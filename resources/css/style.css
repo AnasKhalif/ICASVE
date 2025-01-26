@@ -1,0 +1,12 @@
+@media (min-width: 1025px) {
+    .h-custom {
+      height: 100vh !important;
+    }
+  }
+  
+  .custom-navbar {
+    background-image: url('./img/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
