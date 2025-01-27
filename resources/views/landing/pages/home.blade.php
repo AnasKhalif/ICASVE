@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@
         }
 
         .navbar-black {
-            background-color: black !important;
+            background-color: rgba(15, 83, 15, 0.76) !important;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
         }
 
@@ -35,8 +36,55 @@
         .navbar a:hover {
             color: #ddd;
         }
+
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .hero-img {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .hero-img img {
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .content {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            widht: 100%;
+
+        }
+
+        .content h3{
+            font-size: 20px;
+            color: #ffff;
+            font-weight: 600;
+
+        }
+
+        .content h1{
+            font-size: 44px;
+
+        }
+
+        
+
+
     </style>
 </head>
+
 <body>
     {{-- Header --}}
     <header>
@@ -46,12 +94,13 @@
                 <a class="navbar-brand" href="#">
                     <img src="images/logo/logo-bic-dies.png" alt="Logo" height="40">
                 </a>
-    
+
                 <!-- Toggler for mobile view -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-    
+
                 <!-- Links -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
@@ -75,9 +124,14 @@
 
     {{-- Hero Section --}}
     <main>
-        <div style="height: 200vh; padding-top: 80px;">
-            <img src="" alt="">
-            <h1 id="home" style="margin-top: 100px; text-align: center;">Scroll Down</h1>
+        <div class="hero-img">
+            <img src="images/background/bg-landing.jpg" alt="Hero Image">
+            <div class="content">
+                <h3 id="home">The 2025 Brawijaya International Conference (BIC 2025)</h3>
+                <h1>Artificial Intelligence at the Crossroads:</h1>
+                <h1>Building Sustainable Future</h1>
+                <h3>November 21st to 22nd, 2024 | Batam, Indonesia</h3>
+            </div>
         </div>
     </main>
 
@@ -88,7 +142,7 @@
     <script>
         document.addEventListener("scroll", function() {
             const navbar = document.querySelector(".navbar");
-            if (window.scrollY > 50) {
+            if (window.scrollY > 10) {
                 navbar.classList.remove("navbar-transparent");
                 navbar.classList.add("navbar-black");
             } else {
@@ -98,4 +152,5 @@
         });
     </script>
 </body>
+
 </html>
