@@ -6,9 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laratrust\Traits\HasRolesAndPermissions;
+use Laratrust\Contracts\LaratrustUser;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements LaratrustUser
 {
+    use HasRolesAndPermissions;
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -21,6 +24,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'institution',
+        'job_title',
+        'phone_number',
+        'attendance',
     ];
 
     /**
