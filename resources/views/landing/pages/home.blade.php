@@ -24,7 +24,7 @@
         }
 
         .navbar a {
-            color: black;
+            color: white;
             text-decoration: none;
             transition: color 0.3s ease;
         }
@@ -67,73 +67,131 @@
 
         }
 
-        .content h3{
+        .content h3 {
             font-size: 20px;
             color: #ffff;
             font-weight: 600;
 
         }
 
-        .content h1{
+        .content h1 {
             font-size: 44px;
 
         }
 
-        
+        #hero-about {
+            position: relative;
+            margin: 7rem 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem 0;
+        }
 
+        #hero-about .title h2 {
+            font-size: 30px;
+            color: #1e8d2d;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            /* width: 70%; */
+            text-align: center;
+        }
+
+        .content-about {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            padding: 0 2rem;
+            gap: 3rem;
+        }
+
+        .content-about img {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .content-about p {
+            color: #363636;
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
 
     </style>
 </head>
 
 <body>
-    {{-- Header --}}
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-transparent">
-            <div class="container">
-                <!-- Logo/Image -->
-                <a class="navbar-brand" href="#">
-                    <img src="images/logo/logo-bic-dies.png" alt="Logo" height="40">
-                </a>
+    <div id="landing-page">
+        {{-- Header --}}
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-transparent">
+                <div class="container">
+                    <!-- Logo/Image -->
+                    <a class="navbar-brand" href="#">
+                        <img src="images/logo/logo-bic-dies.png" alt="Logo" height="45">
+                    </a>
 
-                <!-- Toggler for mobile view -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <!-- Toggler for mobile view -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <!-- Links -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-                    </ul>
+                    <!-- Links -->
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#landing-page">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#hero-about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#services">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
 
-    {{-- Hero Section --}}
-    <main>
-        <div class="hero-img">
-            <img src="images/background/bg-landing.jpg" alt="Hero Image">
-            <div class="content">
-                <h3 id="home">The 2025 Brawijaya International Conference (BIC 2025)</h3>
-                <h1>Artificial Intelligence at the Crossroads:</h1>
-                <h1>Building Sustainable Future</h1>
-                <h3>November 21st to 22nd, 2024 | Batam, Indonesia</h3>
-            </div>
-        </div>
-    </main>
+        {{-- Hero Section --}}
+        <main>
+            {{-- Hero Image --}}
+            <section class="hero-img">
+                <img src="images/background/bg-landing.jpg" alt="Hero Image">
+                <div class="content">
+                    <h3 id="home">The 2025 Brawijaya International Conference (BIC 2025)</h3>
+                    <h1>Artificial Intelligence at the Crossroads:</h1>
+                    <h1>Building Sustainable Future</h1>
+                    <h3>November 21st to 22nd, 2025 | Batam, Indonesia</h3>
+                </div>
+            </section>
+
+            {{-- About Section --}}
+            <section id="hero-about">
+                <div class="title">
+                    <h2>ABOUT ICASVE 2025</h2>
+                </div>
+                <div class="container content-about">
+                    <img src="images/background/gedung-vokasi.jpg" alt="img-vokasi">
+                    <p>
+                        The 2025 Brawijaya International Conference (BIC 2025) is a prestigious event that brings together
+                        experts, scholars, and professionals from various fields to explore the intersection of
+                        Artificial Intelligence and Sustainable Development. The conference aims to foster collaboration
+                        and knowledge exchange, and provide a platform for researchers, policymakers, and practitioners
+                        to address complex challenges related to Artificial Intelligence and Sustainable Development.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
