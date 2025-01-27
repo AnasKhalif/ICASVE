@@ -8,4 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    optimizeDeps: {
+        include: ['bootstrap'],  // Pastikan bootstrap dioptimalkan
+    },
 });
