@@ -638,7 +638,6 @@
                 </div>
             </section>
 
-            <!-- -	Registrasion Section -->
             <!-- Registration Section -->
             <section id="regist-section">
                 <div class="title text-center my-4">
@@ -765,6 +764,36 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Venue Section -->
+            <section id="venue-section" class="py-5">
+                <div class="container">
+                    <div class="text-center mb-4">
+                        <h2 class="text-primary">Venue</h2>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <img src="images/background/widyaloka.jpg" alt="Venue Building"
+                                class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto;">
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="text-secondary">Convention Hall Universitas Brawijaya</h3>
+                            <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
+                            <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
+                            <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary">See on Map</a>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
+                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    
+                </div>
+            </section>
+
         </main>
     </div>
 
