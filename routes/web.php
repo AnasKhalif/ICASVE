@@ -2,9 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
+});
+
+Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('participants', 'UserController');
 });
 
 Route::get('/dashboard', function () {
