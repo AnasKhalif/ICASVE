@@ -193,11 +193,12 @@
             margin-bottom: 0.5rem;
         }
 
-        .list-topics{
+        .list-topics {
             display: flex;
             justify-content: space-between;
         }
-        #hero-topics{
+
+        #hero-topics {
             margin: 5em 0;
             padding-top: 2rem;
         }
@@ -210,13 +211,13 @@
             width: 90%;
         }
 
-        #hero-topics ul > li {
+        #hero-topics ul>li {
             margin-bottom: 1.5rem;
             font-weight: bold;
         }
 
-        #hero-topics ul > li::before {
-            content: counters(section, " ".) " ";
+        #hero-topics ul>li::before {
+            content: counters(section, " " .) " ";
             counter-increment: section;
             font-weight: bold;
         }
@@ -230,6 +231,49 @@
 
         #hero-topics ul li ul li {
             margin-bottom: 0.5rem;
+        }
+
+        /* Important Dates Styles */
+        .important-dates {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .important-dates img {
+            width: 40%;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dates ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 18px;
+            color: #363636;
+        }
+
+        .dates ul li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #fff;
+            border-left: 5px solid #1e8d2d;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dates ul li span {
+            font-weight: bold;
+            color: #1e8d2d;
         }
     </style>
 </head>
@@ -487,13 +531,15 @@
                         <li>AI in Healthcare: Innovations and Ethics
                             <ul>
                                 <li>The role of AI in diagnostics, treatment planning, and personalized medicine.</li>
-                                <li>Ethical considerations of AI in healthcare, including patient privacy and data security.</li>
+                                <li>Ethical considerations of AI in healthcare, including patient privacy and data
+                                    security.</li>
                                 <li>Legal frameworks for regulating AI applications in medical practice.</li>
                             </ul>
                         </li>
                         <li>Scientific Advancements through AI
                             <ul>
-                                <li>AI’s contribution to scientific research, including drug discovery and climate modelling.</li>
+                                <li>AI’s contribution to scientific research, including drug discovery and climate
+                                    modelling.</li>
                                 <li>The ethical use of AI in scientific experiments and data analysis.</li>
                                 <li>The impact of AI on scientific methodologies and research integrity.</li>
                             </ul>
@@ -526,7 +572,8 @@
                     <ul>
                         <li>Interdisciplinary Approaches to AI Ethics
                             <ul>
-                                <li>Combining insights from medicine, science, humanities, and law to create robust AI ethics frameworks.</li>
+                                <li>Combining insights from medicine, science, humanities, and law to create robust AI
+                                    ethics frameworks.</li>
                                 <li>Case studies on ethical dilemmas involving AI.</li>
                                 <li>Strategies for interdisciplinary collaboration on AI ethics.</li>
                             </ul>
@@ -568,6 +615,154 @@
                             </ul>
                         </li>
                     </ul>
+                </div>
+            </section>
+
+            <!-- -	Important Dates Section -->
+            <section id="important-dates">
+                <div class="title">
+                    <h2>Important Dates</h2>
+                </div>
+                <div class="container important-dates">
+                    <img src="images/background/poster.jpg" alt="Important Dates Poster">
+                    <div class="dates">
+                        <ul>
+                            <li><span>Abstract Submission Deadline:</span> July 2, 2024</li>
+                            <li><span>Abstract Notification:</span> July 3, 2024</li>
+                            <li><span>Participant (non-speaker) Registration Deadline:</span> July 10, 2024</li>
+                            <li><span>Payment Deadline:</span> July 10, 2024</li>
+                            <li><span>Full Paper Deadline:</span> July 12, 2024</li>
+                            <li><span>Conference Day:</span> July 17, 2024</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- -	Registrasion Section -->
+            <!-- Registration Section -->
+            <section id="regist-section">
+                <div class="title text-center my-4">
+                    <h2>Registration Fee</h2>
+                </div>
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Presenter</th>
+                                    <th>Domestic Participants</th>
+                                    <th>International Participants</th>
+                                    <th>Period of Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Regular (Early Bird)</td>
+                                    <td>IDR 2,000,000</td>
+                                    <td>US$ 200</td>
+                                    <td>Until September 20th, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td>Regular</td>
+                                    <td>IDR 2,500,000</td>
+                                    <td>US$ 250</td>
+                                    <td>Until November 8th, 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Non-Presenter</th>
+                                    <th>Domestic Participants</th>
+                                    <th>International Participants</th>
+                                    <th>Period of Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Additional Presenter or Attendant (Online Attendance)</td>
+                                    <td>IDR 500,000</td>
+                                    <td>US$ 50</td>
+                                    <td>Until November 8th, 2024</td>
+                                </tr>
+                                <tr>
+                                    <td>Additional Presenter or Attendant (On-Spot Attendance)</td>
+                                    <td>IDR 1,000,000</td>
+                                    <td>US$ 100</td>
+                                    <td>Until November 8th, 2024</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Additional Fee</th>
+                                    <th>Domestic Participants</th>
+                                    <th>International Participants</th>
+                                    <th>Period of Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Journal Publication (Selected Article)</td>
+                                    <td>TBA</td>
+                                    <td>TBA</td>
+                                    <td>TBA</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="text-muted mt-3">
+                        <small>
+                            <b>Please note:</b><br>
+                            1. The registration fee serves only for conference fee, and it cannot be waived for
+                            authors.<br>
+                            2. Authors need to pay for publishing if accepted.<br>
+                            3. Certificate fee: Participants can attend the event without certificate.
+                        </small>
+                    </p>
+
+                    <div class="row text-center mt-5">
+                        <div class="col-md-4">
+                            <div class="card border-primary">
+                                <div class="card-body">
+                                    <p><b>Bank Mandiri</b></p>
+                                    <p>Kode VA: 898187743</p>
+                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
+                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-warning">
+                                <div class="card-body">
+                                    <p><b>Bank Nasional Indonesia</b></p>
+                                    <p>Kode VA: 988081657743000</p>
+                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
+                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card border-danger">
+                                <div class="card-body">
+                                    <p><b>Bank Jatim</b></p>
+                                    <p>Kode VA: 151637743000</p>
+                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
+                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-success btn-lg">Payment Proof Upload and Attendance
+                            Confirmation -></button>
+                    </div>
                 </div>
             </section>
         </main>
