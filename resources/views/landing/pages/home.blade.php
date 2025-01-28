@@ -286,7 +286,7 @@
                 <div class="container">
                     <!-- Logo/Image -->
                     <a class="navbar-brand" href="#">
-                        <img src="images/logo/logo-bic-dies.png" alt="Logo" height="45">
+                        <img src="images/logo/logo-header.png" alt="Logo" height="45" style="padding: 4px">
                     </a>
 
                     <!-- Toggler for mobile view -->
@@ -309,6 +309,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#hero-topics">Topics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#important-dates">Important Dates</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#regist-section">Registration</a>
                             </li>
                         </ul>
                     </div>
@@ -768,8 +774,8 @@
             <!-- Venue Section -->
             <section id="venue-section" class="py-5">
                 <div class="container">
-                    <div class="text-center mb-4">
-                        <h2 class="text-primary">Venue</h2>
+                    <div class="title">
+                        <h2>Venue</h2>
                     </div>
                     <div class="row align-items-center">
                         <div class="col-md-6">
@@ -780,7 +786,8 @@
                             <h3 class="text-secondary">Convention Hall Universitas Brawijaya</h3>
                             <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
                             <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
-                            <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary">See on Map</a>
+                            <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank"
+                                class="btn btn-primary">See on Map</a>
                         </div>
                     </div>
                     <div class="mt-4">
@@ -790,11 +797,114 @@
                             referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
-                    
+
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section id="publications-section" class="py-5 bg-light">
+                <div class="container">
+                    <div class="title">
+                        <h2>Publications</h2>
+                    </div>
+                    <div class="row text-center" style="display:flex; align-items: center;">
+                        <!-- Example for logos per row -->
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-1.png" alt="Logo 1" class="img-fluid">
+                        </div>
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-2.png" alt="Logo 2" class="img-fluid">
+                        </div>
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-3.jpg" alt="Logo 3" class="img-fluid">
+                        </div>
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-4.png" alt="Logo 4" class="img-fluid">
+                        </div>
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-5.png" alt="Logo 5" class="img-fluid">
+                        </div>
+                        <div class="col-md-2 col-6 mb-3">
+                            <img src="images/logo/logo-6.jpeg" alt="Logo 6" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hosted and Supported Section -->
+            <section id="hosted-supported-section" class="py-5">
+                <div class="container">
+                    <div class="row">
+                        <!-- Left Section (30%) -->
+                        <div class="col-md-4 bg-secondary text-white p-4">
+                            <div class="mb-4 text-center">
+                                <h4>Hosted By</h4>
+                                <img src="images/logo/logo-hostedBy.png" alt="Hosted Logo" class="img-fluid mb-2">
+                            </div>
+                            <div class="text-center">
+                                <h4>Co-Hosted By</h4>
+                                <img src="images/logo/logo-co1.png" alt="Co-Hosted Logo 1"
+                                    class="img-fluid mb-2">
+                                <img src="images/logo/logo-co2.png" alt="Co-Hosted Logo 2"
+                                    class="img-fluid mb-2">
+                            </div>
+                        </div>
+                        <!-- Right Section (70%) -->
+                        <div class="col-md-8 p-4">
+                            <h4 class="text-center mb-4">Supported By</h4>
+                            <div class="row text-center">
+                                <!-- Example for sponsor logos per row -->
+                                <div class="col-md-3 col-6 mb-3">
+                                    <img src="images/logo/logo-7.png" alt="Sponsor Logo 1"
+                                        class="img-fluid">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <img src="images/logo/logo-7.png" alt="Sponsor Logo 2"
+                                        class="img-fluid">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <img src="images/logo/logo-7.png" alt="Sponsor Logo 3"
+                                        class="img-fluid">
+                                </div>
+                                <div class="col-md-3 col-6 mb-3">
+                                    <img src="images/logo/logo-7.png" alt="Sponsor Logo 4"
+                                        class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
         </main>
+
+        <!-- Footer Section -->
+        <footer id="footer-section" class="py-5 bg-dark text-white">
+            <div class="container">
+                <div class="row" style="display:flex; align-items: flex-start; justify-content: space-evenly;">
+                    <!-- Left Section -->
+                    <div class="col-md-4">
+                        <h5>ICASVE</h5>
+                        <p class="text-white">ICASVE (International Conference on Applied Science, Vocational
+                            Education) is a prestigious event aimed at fostering innovation and collaboration in
+                            vocational education and applied sciences.</p>
+                    </div>
+                    <!-- Middle Section -->
+                    <div class="col-md-4">
+                        <h5>Contact</h5>
+                        <p class="text-white">Vokasi, Universitas Brawijaya</p>
+                        <p class="text-white">Jl. Veteran Malang, East Java, Indonesia 65145</p>
+                        <p><a href="https://wa.me/1234567890" class="text-white">WhatsApp: +62 8xxxxxxxxxxx</a></p>
+                        <p><a href="https://wa.me/0987654321" class="text-white">WhatsApp: +62 8xxxxxxxxxxx</a></p>
+                    </div>
+                    <!-- Right Section -->
+                    <div class="col-md-4 text-center" style="display:flex; gap:2rem; align-items: center;">
+                        <img src="images/logo/ub.png" alt="UB Logo" style="height:4rem;">
+                        <img src="images/logo/vokasi.jpg" alt="Vokasi Logo" style="height:3rem;">
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <!-- Bootstrap JS -->
