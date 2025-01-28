@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return "Welcome to Laravel 11";
+    return view('/landing/pages/home');
 });
 
 Route::get('/dashboard', function () {

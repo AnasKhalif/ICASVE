@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navbar with Scroll Effect</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    @include('layouts.partials.link')
     <style>
         /* Navbar Styles */
         .navbar {
@@ -44,37 +43,104 @@
             z-index: 10;
         }
 
+    .hero-img {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        margin-bottom: 12rem;
+    }
+    
+    .hero-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    .content {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        width: 90%; 
+        padding: 0 20px; 
+    }
+    
+    .content h3 {
+        font-size: 20px;
+        color: #ffff;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .content h1 {
+        font-size: 44px;
+        margin-bottom: 1rem;
+    }
+    
+    @media screen and (max-width: 768px) {
         .hero-img {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            margin-bottom: 12rem;
+            height: 80vh;
+            margin-bottom: 4rem;
         }
-
-        .hero-img img {
-            width: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
+        
         .content {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
+            top: 50%;
         }
-
+        
         .content h3 {
-            font-size: 20px;
-            color: #ffff;
-            font-weight: 600;
+            font-size: 18px;
         }
-
+        
         .content h1 {
-            font-size: 44px;
+            font-size: 32px;
         }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .hero-img {
+            height: 70vh;
+            margin-bottom: 1rem;
+        }
+        
+        .content {
+            top: 50%;
+            width: 95%;
+        }
+        
+        .content h3 {
+            font-size: 16px;
+            margin-bottom: 0.5rem;
+            
+        }
+        
+        .content h1 {
+            font-size: 20px;
+            margin-bottom: 0.5rem;
+        }
+    }
+    
+    @media screen and (max-width: 320px) {
+        .content h1 {
+            font-size: 16px;
+        }
+        
+        .content h3 {
+            font-size: 12px;
+        }
+    }
+    
+    @media screen and (max-height: 480px) and (orientation: landscape) {
+        .hero-img {
+            height: 100vh;
+        }
+        
+        .content {
+            top: 50%;
+        }
+    }
 
         #hero-about {
             position: relative;
@@ -85,7 +151,6 @@
             text-align: center;
             margin-bottom: 7em;
             padding-top: 4rem;
-            /* Ensure spacing to avoid navbar overlap */
         }
 
         .title h2 {
@@ -119,11 +184,73 @@
             line-height: 1.5;
         }
 
-        /* Card Styles */
+
+        @media screen and (max-width: 768px) {
+
+            #hero-about{
+                margin-bottom: 3rem;
+            }
+            .content-about {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .content-about img {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            #hero-about{
+                margin-bottom: 3rem;
+            }
+
+            .content-about {
+                gap: 1.5rem;
+            }
+
+            .content-about img {
+                width: 100%;
+            }
+
+            .content-about p {
+                font-size: 16px;
+                
+
+            }
+
+            .title h2 {
+                font-size: 24px;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            #hero-about{
+                margin-bottom: 3rem;
+            }
+            .content-about {
+                gap: 1rem;
+            }
+
+            .content-about img {
+                width: 100%;
+            }
+
+            .content-about p {
+                font-size: 14px;
+            }
+
+            .title h2 {
+                font-size: 24px;
+            }
+        }
+
+        
         #hero-speakers,
         #hero-invited {
             margin-bottom: 5em;
             padding-top: 2rem;
+
         }
 
         .cards-container {
@@ -135,12 +262,13 @@
             padding: 0 1rem;
             margin: 2rem auto;
             max-width: 1200px;
+
         }
 
         .card {
             width: 100%;
+            margin: 0 auto;
             max-width: 300px;
-            /* Ensures cards are consistent in width */
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -159,20 +287,17 @@
         .card-img-wrapper {
             width: 100%;
             height: 250px;
-            /* Ensures consistent image height */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             background: #f0f0f0;
-            /* Placeholder background */
         }
 
         .card-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Ensures image fits and maintains aspect ratio */
         }
 
         .card-body {
@@ -233,7 +358,81 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Important Dates Styles */
+        @media screen and (max-width: 768px) {
+                
+            #hero-topics ul {
+                margin: 0 auto;
+                font-size: 15px;
+            }
+
+            #hero-topics ul li ul {
+                padding-left: 0;
+                font-size: 13px;
+            }
+
+        }
+
+        @media screen and (max-width: 480px) {
+        #hero-topics ul {
+            margin: 0;
+            font-size: 12px;
+            width: 100%;
+            padding: 0 15px;
+            display: block;
+        }
+    
+        #hero-topics ul>li {
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+    
+        
+        
+        #hero-topics ul li {
+            width: 100%;
+            margin-bottom: 1rem;
+            display: block;
+            clear: both;
+        }
+        
+        #hero-topics ul li ul {
+            padding-left: 1.5rem;
+            font-size: 11px;
+            width: 100%;
+            display: block;
+        }
+        
+        .container.list-topics {
+            width: 100%;
+            padding: 0 15px;
+            display: block; 
+        }
+        
+        .list-topics ul {
+            display: block !important; 
+            column-count: 1 !important; 
+            column-gap: 0;
+        }
+
+        .list-topics li {
+            font-size: 16px;
+        }
+
+        
+        #hero-topics ul li ul li {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            break-inside: avoid; /* Prevent items from breaking across columns */
+        }
+      }
+
+         @media screen and (max-width: 320px) {
+           .list-topics ul {
+               column-count: 1 !important; 
+           }
+   
+         }
+
         .important-dates {
             display: flex;
             justify-content: space-evenly;
@@ -275,6 +474,84 @@
             font-weight: bold;
             color: #1e8d2d;
         }
+
+        @media screen and (max-width: 768px) {
+
+            .important-dates {
+                flex-direction: column;
+            }
+
+            .important-dates img {
+                width: 100%;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+
+            .important-dates {
+                flex-direction: column;
+            }
+
+            .important-dates img {
+                width: 100%;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+
+            li {
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+            }
+            
+            .date {
+                margin-left: auto; 
+                font-style: italic; 
+            }
+
+            .speaker {
+                max-width: 200px;
+            }
+
+            .dates ul li {
+                font-size: 13px;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                background-color: #fff;
+                border-left: 5px solid #1e8d2d;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+        }
+
+        @media screen and (max-width: 480px) {
+            .speaker {
+                max-width: 170px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .bank {
+                margin-bottom: 2rem;
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .location h3 {
+                margin-top: 1rem;
+                font-size: 20px;
+            }
+        }
+
     </style>
 </head>
 
@@ -636,12 +913,13 @@
                     <img src="images/background/poster.jpg" alt="Important Dates Poster">
                     <div class="dates">
                         <ul>
-                            <li><span>Abstract Submission Deadline:</span> July 2, 2024</li>
-                            <li><span>Abstract Notification:</span> July 3, 2024</li>
-                            <li><span>Participant (non-speaker) Registration Deadline:</span> July 10, 2024</li>
-                            <li><span>Payment Deadline:</span> July 10, 2024</li>
-                            <li><span>Full Paper Deadline:</span> July 12, 2024</li>
-                            <li><span>Conference Day:</span> July 17, 2024</li>
+                            <li><span class="speaker">Abstract Submission Deadline:</span class='date'> July 2, 2024</li>
+                            <li><span class="speaker">Abstract Notification:</span class='date'> July 3, 2024</li>
+                            <li><span class="speaker">Participant (non-speaker) Registration Deadline:</span class='date'> July 10, 2024</li>
+                            <li><span class="speaker">Payment Deadline:</span class='date'> July 10, 2024</li>
+                            <li><span class=speaker"">Full Paper Deadline:</span class='date'> July 12, 2024</li>
+                            <li><span class="speaker">Full Paper Deadline:</span class='date'> July 12, 2024</li>
+                            <li><span class="speaker">Conference Day:</span class='date'> July 17, 2024</li>
                         </ul>
                     </div>
                 </div>
@@ -735,7 +1013,7 @@
                     </p>
 
                     <div class="row text-center mt-5">
-                        <div class="col-md-4">
+                        <div class="bank col-md-4">
                             <div class="card border-primary">
                                 <div class="card-body">
                                     <p><b>Bank Mandiri</b></p>
@@ -745,7 +1023,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="bank col-md-4">
                             <div class="card border-warning">
                                 <div class="card-body">
                                     <p><b>Bank Nasional Indonesia</b></p>
@@ -755,7 +1033,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="bank col-md-4">
                             <div class="card border-danger">
                                 <div class="card-body">
                                     <p><b>Bank Jatim</b></p>
@@ -785,7 +1063,7 @@
                             <img src="images/background/widyaloka.jpg" alt="Venue Building"
                                 class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto;">
                         </div>
-                        <div class="col-md-6">
+                        <div class="location col-md-6">
                             <h3 class="text-secondary">Convention Hall Universitas Brawijaya</h3>
                             <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
                             <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
