@@ -3,86 +3,95 @@
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="index.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-clone menu-icon"></i>
                     <span class="menu-title">Summary</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="participants.html">
-                    <i class="mdi mdi-account-star menu-icon"></i>
+                    <i class="fa fa-users menu-icon"></i>
                     <span class="menu-title">Participants</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="abstracts.html">
-                    <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+                    <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Abstracts</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="oral-distribution.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-folder menu-icon"></i>
                     <span class="menu-title">Oral Distribution</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="symposiums.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-columns menu-icon"></i>
                     <span class="menu-title">Symposiums</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="payment.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="manual-receipt.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-file-text menu-icon"></i>
                     <span class="menu-title">Manual Receipt</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="certificates.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-file menu-icon"></i>
                     <span class="menu-title">Certificates</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="reviewers.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-user menu-icon"></i>
                     <span class="menu-title">Reviewers</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="email-csv.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-envelope menu-icon"></i>
                     <span class="menu-title">Email CSV</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="abstracts-book.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-clipboard menu-icon"></i>
                     <span class="menu-title">Abstracts Book</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="download-files.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-download menu-icon"></i>
                     <span class="menu-title">Download Files</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="upload.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-upload menu-icon"></i>
                     <span class="menu-title">Upload</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="setting.html">
-                    <i class="icon-grid menu-icon"></i>
+                    <i class="fa fa-cogs menu-icon"></i>
                     <span class="menu-title">Setting</span>
+                </a>
+            </li>
+            <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
+                @csrf
+            </form>
+            <li class="nav-item">
+                <a class="nav-link" href="setting.html" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out menu-icon"></i>
+                    <span class="menu-title">Logout</span>
                 </a>
             </li>
         </ul>
@@ -93,7 +102,7 @@
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="icon-layout menu-icon"></i>
+                    <i class="fa fa-user menu-icon"></i>
                     <span class="menu-title">Reviewer</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -112,7 +121,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                     aria-controls="form-elements">
-                    <i class="icon-columns menu-icon"></i>
+                    <i class="fa fa-file-text menu-icon"></i>
                     <span class="menu-title">Reviewer: Paper</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -130,7 +139,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                    <i class="icon-bar-graph menu-icon"></i>
+                    <i class="fa fa-cog menu-icon"></i>
                     <span class="menu-title">Editor</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -154,7 +163,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                    <i class="icon-grid-2 menu-icon"></i>
+                    <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Editor: Paper</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -174,6 +183,15 @@
                                 Workload</a></li>
                     </ul>
                 </div>
+                <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
+                    @csrf
+                </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="setting.html" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fa fa-sign-out menu-icon"></i>
+                        <span class="menu-title">Logout</span>
+                    </a>
+                </li>
             </li>
 
         </ul>
@@ -186,7 +204,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
-                    <i class="icon-layout menu-icon"></i>
+                    <i class="fa fa-user menu-icon"></i>
                     <span class="menu-title">Reviewer</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -203,7 +221,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
                     aria-controls="form-elements">
-                    <i class="icon-columns menu-icon"></i>
+                    <i class="fa fa-file-text menu-icon"></i>
                     <span class="menu-title">Reviewer: Paper</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -216,7 +234,15 @@
                     </ul>
                 </div>
             </li>
-
+            <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
+                @csrf
+            </form>
+            <li class="nav-item">
+                <a class="nav-link" href="setting.html" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fa fa-sign-out menu-icon"></i>
+                    <span class="menu-title">Logout</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole
@@ -236,6 +262,12 @@
                     aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Payment</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="setting.html">
+                    <i class="fa fa-sign-out menu-icon"></i>
+                    <span class="menu-title">Logout</span>
                 </a>
             </li>
         </ul>
