@@ -18,6 +18,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/dashboard/participants', function () {
+    return view('admin/participants');
+})->middleware(['auth'])->name('dashboard.participants');
+
 Route::get('/user', function () {
     return request()->user();
 })->middleware(['auth'])->name('user');
