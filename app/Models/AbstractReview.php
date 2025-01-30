@@ -18,7 +18,7 @@ class AbstractReview extends Model
 
     public function abstract()
     {
-        return $this->belongsTo(AbstractModel::class);
+        return $this->belongsTo(AbstractModel::class, 'abstract_id');
     }
 
     public function reviewer()

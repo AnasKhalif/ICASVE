@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers\Reviewer;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\AbstractModel;
+use App\Models\AbstractReview;
+
+class ReviewController extends Controller
+{
+    public function index()
+    {
+        $reviewerId = auth()->id();
+        $abstracts = AbstractModel::whereHas('abstractReviews', function ($query) use ($reviewerId) {
+            $query->where('reviewer_id', $reviewerId);
+        })->get();
+
+        return view('reviewer.index', compact('abstracts'));
+    }
+
+    public function showReviewForm($abstractId)
+    {
+        $abstract = AbstractModel::findOrFail($abstractId);
+        $abstractReview = AbstractReview::where('abstract_id', $abstractId)
+            ->where('reviewer_id', auth()->id())
+            ->first();
+
+        return view('reviewer.review', compact('abstract', 'abstractReview'));
+    }
+
+    public function storeReview(Request $request, $abstractId)
+    {
+        $request->validate([
+            'recommendation' => 'required|string',
+            'comment' => 'nullable|string',
+        ]);
+
+        $abstractReview = AbstractReview::firstOrCreate(
+            ['abstract_id' => $abstractId, 'reviewer_id' => auth()->id()],
+            ['recommendation' => $request->recommendation, 'comment' => $request->comment]
+        );
+
+        if ($abstractReview->wasRecentlyCreated === false) {
+            $abstractReview->update([
+                'recommendation' => $request->recommendation,
+                'comment' => $request->comment
+            ]);
+        }
+
+        return redirect()->route('reviewer.review.index')->with('success', 'Review submitted successfully');
+    }
+}

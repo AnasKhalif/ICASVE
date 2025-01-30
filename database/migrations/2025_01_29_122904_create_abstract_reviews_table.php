@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('abstract_id')->constrained()->onDelete('cascade');
             $table->foreignId('reviewer_id')->constrained('users')->onDelete('cascade');
-            $table->string('recommendation');
+            $table->string('recommendation')->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

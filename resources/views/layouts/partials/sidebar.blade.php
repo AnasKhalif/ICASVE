@@ -92,6 +92,12 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('reviewer.summary') }}">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Reviewer</span>
@@ -99,7 +105,7 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Need to be
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('reviewer.reviewer.index') }}">Need to be
                                 reviewed</a></li>
                         <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Review
                                 completed</a></li>
@@ -140,11 +146,11 @@
                         </li>
                         <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">No review</a>
                         </li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">No
+                        <li class="nav-item"> <a class="nav-link" href="#">No
                                 decision</a></li>
                         <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">With
                                 decision</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">All
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('reviewer.editor.index') }}">All
                                 abstracts</a></li>
                         <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Reviewers
                                 Workload</a></li>
@@ -184,6 +190,12 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('reviewer.summary') }}">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
                     aria-controls="ui-basic">
                     <i class="icon-layout menu-icon"></i>
@@ -192,7 +204,8 @@
                 </a>
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Need to be
+                        <li class="nav-item"> <a class="nav-link" href="{{ route('reviewer.review.index') }}">Need to
+                                be
                                 reviewed</a></li>
                         <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Review
                                 completed</a></li>
