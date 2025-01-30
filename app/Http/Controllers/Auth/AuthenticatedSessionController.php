@@ -31,15 +31,25 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
         $roles = $user->roles->pluck('name')->toArray();
 
-        $specificRoles = [
+        $users = [
             'indonesia-presenter',
             'foreign-presenter',
             'indonesia-participants',
             'foreign-participants',
         ];
 
-        if (array_intersect($roles, $specificRoles)) {
-            return redirect('/dashboard');
+        if (array_intersect($roles, $users)) {
+            return redirect()->route('dashboard');
+        }
+
+        $reviewer = [
+            'chief-editor',
+            'editor',
+            'reviewer'
+        ];
+
+        if (array_intersect($roles, $reviewer)) {
+            return redirect()->route('reviewer.summary');
         }
 
         return redirect()->intended(route('admin.summary', absolute: false));

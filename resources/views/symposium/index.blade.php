@@ -6,7 +6,10 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Symposium</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Symposium</h4>
+                    <a href="{{ route('admin.symposium.create') }}" class="btn btn-sm btn-success">Add Symposium</a>
+                </div>
                 <p class="card-description">
                     List of Symposium
                 </p>

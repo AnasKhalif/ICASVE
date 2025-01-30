@@ -20,9 +20,4 @@ class FullPaper extends Model
     {
         return $this->hasMany(FullPaperReview::class);
     }
-
-    public function fullPaperDecision()
-    {
-        return $this->hasOne(FullPaperDecision::class);
-    }
 }

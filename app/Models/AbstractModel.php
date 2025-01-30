@@ -26,16 +26,16 @@ class AbstractModel extends Model
 
     public function abstractReviews()
     {
-        return $this->hasMany(AbstractReview::class);
-    }
-
-    public function editorDecision()
-    {
-        return $this->hasOne(EditorDecision::class);
+        return $this->hasMany(AbstractReview::class, 'abstract_id');
     }
 
     public function fullPaper()
     {
         return $this->hasOne(FullPaper::class, 'abstract_id');
+    }
+
+    public function reviewers()
+    {
+        return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id');
     }
 }
