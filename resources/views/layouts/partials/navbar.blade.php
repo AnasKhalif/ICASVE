@@ -4,7 +4,8 @@
          <a class="navbar-brand brand-logo mr-5" href="index.html">
              <img src="{{ asset('img/icasve_logo.jpg') }}" class="mr-2 w-10 h-15" alt="logo" />
          </a>
-         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
+         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('images/logo-mini.svg') }}"
+                 alt="logo" /></a>
      </div>
      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
          @role('admin')
@@ -65,7 +66,7 @@
              </li>
              <li class="nav-item nav-profile dropdown">
                  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                     <img src="images/faces/face28.jpg" alt="profile" />
+                     <img src="{{ asset('images/faces/face28.jpg') }}" alt="profile" />
                  </a>
                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                      <a class="dropdown-item">

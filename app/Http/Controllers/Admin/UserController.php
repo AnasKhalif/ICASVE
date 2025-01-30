@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $user->roles()->attach($role);
 
-        return redirect()->route('admin.participants.index')->with($this->alertCreated());
+        return redirect()->route('admin.participant.index')->with($this->alertCreated());
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
 
             return view('participants.edit', compact('user', 'roles'));
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.participants.index')->with($this->alertNotFound());
+            return redirect()->route('admin.participant.index')->with($this->alertNotFound());
         }
     }
 
@@ -137,9 +137,9 @@ class UserController extends Controller
 
             $user->roles()->attach($role);
 
-            return redirect()->route('admin.participants.index')->with($this->alertUpdated());
+            return redirect()->route('admin.participant.index')->with($this->alertUpdated());
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.participants.index')->with($this->alertNotFound());
+            return redirect()->route('admin.participant.index')->with($this->alertNotFound());
         }
     }
 
@@ -159,9 +159,9 @@ class UserController extends Controller
 
             $user->delete();
 
-            return redirect()->route('admin.participants.index')->with($this->alertDeleted());
+            return redirect()->route('admin.participant.index')->with($this->alertDeleted());
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.participants.index')->with($this->alertNotFound());
+            return redirect()->route('admin.participant.index')->with($this->alertNotFound());
         }
     }
 }

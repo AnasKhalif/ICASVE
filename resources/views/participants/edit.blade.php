@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Participant</h4>
-                <form class="forms-sample" action="{{ route('admin.participants.update', $user->id) }}" method="POST">
+                <form class="forms-sample" action="{{ route('admin.participant.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -88,7 +88,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Update</button>
-                    <a href="{{ route('admin.participants.index') }}" class="btn btn-light">Cancel</a>
+                    <a href="{{ route('admin.participant.index') }}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>

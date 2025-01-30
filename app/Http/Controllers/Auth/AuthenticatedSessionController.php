@@ -39,10 +39,10 @@ class AuthenticatedSessionController extends Controller
         ];
 
         if (array_intersect($roles, $specificRoles)) {
-            return redirect('/user');
+            return redirect('/dashboard');
         }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('admin.summary', absolute: false));
     }
 
     /**
