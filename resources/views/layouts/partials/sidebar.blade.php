@@ -2,13 +2,13 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('admin.summary') }}">
                     <i class="icon-grid menu-icon"></i>
                     <span class="menu-title">Summary</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="participants.html">
+                <a class="nav-link" href="{{ route('admin.participant.index') }}">
                     <i class="mdi mdi-account-star menu-icon"></i>
                     <span class="menu-title">Participants</span>
                 </a>
@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="symposiums.html">
+                <a class="nav-link" href="{{ route('admin.symposium.index') }}">
                     <i class="icon-grid menu-icon"></i>
                     <span class="menu-title">Symposiums</span>
                 </a>
@@ -50,7 +50,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="reviewers.html">
+                <a class="nav-link" href="{{ route('admin.reviewer.index') }}">
                     <i class="icon-grid menu-icon"></i>
                     <span class="menu-title">Reviewers</span>
                 </a>
@@ -221,19 +221,23 @@
     </nav>
 @endrole
 
-@role(['indonesia-presenter', 'foreign-presenter'], ['indonesia-participants', 'foreign-participants'])
+@role(['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'])
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                    aria-controls="ui-basic">
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <i class="icon-grid menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('abstracts.index') }}">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Abstract</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                    aria-controls="ui-basic">
+                <a class="nav-link" href="#ui-basic">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Payment</span>
                 </a>

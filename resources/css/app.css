@@ -1,4 +1,5 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
+@import 'abstract.css';
 
 @media (min-width: 1025px) {
     .h-custom {

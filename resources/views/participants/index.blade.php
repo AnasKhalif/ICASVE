@@ -6,9 +6,13 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Participants</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Participants</h4>
+                    <a href="{{ route('admin.participant.create') }}" class="btn btn-sm btn-success">New Register
+                        Participants</a>
+                </div>
                 <p class="card-description">
-                    List of participants with roles
+                    List of participants
                 </p>
                 <div class="table-responsive pt-3">
                     <table class="table table-bordered">
@@ -35,9 +39,9 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.user.edit', $user->id) }}"
+                                        <a href="{{ route('admin.participant.edit', $user->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST"
+                                        <form action="{{ route('admin.participant.destroy', $user->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')

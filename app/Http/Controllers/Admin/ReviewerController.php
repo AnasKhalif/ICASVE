@@ -62,7 +62,7 @@ class ReviewerController extends Controller
 
         $user->roles()->attach($role);
 
-        return redirect()->route('admin.reviewers.index')->with($this->alertCreated());
+        return redirect()->route('admin.reviewer.index')->with($this->alertCreated());
     }
 
     /**
@@ -88,7 +88,7 @@ class ReviewerController extends Controller
 
             return view('reviewers.edit', compact('user', 'roles'));
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.reviewers.index')->with($this->alertNotFound());
+            return redirect()->route('admin.reviewer.index')->with($this->alertNotFound());
         }
     }
 
@@ -123,9 +123,9 @@ class ReviewerController extends Controller
 
             $user->roles()->attach($role);
 
-            return redirect()->route('admin.reviewers.index')->with($this->alertUpdated());
+            return redirect()->route('admin.reviewer.index')->with($this->alertUpdated());
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.reviewers.index')->with($this->alertNotFound());
+            return redirect()->route('admin.reviewer.index')->with($this->alertNotFound());
         }
     }
 
@@ -145,9 +145,9 @@ class ReviewerController extends Controller
 
             $user->delete();
 
-            return redirect()->route('admin.reviewers.index')->with($this->alertDeleted());
+            return redirect()->route('admin.reviewer.index')->with($this->alertDeleted());
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('admin.reviewers.index')->with($this->alertNotFound());
+            return redirect()->route('admin.reviewer.index')->with($this->alertNotFound());
         }
     }
 }

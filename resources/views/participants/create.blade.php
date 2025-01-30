@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Register New Participants</h4>
-                <form class="forms-sample" action="{{ route('admin.participants.store') }}" method="POST">
+                <form class="forms-sample" action="{{ route('admin.participant.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -95,7 +95,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <a href="{{ route('admin.participants.index') }}" class="btn btn-light">Cancel</a>
+                    <a href="{{ route('admin.participant.index') }}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>

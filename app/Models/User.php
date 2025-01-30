@@ -52,4 +52,34 @@ class User extends Authenticatable  implements LaratrustUser
             'password' => 'hashed',
         ];
     }
+
+    public function abstracts()
+    {
+        return $this->hasMany(AbstractModel::class);
+    }
+
+    public function fullPapers()
+    {
+        return $this->hasMany(FullPaper::class);
+    }
+
+    public function abstractReviews()
+    {
+        return $this->hasMany(AbstractReview::class, 'reviewer_id');
+    }
+
+    public function fullPaperReviews()
+    {
+        return $this->hasMany(FullPaperReview::class, 'reviewer_id');
+    }
+
+    public function editorDecisions()
+    {
+        return $this->hasMany(EditorDecision::class, 'editor_id');
+    }
+
+    public function fullPaperDecisions()
+    {
+        return $this->hasMany(FullPaperDecision::class, 'editor_id');
+    }
 }

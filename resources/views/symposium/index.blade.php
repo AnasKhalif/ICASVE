@@ -6,38 +6,32 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Reviewers</h4>
+                <h4 class="card-title">Symposium</h4>
                 <p class="card-description">
-                    List of Reviewers with roles
+                    List of Symposium
                 </p>
                 <div class="table-responsive pt-3">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Institution</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Abstract</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($users as $key => $user)
+                            @forelse ($symposiums as $key => $symposium)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->institution }}</td>
-                                    <td>
-                                        @foreach ($user->roles as $role)
-                                            <span class="badge badge-primary">{{ $role->display_name }}</span>
-                                        @endforeach
+                                    <td>{{ $symposium->name }} ({{ $symposium->abbreviation }})</td>
+                                    <td class="text-center">
+                                        <span class="badge badge-info">{{ $symposium->abstracts_count }} Abstracts</span>
                                     </td>
-                                    <td>
-                                        <a href="{{ route('admin.reviewer.edit', $user->id) }}"
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.symposium.edit', $symposium->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('admin.reviewer.destroy', $user->id) }}" method="POST"
+                                        <form action="{{ route('admin.symposium.destroy', $symposium->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
@@ -48,13 +42,14 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="text-center">No users found</td>
+                                    <td colspan="4" class="text-center">No symposiums found</td>
                                 </tr>
                             @endforelse
                         </tbody>
+
                     </table>
                 </div>
-                {{ $users->links() }}
+                {{ $symposiums->links() }}
             </div>
         </div>
     </div>
