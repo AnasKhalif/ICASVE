@@ -67,4 +67,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/test-404', function () {
+    abort(404);
+});
+
 require __DIR__ . '/auth.php';
