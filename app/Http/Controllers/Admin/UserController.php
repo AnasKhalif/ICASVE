@@ -77,7 +77,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('participants.detail', ['user' => User::findOrFail($id)]);
+        
     }
 
     /**

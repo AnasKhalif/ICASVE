@@ -72,4 +72,9 @@ class User extends Authenticatable  implements LaratrustUser
     {
         return $this->hasMany(FullPaperReview::class, 'reviewer_id');
     }
+
+    public function filePayment()
+    {
+        return $this->hasOne(FilePayment::class); 
+    }
 }

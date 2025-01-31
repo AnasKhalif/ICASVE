@@ -48,6 +48,8 @@
                                             <button type="submit" class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
+                                        <a href="{{ route('admin.participant.show', $user->id) }}"
+                                            class="btn btn-sm btn-info">Detail</a>
                                     </td>
                                 </tr>
                             @empty

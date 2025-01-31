@@ -9,6 +9,7 @@ use App\Http\Controllers\AbstractController;
 use App\Http\Controllers\Admin\SummaryController;
 use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\Reviewer\SummaryReviewerController;
+use App\Http\Controllers\FilePaymentController;
 use App\Http\Controllers\Reviewer\EditorController;
 use App\Http\Controllers\Reviewer\ReviewController;
 
@@ -50,7 +51,15 @@ Route::middleware('auth')->group(function () {
     Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
     Route::get('create/{abstractId}', [FullPaperController::class, 'create'])->name('fullpapers.create');
     Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
+
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('filepayments/{userId}', [FilePaymentController::class, 'create'])->name('filepayments.create');
+    Route::post('filepayments/{userId}', [FilePaymentController::class, 'store'])->name('filepayments.store');
+});
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
