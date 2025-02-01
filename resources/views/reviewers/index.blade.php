@@ -6,7 +6,10 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Reviewers</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Reviewers</h4>
+                    <a href="{{ route('admin.reviewer.create') }}" class="btn btn-sm btn-success">Add Reviewers</a>
+                </div>
                 <p class="card-description">
                     List of Reviewers with roles
                 </p>
