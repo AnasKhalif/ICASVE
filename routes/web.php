@@ -24,4 +24,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', [SpeakerController::class, 'index']);
 
+Route::get('/', [Conferen::class, 'index']);
 require __DIR__ . '/auth.php';
