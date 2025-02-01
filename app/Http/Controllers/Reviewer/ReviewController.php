@@ -23,7 +23,12 @@ class ReviewController extends Controller
 
     public function reviewCompleted()
     {
-        $abstracts = AbstractModel::where('status', 'accepted')->get();
+        $reviewerId = auth()->id();
+        $abstracts = AbstractModel::whereHas('abstractReviews', function ($query) use ($reviewerId) {
+            $query->where('reviewer_id', $reviewerId);
+        })
+            ->where('status', 'accepted')
+            ->get();
 
         return view('reviewer.reviewCompleted', compact('abstracts'));
     }

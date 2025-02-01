@@ -129,7 +129,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('reviewer.review-fullpaper.index') }}">
                     <span class="menu-title">Review completed</span>
                 </a>
             </li>
@@ -234,7 +234,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('reviewer.review-fullpaper.review-completed') }}">
                     <span class="menu-title">Reviewed completed</span>
                 </a>
             </li>

@@ -22,6 +22,19 @@ class ReviewFullPaperController extends Controller
         return view('reviewer.fullpaperIndex', compact('fullPapers'));
     }
 
+    public function reviewCompleted()
+    {
+        $reviewerId = auth()->id();
+
+        $fullPapers = FullPaper::whereHas('fullPaperReviews', function ($query) use ($reviewerId) {
+            $query->where('reviewer_id', $reviewerId);
+        })
+            ->where('status', 'accepted')
+            ->get();
+
+        return view('reviewer.fullpaperCompleted', compact('fullPapers'));
+    }
+
 
     public function showReviewForm($fullpaperId)
     {
