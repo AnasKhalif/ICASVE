@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConferenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpeakerController;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +25,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', [SpeakerController::class, 'index']);
 
-Route::get('/', [Conferen::class, 'index']);
+Route::get('/', [ConferenceController::class, 'index']);
 require __DIR__ . '/auth.php';
