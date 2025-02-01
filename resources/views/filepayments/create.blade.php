@@ -41,7 +41,7 @@
                 <i class="fas fa-file-upload mr-2"></i>Upload Payment
             </h4>
             
-            <form action="{{ route('filepayments.store', ['userId' => $users->id]) }}" 
+            <form action="{{ route('filepayments.store') }}" 
                   method="POST" 
                   enctype="multipart/form-data">
                 @csrf
@@ -55,11 +55,10 @@
                                required>
                         <label class="custom-file-label" for="file">Choose file</label>
                     </div>
-                    
                 </div>
 
                 <small class="form-text text-muted mt-2">
-                    Accepted formats: JPG, JPEG, PNG, PDF
+                    Accepted formats: JPG, JPEG, PNG, PDF | Max size: 2MB
                 </small>
 
                 <div class="input-group-append mt-3">
@@ -67,8 +66,6 @@
                         <i class="fas fa-upload mr-1"></i> Upload
                     </button>
                 </div>
-
-                
 
                 @error('file')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -79,8 +76,6 @@
                         {{ session('success') }}
                     </div>
                 @endif
-
-                
                 
             </form>
         </div>

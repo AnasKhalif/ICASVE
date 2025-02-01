@@ -250,7 +250,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('filepayments.create', ['userId' => Auth::id()]) }}">
+                <a class="nav-link" href="{{ route('filepayments.create') }}">
                     <i class="icon-layout menu-icon"></i>
                     <span class="menu-title">Payment</span>
                 </a>
