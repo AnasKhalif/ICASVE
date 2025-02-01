@@ -14,9 +14,23 @@ class ReviewController extends Controller
         $reviewerId = auth()->id();
         $abstracts = AbstractModel::whereHas('abstractReviews', function ($query) use ($reviewerId) {
             $query->where('reviewer_id', $reviewerId);
-        })->get();
+        })
+            ->where('status', 'under review')
+            ->get();
 
         return view('reviewer.index', compact('abstracts'));
+    }
+
+    public function reviewCompleted()
+    {
+        $reviewerId = auth()->id();
+        $abstracts = AbstractModel::whereHas('abstractReviews', function ($query) use ($reviewerId) {
+            $query->where('reviewer_id', $reviewerId);
+        })
+            ->where('status', 'accepted')
+            ->get();
+
+        return view('reviewer.reviewCompleted', compact('abstracts'));
     }
 
     public function showReviewForm($abstractId)

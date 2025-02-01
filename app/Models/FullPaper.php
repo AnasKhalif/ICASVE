@@ -13,11 +13,21 @@ class FullPaper extends Model
 
     public function abstract()
     {
-        return $this->hasOne(FullPaper::class, 'abstract_id');
+        return $this->belongsTo(AbstractModel::class, 'abstract_id');
     }
 
     public function fullPaperReviews()
     {
         return $this->hasMany(FullPaperReview::class);
+    }
+
+    public function reviewers()
+    {
+        return $this->belongsToMany(User::class, 'full_paper_reviews', 'full_paper_id', 'reviewer_id');
+    }
+
+    public function symposium()
+    {
+        return $this->belongsTo(Symposium::class);
     }
 }

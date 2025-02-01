@@ -24,12 +24,12 @@
             <div class="container d-flex justify-content-center align-items-center">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link active text-uppercase fw-bold text-danger text-center" aria-current="page"
-                            href="#">Registration</a>
+                        <a class="nav-link text-uppercase fw-bold text-center text-black" aria-current="page"
+                            href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-uppercase fw-bold text-center" style="color: gray"
-                            href="login.html">Login</a>
+                        <a class="nav-link text-uppercase fw-bold text-center text-black" style="color: gray"
+                            href="{{ route('register') }}">Register</a>
                     </li>
                 </ul>
             </div>

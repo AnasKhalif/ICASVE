@@ -11,8 +11,40 @@ class EditorController extends Controller
 {
     public function index()
     {
-        $abstracts = AbstractModel::paginate(10);
+        $abstracts = AbstractModel::with('abstractReviews.reviewer')->paginate(10);
         return view('editor.index', compact('abstracts'));
+    }
+
+    public function noReviewer()
+    {
+        $abstracts = AbstractModel::doesntHave('abstractReviews')
+            ->orWhereHas('abstractReviews', function ($query) {
+                $query->whereNull('comment');
+            })
+            ->paginate(10);
+
+        return view('editor.noReviewer', compact('abstracts'));
+    }
+
+    public function noDecision()
+    {
+        $abstracts = AbstractModel::with('abstractReviews.reviewer')
+            ->where('status', 'under review')
+            ->whereHas('abstractReviews', function ($query) {
+                $query->whereNotNull('comment');
+            })
+            ->paginate(10);
+
+        return view('editor.noDecision', compact('abstracts'));
+    }
+
+    public function withDecision()
+    {
+        $abstracts = AbstractModel::with('abstractReviews.reviewer')
+            ->where('status', 'accepted')
+            ->paginate(10);
+
+        return view('editor.withDecision', compact('abstracts'));
     }
 
     public function showAssignReviewer($abstractId)
