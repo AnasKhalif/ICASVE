@@ -36,82 +36,42 @@
     <!-- Keynote Section -->
     <section id="hero-speakers" style="background-color: #f9f9f9; padding:40px 20px; margin-bottom: 0; height: 100vh;">
         <x-section_title title="Keynote Speakers"></x-section_title>
-        <div class="container-keynotes">
-            <x-card></x-card>
-            <x-card></x-card>
-            <x-card></x-card>
+        <div class="container content-speakers">
+            <h2>Keynote Speakers</h2>
+            <div class="speakers">
+                @foreach ($speakers as $speaker)
+                <div class="speaker">
+                    <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
+                    <div class="info">
+                        <div class="name">{{ $speaker['name'] }}</div>
+                        <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                    </div>
+                </div>
+            @endforeach            
+            </div>
         </div>
+        {{-- <div class="container-keynotes">
+            <x-card></x-card>
+            <x-card></x-card>
+            <x-card></x-card>
+        </div>  --}}
     </section>
 
     <!-- Invited  Section -->
     <section id="hero-invited" style="padding:40px 20px; margin-top:0; background-color: #f9f9f9;">
         <x-section_title title="Invited Speakers"></x-section_title>
-        <div class="container-keynotes">
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/speaker1.jpg" alt="Speaker 1">
+        <div class="container content-speakers">
+            <h2>Invited Speakers</h2>
+            <div class="speakers">
+                @foreach ($speakers as $speaker)
+                <div class="speaker">
+                    <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
+                    <div class="info">
+                        <div class="name">{{ $speaker['name'] }}</div>
+                        <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Ilham A. Habibie, Dr.‐Ing., MBA</h5>
-                    <p class="card-text">Jabatan</p>
-                    <p class="card-text">Asal Institusi</p>
-                </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/ProfRamayah.jpg" alt="Speaker 2">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Prof. Ramayah T.</h5>
-                    <p class="card-text">Professor of Technology Management</p>
-                    <p class="card-text">Universiti Sains Malaysia (USM)</p>
-                </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/ProfMuhammadAshfaq.jpg" alt="Speaker 3">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Prof. Muhammad Asfaq</h5>
-                    <p class="card-text">Professor of Business Administration (Finance & Accounting)</p>
-                    <p class="card-text">International University of Applied Sciences</p>
-                </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/TalebRifai.jpeg" alt="Speaker 4">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">H.E.Dr. Taleb Rifai</h5>
-                    <p class="card-text">Former Secretary General</p>
-                    <p class="card-text">UN World Tourism Organization (UNWTO)</p>
-                </div>
-            </div>
-            <!-- Card 5 -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/ProfEkoGanis.jpg" class="card-img-top" alt="Speaker 3">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Prof. Eko Ganis Sukoharsono, SE., M.Com.Hons., Ph.D.</h5>
-                    <p class="card-text">Professor of Sustainability Accounting and Head of Doctorate Program
-                    </p>
-                    <p class="card-text">Universitas Brawijaya</p>
-                </div>
-            </div>
-            <!-- Card 6 -->
-            <div class="card">
-                <div class="card-img-wrapper">
-                    <img src="images/speakers/XiaoQin.png" class="card-img-top" alt="Speaker 3">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Xiao Qin, PhD</h5>
-                    <p class="card-text">Lecturer in Design and Interior Architecture</p>
-                    <p class="card-text">Shanghai University</p>
-                </div>
+            @endforeach            
             </div>
         </div>
     </section>
