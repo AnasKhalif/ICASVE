@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\FilePayment;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FilePaymentController extends Controller
 {
     public function create()
     {
         $users = Auth::user();
-        return view('filepayments.create', compact('users'));
+        $existingPayment = FilePayment::where('user_id', $users->id)->first();
+        return view('filepayments.create', compact('users', 'existingPayment'));
     }
 
     public function store(Request $request) 
@@ -26,14 +28,41 @@ class FilePaymentController extends Controller
         ]);
 
         $user = Auth::user();
-        $filePath = $request->file('file')->store('payments', 'public');
+        $file = $request->file('file');
+        $originalFilename = $file->getClientOriginalName();
 
-        FilePayment::create([
-            'user_id' => $user->id,
-            'file_path' => $filePath,
-        ]);
+        // Cek apakah user sudah punya file payment
+        $existingPayment = FilePayment::where('user_id', $user->id)->first();
+
+        if ($existingPayment) {
+            // Hapus file lama
+            Storage::disk('public')->delete($existingPayment->file_path);
+            
+            // Simpan file baru
+            $filePath = $file->store('payments', 'public');
+            
+            // Update record yang ada
+            $existingPayment->update([
+                'file_path' => $filePath,
+                'original_filename' => $originalFilename
+            ]);
+
+            $message = 'File pembayaran berhasil diperbarui.';
+        } else {
+            // Simpan file baru
+            $filePath = $file->store('payments', 'public');
+            
+            // Buat record baru
+            FilePayment::create([
+                'user_id' => $user->id,
+                'file_path' => $filePath,
+                'original_filename' => $originalFilename
+            ]);
+
+            $message = 'File pembayaran berhasil diunggah.';
+        }
 
         return redirect()->route('filepayments.create')
-            ->with('success', 'File payment has been uploaded successfully.');
+            ->with('success', $message);
     }
 }

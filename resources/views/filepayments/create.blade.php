@@ -41,6 +41,15 @@
                 <i class="fas fa-file-upload mr-2"></i>Upload Payment
             </h4>
             
+            @if($existingPayment)
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    File yang sudah diunggah: {{ $existingPayment->original_filename }}
+                    <br>
+                    <small>Mengunggah file baru akan menggantikan file yang sudah ada.</small>
+                </div>
+            @endif
+
             <form action="{{ route('filepayments.store') }}" 
                   method="POST" 
                   enctype="multipart/form-data">
@@ -53,33 +62,38 @@
                                name="file" 
                                id="file"
                                required>
-                        <label class="custom-file-label" for="file">Choose file</label>
+                        <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
                     </div>
                 </div>
-
+            
                 <small class="form-text text-muted mt-2">
                     Accepted formats: JPG, JPEG, PNG, PDF | Max size: 2MB
                 </small>
-
+            
                 <div class="input-group-append mt-3">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-upload mr-1"></i> Upload
+                        <i class="fas fa-upload mr-1"></i> 
+                        {{ $existingPayment ? 'Update File' : 'Upload File' }}
                     </button>
                 </div>
-
+            
                 @error('file')
                     <div class="invalid-feedback d-block">{{ $message }}</div>
                 @enderror
-
-                  @if (session('success'))
+            
+                @if (session('success'))
                     <div class="alert alert-success mt-3">
                         {{ session('success') }}
                     </div>
                 @endif
-                
             </form>
+         <script>
+             document.getElementById('file').addEventListener('change', function() {
+             var fileName = this.files[0].name;
+             document.getElementById('fileLabel').innerText = fileName;
+         });
+         </script>
         </div>
     </div>
 </div>
-
 @endsection
