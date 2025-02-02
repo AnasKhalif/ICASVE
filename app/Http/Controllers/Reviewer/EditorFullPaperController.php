@@ -71,10 +71,17 @@ class EditorFullPaperController extends Controller
     {
         $fullpaper = FullPaper::findOrFail($fullpaperId);
 
-        $fullpaper->reviewers()->attach($request->reviewer_id);
+        $existingReview = $fullpaper->reviewers()->wherePivot('full_paper_id', $fullpaperId)->first();
 
-        return redirect()->route('reviewer.editor-fullpaper.index')->with('success', 'Reviewer assigned and full paper status updated to under review');
+        if ($existingReview) {
+            $fullpaper->reviewers()->updateExistingPivot($existingReview->id, ['reviewer_id' => $request->reviewer_id]);
+        } else {
+            $fullpaper->reviewers()->attach($request->reviewer_id);
+        }
+
+        return redirect()->route('reviewer.editor-fullpaper.index')->with('success', 'Reviewer berhasil diperbarui.');
     }
+
 
     public function showEditStatus($fullpaperId)
     {

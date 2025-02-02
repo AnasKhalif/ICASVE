@@ -31,7 +31,7 @@ Route::name('reviewer.')
     ->middleware(['auth', 'role:reviewer|chief-editor|editor'])
     ->group(function () {
         Route::get('summary', [SummaryReviewerController::class, 'index'])->name('summary');
-        Route::get('editor', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('editor-allabstract', [EditorController::class, 'index'])->name('editor.index');
 
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
@@ -49,7 +49,7 @@ Route::name('reviewer.')
         Route::get('/review-abstract/{abstractId}', [ReviewController::class, 'showReviewForm'])->name('review.showReviewForm');
         Route::post('/review-abstract/{abstractId}', [ReviewController::class, 'storeReview'])->name('review.storeReview');
 
-        Route::get('editor-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('editor-all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
 
         Route::get('/editor-fullpaper/no-reviewer', [EditorFullPaperController::class, 'noReviewer'])->name('editor-fullpaper.noReviewer');
         Route::get('/editor-fullpaper/no-decision', [EditorFullPaperController::class, 'noDecision'])->name('editor-fullpaper.noDecision');
