@@ -27,7 +27,8 @@
 
 /* Navbar Styles */
 .navbar {
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease,
+        color 0.3s ease;
     height: 80px;
     font-size: 14px;
 }
@@ -63,7 +64,8 @@
     margin-left: 2.5rem;
 }
 
-.btn-regist, .btn-login {
+.btn-regist,
+.btn-login {
     font-weight: semibold;
     padding: 5px 20px;
     border-radius: 5px;
@@ -123,7 +125,12 @@ header {
     bottom: -14px;
     width: 110px;
     height: 6px;
-    background: linear-gradient(to right, transparent, rgba(15, 83, 15, 0.76), transparent);
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(15, 83, 15, 0.76),
+        transparent
+    );
     border-radius: 5px;
     transition: 0.3s ease-in-out;
 }
@@ -165,7 +172,8 @@ header {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: url('../images/background/Lab-Vokasi.jpg') no-repeat center center/cover;
+    background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
+        center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,7 +202,7 @@ header {
 .text-style {
     font-size: 40px;
     font-weight: 900;
-    color: #f4a500;
+    color: #EDAA2C;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .superscript {
@@ -208,7 +216,7 @@ header {
 }
 .btn-register {
     display: inline-block;
-    background-color: #f4a500;
+    background-color: #EDAA2C;
     color: white;
     padding: 12px 24px;
     font-size: 18px;
@@ -281,7 +289,7 @@ header {
         line-height: 1.4rem;
         margin-bottom: 1.5rem;
     }
-    
+
     #hero-title {
         font-size: 1.6em;
         line-height: 1.8rem;
@@ -393,19 +401,19 @@ header {
     border-radius: 10px;
 }
 
-.content-about span h3{
-    color: #f4a500;
+.content-about span h3 {
+    color: #EDAA2C;
     font-size: 18px;
     font-weight: 500;
     line-height: 1.5;
 }
-.content-about span h2{
+.content-about span h2 {
     color: #102477;
     font-size: 44px;
     font-weight: 900;
     line-height: 1;
 }
-.content-about span p{
+.content-about span p {
     color: #4d4d4d;
     font-size: 16px;
     font-weight: 400;
@@ -438,7 +446,7 @@ header {
 
 .content-speakers h2 {
     color: #122677;
-    font-weight:800;
+    font-weight: 800;
     margin-bottom: 1rem;
 }
 .speakers {
@@ -457,7 +465,7 @@ header {
     height: 10rem;
     border-radius: 50%;
     margin-right: 15px;
-    border: 6px solid #f4b300;
+    border: 6px solid #EAA02A;
     object-fit: cover;
 }
 
@@ -566,7 +574,8 @@ header {
     position: relative;
     width: 100%;
     height: 60vh;
-    background: url('../images/background/Lab-Vokasi.jpg') no-repeat center center/cover;
+    background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
+        center/cover;
 }
 
 .content-topics::before {
@@ -594,7 +603,7 @@ header {
 .list-topics h2 {
     font-size: 24px;
     margin-bottom: 15px;
-    font-weight:900;
+    font-weight: 900;
 }
 .list-topics ul {
     line-height: 1.5;
@@ -604,46 +613,56 @@ header {
 }
 
 /* Important Dates Section Styles */
-#important-dates {
-    background-color: #f9f9f9;
+.content-timeline h3{
+    text-align: left;
+    color: #FFBF0F;
+    font-weight: 900;
+    font-size: 24px;
+    font-style: italic;
 }
 
-.important-dates {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.content-timeline h2{
+    text-align: left;
+    margin-bottom: 20px;
+    color: #1f3a6f;
+    font-weight: 900;
+    font-size: 28px;
 }
 
-.important-dates img {
-    width: 40%;
-    padding: 1rem;
+#important-dates .table {
+    width: 100%;
+    border: 1px solid #dee2e6;
     border-radius: 10px;
-    padding: 40px auto;
+    background-color: #f8f9fa;
+    table-layout: fixed;
 }
 
-.dates ul {
-    list-style-type: none;
-    padding: 0;
-    font-size: 18px;
-    color: #363636;
+#important-dates .table th, .important-dates .table td {
+    text-align: left;
+    padding: 20px;
 }
 
-.dates ul li {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    background-color: #fff;
-    border-left: 5px solid #1e8d2d;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+#important-dates .table th {
+    background-color: #2D4B81;
+    color: white;
 }
 
-.dates ul li span {
+#important-dates .table td {
+    background-color: #e9ecef;
+    padding: 20px;
+}
+#important-dates .table tbody tr:nth-child(odd) td {
+    background-color: #f1f1f1;
+}
+
+#important-dates .table tbody tr:nth-child(even) td {
+    background-color: #e9ecef;
+}
+
+#important-dates .table thead th {
     font-weight: bold;
-    color: #1e8d2d;
 }
+
 
 /* Footer Section Styles */
 #footer-section {

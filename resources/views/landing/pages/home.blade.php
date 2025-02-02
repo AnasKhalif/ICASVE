@@ -39,7 +39,7 @@
         <div class="container content-speakers">
             <h2>Keynote Speakers</h2>
             <div class="speakers">
-                @foreach ($speakers as $speaker)
+                {{-- @foreach ($speakers as $speaker)
                 <div class="speaker">
                     <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
                     <div class="info">
@@ -47,7 +47,7 @@
                         <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
                     </div>
                 </div>
-            @endforeach            
+            @endforeach             --}}
             </div>
         </div>
         {{-- <div class="container-keynotes">
@@ -99,7 +99,7 @@
     <!-- -	Important Dates Section -->
     <section id="important-dates">
         <x-section_title title="Important Dates"></x-section_title>
-        <div class="important-dates">
+        {{-- <div class="important-dates">
             <img src="images/background/poster.jpg" alt="Important Dates Poster">
             <div class="dates">
                 <ul>
@@ -113,6 +113,27 @@
                     <li><span class="speaker">Conference Day:</span class='date'> July 17, 2024</li>
                 </ul>
             </div>
+        </div> --}}
+
+        <div class="container content-timeline">
+            <h3>Deadline Dates</h3>
+            <h2>ICASVE Conference Timeline</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($timeline as $item)
+                        <tr>
+                            <td>{{ $item['name'] }}</td>
+                            <td>{{ $item['date'] }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </section>
 
