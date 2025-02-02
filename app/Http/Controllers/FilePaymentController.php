@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FilePayment;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,7 +28,6 @@ class FilePaymentController extends Controller
 
         $user = Auth::user();
         $file = $request->file('file');
-        $originalFilename = $file->getClientOriginalName();
 
         // Cek apakah user sudah punya file payment
         $existingPayment = FilePayment::where('user_id', $user->id)->first();
@@ -43,8 +41,7 @@ class FilePaymentController extends Controller
             
             // Update record yang ada
             $existingPayment->update([
-                'file_path' => $filePath,
-                'original_filename' => $originalFilename
+                'file_path' => $filePath
             ]);
 
             $message = 'File pembayaran berhasil diperbarui.';
@@ -55,8 +52,7 @@ class FilePaymentController extends Controller
             // Buat record baru
             FilePayment::create([
                 'user_id' => $user->id,
-                'file_path' => $filePath,
-                'original_filename' => $originalFilename
+                'file_path' => $filePath
             ]);
 
             $message = 'File pembayaran berhasil diunggah.';
