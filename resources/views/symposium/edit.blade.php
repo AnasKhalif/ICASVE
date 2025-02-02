@@ -7,13 +7,13 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Symposium</h4>
-                <form class="forms-sample" action="{{ route('admin.symposium.update', $user->id) }}" method="POST">
+                <form class="forms-sample" action="{{ route('admin.symposium.update', $symposium->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            name="name" value="{{ old('name', $user->name) }}" placeholder="Name" required>
+                            name="name" value="{{ old('name', $symposium->name) }}" placeholder="Name" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -22,8 +22,8 @@
                     <div class="form-group">
                         <label for="abbreviation">Abbreviation</label>
                         <input type="text" class="form-control @error('abbreviation') is-invalid @enderror"
-                            id="abbreviation" name="abbreviation" value="{{ old('abbreviation', $user->institution) }}"
-                            placeholder="Abbreviation" required>
+                            id="abbreviation" name="abbreviation"
+                            value="{{ old('abbreviation', $symposium->abbreviation) }}" placeholder="Abbreviation" required>
                         @error('abbreviation')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
