@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
     Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
 });

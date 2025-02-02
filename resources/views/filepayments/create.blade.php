@@ -44,9 +44,8 @@
             @if($existingPayment)
                 <div class="alert alert-info">
                     <i class="fas fa-info-circle mr-2"></i>
-                    File yang sudah diunggah: {{ $existingPayment->original_filename }}
+                File yang berhasil diunggah: {{ $existingPayment->original_filename }}
                     <br>
-                    <small>Mengunggah file baru akan menggantikan file yang sudah ada.</small>
                 </div>
             @endif
 
@@ -70,11 +69,19 @@
                     Accepted formats: JPG, JPEG, PNG, PDF | Max size: 2MB
                 </small>
             
-                <div class="input-group-append mt-3">
-                    <button type="submit" class="btn btn-primary">
+                <div class="input-group-append mt-3 ">
+                    <button type="submit" class="btn btn-primary mr-3">
                         <i class="fas fa-upload mr-1"></i> 
                         {{ $existingPayment ? 'Update File' : 'Upload File' }}
                     </button>
+                    @if($existingPayment && $existingPayment->file_path)
+                        <a href="{{ Storage::url($existingPayment->file_path) }}" 
+                           class="btn btn-light"
+                           target="_blank">
+                           <i class="fas fa-file mr-1"></i>
+                           View File
+                        </a>
+                    @endif
                 </div>
             
                 @error('file')
