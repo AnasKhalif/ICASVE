@@ -8,6 +8,12 @@ class LandingPageController extends Controller
 {
     public function index()
     {
+        // Data dari KeynotesController
+        $keynotes  = [
+            ['name' => 'Tatang Muttaqin, S.Sos., M.Ed., Ph.D', 'university' => 'Plt. Direktur Jenderal Pendidikan Vokasi Kementerian Pendidikan, Kebudayaan, Riset dan Teknologi
+', 'country' => 'Malaysia', 'image' => 'tatangMutakin.jpg'],
+        ];
+
         // Data dari SpeakerController
         $speakers = [
             ['name' => 'Prof. Ramayah T', 'university' => 'Universiti Sains Malaysia', 'country' => 'Malaysia', 'image' => 'ProfRamayah.jpg'],
@@ -28,6 +34,6 @@ class LandingPageController extends Controller
             ['name' => 'Conference Date', 'date' => '23 October 2024'],
         ];
 
-        return view('landing.pages.home', compact('speakers', 'timeline'));
+        return view('landing.pages.home', compact('keynotes', 'speakers', 'timeline'));
     }
 }

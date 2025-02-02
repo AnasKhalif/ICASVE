@@ -39,15 +39,15 @@
         <div class="container content-speakers">
             <h2>Keynote Speakers</h2>
             <div class="speakers">
-                {{-- @foreach ($speakers as $speaker)
+                @foreach ($keynotes as $keynote)
                 <div class="speaker">
-                    <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
+                    <img src="{{ asset('images/speakers/' . $keynote['image']) }}" alt="{{ $keynote['name'] }}">
                     <div class="info">
-                        <div class="name">{{ $speaker['name'] }}</div>
-                        <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                        <div class="name">{{ $keynote['name'] }}</div>
+                        <div class="university">{{ $keynote['university'] }}<br>{{ $keynote['country'] }}</div>
                     </div>
                 </div>
-            @endforeach             --}}
+            @endforeach            
             </div>
         </div>
         {{-- <div class="container-keynotes">
