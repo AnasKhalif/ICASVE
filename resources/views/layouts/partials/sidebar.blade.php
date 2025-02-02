@@ -263,7 +263,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#ui-basic">
+                <a class="nav-link" href="{{ route('filepayments.create') }}">
                     <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
                 </a>

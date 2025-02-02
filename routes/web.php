@@ -13,6 +13,7 @@ use App\Http\Controllers\Reviewer\EditorController;
 use App\Http\Controllers\Reviewer\ReviewController;
 use App\Http\Controllers\Reviewer\EditorFullPaperController;
 use App\Http\Controllers\Reviewer\ReviewFullPaperController;
+use App\Http\Controllers\FilePaymentController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -73,6 +74,11 @@ Route::name('reviewer.')
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
+    Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
+});
 
 Route::middleware('auth')->group(function () {
     Route::resource('abstracts', AbstractController::class);
