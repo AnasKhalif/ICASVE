@@ -129,8 +129,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('reviewer.review-fullpaper.index') }}">
-                    <span class="menu-title">Review completed</span>
+                <a class="nav-link" href="{{ route('reviewer.review-fullpaper.review-completed') }}">
+                    <span class="menu-title">Reviewed completed</span>
                 </a>
             </li>
 
@@ -170,17 +170,22 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="menu-title">Under review</span>
+                <a class="nav-link" href="{{ route('reviewer.editor-fullpaper.noReviewer') }}">
+                    <span class="menu-title">No review</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('reviewer.editor-fullpaper.revision') }}">
                     <span class="menu-title">Revision req</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('reviewer.editor-fullpaper.noDecision') }}">
+                    <span class="menu-title">No Decision</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('reviewer.editor-fullpaper.withDecision') }}">
                     <span class="menu-title">With Decision</span>
                 </a>
             </li>

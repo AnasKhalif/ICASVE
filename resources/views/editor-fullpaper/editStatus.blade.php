@@ -17,6 +17,8 @@
                                 Review</option>
                             <option value="accepted" {{ $fullpaper->status == 'accepted' ? 'selected' : '' }}>Accepted
                             </option>
+                            <option value="revision" {{ $fullpaper->status == 'revision' ? 'selected' : '' }}>Revision
+                            </option>
                             <option value="rejected" {{ $fullpaper->status == 'rejected' ? 'selected' : '' }}>Rejected
                             </option>
                         </select>

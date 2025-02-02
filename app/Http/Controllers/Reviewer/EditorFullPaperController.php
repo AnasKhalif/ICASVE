@@ -16,7 +16,46 @@ class EditorFullPaperController extends Controller
         return view('editor-fullpaper.index', compact('fullpapers'));
     }
 
+    public function noReviewer()
+    {
+        $fullpapers = FullPaper::doesntHave('fullPaperReviews')
+            ->orWhereHas('fullPaperReviews', function ($query) {
+                $query->whereNull('comment');
+            })
+            ->paginate(10);
 
+        return view('editor-fullpaper.noReviewer', compact('fullpapers'));
+    }
+
+    public function noDecision()
+    {
+        $fullpapers = FullPaper::with(['fullPaperReviews.reviewer', 'abstract.symposium'])
+            ->where('status', 'under review')
+            ->whereHas('fullPaperReviews', function ($query) {
+                $query->whereNotNull('comment');
+            })
+            ->paginate(10);
+
+        return view('editor-fullpaper.noDecision', compact('fullpapers'));
+    }
+
+    public function withDecision()
+    {
+        $fullpapers = FullPaper::with(['fullPaperReviews.reviewer', 'abstract.symposium'])
+            ->where('status', 'accepted')
+            ->paginate(10);
+
+        return view('editor-fullpaper.withDecision', compact('fullpapers'));
+    }
+
+    public function revision()
+    {
+        $fullpapers = FullPaper::with(['fullPaperReviews.reviewer', 'abstract.symposium'])
+            ->where('status', 'revision')
+            ->paginate(10);
+
+        return view('editor-fullpaper.revision', compact('fullpapers'));
+    }
 
     public function showAssignReviewer($fullpaperId)
     {
@@ -48,7 +87,7 @@ class EditorFullPaperController extends Controller
         $fullpaper = FullPaper::findOrFail($fullpaperId);
 
         $request->validate([
-            'status' => 'required|string|in:open,under review,accepted,rejected'
+            'status' => 'required|string|in:open,under review,accepted,revision,rejected'
         ]);
 
         $fullpaper->status = $request->status;
