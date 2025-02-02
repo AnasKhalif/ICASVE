@@ -87,7 +87,7 @@ class EditorFullPaperController extends Controller
         $fullpaper = FullPaper::findOrFail($fullpaperId);
 
         $request->validate([
-            'status' => 'required|string|in:open,under review,accepted,rejected'
+            'status' => 'required|string|in:open,under review,accepted,revision,rejected'
         ]);
 
         $fullpaper->status = $request->status;
