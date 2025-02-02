@@ -39,6 +39,8 @@
                                         @endforeach
                                     </td>
                                     <td>
+                                        <a href="{{ route('admin.participant.show', $user->id) }}"
+                                            class="btn btn-sm btn-info">Detail</a>
                                         <a href="{{ route('admin.participant.edit', $user->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                         <form action="{{ route('admin.participant.destroy', $user->id) }}" method="POST"
