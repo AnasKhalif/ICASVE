@@ -16,49 +16,66 @@ class FilePaymentController extends Controller
         return view('filepayments.create', compact('users', 'existingPayment'));
     }
 
-    public function store(Request $request) 
-    {
-        $request->validate([
-            'file' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
-        ], [
-            'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
-            'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',
-            'file.required' => 'File pembayaran harus diupload',
-        ]);
+    public function store(Request $request) {
+      $amount = $request->input('amount');
+      $amount = str_replace('.', '', $amount);
+      $amount = (int) $amount;
 
-        $user = Auth::user();
-        $file = $request->file('file');
+    $request->validate([
+        'file' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+        'amount' => 'nullable|numeric|min:0', 
+    ], [
+        'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
+        'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',
+        'amount.numeric' => 'Jumlah pembayaran harus berupa angka yang valid.',
+        'amount.min' => 'Jumlah pembayaran tidak boleh negatif',
+    ]);
 
-        // Cek apakah user sudah punya file payment
-        $existingPayment = FilePayment::where('user_id', $user->id)->first();
+    if (!$request->hasFile('file') && !$request->filled('amount')) {
+        return redirect()->back()
+            ->withErrors(['file' => 'Anda harus mengisi file atau jumlah pembayaran.'])
+            ->withInput();
+    }
 
-        if ($existingPayment) {
-            // Hapus file lama
+    $user = Auth::user();
+    $existingPayment = FilePayment::where('user_id', $user->id)->first();
+
+    if ($existingPayment) {
+        $updateData = [];
+
+        if ($request->hasFile('file')) {
             Storage::disk('public')->delete($existingPayment->file_path);
-            
-            // Simpan file baru
-            $filePath = $file->store('payments', 'public');
-            
-            // Update record yang ada
-            $existingPayment->update([
-                'file_path' => $filePath
-            ]);
-
-            $message = 'File pembayaran berhasil diperbarui.';
-        } else {
-            // Simpan file baru
-            $filePath = $file->store('payments', 'public');
-            
-            // Buat record baru
-            FilePayment::create([
-                'user_id' => $user->id,
-                'file_path' => $filePath
-            ]);
-
-            $message = 'File pembayaran berhasil diunggah.';
+            $filePath = $request->file('file')->store('payments', 'public');
+            $updateData['file_path'] = $filePath;
         }
 
-        return redirect()->route('filepayments.create')
-            ->with('success', $message);
+        if ($request->filled('amount')) {
+            $updateData['amount'] = $amount;
+        }
+
+        if (!empty($updateData)) {
+            $existingPayment->update($updateData);
+            $message = 'Data pembayaran berhasil diperbarui.';
+        } else {
+            $message = 'Tidak ada perubahan yang dilakukan.';
+        }
+    } else {
+        $data = ['user_id' => $user->id];
+
+        if ($request->hasFile('file')) {
+            $data['file_path'] = $request->file('file')->store('payments', 'public');
+        }
+
+        if ($request->filled('amount')) {
+            $data['amount'] = $amount; 
+        }
+
+        FilePayment::create($data);
+        $message = 'Data pembayaran berhasil disimpan.';
     }
+
+    return redirect()->route('filepayments.create')
+        ->with('success', $message);
+  }
 }
+
