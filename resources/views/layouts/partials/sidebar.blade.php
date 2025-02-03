@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="oral-distribution.html">
+                <a class="nav-link" href="{{ route('admin.oral.index') }}">
                     <i class="fa fa-folder menu-icon"></i>
                     <span class="menu-title">Oral Distribution</span>
                 </a>
