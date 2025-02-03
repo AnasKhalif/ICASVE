@@ -41,8 +41,7 @@
                                             @if ($abstract->fullPaper)
                                                 <a href="{{ asset('storage/' . $abstract->fullPaper->file_path) }}"
                                                     target="_blank" class="d-block mt-1">
-                                                    <i class="mdi mdi-file-download text-primary"
-                                                        style="font-size: 20px;"></i>
+                                                    <i class="fa fa-download text-primary fa-3x mt-2"></i>
                                                 </a>
                                             @endif
                                         @else

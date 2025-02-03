@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FilePayment;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class FilePaymentController extends Controller
 {
     public function create()
     {
         $users = Auth::user();
-        return view('filepayments.create', compact('users'));
+        $existingPayment = FilePayment::where('user_id', $users->id)->first();
+        return view('filepayments.create', compact('users', 'existingPayment'));
     }
     public function store(Request $request)
     {
@@ -24,12 +25,29 @@ class FilePaymentController extends Controller
             'file.required' => 'File pembayaran harus diupload',
         ]);
         $user = Auth::user();
-        $filePath = $request->file('file')->store('payments', 'public');
-        FilePayment::create([
-            'user_id' => $user->id,
-            'file_path' => $filePath,
-        ]);
+        $file = $request->file('file');
+
+        $existingPayment = FilePayment::where('user_id', $user->id)->first();
+        if ($existingPayment) {
+            Storage::disk('public')->delete($existingPayment->file_path);
+
+            $filePath = $file->store('payments', 'public');
+
+            $existingPayment->update([
+                'file_path' => $filePath,
+            ]);
+            $message = 'File pembayaran berhasil diperbarui.';
+        } else {
+            $filePath = $file->store('payments', 'public');
+
+            FilePayment::create([
+                'user_id' => $user->id,
+                'file_path' => $filePath,
+            ]);
+            $message = 'File pembayaran berhasil diunggah.';
+        }
+
         return redirect()->route('filepayments.create')
-            ->with('success', 'File payment has been uploaded successfully.');
+            ->with('success', $message);
     }
 }

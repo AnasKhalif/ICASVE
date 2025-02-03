@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="abstracts.html">
+                <a class="nav-link" href="{{ route('admin.abstract.index') }}">
                     <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Abstracts</span>
                 </a>

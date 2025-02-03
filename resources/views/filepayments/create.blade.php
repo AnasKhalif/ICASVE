@@ -39,17 +39,23 @@
                     <i class="fas fa-file-upload mr-2"></i>Upload Payment
                 </h4>
 
+                @if ($existingPayment)
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        File yang sudah diunggah: {{ $existingPayment->original_filename }}
+                        <br>
+                        <small>Mengunggah file baru akan menggantikan file yang sudah ada.</small>
+                    </div>
+                @endif
+
                 <form action="{{ route('filepayments.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="input-group">
                         <div class="custom-file">
-                            <label class="custom-file-label" for="file">Choose file</label>
+                            <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
                             <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
-                                name="file" id="file" value="{{ old('file') }}" required>
-                            @error('file')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                name="file" id="file" required>
                         </div>
 
                     </div>
@@ -59,8 +65,15 @@
                     </small>
                     <div class="input-group-append mt-3">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-upload mr-1"></i> Upload
+                            <i class="fas fa-upload mr-3"></i>
+                            {{ $existingPayment ? 'Update File' : 'Upload File' }}
                         </button>
+                        @if ($existingPayment && $existingPayment->file_path)
+                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
+                                <i class="fas fa-file mr-1"></i>
+                                View File
+                            </a>
+                        @endif
                     </div>
 
                     @error('file')
@@ -74,6 +87,13 @@
 
 
                 </form>
+
+                <script>
+                    document.getElementById('file').addEventListener('change', function() {
+                        var fileName = this.files[0].name;
+                        document.getElementById('fileLabel').innerText = fileName;
+                    });
+                </script>
             </div>
         </div>
     </div>
