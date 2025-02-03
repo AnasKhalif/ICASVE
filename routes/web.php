@@ -15,6 +15,7 @@ use App\Http\Controllers\Reviewer\EditorFullPaperController;
 use App\Http\Controllers\Reviewer\ReviewFullPaperController;
 use App\Http\Controllers\FilePaymentController;
 use App\Http\Controllers\Admin\AbstractsController;
+use App\Http\Controllers\Admin\OralController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -26,6 +27,7 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::resource('symposium', 'SymposiumController');
     Route::resource('abstract', 'AbstractsController');
     Route::get('summary', [SummaryController::class, 'index'])->name('summary');
+    Route::resource('oral', 'OralController');
 });
 
 Route::name('reviewer.')
