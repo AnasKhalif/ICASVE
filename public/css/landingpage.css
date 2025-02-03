@@ -30,7 +30,7 @@
     transition: background-color 0.3s ease, box-shadow 0.3s ease,
         color 0.3s ease;
     height: 80px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .navbar-transparent {
@@ -202,7 +202,7 @@ header {
 .text-style {
     font-size: 40px;
     font-weight: 900;
-    color: #EDAA2C;
+    color: #edaa2c;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .superscript {
@@ -216,7 +216,7 @@ header {
 }
 .btn-register {
     display: inline-block;
-    background-color: #EDAA2C;
+    background-color: #edaa2c;
     color: white;
     padding: 12px 24px;
     font-size: 18px;
@@ -366,16 +366,19 @@ header {
 #regist-section,
 #important-dates,
 #hero-speakers,
-#hero-invited {
+#hero-invited,
+#venue-section,
+#publications-section,
+#hosted-supported-section {
     /* position: relative; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 7em;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    margin-bottom: 4rem;
     /* padding-top: 4rem; */
     /* padding: 20px 40px; */
-    margin: 40px auto;
+    /* margin: 0 40px 7em; */
 }
 
 .title h2 {
@@ -393,6 +396,7 @@ header {
     text-align: start;
     padding: 0 5rem;
     gap: 5rem;
+    margin-top: 4rem;
 }
 
 .content-about img {
@@ -402,7 +406,7 @@ header {
 }
 
 .content-about span h3 {
-    color: #EDAA2C;
+    color: #edaa2c;
     font-size: 18px;
     font-weight: 500;
     line-height: 1.5;
@@ -444,8 +448,9 @@ header {
     }
 }
 
-.content-speakers h2 {
-    color: #122677;
+.content-speakers h2,
+.content-keynote h2 {
+    color: #0f1e5c;
     font-weight: 800;
     margin-bottom: 1rem;
 }
@@ -458,14 +463,14 @@ header {
     display: flex;
     align-items: center;
     width: 48%;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 .speaker img {
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
     margin-right: 15px;
-    border: 6px solid #EAA02A;
+    border: 6px solid #eaa02a;
     object-fit: cover;
 }
 
@@ -482,6 +487,13 @@ header {
     font-size: 20px;
     color: #666;
 }
+
+.hero-invited {
+    padding: 50px 20px;
+    margin-top: 0;
+    background-color: #f9f9f9;
+}
+
 @media (max-width: 600px) {
     .speaker {
         width: 100%;
@@ -573,7 +585,7 @@ header {
 .content-topics {
     position: relative;
     width: 100%;
-    height: 60vh;
+    height: 22rem;
     background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
         center/cover;
 }
@@ -613,15 +625,31 @@ header {
 }
 
 /* Important Dates Section Styles */
-.content-timeline h3{
+.content-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 2rem;
+}
+
+.content-detail img {
+    height: 100vh;
+    border-radius: 10px;
+}
+
+.content-timeline h3 {
     text-align: left;
-    color: #FFBF0F;
+    color: #ffbf0f;
     font-weight: 900;
     font-size: 24px;
     font-style: italic;
 }
 
-.content-timeline h2{
+.content-timeline h2 {
     text-align: left;
     margin-bottom: 20px;
     color: #1f3a6f;
@@ -629,40 +657,185 @@ header {
     font-size: 28px;
 }
 
-#important-dates .table {
+#important-dates .table-dates {
     width: 100%;
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
     background-color: #f8f9fa;
     table-layout: fixed;
+    border-radius: 7px;
+    overflow: hidden;
 }
 
-#important-dates .table th, .important-dates .table td {
+#important-dates thead {
+    border-radius: 10rem;
+}
+
+#important-dates .table-dates th,
+.important-dates .table-dates td {
     text-align: left;
     padding: 20px;
 }
 
-#important-dates .table th {
-    background-color: #2D4B81;
+#important-dates .table-dates th {
+    background-color: #2d4b81;
     color: white;
 }
 
-#important-dates .table td {
+#important-dates .table-dates td {
     background-color: #e9ecef;
     padding: 20px;
 }
-#important-dates .table tbody tr:nth-child(odd) td {
+#important-dates .table-dates tbody tr:nth-child(odd) td {
     background-color: #f1f1f1;
 }
 
-#important-dates .table tbody tr:nth-child(even) td {
+#important-dates .table-dates tbody tr:nth-child(even) td {
     background-color: #e9ecef;
 }
 
-#important-dates .table thead th {
+#important-dates .table-dates thead th {
     font-weight: bold;
 }
 
+/* Style Venue */
+#venue-section .title-venue {
+    color: #162668;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+}
+
+.content-venue {
+    display: flex;
+    gap: 2.3rem;
+    padding: 2.5rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.content-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.content-left img {
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 5 00px;
+}
+
+.content-left h3 {
+    color: #162668;
+    font-weight: 500;
+}
+
+.content-venue iframe {
+    width: 100%;
+}
+
+/* style publication */
+.content-publication {
+    background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
+        center/cover;
+    margin-top: 10rem;
+}
+
+.content-overlay {
+    background: #462c2c91;
+    padding: 2rem 0;
+}
+
+.content-jurnal {
+    text-align: left;
+}
+
+.logo-jurnal {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    background: #fff;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1.5rem;
+    border-radius: 1rem;
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.title {
+    color: #f4a623;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.logo-jurnal img {
+    width: 10rem;
+    height: auto;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+/* hosted and supported styles */
+.content-hosted{
+    width: 100%;
+    display: flex;
+    gap: 3rem;
+    justify-content: space-between;
+    margin: 5rem 0 10rem;
+}
+
+.hosted-logo{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 1rem;
+}
+
+.hosted-by{
+    margin-bottom: 2rem;
+}
+
+.sponsor-logo h4 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #202020;
+}
+
+.hosted-by h4, .co-hosted-by h4 {
+    text-align: left;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #202020;
+}
+
+.hb-logo img, .ds-logo img{
+    width: 11rem;
+    height: 8%;
+}
+
+.hb-logo {
+    display: flex;
+    gap: 1.5rem;
+    align-items: left;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.ds-logo {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.sponsor-logo{
+    width: 70%;
+}
 
 /* Footer Section Styles */
 #footer-section {

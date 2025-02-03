@@ -26,14 +26,24 @@ class LandingPageController extends Controller
 
         // Data dari ConferenceController
         $timeline = [
-            ['name' => 'Abstract Submission', 'date' => '15 August – 14 September 2024'],
-            ['name' => 'Abstract Acceptance', 'date' => 'One day after submission'],
-            ['name' => 'Payment Deadline', 'date' => '17 September 2024'],
-            ['name' => 'Full Paper Submission', 'date' => '16 – 30 September 2024'],
-            ['name' => 'Non-presenter Registration', 'date' => '15 October 2024'],
-            ['name' => 'Conference Date', 'date' => '23 October 2024'],
+            ['name' => 'Abstract Submission Deadline  ', 'date' => 'July 2, 2024'],
+            ['name' => 'Abstract Notification', 'date' => 'July 3, 2024'],
+            ['name' => 'Participant (non speaker) Registration Deadline', 'date' => 'July 10, 2024'],
+            ['name' => 'Payment Deadline', 'date' => 'July 10, 2024'],
+            ['name' => 'Full Paper Deadline', 'date' => 'July 12, 2024'],
+            ['name' => 'Conference Date', 'date' => 'July 17, 2024'],
         ];
 
-        return view('landing.pages.home', compact('keynotes', 'speakers', 'timeline'));
+        // Data dari PublicationController
+        $publicationJurnal = [
+            ['name' => 'Logo 1', 'src' => 'images/logo/logo-8.png'],
+            ['name' => 'Logo 2', 'src' => 'images/logo/logo-2.png'],
+            ['name' => 'Logo 3', 'src' => 'images/logo/logo-3.jpg'],
+            ['name' => 'Logo 4', 'src' => 'images/logo/logo-4.png'],
+            ['name' => 'Logo 5', 'src' => 'images/logo/logo-5.png'],
+            ['name' => 'Logo 6', 'src' => 'images/logo/logo-6.jpeg'],
+        ];
+
+        return view('landing.pages.home', compact('keynotes', 'speakers', 'timeline', 'publicationJurnal'));
     }
 }

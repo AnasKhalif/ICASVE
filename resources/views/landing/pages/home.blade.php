@@ -1,7 +1,7 @@
 @extends('layouts.landing')
 @section('title', 'Home')
 @section('content')
-    <section class="hero-img">
+    <section id="landing-page" class="hero-img">
         <div class="container content">
             <div class="text-style">
                 3<sup class="superscript">rd</sup> ICASVE 2024 - International Conference on Applied Science for Vocational
@@ -16,7 +16,7 @@
 
     <!-- About Section -->
     <section id="hero-about">
-        <x-section_title title="About ICASVE 2025"></x-section_title>
+        {{-- <x-section_title title="About ICASVE 2025"></x-section_title> --}}
         <div class="container content-about">
             <img src="{{ asset('images/background/Lab-Vokasi.jpg') }}" alt="logo" class="img-fluid">
             <span class="about-desc">
@@ -34,20 +34,20 @@
     </section>
 
     <!-- Keynote Section -->
-    <section id="hero-speakers" style="background-color: #f9f9f9; padding:40px 20px; margin-bottom: 0; height: 100vh;">
-        <x-section_title title="Keynote Speakers"></x-section_title>
-        <div class="container content-speakers">
+    <section id="hero-speakers">
+        {{-- <x-section_title title="Keynote Speakers"></x-section_title> --}}
+        <div class="container content-keynote">
             <h2>Keynote Speakers</h2>
             <div class="speakers">
                 @foreach ($keynotes as $keynote)
-                <div class="speaker">
-                    <img src="{{ asset('images/speakers/' . $keynote['image']) }}" alt="{{ $keynote['name'] }}">
-                    <div class="info">
-                        <div class="name">{{ $keynote['name'] }}</div>
-                        <div class="university">{{ $keynote['university'] }}<br>{{ $keynote['country'] }}</div>
+                    <div class="speaker">
+                        <img src="{{ asset('images/speakers/' . $keynote['image']) }}" alt="{{ $keynote['name'] }}">
+                        <div class="info">
+                            <div class="name">{{ $keynote['name'] }}</div>
+                            <div class="university">{{ $keynote['university'] }}<br>{{ $keynote['country'] }}</div>
+                        </div>
                     </div>
-                </div>
-            @endforeach            
+                @endforeach
             </div>
         </div>
         {{-- <div class="container-keynotes">
@@ -58,47 +58,46 @@
     </section>
 
     <!-- Invited  Section -->
-    <section id="hero-invited" style="padding:40px 20px; margin-top:0; background-color: #f9f9f9;">
-        <x-section_title title="Invited Speakers"></x-section_title>
+    <section id="hero-invited">
+        {{-- <x-section_title title="Invited Speakers"></x-section_title> --}}
         <div class="container content-speakers">
             <h2>Invited Speakers</h2>
             <div class="speakers">
                 @foreach ($speakers as $speaker)
-                <div class="speaker">
-                    <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
-                    <div class="info">
-                        <div class="name">{{ $speaker['name'] }}</div>
-                        <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                    <div class="speaker">
+                        <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
+                        <div class="info">
+                            <div class="name">{{ $speaker['name'] }}</div>
+                            <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                        </div>
                     </div>
-                </div>
-            @endforeach            
+                @endforeach
             </div>
         </div>
     </section>
 
-    <section id="hero-topics">
-        <x-section_title title="Topics"></x-section_title>
-        <div class="content-topics">
-            <div class="overlay">
-                <div class="container list-topics">
-                    <h2>CALL FOR PAPER</h2>
-                        <p>The topics include, but are not limited:</p>
-                        <ul>
-                            <li>Economic and Business</li>
-                            <li>Technological Engineering</li>
-                            <li>Design Innovation</li>
-                            <li>Governance and Public Administration</li>
-                            <li>Environment and Conservation</li>
-                            <li>Corporate Social Responsibility</li>
-                            <li>Tourism and Hospitality</li>
-                        </ul>
-                </div>
+    <section id="hero-topics" class="content-topics">
+        {{-- <x-section_title title="Topics"></x-section_title> --}}
+        <div class="overlay">
+            <div class="container list-topics">
+                <h2>CALL FOR PAPER</h2>
+                <p>The topics include, but are not limited:</p>
+                <ul>
+                    <li>Economic and Business</li>
+                    <li>Technological Engineering</li>
+                    <li>Design Innovation</li>
+                    <li>Governance and Public Administration</li>
+                    <li>Environment and Conservation</li>
+                    <li>Corporate Social Responsibility</li>
+                    <li>Tourism and Hospitality</li>
+                </ul>
             </div>
         </div>
+    </section>
 
     <!-- -	Important Dates Section -->
-    <section id="important-dates">
-        <x-section_title title="Important Dates"></x-section_title>
+    <section id="important-dates" class="container content-timeline">
+        {{-- <x-section_title title="Important Dates"></x-section_title> --}}
         {{-- <div class="important-dates">
             <img src="images/background/poster.jpg" alt="Important Dates Poster">
             <div class="dates">
@@ -115,10 +114,11 @@
             </div>
         </div> --}}
 
-        <div class="container content-timeline">
-            <h3>Deadline Dates</h3>
-            <h2>ICASVE Conference Timeline</h2>
-            <table class="table table-bordered">
+        <h3>Deadline Dates</h3>
+        <h2>ICASVE Conference Timeline</h2>
+        <div class="container content-detail">
+            <img src="images/background/poster.jpg" alt="Important Dates Poster">
+            <table class="table-dates">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -126,7 +126,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($timeline as $item)
+                    @foreach ($timeline as $item)
                         <tr>
                             <td>{{ $item['name'] }}</td>
                             <td>{{ $item['date'] }}</td>
@@ -138,9 +138,9 @@
     </section>
 
     <!-- Registration Section -->
-    <section id="regist-section">
+    <section id="regist-section" class="container">
         <x-section_title title="Registration Fee"></x-section_title>
-        <div class="container">
+        <div class="container content-regist">
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead class="thead-light">
@@ -257,97 +257,74 @@
 
             <div class="text-center mt-4">
                 <button class="btn btn-success btn-lg">Payment Proof Upload and Attendance
-                    Confirmation -></button>
+                    Confirmation ➜</button>
             </div>
         </div>
     </section>
 
     <!-- Venue Section -->
-    <section id="venue-section" class="py-5 h-100">
-        <div class="container d-flex flex-column justify-content-center">
-            <x-section_title title="Venue"></x-section_title>
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <img src="images/background/widyaloka.jpg" alt="Venue Building" class="img-fluid rounded shadow"
-                        style="width: 100%; max-width: 500px; height: auto;">
-                </div>
-                <div class="location col-md-6">
-                    <h3 class="text-secondary">Convention Hall Universitas Brawijaya</h3>
-                    <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
-                    <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
-                    <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary">See on
-                        Map</a>
-                </div>
+    <section id="venue-section" class="container">
+        {{-- <x-section_title title="Venue"></x-section_title> --}}
+        <h3 class="title-venue">Venue</h3>
+        <div class="container content-venue">
+            <div class="content-left">
+                <img src="images/background/widyalokaub.jpg" alt="Venue Building" class="img-fluid rounded shadoxw">
+                <h3>Convention Hall Universitas Brawijaya</h3>
+                <p>Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
+                <p>Date: November 20th - 22nd, 2024</p>
+                <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary">See on
+                    Map</a>
             </div>
-            <div class="mt-4">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
-                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
+
     </section>
 
     <!-- Publications Section -->
-    <section id="publications-section" class="py-5 bg-light">
-        <div class="container d-flex flex-column justify-content-center">
-            <x-section_title title="Publications"></x-section_title>
-            <div class="row text-center" style="display:flex; align-items: center;">
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-1.png" alt="Logo 1" class="img-fluid">
-                </div>
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-2.png" alt="Logo 2" class="img-fluid">
-                </div>
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-3.jpg" alt="Logo 3" class="img-fluid">
-                </div>
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-4.png" alt="Logo 4" class="img-fluid">
-                </div>
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-5.png" alt="Logo 5" class="img-fluid">
-                </div>
-                <div class="col-md-2 col-6 mb-3">
-                    <img src="images/logo/logo-6.jpeg" alt="Logo 6" class="img-fluid">
+    <section id="publications-section" class="content-publication">
+        <div class="content-overlay">
+            <!-- Journal Section -->
+            <div class="container content-jurnal">
+                <h3 class="title">Journal:</h3>
+                <div class="container logo-jurnal">
+                    @foreach ($publicationJurnal as $logo)
+                        <img src="{{ asset($logo['src']) }}" alt="{{ $logo['name'] }}">
+                    @endforeach
                 </div>
             </div>
+        </div>
     </section>
 
     <!-- Hosted and Supported Section -->
-    <section id="hosted-supported-section" class="py-5">
+    <section id="hosted-supported-section">
         <div class="container">
-            <div class="row">
+            <div class="content-hosted">
                 <!-- Left Section (30%) -->
-                <div class="col-md-4 bg-secondary text-white p-4">
-                    <div class="mb-4 text-center">
+                <div class="hosted-logo">
+                    <div class="hosted-by">
                         <h4>Hosted By</h4>
-                        <img src="images/logo/logo-hostedBy.png" alt="Hosted Logo" class="img-fluid mb-2">
+                        <span class="hb-logo">
+                            <img src="images/logo/logo-hostedBy.png" alt="Hosted Logo" class="img-fluid mb-2">
+                        </span>
                     </div>
-                    <div class="text-center">
+                    <div class="co-hosted-by">
                         <h4>Co-Hosted By</h4>
-                        <img src="images/logo/logo-co1.png" alt="Co-Hosted Logo 1" class="img-fluid mb-2">
-                        <img src="images/logo/logo-co2.png" alt="Co-Hosted Logo 2" class="img-fluid mb-2">
+                        <span class="hb-logo">
+                            <img src="images/logo/logo-co1.png" alt="Co-Hosted Logo 1" class="img-fluid mb-2">
+                            <img src="images/logo/logo-co2.png" alt="Co-Hosted Logo 2" class="img-fluid mb-2">
+                        </span>
                     </div>
                 </div>
                 <!-- Right Section (70%) -->
-                <div class="col-md-8 p-4">
-                    <h4 class="text-center mb-4">Supported By</h4>
-                    <div class="row text-center">
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="images/logo/logo-7.png" alt="Sponsor Logo 1" class="img-fluid">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="images/logo/logo-7.png" alt="Sponsor Logo 2" class="img-fluid">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="images/logo/logo-7.png" alt="Sponsor Logo 3" class="img-fluid">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="images/logo/logo-7.png" alt="Sponsor Logo 4" class="img-fluid">
-                        </div>
+                <div class="sponsor-logo">
+                    <h4>Supported By</h4>
+                    <div class="ds-logo">
+                        @foreach ($publicationJurnal as $logo)
+                            <img src="{{ asset($logo['src']) }}" alt="{{ $logo['name'] }}">
+                        @endforeach
                     </div>
                 </div>
             </div>
