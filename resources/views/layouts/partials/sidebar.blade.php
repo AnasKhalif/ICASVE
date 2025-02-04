@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="manual-receipt.html">
+                <a class="nav-link" href="{{ route('admin.manual-receipt.create') }}">
                     <i class="fa fa-file-text menu-icon"></i>
                     <span class="menu-title">Manual Receipt</span>
                 </a>
