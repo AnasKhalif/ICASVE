@@ -171,13 +171,9 @@ header {
 .hero-img {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
         center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
 }
 
 .hero-img::before {
@@ -190,56 +186,225 @@ header {
     background: rgba(0, 50, 100, 0.6);
 }
 
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    width: 80%;
+.container {
+    position: relative;
+    z-index: 2;
 }
+
 .text-style {
-    font-size: 40px;
+    font-size: 2.5rem;
     font-weight: 900;
     color: #edaa2c;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
 .superscript {
-    font-size: 20px;
+    font-size: 1.2rem;
     vertical-align: super;
 }
+
 .subtitle {
-    font-size: 20px;
-    color: white;
+    font-size: 1.2rem;
     margin-top: 10px;
 }
+
 .btn-register {
     display: inline-block;
     background-color: #edaa2c;
     color: white;
     padding: 12px 24px;
-    font-size: 18px;
+    font-size: 1rem;
     font-weight: bold;
-    word-spacing: 7px;
     text-decoration: none;
     border-radius: 5px;
     margin-top: 20px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 .btn-register:hover {
     background-color: #d18e00;
 }
 
+/* style about */
+#hero-about {
+    margin-top: 2rem;
+}
+
+#hero-about img {
+    width: 38rem;
+    height: auto;
+    border-radius: 1rem;
+    margin: 5rem 0 1.5rem;
+}
+.text-justify {
+    text-align: justify;
+}
+
+/* style keynote & speakers */
+.speaker-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 4px solid #eaa02a;
+    margin-right: 15px;
+}
+
+.card-speakers {
+    gap: 1.3rem;
+}
+
+.speaker-card {
+    display: flex;
+    align-items: center;
+    flex: 1 1 calc(33.333% - 20px);
+    min-width: 250px;
+}
+
+/* Topic style */
+.content-topics {
+    position: relative;
+    width: 100%;
+    min-height: 22rem;
+    background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
+        center/cover;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 50, 150, 0.8);
+    display: flex;
+    justify-content: center;
+}
+
+.list-topics li {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Responsiveness */
+
+
+@media (max-width: 768px) {
+    /* style home */
+    .text-style {
+        font-size: 1.8rem;
+    }
+
+    .superscript {
+        font-size: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .btn-register {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    /* style about */
+    #hero-about {
+        margin-top: 1rem;
+    }
+
+    .text-lg-start {
+        text-align: center !important;
+    }
+
+    .img-responsive {
+        margin-bottom: 1.5rem;
+    }
+
+    /* style keynote & invited speakers */
+    #hero-invited{
+        padding: 2rem 0;
+    }
+    .speaker-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .card-speakers {
+        gap: 5px;
+    }
+
+    /* style topics */
+    .content-topics {
+        min-height: 18rem;
+    }
+
+    .list-topics li {
+        font-size: 14px;
+    }
+    
+    .contents-topics h2{
+        font-size: 18px;
+    }
+    .contents-topics p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* style home */
+    .text-style {
+        font-size: 1.2rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .btn-register {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+
+    /* style about */
+    #hero-about {
+        margin-top: 0rem;
+    }
+
+    /* style keynote & invited speakers */
+    .card-speakers {
+        gap: 5px;
+    }
+    .d-flex img {
+        width: 60px;
+        height: 60px;
+    }
+    .speaker-card h5 {
+        font-size: 16px;
+    }
+    .speaker-card p {
+        font-size: 12px;
+    }
+
+    /* style topics */
+    .list-topics li {
+        font-size: 11px;
+    }
+    .contents-topics h2{
+        font-size: 14px;
+    }
+    .contents-topics p {
+        font-size: 11px;
+    }
+}
+
 /* Media Queries for Responsiveness */
-@media screen and (min-width: 900px) {
+/* @media screen and (min-width: 900px) {
     #hero-title {
         font-size: 44px;
         line-height: 0.8;
     }
-}
+} */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
     #navbarNav {
         flex-direction: column;
         width: 100%;
@@ -309,9 +474,9 @@ header {
         line-height: 1.4rem;
         justify-content: left;
     }
-}
+} */
 
-@media screen and (max-width: 480px) {
+/* @media screen and (max-width: 480px) {
     .hero-img {
         height: 70vh;
         margin-bottom: 1rem;
@@ -326,7 +491,6 @@ header {
         font-size: 12px;
         width: 80%;
         margin: 0 auto;
-        /* margin-bottom: 0.5rem; */
     }
 
     .content h1 {
@@ -338,9 +502,9 @@ header {
         font-size: 14px;
         margin-bottom: 0.5rem;
     }
-}
+} */
 
-@media screen and (max-width: 320px) {
+/* @media screen and (max-width: 320px) {
     .content h1 {
         font-size: 16px;
     }
@@ -358,28 +522,7 @@ header {
     .content {
         top: 50%;
     }
-}
-
-/* Additional Section Styles */
-#hero-about,
-#hero-topics,
-#regist-section,
-#important-dates,
-#hero-speakers,
-#hero-invited,
-#venue-section,
-#publications-section,
-#hosted-supported-section {
-    /* position: relative; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: center; */
-    margin-bottom: 4rem;
-    /* padding-top: 4rem; */
-    /* padding: 20px 40px; */
-    /* margin: 0 40px 7em; */
-}
+} */
 
 .title h2 {
     font-size: 30px;
@@ -389,44 +532,8 @@ header {
     text-transform: uppercase;
 }
 
-.content-about {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-align: start;
-    padding: 0 5rem;
-    gap: 5rem;
-    margin-top: 4rem;
-}
-
-.content-about img {
-    width: 28rem;
-    height: auto;
-    border-radius: 10px;
-}
-
-.content-about span h3 {
-    color: #edaa2c;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.5;
-}
-.content-about span h2 {
-    color: #102477;
-    font-size: 44px;
-    font-weight: 900;
-    line-height: 1;
-}
-.content-about span p {
-    color: #4d4d4d;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: justify;
-}
-
 /* Keynotes Section Styles */
-.container-keynotes {
+/* .container-keynotes {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -434,9 +541,9 @@ header {
     justify-content: space-between;
     align-content: center;
     padding: 0 1rem;
-}
+} */
 
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
     .container-keynotes {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -446,9 +553,9 @@ header {
     .container-keynotes {
         grid-template-columns: repeat(1, 1fr);
     }
-}
+} */
 
-.content-speakers h2,
+/* .content-speakers h2,
 .content-keynote h2 {
     color: #0f1e5c;
     font-weight: 800;
@@ -492,9 +599,9 @@ header {
     padding: 50px 20px;
     margin-top: 0;
     background-color: #f9f9f9;
-}
+} */
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .speaker {
         width: 100%;
     }
@@ -579,50 +686,7 @@ header {
 .card-text-small {
     font-size: 14px;
     color: #777777;
-}
-
-/* Topics Section Styles */
-.content-topics {
-    position: relative;
-    width: 100%;
-    height: 22rem;
-    background: url("../images/background/Lab-Vokasi.jpg") no-repeat center
-        center/cover;
-}
-
-.content-topics::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60%;
-    background: rgba(0, 50, 100, 0.6);
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 50, 150, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    color: white;
-}
-
-.list-topics h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    font-weight: 900;
-}
-.list-topics ul {
-    line-height: 1.5;
-}
-.list-topics ul li {
-    font-size: 18px;
-}
+} */
 
 /* Important Dates Section Styles */
 .content-detail {
@@ -776,7 +840,7 @@ header {
 }
 
 /* hosted and supported styles */
-.content-hosted{
+.content-hosted {
     width: 100%;
     display: flex;
     gap: 3rem;
@@ -784,14 +848,14 @@ header {
     margin: 5rem 0 10rem;
 }
 
-.hosted-logo{
+.hosted-logo {
     display: flex;
     flex-direction: column;
     width: 30%;
     gap: 1rem;
 }
 
-.hosted-by{
+.hosted-by {
     margin-bottom: 2rem;
 }
 
@@ -803,7 +867,8 @@ header {
     color: #202020;
 }
 
-.hosted-by h4, .co-hosted-by h4 {
+.hosted-by h4,
+.co-hosted-by h4 {
     text-align: left;
     font-size: 26px;
     font-weight: 600;
@@ -811,7 +876,8 @@ header {
     color: #202020;
 }
 
-.hb-logo img, .ds-logo img{
+.hb-logo img,
+.ds-logo img {
     width: 11rem;
     height: 8%;
 }
@@ -832,14 +898,21 @@ header {
     justify-content: center;
 }
 
-
-.sponsor-logo{
+.sponsor-logo {
     width: 70%;
 }
 
 /* Footer Section Styles */
-#footer-section {
-    background: linear-gradient(to right, #309133, #ffc13b);
+.first-footer {
+    background: linear-gradient(to right, #021a3d, #ffc13b);
+}
+@media (max-width: 768px) {
+    #footer-section .col-lg-4 {
+        text-align: center;
+    }
+    #footer-section .col-lg-4 img {
+        margin: auto;
+    }
 }
 
 /* Slider Styles */

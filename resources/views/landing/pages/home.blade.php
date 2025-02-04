@@ -1,74 +1,84 @@
 @extends('layouts.landing')
 @section('title', 'Home')
 @section('content')
-    <section id="landing-page" class="hero-img">
-        <div class="container content">
-            <div class="text-style">
-                3<sup class="superscript">rd</sup> ICASVE 2024 - International Conference on Applied Science for Vocational
-                Education
+    <section id="landing-page" class="hero-img d-flex align-items-center">
+        <div class="container text-center text-white">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-12">
+                    <h1 class="text-style">
+                        3<sup class="superscript">rd</sup> ICASVE 2024 - International Conference on Applied Science for
+                        Vocational Education
+                    </h1>
+                    <p class="subtitle">
+                        Implementation of Applied Science for Prosperity and Sustainability
+                    </p>
+                    <a href="#" class="btn btn-register">REGISTER ➜</a>
+                </div>
             </div>
-            <div class="subtitle">
-                Implementation of Applied Science for Prosperity and Sustainability
-            </div>
-            <a href="#" class="btn-register">REGISTER ➜</a>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="hero-about">
+    <section id="hero-about" class="pb-5 px-3">
         {{-- <x-section_title title="About ICASVE 2025"></x-section_title> --}}
-        <div class="container content-about">
-            <img src="{{ asset('images/background/Lab-Vokasi.jpg') }}" alt="logo" class="img-fluid">
-            <span class="about-desc">
-                <h3 class="sub-title">About Conference</h3>
-                <h2>ICASVE 2024</h2>
-                <p>ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring together
-                    leading academic, researchers and practitioners to exchange and share their experiences and research
-                    results on all aspects of Entrepreneurship, Innovation and Creativity. It also provides a premier
-                    interdisciplinary platform for researchers, practitioners and educators to present and discuss the most
-                    recent innovations, trends, and concerns as well as practical challenges encountered and solutions
-                    through conference theme “Implemetation of Applied Science for Prosperity and Sustainability”.
-                </p>
-            </span>
+        <div class="container">
+            <div class="row align-items-center gx-5">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <img src="{{ asset('images/background/Lab-Vokasi.jpg') }}" alt="logo"
+                        class="img-fluid img-responsive">
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="sub-title text-warning">About Conference</h3>
+                    <h2 class="fw-bold" style="color: #1f3969;">ICASVE 2024</h2>
+                    <p class="text-muted text-justify">
+                        ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring
+                        together
+                        leading academic, researchers, and practitioners to exchange and share their experiences and
+                        research
+                        results on all aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier
+                        interdisciplinary platform for researchers, practitioners, and educators to present and discuss the
+                        most
+                        recent innovations, trends, and concerns as well as practical challenges encountered and solutions
+                        through the conference theme “Implementation of Applied Science for Prosperity and Sustainability”.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Keynote Section -->
-    <section id="hero-speakers">
-        {{-- <x-section_title title="Keynote Speakers"></x-section_title> --}}
-        <div class="container content-keynote">
-            <h2>Keynote Speakers</h2>
-            <div class="speakers">
+    <section id="hero-speakers" class="pb-5 px-3">
+        <div class="container">
+            <h2 class="fw-bold mb-4" style="color: #1f3969;">Keynote Speaker</h2>
+            <div class="d-flex flex-wrap justify-content-center card-speakers">
                 @foreach ($keynotes as $keynote)
-                    <div class="speaker">
-                        <img src="{{ asset('images/speakers/' . $keynote['image']) }}" alt="{{ $keynote['name'] }}">
-                        <div class="info">
-                            <div class="name">{{ $keynote['name'] }}</div>
-                            <div class="university">{{ $keynote['university'] }}<br>{{ $keynote['country'] }}</div>
+                    <div class="d-flex align-items-center speaker-card">
+                        <img src="{{ asset('images/speakers/' . $keynote['image']) }}" alt="{{ $keynote['name'] }}"
+                            class="rounded-circle speaker-img">
+                        <div>
+                            <h5 class="fw-bold mb-1">{{ $keynote['name'] }}</h5>
+                            <p class="text-muted mb-0">{{ $keynote['university'] }}</p>
+                            <p class="text-muted">{{ $keynote['country'] }}</p>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-        {{-- <div class="container-keynotes">
-            <x-card></x-card>
-            <x-card></x-card>
-            <x-card></x-card>
-        </div>  --}}
     </section>
 
-    <!-- Invited  Section -->
-    <section id="hero-invited">
-        {{-- <x-section_title title="Invited Speakers"></x-section_title> --}}
-        <div class="container content-speakers">
-            <h2>Invited Speakers</h2>
-            <div class="speakers">
+    <!-- Invited Speakers Section -->
+    <section id="hero-invited" class="py-5 px-3" style="background: #eef1f5;">
+        <div class="container">
+            <h2 class="fw-bold mb-4" style="color: #1f3969;">Invited Speakers</h2>
+            <div class="d-flex flex-wrap justify-content-center card-speakers">
                 @foreach ($speakers as $speaker)
-                    <div class="speaker">
-                        <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}">
-                        <div class="info">
-                            <div class="name">{{ $speaker['name'] }}</div>
-                            <div class="university">{{ $speaker['university'] }}<br>{{ $speaker['country'] }}</div>
+                    <div class="d-flex align-items-center speaker-card">
+                        <img src="{{ asset('images/speakers/' . $speaker['image']) }}" alt="{{ $speaker['name'] }}"
+                            class="rounded-circle speaker-img">
+                        <div>
+                            <h5 class="fw-bold mb-1">{{ $speaker['name'] }}</h5>
+                            <p class="text-muted mb-0">{{ $speaker['university'] }}</p>
+                            <p class="text-muted">{{ $speaker['country'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -76,13 +86,12 @@
         </div>
     </section>
 
-    <section id="hero-topics" class="content-topics">
-        {{-- <x-section_title title="Topics"></x-section_title> --}}
-        <div class="overlay">
-            <div class="container list-topics">
-                <h2>CALL FOR PAPER</h2>
-                <p>The topics include, but are not limited:</p>
-                <ul>
+    <section id="hero-topics" class="py-5 content-topics">
+        <div class="overlay d-flex align-items-center">
+            <div class="container contents-topics text-white text-left text-md-start">
+                <h2 class="fw-bold">CALL FOR PAPER</h2>
+                <p>The topics include, but are not limited to:</p>
+                <ul class="list-topics">
                     <li>Economic and Business</li>
                     <li>Technological Engineering</li>
                     <li>Design Innovation</li>
