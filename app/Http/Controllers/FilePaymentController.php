@@ -21,9 +21,9 @@ class FilePaymentController extends Controller
       $amount = str_replace('.', '', $amount);
       $amount = (int) $amount;
 
-    $request->validate([
-        'file' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
-        'amount' => 'nullable|numeric|min:0', 
+      $request->validate([
+        'file' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048|required',
+        'amount' => 'nullable|numeric|min:0|required', 
     ], [
         'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
         'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',

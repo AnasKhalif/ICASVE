@@ -48,8 +48,7 @@
            <section class="col-lg-6 d-flex align-items-center justify-content-center p-4 vh-100" 
                style="background: #F1F8E9;">
                <div class="login-container w-100 px-4 py-2" 
-                   style="max-width: 600px; background: rgba(255,255,255,0.95); 
-                   backdrop-filter: blur(10px); border-radius: 20px;
+                   style="max-width: 600px; background: rgba(255,255,255,0.95); border-radius: 20px;
                    box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                    <header class="text-center">
                        <img src="{{ asset('img/icasve_logo.jpg') }}" alt="Logo icasve" class="img-fluid mb-3" style="max-width: 180px;">

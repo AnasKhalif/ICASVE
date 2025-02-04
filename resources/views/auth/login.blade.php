@@ -50,7 +50,7 @@
                style="background: #F1F8E9;">
                <div class="login-container w-100 p-3 p-md-5" 
                    style="max-width: 450px; background: rgba(255,255,255,0.95); 
-                   backdrop-filter: blur(10px); border-radius: 20px;
+                    border-radius: 20px;
                    box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                    <header class="text-center">
                        <img src="{{ asset('img/icasve_logo.jpg') }}" alt="Logo icasve" class="mb-4 mb-md-5 img-fluid" style="max-width: 150px;">
