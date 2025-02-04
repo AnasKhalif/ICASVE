@@ -284,9 +284,87 @@ header {
     line-height: 1.6;
 }
 
+/* style important dates */
+#important-dates img {
+    max-height: 38rem;
+    width: auto;
+}
+
+.content-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.image-container,
+.table-container {
+    flex: 1;
+    min-width: 300px;
+}
+
+.content-timeline h3 {
+    text-align: left;
+    color: #ffbf0f;
+    font-weight: 900;
+    font-size: 24px;
+    font-style: italic;
+}
+
+.content-timeline h2 {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #1f3a6f;
+    font-weight: 900;
+    font-size: 28px;
+}
+
+.table-dates {
+    background-color: #f8f9fa;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.table-dates th {
+    background-color: #2d4b81;
+    color: white;
+    font-weight: bold;
+    padding: 1.2rem 2rem;
+}
+
+.table-dates td {
+    background-color: #e9ecef;
+    border: 2px solid #e9ecef;
+    padding: 20px;
+}
+
+.table-dates tbody tr:nth-child(odd) td {
+    background-color: #f1f1f1;
+}
+
+.table-dates tbody tr:nth-child(even) td {
+    background-color: #e9ecef;
+}
+
+/* Style Venue */
+#venue-section .title-venue {
+    color: #162668;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+}
+
+.content-venue {
+    padding: 2.5rem 2.5rem;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsiveness */
-
-
 @media (max-width: 768px) {
     /* style home */
     .text-style {
@@ -320,7 +398,7 @@ header {
     }
 
     /* style keynote & invited speakers */
-    #hero-invited{
+    #hero-invited {
         padding: 2rem 0;
     }
     .speaker-img {
@@ -340,12 +418,28 @@ header {
     .list-topics li {
         font-size: 14px;
     }
-    
-    .contents-topics h2{
+
+    .contents-topics h2 {
         font-size: 18px;
     }
     .contents-topics p {
         font-size: 14px;
+    }
+
+    /* style important dates */
+    #important-dates img {
+        max-height: 300px;
+    }
+    .content-detail {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    .content-timeline h3 {
+        font-size: 20px;
+    }
+    .content-timeline h2 {
+        font-size: 24px;
     }
 }
 
@@ -388,11 +482,24 @@ header {
     .list-topics li {
         font-size: 11px;
     }
-    .contents-topics h2{
+    .contents-topics h2 {
         font-size: 14px;
     }
     .contents-topics p {
         font-size: 11px;
+    }
+
+    /* style important dates */
+    .content-timeline h3 {
+        font-size: 18px;
+    }
+    .content-timeline h2 {
+        font-size: 22px;
+    }
+    .content-detail {
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: none;
     }
 }
 
@@ -687,114 +794,6 @@ header {
     font-size: 14px;
     color: #777777;
 } */
-
-/* Important Dates Section Styles */
-.content-detail {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    padding: 3rem;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-    margin-top: 2rem;
-}
-
-.content-detail img {
-    height: 100vh;
-    border-radius: 10px;
-}
-
-.content-timeline h3 {
-    text-align: left;
-    color: #ffbf0f;
-    font-weight: 900;
-    font-size: 24px;
-    font-style: italic;
-}
-
-.content-timeline h2 {
-    text-align: left;
-    margin-bottom: 20px;
-    color: #1f3a6f;
-    font-weight: 900;
-    font-size: 28px;
-}
-
-#important-dates .table-dates {
-    width: 100%;
-    background-color: #f8f9fa;
-    table-layout: fixed;
-    border-radius: 7px;
-    overflow: hidden;
-}
-
-#important-dates thead {
-    border-radius: 10rem;
-}
-
-#important-dates .table-dates th,
-.important-dates .table-dates td {
-    text-align: left;
-    padding: 20px;
-}
-
-#important-dates .table-dates th {
-    background-color: #2d4b81;
-    color: white;
-}
-
-#important-dates .table-dates td {
-    background-color: #e9ecef;
-    padding: 20px;
-}
-#important-dates .table-dates tbody tr:nth-child(odd) td {
-    background-color: #f1f1f1;
-}
-
-#important-dates .table-dates tbody tr:nth-child(even) td {
-    background-color: #e9ecef;
-}
-
-#important-dates .table-dates thead th {
-    font-weight: bold;
-}
-
-/* Style Venue */
-#venue-section .title-venue {
-    color: #162668;
-    font-weight: 900;
-    margin-bottom: 1.5rem;
-}
-
-.content-venue {
-    display: flex;
-    gap: 2.3rem;
-    padding: 2.5rem 2.5rem;
-    border-radius: 10px;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.content-left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.content-left img {
-    margin-bottom: 1rem;
-    width: 100%;
-    max-width: 5 00px;
-}
-
-.content-left h3 {
-    color: #162668;
-    font-weight: 500;
-}
-
-.content-venue iframe {
-    width: 100%;
-}
 
 /* style publication */
 .content-publication {

@@ -104,45 +104,37 @@
         </div>
     </section>
 
-    <!-- -	Important Dates Section -->
-    <section id="important-dates" class="container content-timeline">
-        {{-- <x-section_title title="Important Dates"></x-section_title> --}}
-        {{-- <div class="important-dates">
-            <img src="images/background/poster.jpg" alt="Important Dates Poster">
-            <div class="dates">
-                <ul>
-                    <li><span class="speaker">Abstract Submission Deadline:</span class='date'> July 2, 2024</li>
-                    <li><span class="speaker">Abstract Notification:</span class='date'> July 3, 2024</li>
-                    <li><span class="speaker">Participant (non-speaker) Registration Deadline:</span class='date'> July
-                        10, 2024</li>
-                    <li><span class="speaker">Payment Deadline:</span class='date'> July 10, 2024</li>
-                    <li><span class=speaker"">Full Paper Deadline:</span class='date'> July 12, 2024</li>
-                    <li><span class="speaker">Full Paper Deadline:</span class='date'> July 12, 2024</li>
-                    <li><span class="speaker">Conference Day:</span class='date'> July 17, 2024</li>
-                </ul>
-            </div>
-        </div> --}}
+    <!-- Important Dates Section -->
+    <section id="important-dates" class="container py-5">
+        <div class="text-left mb-4 content-timeline">
+            <h3>Deadline Dates</h3>
+            <h2>ICASVE Conference Timeline</h2>
+        </div>
 
-        <h3>Deadline Dates</h3>
-        <h2>ICASVE Conference Timeline</h2>
-        <div class="container content-detail">
-            <img src="images/background/poster.jpg" alt="Important Dates Poster">
-            <table class="table-dates">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($timeline as $item)
-                        <tr>
-                            <td>{{ $item['name'] }}</td>
-                            <td>{{ $item['date'] }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="content-detail">
+            <div class="image-container text-center">
+                <img src="images/background/poster.jpg" alt="Important Dates Poster" class="img-fluid rounded">
+            </div>
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table-dates w-100">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($timeline as $item)
+                                <tr>
+                                    <td>{{ $item['name'] }}</td>
+                                    <td>{{ $item['date'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -273,24 +265,25 @@
 
     <!-- Venue Section -->
     <section id="venue-section" class="container">
-        {{-- <x-section_title title="Venue"></x-section_title> --}}
-        <h3 class="title-venue">Venue</h3>
-        <div class="container content-venue">
-            <div class="content-left">
-                <img src="images/background/widyalokaub.jpg" alt="Venue Building" class="img-fluid rounded shadoxw">
-                <h3>Convention Hall Universitas Brawijaya</h3>
+        <h3 class="title-venue text-center">Venue</h3>
+        <div class="row content-venue align-items-start">
+            <div class="col-lg-6 col-md-12">
+                <img src="images/background/widyalokaub.jpg" alt="Venue Building" class="img-fluid rounded shadow">
+                <h3 class="mt-3">Convention Hall Universitas Brawijaya</h3>
                 <p>Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
                 <p>Date: November 20th - 22nd, 2024</p>
                 <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary">See on
                     Map</a>
             </div>
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
-                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            <div class="col-lg-6 col-md-12 mt-4 mt-lg-0">
+                <iframe class="w-100 h-100 rounded" style="min-height: 500px;"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
         </div>
-
     </section>
+
 
     <!-- Publications Section -->
     <section id="publications-section" class="content-publication">
