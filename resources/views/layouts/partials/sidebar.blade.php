@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="payment.html">
+                <a class="nav-link" href="{{ route('admin.payment.index') }}">
                     <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
                 </a>

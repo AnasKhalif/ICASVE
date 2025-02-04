@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card shadow">
@@ -32,41 +33,59 @@
             </div>
         </div>
     </div>
+
     <div class="col-lg-12 grid-margin stretch-card mt-4">
         <div class="card shadow-sm">
             <div class="card-body">
                 <h4 class="card-title border-bottom pb-3">
-                    <i class="fas fa-file-upload mr-2"></i>Upload Payment
+                    <i class="fas fa-file-upload mr-2"></i>Payment Details
                 </h4>
 
                 @if ($existingPayment)
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
-                        File yang sudah diunggah: {{ $existingPayment->original_filename }}
-                        <br>
-                        <small>Mengunggah file baru akan menggantikan file yang sudah ada.</small>
+                        @if ($existingPayment->file_path)
+                            @if ($existingPayment->amount)
+                                File yang berhasil diunggah dan Jumlah pembayaran: Rp
+                                {{ number_format($existingPayment->amount, 0, ',', '.') }}
+                            @endif
+                        @endif
+
                     </div>
                 @endif
 
                 <form action="{{ route('filepayments.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
-                            <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
-                                name="file" id="file" required>
-                        </div>
-
+                    <div class="form-group mb-4">
+                        <label for="amount">Jumlah Pembayaran (Rp)</label>
+                        <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
+                            name="amount" value="{{ old('amount') }}" placeholder="Contoh: 100000"
+                            @if (!$existingPayment) required @endif>
+                        <small class="form-text text-muted">
+                            Masukkan jumlah tanpa tanda titik atau koma
+                        </small>
+                        @error('amount')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
+
+                    <div class="input-group mb-3">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
+                                name="file" @if (!$existingPayment) required @endif id="file">
+                            <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
+                        </div>
+                    </div>
+
                     <small class="form-text text-muted mt-2">
-                        Accepted formats: JPG, JPEG, PNG, PDF
-                        Accepted formats: JPG, JPEG, PNG, PDF | Max size: 2MB
+                        Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
                     </small>
+
                     <div class="input-group-append mt-3">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-upload mr-3"></i>
-                            {{ $existingPayment ? 'Update File' : 'Upload File' }}
+                        <button type="submit" class="btn btn-primary mr-3">
+                            <i class="fas fa-save mr-1"></i>
+                            {{ $existingPayment ? 'Update' : 'Save' }}
                         </button>
                         @if ($existingPayment && $existingPayment->file_path)
                             <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
@@ -79,19 +98,27 @@
                     @error('file')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
+
                     @if (session('success'))
                         <div class="alert alert-success mt-3">
                             {{ session('success') }}
                         </div>
                     @endif
-
-
                 </form>
 
                 <script>
                     document.getElementById('file').addEventListener('change', function() {
-                        var fileName = this.files[0].name;
+                        var fileName = this.files[0] ? this.files[0].name : 'Choose file';
                         document.getElementById('fileLabel').innerText = fileName;
+                    });
+
+                    document.querySelector('form').addEventListener('submit', function(e) {
+                        let amountInput = document.getElementById('amount');
+                        amountInput.value = amountInput.value.replace(/\D/g, '');
+                        if (isNaN(amountInput.value) || amountInput.value === '') {
+                            e.preventDefault();
+                            alert('Jumlah pembayaran harus berupa angka yang valid.');
+                        }
                     });
                 </script>
             </div>

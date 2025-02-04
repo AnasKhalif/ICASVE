@@ -16,6 +16,7 @@ use App\Http\Controllers\Reviewer\ReviewFullPaperController;
 use App\Http\Controllers\FilePaymentController;
 use App\Http\Controllers\Admin\AbstractsController;
 use App\Http\Controllers\Admin\OralController;
+use App\Http\Controllers\Admin\VerifyPaymentController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -26,8 +27,10 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::resource('reviewer', 'ReviewerController');
     Route::resource('symposium', 'SymposiumController');
     Route::resource('abstract', 'AbstractsController');
-    Route::get('summary', [SummaryController::class, 'index'])->name('summary');
     Route::resource('oral', 'OralController');
+    Route::get('summary', [SummaryController::class, 'index'])->name('summary');
+    Route::get('payment', [VerifyPaymentController::class, 'index'])->name('payment.index');
+    Route::put('payment/{filePayment}/verify', [VerifyPaymentController::class, 'verify'])->name('payment.verify');
 });
 
 Route::name('reviewer.')

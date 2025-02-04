@@ -14,6 +14,8 @@ class FilePayment extends Model
     protected $fillable = [
         'user_id',
         'file_path',
+        'amount',
+        'status',
     ];
 
     public function user()
