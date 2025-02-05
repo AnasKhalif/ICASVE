@@ -53,7 +53,7 @@
                     border-radius: 20px;
                    box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                    <header class="text-center">
-                       <img src="{{ asset('img/icasve_logo.jpg') }}" alt="Logo icasve" class="mb-4 mb-md-5 img-fluid" style="max-width: 150px;">
+                       <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="mb-3 img-fluid" style="max-width: 150px;">
                    </header>
                    <form method="POST" action="{{ route('login') }}">
                        @csrf
@@ -65,7 +65,7 @@
                                        <i class="fas fa-envelope text-success"></i>
                                    </span>
                                </div>
-                               <input type="email" id="email" name="email" class="form-control form-control-lg border-left-0" 
+                               <input type="email" id="email" name="email" class="form-control form-control-md border-left-0" 
                                    placeholder="E.g. budiutomo@gmail.com" value="{{ old('email') }}" required />
                            </div>
                            @if ($errors->has('email'))
@@ -81,7 +81,7 @@
                                        <i class="fas fa-lock text-success"></i>
                                    </span>
                                </div>
-                               <input type="password" id="password" name="password" class="form-control form-control-lg border-left-0" 
+                               <input type="password" id="password" name="password" class="form-control form-control-md border-left-0" 
                                    placeholder="Password" required />
                            </div>
                            @if ($errors->has('password'))

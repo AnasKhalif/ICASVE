@@ -51,7 +51,7 @@
                    style="max-width: 600px; background: rgba(255,255,255,0.95); border-radius: 20px;
                    box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                    <header class="text-center">
-                       <img src="{{ asset('img/icasve_logo.jpg') }}" alt="Logo icasve" class="img-fluid mb-3" style="max-width: 180px;">
+                       <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid mb-3 mt-3" style="max-width: 180px;">
                    </header>
                    <form method="POST" action="{{ route('register') }}">
                        @csrf
@@ -65,7 +65,7 @@
                                                <i class="fas fa-user text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="text" name="name" id="name" class="form-control form-control-lg border-left-0" 
+                                       <input type="text" name="name" id="name" class="form-control form-control-md border-left-0" 
                                            placeholder="Full Name" value="{{ old('name') }}" required />
                                    </div>
                                    @if ($errors->has('name'))
@@ -80,7 +80,7 @@
                                                <i class="fas fa-envelope text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="email" name="email" id="email" class="form-control form-control-lg border-left-0" 
+                                       <input type="email" name="email" id="email" class="form-control form-control-md border-left-0" 
                                            placeholder="Email Address" value="{{ old('email') }}" required />
                                    </div>
                                    @if ($errors->has('email'))
@@ -95,7 +95,7 @@
                                                <i class="fas fa-lock text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="password" name="password" id="password" class="form-control form-control-lg border-left-0" 
+                                       <input type="password" name="password" id="password" class="form-control form-control-md border-left-0" 
                                            placeholder="Password" required />
                                    </div>
                                    @if ($errors->has('password'))
@@ -111,7 +111,7 @@
                                            </span>
                                        </div>
                                        <input type="password" name="password_confirmation" id="password_confirmation" 
-                                           class="form-control form-control-lg border-left-0" placeholder="Confirm Password" required />
+                                           class="form-control form-control-md border-left-0" placeholder="Confirm Password" required />
                                    </div>
                                    @if ($errors->has('password_confirmation'))
                                        <span class="text-danger" style="font-size: 12px;">{{ $errors->first('password_confirmation') }}</span>
@@ -128,7 +128,7 @@
                                                <i class="fas fa-building text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="text" name="institution" id="institution" class="form-control form-control-lg border-left-0" 
+                                       <input type="text" name="institution" id="institution" class="form-control form-control-md border-left-0" 
                                            placeholder="Institution" value="{{ old('institution') }}" required />
                                    </div>
                                    @if ($errors->has('institution'))
@@ -143,7 +143,7 @@
                                                <i class="fas fa-briefcase text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="text" name="job_title" id="job_title" class="form-control form-control-lg border-left-0" 
+                                       <input type="text" name="job_title" id="job_title" class="form-control form-control-md border-left-0" 
                                            placeholder="Job Title" value="{{ old('job_title') }}" required />
                                    </div>
                                    @if ($errors->has('job_title'))
@@ -158,7 +158,7 @@
                                                <i class="fas fa-phone text-success"></i>
                                            </span>
                                        </div>
-                                       <input type="tel" name="phone_number" id="phone_number" class="form-control form-control-lg border-left-0" 
+                                       <input type="tel" name="phone_number" id="phone_number" class="form-control form-control-md border-left-0" 
                                            placeholder="Phone Number" value="{{ old('phone_number') }}" required />
                                    </div>
                                    @if ($errors->has('phone_number'))
@@ -167,7 +167,7 @@
                                </div>
 
                                <div class="form-group mb-4">
-                                   <select name="role_id" id="registration_type" class="form-control form-control-lg" required>
+                                   <select name="role_id" id="registration_type" class="form-control form-control-md" required>
                                        <option value="" disabled selected>Select Registration Type</option>
                                        @foreach ($role as $r)
                                            <option value="{{ $r->id }}" {{ old('role_id') == $r->id ? 'selected' : '' }}>
@@ -181,7 +181,7 @@
                                </div>
 
                                <div class="form-group mb-4">
-                                   <select name="attendance" id="attendance" class="form-control form-control-lg" required>
+                                   <select name="attendance" id="attendance" class="form-control form-control-md" required>
                                        <option value="" disabled selected>Select Attendance Plan</option>
                                        <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite</option>
                                        <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>Online</option>
