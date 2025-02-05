@@ -264,8 +264,8 @@
     </section>
 
     <!-- Venue Section -->
-    <section id="venue-section" class="container">
-        <h3 class="title-venue text-center">Venue</h3>
+    <section id="venue-section" class="container py-5">
+        <h3 class="title-venue text-left">Venue</h3>
         <div class="row content-venue align-items-start">
             <div class="col-lg-6 col-md-12">
                 <img src="images/background/widyalokaub.jpg" alt="Venue Building" class="img-fluid rounded shadow">
