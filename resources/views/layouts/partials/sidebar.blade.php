@@ -44,7 +44,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="certificates.html">
+                <a class="nav-link" href="{{ route('admin.certificates.index') }}">
                     <i class="fa fa-file menu-icon"></i>
                     <span class="menu-title">Certificates</span>
                 </a>
@@ -65,6 +65,12 @@
                 <a class="nav-link" href="abstracts-book.html">
                     <i class="fa fa-clipboard menu-icon"></i>
                     <span class="menu-title">Abstracts Book</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="abstracts-book.html">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Landing Page</span>
                 </a>
             </li>
             <li class="nav-item">
