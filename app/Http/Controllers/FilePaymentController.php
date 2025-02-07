@@ -21,9 +21,11 @@ class FilePaymentController extends Controller
         $amount = str_replace('.', '', $amount);
         $amount = (int) $amount;
 
+        $isFirstUpload = FilePayment::where('user_id', Auth::user()->id)->doesntExist();
+
         $request->validate([
-            'file' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
-            'amount' => 'nullable|numeric|min:0|required',
+            'file' => $isFirstUpload ? 'required|file|mimes:pdf,jpg,png|max:2048' : 'file|mimes:pdf,jpg,png|max:2048',
+            'amount' => $isFirstUpload ? 'required|numeric|min:0' : 'nullable|numeric|min:0'
         ], [
             'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
             'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',
