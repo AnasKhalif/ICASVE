@@ -41,18 +41,14 @@
                     <i class="fas fa-file-upload mr-2"></i>Payment Details
                 </h4>
 
-                @if ($existingPayment)
+                @if ($existingPayment && $existingPayment->amount)
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
-                        @if ($existingPayment->file_path)
-                            @if ($existingPayment->amount)
-                                File yang berhasil diunggah dan Jumlah pembayaran: Rp
-                                {{ number_format($existingPayment->amount, 0, ',', '.') }}
-                            @endif
-                        @endif
-
+                        File berhasil diunggah dan Jumlah pembayaran: 
+                        <span id="existingAmount">Rp {{ number_format($existingPayment->amount, 0, ',', '.') }}</span>
                     </div>
                 @endif
+                
 
                 <form action="{{ route('filepayments.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -94,16 +90,18 @@
                             </a>
                         @endif
                     </div>
+                    @if (session('success'))
+                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                        <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                   @endif
 
                     @error('file')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
-
-                    @if (session('success'))
-                        <div class="alert alert-success mt-3">
-                            {{ session('success') }}
-                        </div>
-                    @endif
                 </form>
 
                 <script>
