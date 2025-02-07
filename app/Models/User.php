@@ -77,4 +77,9 @@ class User extends Authenticatable  implements LaratrustUser
     {
         return $this->hasOne(FilePayment::class);
     }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

@@ -8,6 +8,11 @@ use App\Models\Symposium;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\FullPaper;
+use setasign\Fpdi\Fpdi;
+use App\Models\Certificate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 class AbstractController extends Controller
 {
@@ -46,7 +51,7 @@ class AbstractController extends Controller
             'symposium_id' => 'required|exists:symposiums,id',
         ]);
 
-        AbstractModel::create([
+        $abstract = AbstractModel::create([
             'user_id' => Auth::id(),
             'symposium_id' => $request->symposium_id,
             'title' => $request->title,
@@ -58,8 +63,79 @@ class AbstractController extends Controller
             'status' => 'open',
         ]);
 
+        $this->generateCertificate($abstract);
+
         return redirect()->route('abstracts.index')->with('success', 'Abstract submitted successfully');
     }
+
+    private function generateCertificate(AbstractModel $abstract)
+    {
+        $user = $abstract->user;
+        $role = $user->roles->first()->name;
+
+        $templatePath = public_path('templates/certificate_presenter.pdf');
+
+        $pdf = new Fpdi();
+        $pdf->setSourceFile($templatePath);
+
+        $template = $pdf->importPage(1);
+        $size = $pdf->getTemplateSize($template);
+        $pdf->addPage($size['orientation'], [$size['width'], $size['height']]);
+        $pdf->useTemplate($template);
+
+        $pdf->SetFont('Times', 'B', 45);
+
+        $nameWidth = $pdf->GetStringWidth($user->name);
+        $nameX = ($size['width'] - $nameWidth) / 2;
+        $pdf->SetXY($nameX, 150);
+        $pdf->Write(0, $user->name);
+
+        $pdf->Line($nameX, 155, $nameX + $nameWidth, 155);
+
+        $roleText = ($abstract->presentation_type == "Oral presentation") ? "Oral presenter" : "Poster presenter";
+
+        $roleWidth = $pdf->GetStringWidth($roleText);
+        $roleX = ($size['width'] - $roleWidth) / 2;
+        $pdf->SetXY($roleX, 195);
+        $pdf->Write(0, $roleText);
+
+
+        $pdf->SetFont('Times', 'I', 35);
+        $pdf->SetXY(30, 230);
+        $pdf->MultiCell($size['width'] - 60, 20, $abstract->title, 0, 'C');
+
+        Storage::disk('public')->makeDirectory('certificates');
+        $certificateName = Str::random(20) . '.pdf';
+        $certificatePath = 'certificates/' . $certificateName;
+        $pdf->Output(storage_path('app/public/' . $certificatePath), 'F');
+
+        Certificate::create([
+            'user_id' => $user->id,
+            'certificate_type' => 'presenter',
+            'certificate_path' => $certificatePath,
+        ]);
+    }
+
+    public function viewCertificate($encryptedId, $type)
+    {
+        try {
+            $id = Crypt::decrypt($encryptedId);
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return abort(404);
+        }
+
+        $abstract = AbstractModel::with('user')->findOrFail($id);
+        $certificate = Certificate::where('user_id', $abstract->user_id)
+            ->where('certificate_type', $type)
+            ->first();
+
+        if ($certificate) {
+            return response()->file(public_path('storage/' . $certificate->certificate_path));
+        } else {
+            return redirect()->route('abstracts.show', $id)->with('error', 'Certificate not generated yet.');
+        }
+    }
+
 
     /**
      * Display the specified resource.
@@ -119,9 +195,27 @@ class AbstractController extends Controller
             return back()->with('error', 'Cannot delete abstract in review process');
         }
 
+        $certificate = $abstract->user->certificates()->first();
+        if ($certificate && $certificate->certificate_path) {
+            $certificatePath = $certificate->certificate_path;
+            if (Storage::disk('public')->exists($certificatePath)) {
+                Storage::disk('public')->delete($certificatePath);
+            }
+            $certificate->delete(); // Hapus data sertifikat dari DB
+        }
+
+        // // Pastikan file abstrak juga dihapus jika ada
+        // if ($abstract->fullPaper) {
+        //     $fullPaperPath = 'public/' . $abstract->fullPaper->file_path; // Periksa path file full paper
+        //     if (Storage::exists($fullPaperPath)) {
+        //         Storage::delete($fullPaperPath);
+        //     }
+        // }
+
         $abstract->delete();
         return redirect()->route('abstracts.index')->with('success', 'Abstract deleted successfully');
     }
+
 
     private function formatAuthors($authors)
     {
@@ -144,5 +238,14 @@ class AbstractController extends Controller
         $pdf = PDF::loadView('abstracts.pdf', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
 
         return $pdf->stream('abstract-detail.pdf');
+    }
+
+    public function acceptancePdf($id)
+    {
+        $abstract = AbstractModel::with(['user'])->findOrFail($id);
+
+        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract'));
+
+        return $pdf->stream('abstract-acceptance.pdf');
     }
 }

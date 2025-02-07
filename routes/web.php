@@ -17,6 +17,7 @@ use App\Http\Controllers\FilePaymentController;
 use App\Http\Controllers\Admin\AbstractsController;
 use App\Http\Controllers\Admin\OralController;
 use App\Http\Controllers\Admin\VerifyPaymentController;
+use App\Http\Controllers\Admin\CertificateController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -30,7 +31,10 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::resource('oral', 'OralController');
     Route::get('summary', [SummaryController::class, 'index'])->name('summary');
     Route::get('payment', [VerifyPaymentController::class, 'index'])->name('payment.index');
+    Route::get('payment/{id}/digital-pdf', [VerifyPaymentController::class, 'digitalPdf'])->name('payment.digitalPdf');
     Route::put('payment/{filePayment}/verify', [VerifyPaymentController::class, 'verify'])->name('payment.verify');
+    Route::get('certificates', [CertificateController::class, 'index'])->name('certificates.index');
+    Route::put('certificates/{id}/toggle', [CertificateController::class, 'toggleStatus'])->name('certificates.toggle');
 });
 
 Route::name('reviewer.')
@@ -90,8 +94,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('abstracts', AbstractController::class);
     Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
+    Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
     Route::get('create/{abstractId}', [FullPaperController::class, 'create'])->name('fullpapers.create');
     Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
+    Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
 });
 
 Route::middleware('auth')->group(function () {

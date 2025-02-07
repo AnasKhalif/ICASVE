@@ -8,14 +8,15 @@
             <div class="card-body">
                 <h4 class="card-title">Table of Payment</h4>
 
-                <div class="table-responsive">
-                    <table class="table table-striped">
+                <div class="table-responsive pt-3">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Nomor</th>
                                 <th>Name / Institution / Email</th>
                                 <th>Registration Type</th>
                                 <th>Proof</th>
+                                <th>Receipt</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -24,7 +25,7 @@
                         <tbody>
                             @foreach ($payments as $payment)
                                 <tr>
-                                    <td>{{ $payment->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <strong>{{ $payment->user->name }}</strong><br>
                                         {{ $payment->user->institution }}<br>
@@ -35,12 +36,16 @@
                                     </td>
                                     <td>
                                         @if ($payment->file_path)
-                                            <a href="{{ asset('storage/' . $payment->file_path) }}" target="_blank">View
-                                                Proof</a>
+                                            <a href="{{ asset('storage/' . $payment->file_path) }}" target="_blank"
+                                                class="d-flex justify-content-center"><i class="fa fa-file fa-lg"></i></a>
                                         @else
                                             No proof available
                                         @endif
                                     </td>
+                                    <td><a href="{{ route('admin.payment.digitalPdf', $payment->id) }}" target="_blank"
+                                            class="btn btn-primary">
+                                            Open Digital PDF
+                                        </a></td>
                                     <td>IDR {{ number_format($payment->amount, 0, ',', '.') }}</td>
                                     <td>
                                         <span
