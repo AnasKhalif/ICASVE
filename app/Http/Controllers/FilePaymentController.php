@@ -46,21 +46,24 @@ class FilePaymentController extends Controller
         if ($existingPayment) {
             $updateData = [];
             if ($request->hasFile('file')) {
-                Storage::disk('public')->delete($existingPayment->file_path);
+                if (!empty($existingPayment->file_path)) {
+                    Storage::disk('public')->delete($existingPayment->file_path);
+                }
                 $filePath = $request->file('file')->store('payments', 'public');
                 $updateData['file_path'] = $filePath;
             }
-
+        
             if ($request->filled('amount')) {
                 $updateData['amount'] = $amount;
             }
-
+        
             if (!empty($updateData)) {
                 $existingPayment->update($updateData);
                 $message = 'Data pembayaran berhasil diperbarui.';
             } else {
                 $message = 'Tidak ada perubahan yang dilakukan.';
             }
+        
         } else {
             $data = ['user_id' => $user->id];
             if ($request->hasFile('file')) {
