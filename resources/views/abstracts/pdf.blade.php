@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abstract Detail</title>
     <style>
-        /* Styling yang ingin kamu terapkan pada PDF */
         #abstract_title {
             text-align: center;
             font-size: 16pt;

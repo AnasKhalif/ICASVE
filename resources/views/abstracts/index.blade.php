@@ -23,6 +23,7 @@
                                 <th class="text-center">Presentation Type</th>
                                 <th class="text-center">Status</th>
                                 <th class="text-center">FullPaper Status</th>
+                                <th class="text-center">LOA</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -48,6 +49,16 @@
                                             <span class="text-muted">Not Submitted</span>
                                         @endif
                                     </td>
+                                    <td class="text-center">
+                                        @if ($abstract->status === 'accepted')
+                                            <a href="{{ route('abstracts.acceptancePdf', $abstract->id) }}" target="_blank"
+                                                class="btn btn-primary">
+                                                Open Abstract PDF
+                                            </a>
+                                        @else
+                                            <span class="text-muted">Not Available</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('abstracts.show', $abstract->id) }}"
                                             class="btn btn-sm btn-primary">Detail</a>
@@ -57,6 +68,31 @@
                                             <a href="{{ route('fullpapers.create', $abstract->id) }}"
                                                 class="btn btn-sm btn-success">Upload Full Paper</a>
                                         @endif
+
+                                        @php
+                                            $user = $abstract->user;
+                                            $participantCertificate = $user->certificates->firstWhere(
+                                                'certificate_type',
+                                                'participant',
+                                            );
+                                            $presenterCertificate = $user->certificates->firstWhere(
+                                                'certificate_type',
+                                                'presenter',
+                                            );
+                                        @endphp
+
+                                        @if ($participantCertificate && $participantCertificate->status == 1)
+                                            <a href="{{ route('abstracts.viewCertificate', ['id' => \Crypt::encrypt($abstract->id), 'type' => 'participant']) }}"
+                                                class="btn btn-sm btn-info" target="_blank">View Participant Certificate</a>
+                                        @endif
+
+                                        @if ($presenterCertificate && $presenterCertificate->status == 1)
+                                            <a href="{{ route('abstracts.viewCertificate', ['id' => \Crypt::encrypt($abstract->id), 'type' => 'presenter']) }}"
+                                                class="btn btn-sm btn-warning" target="_blank">View Presenter
+                                                Certificate</a>
+                                        @endif
+
+
                                         <form action="{{ route('abstracts.destroy', $abstract->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf

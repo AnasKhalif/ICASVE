@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\FilePayment;
 use App\Models\User;
 use App\Models\Role;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VerifyPaymentController extends Controller
 {
@@ -23,5 +24,12 @@ class VerifyPaymentController extends Controller
         $filePayment->update(['status' => $newStatus]);
 
         return redirect()->route('admin.payment.index')->with('success', 'Payment status has been updated.');
+    }
+
+    public function digitalPdf($id)
+    {
+        $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment'));
+        return $pdf->stream('payment-digital.pdf');
     }
 }

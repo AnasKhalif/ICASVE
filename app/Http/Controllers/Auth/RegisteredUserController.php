@@ -14,6 +14,10 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Mail\RegistrationConfirmation;
 use Illuminate\Support\Facades\Mail;
+use setasign\Fpdi\Fpdi;
+use App\Models\Certificate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -64,17 +68,64 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        $details = [
-            'name' => $validatedData['name'],
-            'institution' => $validatedData['institution'],
-            'job_title' => $validatedData['job_title'],
-            'email' => $validatedData['email'],
-            'phone_number' => $validatedData['phone_number'],
-            'registration_type' => $role->display_name,
-        ];
+        // $details = [
+        //     'name' => $validatedData['name'],
+        //     'institution' => $validatedData['institution'],
+        //     'job_title' => $validatedData['job_title'],
+        //     'email' => $validatedData['email'],
+        //     'phone_number' => $validatedData['phone_number'],
+        //     'registration_type' => $role->display_name,
+        // ];
 
-        Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
+        // Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
+        $this->generateCertificate($user);
 
         return redirect(route('login'))->with('success', 'Registration successful. A confirmation email has been sent.');
+    }
+
+    private function generateCertificate(User $user)
+    {
+        // Tentukan template sertifikat untuk peserta
+        $templatePath = public_path('templates/certificate_participant.pdf');
+
+        // Inisialisasi FPDI
+        $pdf = new Fpdi();
+        $pdf->setSourceFile($templatePath);
+        $template = $pdf->importPage(1);
+        $size = $pdf->getTemplateSize($template);
+        $pdf->addPage($size['orientation'], [$size['width'], $size['height']]);
+        $pdf->useTemplate($template);
+
+        // Menambahkan teks ke dalam template sertifikat
+        $pdf->SetFont('Times', 'B', 45); // Gunakan font Times New Roman atau Helvetica
+
+        // Menentukan posisi untuk nama penerima dan menambahkan garis bawah
+        $nameWidth = $pdf->GetStringWidth($user->name);
+        $nameX = ($size['width'] - $nameWidth) / 2;  // Memusatkan nama
+        $pdf->SetXY($nameX, 150);  // Koordinat untuk nama penerima
+        $pdf->Write(0, $user->name);
+
+        // Menambahkan garis bawah pada nama
+        $pdf->Line($nameX, 155, $nameX + $nameWidth, 155);  // Garis bawah untuk nama
+
+        // Menambahkan teks untuk institusi
+        $participantText = "Participant";  // Teks yang ingin ditampilkan
+        $participantWidth = $pdf->GetStringWidth($participantText);
+        $participantX = ($size['width'] - $participantWidth) / 2;  // Memusatkan teks
+        $pdf->SetXY($participantX, 200);  // Koordinat untuk teks
+        $pdf->Write(0, $participantText);
+
+        // Menyimpan PDF ke storage
+        Storage::disk('public')->makeDirectory('certificates');
+        $certificateName = Str::random(20) . '.pdf';  // Hash nama file
+        $certificatePath = 'certificates/' . $certificateName;
+        $pdf->Output(storage_path('app/public/' . $certificatePath), 'F');
+
+        // Menyimpan path sertifikat ke database
+        Certificate::create([
+            'user_id' => $user->id,
+            'certificate_type' => 'participant',
+            'certificate_path' => $certificatePath,
+        ]);
     }
 }
