@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\AbstractsController;
 use App\Http\Controllers\Admin\OralController;
 use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
+use App\Http\Controllers\Admin\ManualReceiptController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -33,6 +34,8 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('payment', [VerifyPaymentController::class, 'index'])->name('payment.index');
     Route::get('payment/{id}/digital-pdf', [VerifyPaymentController::class, 'digitalPdf'])->name('payment.digitalPdf');
     Route::put('payment/{filePayment}/verify', [VerifyPaymentController::class, 'verify'])->name('payment.verify');
+    Route::get('manual-receipt', [ManualReceiptController::class, 'create'])->name('manual-receipt.create');
+    Route::post('manual-receipt', [ManualReceiptController::class, 'store'])->name('manual-receipt.store');
     Route::get('certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::put('certificates/{id}/toggle', [CertificateController::class, 'toggleStatus'])->name('certificates.toggle');
 });

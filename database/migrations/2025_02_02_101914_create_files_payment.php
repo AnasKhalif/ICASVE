@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('files_payment', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });
