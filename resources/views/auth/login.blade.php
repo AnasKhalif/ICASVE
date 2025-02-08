@@ -48,10 +48,7 @@
            <!-- kolom2 -->
            <section class="col-lg-6 d-flex align-items-center justify-content-center p-4 vh-100" 
                style="background: #F1F8E9;">
-               <div class="login-container w-100 p-3 p-md-5" 
-                   style="max-width: 450px; background: rgba(255,255,255,0.95); 
-                    border-radius: 20px;
-                   box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+               <div class="login-container w-100 p-3 "style="max-width: 450px;">
                    <header class="text-center">
                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="mb-3 img-fluid" style="max-width: 150px;">
                    </header>
@@ -65,9 +62,9 @@
                                        <i class="fas fa-envelope text-success"></i>
                                    </span>
                                </div>
-                               <input type="email" id="email" name="email" class="form-control form-control-md border-left-0" 
-                                   placeholder="E.g. budiutomo@gmail.com" value="{{ old('email') }}" required />
-                           </div>
+                                   <input type="email" id="email" name="email" class="form-control form-control-md border-left-0" 
+                                    placeholder="E.g. budiutomo@gmail.com" value="{{ old('email') }}" required />
+                                 </div>
                            @if ($errors->has('email'))
                                <span class="text-danger" style="font-size: 12px;">{{ $errors->first('email') }}</span>
                            @endif
@@ -89,7 +86,7 @@
                            @endif
                        </div>
 
-                       <button type="submit" class="btn btn-sm btn-block text-white mb-3 mb-md-4 py-2 py-md-3" 
+                       <button type="submit" class="btn btn-sm btn-block text-white mb-3 mb-md-4 py-2 py-md-2" 
                            style="background: linear-gradient(45deg, #1B5E20, #2E7D32);
                            border-radius: 15px; transition: all 0.3s ease;">
                            <i class="fas fa-sign-in-alt mr-2"></i>Login
