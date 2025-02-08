@@ -78,12 +78,14 @@
                         Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
                     </small>
 
-
                     <div class="input-group-append mt-3">
-                        <button type="submit" class="btn btn-primary mr-3">
-                            <i class="fas fa-save mr-1"></i>
-                            {{ $existingPayment ? 'Update' : 'Save' }}
-                        </button>
+                        @if (!$existingPayment || $existingPayment->status !== 'verified')
+                            <button type="submit" class="btn btn-primary mr-3">
+                                <i class="fas fa-save mr-1"></i>
+                                {{ $existingPayment ? 'Update' : 'Save' }}
+                            </button>
+                        @endif
+
                         @if ($existingPayment && $existingPayment->file_path)
                             <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
                                 <i class="fas fa-file mr-1"></i>

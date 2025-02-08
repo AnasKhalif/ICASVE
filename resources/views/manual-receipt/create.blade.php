@@ -13,10 +13,19 @@
 
                 <form action="{{ route('admin.manual-receipt.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf 
+
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                            <i class="fas fa-check-circle mr-2"></i> {{ session('success') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="attendance">Participants Name</label>
-                        <select name="attendance" id="attendance" class="form-select" required>
+                        <select name="attendance" id="attendance" class="form-select @error('attendance') is-invalid @enderror" required>
                             @foreach($users as $user)
                                 <option value="{{ $user->id }}" {{ old('attendance') == $user->id ? 'selected' : '' }}>
                                     {{ $user->name }}
@@ -40,12 +49,29 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
+                                name="file" id="file">
+                            <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
+                        </div>
+                    </div>
+
+                    <small class="form-text text-muted mb-3">
+                        Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
+                    </small>
                        
                     <button type="submit" class="btn btn-primary">Make Receipt</button>
                 </form>
-                
-                
             </div>
+            <script>
+                document.getElementById('file').addEventListener('change', function() {
+                        var fileName = this.files[0] ? this.files[0].name : 'Choose file';
+                        document.getElementById('fileLabel').innerText = fileName;
+                    });
+            </script>
         </div>
     </div>
 @endsection
