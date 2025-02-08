@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\FilePayment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FilePaymentController extends Controller
 {
@@ -46,7 +47,9 @@ class FilePaymentController extends Controller
         if ($existingPayment) {
             $updateData = [];
             if ($request->hasFile('file')) {
-                Storage::disk('public')->delete($existingPayment->file_path);
+                if (!empty($existingPayment->file_path)) {
+                    Storage::disk('public')->delete($existingPayment->file_path);
+                }
                 $filePath = $request->file('file')->store('payments', 'public');
                 $updateData['file_path'] = $filePath;
             }
@@ -75,5 +78,12 @@ class FilePaymentController extends Controller
 
         return redirect()->route('filepayments.create')
             ->with('success', $message);
+    }
+
+    public function receipt($id)
+    {
+        $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment'));
+        return $pdf->stream('payment-digital.pdf');
     }
 }
