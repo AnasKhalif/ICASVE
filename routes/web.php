@@ -15,6 +15,7 @@ use App\Http\Controllers\Reviewer\EditorFullPaperController;
 use App\Http\Controllers\Reviewer\ReviewFullPaperController;
 use App\Http\Controllers\FilePaymentController;
 use App\Http\Controllers\Admin\AbstractsController;
+use App\Http\Controllers\landingPage;
 use App\Http\Controllers\Admin\OralController;
 use App\Http\Controllers\Admin\VerifyPaymentController;
 
@@ -27,6 +28,8 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::resource('reviewer', 'ReviewerController');
     Route::resource('symposium', 'SymposiumController');
     Route::resource('abstract', 'AbstractsController');
+    Route::get('landingpage', [landingPage::class, 'index'])->name('landingpage.index');
+    Route::resource('speakers', 'speakersController');
     Route::resource('oral', 'OralController');
     Route::get('summary', [SummaryController::class, 'index'])->name('summary');
     Route::get('payment', [VerifyPaymentController::class, 'index'])->name('payment.index');

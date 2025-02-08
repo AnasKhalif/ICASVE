@@ -1,0 +1,20 @@
+@extends('layouts.app')
+
+@section('title', 'Participants')
+
+@section('content')
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">Edit Leading Page</h4>
+                </div>
+                <div class="table-responsive pt-3 d-flex justify-content-around">
+                    <a href="{{ route('admin.speakers.index') }}" class="btn btn-md btn-danger">Speakers</a>
+                    <a class="btn btn-md btn-primary">Registration Fee</a>
+                    <a class="btn btn-md btn-warning">Location</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

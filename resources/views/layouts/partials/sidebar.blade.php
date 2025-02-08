@@ -43,12 +43,12 @@
                     <span class="menu-title">Manual Receipt</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.certificates.index') }}">
                     <i class="fa fa-file menu-icon"></i>
                     <span class="menu-title">Certificates</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.reviewer.index') }}">
                     <i class="fa fa-user menu-icon"></i>
@@ -68,8 +68,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="abstracts-book.html">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                <a class="nav-link" href="{{ route('admin.landingpage.index') }}">
+                    <i class="fa fa-home menu-icon"></i>
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
