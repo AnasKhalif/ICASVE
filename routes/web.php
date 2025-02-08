@@ -92,6 +92,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
     Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
+    Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
 });
 
 Route::middleware('auth')->group(function () {
