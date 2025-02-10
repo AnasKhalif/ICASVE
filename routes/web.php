@@ -60,15 +60,15 @@ Route::get('/conference-program', function () {
 
 Route::prefix('archive')->group(function () {
     Route::get('/2023', function () {
-        return view('landingpage.archive.2023');
-    })->name('archive.2023');
+        return view('landingpage.archive.index');
+    })->name('archive.index');
 
     Route::get('/2024', function () {
-        return view('landingpage.archive.2024');
-    })->name('archive.2024');
+        return view('landingpage.archive.index');
+    })->name('archive.index');
 
     Route::get('/2025', function () {
-        return view('landingpage.archive.2025');
+        return view('landingpage.archive.index');
     })->name('archive.2025');
 });
 
@@ -77,7 +77,7 @@ Route::get('/previous-conference', function () {
 })->name('previous.conference');
 
 Route::get('/contact', function () {
-    return view('contact');
+    return view('landingpage.contact.contact');
 })->name('contact');
 
 

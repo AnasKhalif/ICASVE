@@ -27,9 +27,9 @@
                 <li class="dropdown">
                     <a href="#"><span>Archive</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="{{ route('archive.2023') }}">ICASVE 2023</a></li>
-                        <li><a href="{{ route('archive.2024') }}">ICASVE 2024</a></li>
-                        <li><a href="{{ route('archive.2025') }}">ICASVE 2025</a></li>
+                        <li><a href="{{ route('archive.index') }}">ICASVE 2023</a></li>
+                        <li><a href="{{ route('archive.index') }}">ICASVE 2024</a></li>
+                        <li><a href="{{ route('archive.index') }}">ICASVE 2025</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('previous.conference') }}">Previous Conference</a></li>

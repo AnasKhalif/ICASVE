@@ -1834,3 +1834,10 @@ section,
 .logo-support {
   max-width: 100px;
 }
+
+@media (max-width: 450px) {
+  .pic img {
+      display: flex;
+      margin: auto;
+  }
+}
