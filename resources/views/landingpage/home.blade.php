@@ -125,7 +125,7 @@
         </div>
     </div>
 </section>
-<section id="team" class="team section">
+<section id="team-invited" class="team section">
     <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
         <h2>Invited Speakers</h2>
@@ -255,13 +255,16 @@
         <!-- Features Item -->
 
         <div class="row gy-4 align-items-center features-item">
-            <div class="col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-                <img src="{{asset('images/poster.png')}}" class="img-fluid rounded-2" alt="" />
+            <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+                <img src="{{asset('images/poster.png')}}" class="poster-md img-fluid rounded-2" alt="" />
             </div>
             <div class="col-md-7 order-2 order-md-1" data-aos="fade-up" data-aos-delay="200">
                 <div class="container section-title" data-aos="fade-up">
                     <h2>ICASVE Conference Timeline</h2>
                     <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
+                </div>
+                <div class="mb-4">
+                    <img src="{{asset('images/poster.png')}}" class="poster-sm img-fluid rounded-2" alt="" />
                 </div>
                 <table class="custom-table">
                     <thead>
@@ -446,7 +449,7 @@
                         style="width: 100%; max-width: 500px; height: auto" />
                 </div>
                 <div class="location col-md-6">
-                    <h3 class="">Convention Hall Universitas Brawijaya</h3>
+                    <h3 class="title-location">Convention Hall Universitas Brawijaya</h3>
                     <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
                     <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
                     <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank" class="btn btn-primary btn-map">See on Map</a>
@@ -471,7 +474,7 @@
 
 <section id="publications-section" class="py-5 bg-light section">
     <div class="container d-flex flex-column justify-content-center">
-        <div class="container section-title" data-aos="fade-up">
+        <div class="publications-journal container section-title" data-aos="fade-up">
             <h2>Publications</h2>
             <div><span>Publications</span> <span class="description-title"> Journal</span></div>
         </div>

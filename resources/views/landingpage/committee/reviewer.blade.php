@@ -1,9 +1,10 @@
 @extends('layouts.landing')
 @section('title', 'Home')
 @section('content')
-<section id="reviewer" class="reviewer section">
-    <div class="container section-title" data-aos="fade-up">
-        <h2>REVIEWER</h2>
+<section id="reviewer" class="steering-committee section">
+    <div class="container" data-aos="fade-up">
+        <h2 class="title-committee">REVIEWER</h2>
+        <div class="line bg-success mx-auto rounded-pill" style="height: 2px; "/>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">

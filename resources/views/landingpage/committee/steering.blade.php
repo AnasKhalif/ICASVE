@@ -2,8 +2,9 @@
 @section('title', 'Home')
 @section('content')
 <section id="steering-committee" class="steering-committee section">
-    <div class="container section-title" data-aos="fade-up">
-        <h2>STEERING COMMITTEE</h2>
+    <div class="container" data-aos="fade-up">
+        <h2 class="title-committee">STEERING COMMITTEE</h2>
+        <div class="line bg-success mx-auto rounded-pill" style="height: 2px; "/>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
