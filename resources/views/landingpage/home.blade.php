@@ -45,26 +45,28 @@
 <!-- About Section -->
 <section id="about" class="about section">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-xl-center gy-5">
-            <div class="col-xl-5 content">
+        <div class="row align-items-center justify-content-between gy-5">
+            <!-- Kolom Teks -->
+            <div class="col-12 col-xl-5 content">
                 <h3>About</h3>
                 <h2>ICASVE 2024</h2>
                 <p>
                     ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring together leading
-                    academic, researchers and practitioners to exchange and share their experiences and research results on all
-                    aspects of Entrepreneurship, Innovation and Creativity. It also provides a premier interdisciplinary platform for
-                    researchers, practitioners and educators to present and discuss the most recent innovations, trends, and concerns
-                    as well as practical challenges encountered and solutions through conference theme “Implemetation of Applied
+                    academic, researchers, and practitioners to exchange and share their experiences and research results on all
+                    aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier interdisciplinary platform for
+                    researchers, practitioners, and educators to present and discuss the most recent innovations, trends, and concerns
+                    as well as practical challenges encountered and solutions through the conference theme “Implementation of Applied
                     Science for Prosperity and Sustainability”.
                 </p>
                 <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
-
-            <div class="col-xl-7">
-                <div class="row w-100 d-flex gap-4 justify-content-between gy-4 icon-boxes">
-                    <img src="assets/images/vokasi.png" class="w-100 animated" alt="" />
-                    <!-- End Icon Box -->
-                </div>
+        
+            <!-- Spacer untuk memberikan jarak -->
+            <div class="d-none d-xl-block col-xl-2"></div>
+        
+            <!-- Kolom Gambar -->
+            <div class="col-12 col-xl-5 d-flex justify-content-end">
+                <img src="../images/Lab-Vokasi.jpg" class="w-100 w-md-75 animated rounded-3" alt="gedung-vokasi" />
             </div>
         </div>
     </div>
