@@ -56,7 +56,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="email-csv.html">
+                <a class="nav-link" href="{{ route('admin.email.csv') }}">
                     <i class="fa fa-envelope menu-icon"></i>
                     <span class="menu-title">Email CSV</span>
                 </a>
