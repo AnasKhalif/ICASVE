@@ -227,17 +227,26 @@
 <!-- Details Section -->
 <section id="details" class="details section">
     <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Details</h2>
-        <div><span>Check Our</span> <span class="description-title">Details</span></div>
-    </div>
-    <!-- End Section Title -->
+    <div id="hero-topics" class="py-5 content-topics">
+        <div class="overlay d-flex align-items-center">
+            <div class="container contents-topics text-white text-left text-md-start">
+                <h2 class="fw-bold text-white">CALL FOR PAPER</h2>
+                <p>The topics include, but are not limited to:</p>
+                <ul class="list-topics">
+                    <li>Economic and Business</li>
+                    <li>Technological Engineering</li>
+                    <li>Design Innovation</li>
+                    <li>Governance and Public Administration</li>
+                    <li>Environment and Conservation</li>
+                    <li>Corporate Social Responsibility</li>
+                    <li>Tourism and Hospitality</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
-        <div class="row gy-4 align-items-center features-item">
-            <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-                <img src="{{asset('images/details-1.png')}}" class="img-fluid" alt="" />
-            </div>
+        {{-- <div class="row gy-4 align-items-center features-item">
             <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
                 <h3>CALL FOR PAPER</h3>
                 <p class="fst-italic">The topics include, but are not limited:</p>
@@ -251,7 +260,7 @@
                     <li><i class="bi bi-check"></i> <span>Tourism and Hospitality</span></li>
                 </ul>
             </div>
-        </div>
+        </div> --}}
         <!-- Features Item -->
 
         <div class="row gy-4 align-items-center features-item">
