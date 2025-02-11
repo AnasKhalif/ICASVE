@@ -46,7 +46,6 @@
 <section id="about" class="about section">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-center justify-content-between gy-5">
-            <!-- Kolom Teks -->
             <div class="col-12 col-xl-5 content">
                 <h3>About</h3>
                 <h2>ICASVE 2024</h2>
@@ -61,10 +60,8 @@
                 <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
         
-            <!-- Spacer untuk memberikan jarak -->
             <div class="d-none d-xl-block col-xl-2"></div>
         
-            <!-- Kolom Gambar -->
             <div class="col-12 col-xl-5 d-flex justify-content-end">
                 <img src="../images/Lab-Vokasi.jpg" class="w-100 w-md-75 animated rounded-3" alt="gedung-vokasi" />
             </div>
