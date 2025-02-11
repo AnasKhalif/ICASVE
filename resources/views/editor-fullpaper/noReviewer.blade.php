@@ -14,18 +14,43 @@
                                 <th>No</th>
                                 <th class="text-center">Title</th>
                                 <th class="text-center">Symposium</th>
+                                <th class="text-center">Requested Presentation</th>
+                                <th class="text-center">Reviewer Comment</th>
                                 <th class="text-center">Assign Reviewer</th>
+                                <th class="text-center">Editor Decision</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($fullpapers as $key => $fullpaper)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td class="text-wrap">{{ $fullpaper->title }}</td>
+                                    <td class="text-wrap">{{ $fullpaper->abstract->title }}</td>
                                     <td>{{ $fullpaper->abstract->symposium->name }}</td>
+                                    <td>{{ $fullpaper->abstract->presentation_type }}</td>
+                                    <td>
+                                        @foreach ($fullpaper->fullPaperReviews as $review)
+                                            <div>
+                                                <span>Comment:</span>
+                                                <strong>{{ $review->comment ?? 'No comment' }}</strong><br><br>
+                                            </div>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @if ($fullpaper->fullPaperReviews->isEmpty())
+                                            <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
+                                                class="btn btn-sm btn-primary">Assign Reviewer</a>
+                                        @else
+                                            @foreach ($fullpaper->fullPaperReviews as $review)
+                                                <div>
+                                                    <strong>{{ $review->reviewer->name }}</strong><br>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                    </td>
                                     <td class="text-center">
-                                        <a href="{{ route('reviewer.editor.showAssignReviewer', $fullpaper->id) }}"
-                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
+                                        <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>
+                                        <a href="{{ route('reviewer.editor-fullpaper.showEditStatus', $fullpaper->id) }}"
+                                            class="btn btn-sm btn-warning">Edit Status</a>
                                     </td>
                                 </tr>
                             @empty
