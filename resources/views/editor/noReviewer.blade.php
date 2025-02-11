@@ -36,13 +36,13 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">
-                                        <!-- Check if the abstract already has a reviewer assigned -->
                                         @if ($abstract->abstractReviews->isEmpty())
                                             <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
                                                 class="btn btn-sm btn-primary">Assign Reviewer</a>
                                         @else
-                                            <!-- If there's already a reviewer, show their name -->
-                                            <strong>{{ $abstract->abstractReviews->first()->reviewer->name }}</strong>
+                                            @foreach ($abstract->abstractReviews as $review)
+                                                <strong>{{ $review->reviewer->name }} <br></strong>
+                                            @endforeach
                                         @endif
                                     </td>
                                     <td class="text-center">

@@ -21,7 +21,7 @@ class AbstractController extends Controller
      */
     public function index()
     {
-        $abstracts = AbstractModel::with(['symposium', 'fullPaper'])
+        $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'user.filePayment'])
             ->where('user_id', Auth::id())
             ->paginate(10);
         return view('abstracts.index', compact('abstracts'));

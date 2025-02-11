@@ -10,17 +10,32 @@
                 <form action="{{ route('reviewer.editor-fullpaper.assignReviewer', $fullpaper->id) }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="reviewer_id">Select Reviewer</label>
-                        <select class="form-control" name="reviewer_id" id="reviewer_id" required>
-                            <option value="">-- Select Reviewer --</option>
+                        <label for="reviewer_1_id">Select Reviewer 1</label>
+                        <select class="form-control" name="reviewer_1_id" id="reviewer_1_id" required>
+                            <option value="">-- Select Reviewer 1 --</option>
                             @foreach ($reviewers as $reviewer)
                                 <option value="{{ $reviewer->id }}"
-                                    {{ old('reviewer_id') == $reviewer->id ? 'selected' : '' }}>
-                                    {{ $reviewer->name }}</option>
+                                    {{ old('reviewer_1_id') == $reviewer->id ? 'selected' : '' }}>
+                                    {{ $reviewer->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-sm btn-success">Assign Reviewer</button>
+
+                    <div class="form-group">
+                        <label for="reviewer_2_id">Select Reviewer 2</label>
+                        <select class="form-control" name="reviewer_2_id" id="reviewer_2_id" required>
+                            <option value="">-- Select Reviewer 2 --</option>
+                            @foreach ($reviewers as $reviewer)
+                                <option value="{{ $reviewer->id }}"
+                                    {{ old('reviewer_2_id') == $reviewer->id ? 'selected' : '' }}>
+                                    {{ $reviewer->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-success">Assign Reviewers</button>
                     <a href="{{ route('reviewer.editor-fullpaper.index') }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>
             </div>

@@ -61,7 +61,17 @@ class EditorController extends Controller
     {
         $abstract = AbstractModel::findOrFail($abstractId);
 
-        $abstract->reviewers()->attach($request->reviewer_id);
+        $request->validate([
+            'reviewer_1_id' => 'required|exists:users,id',
+            'reviewer_2_id' => 'required|exists:users,id|different:reviewer_1_id',
+        ]);
+
+        $abstract->reviewers()->detach();
+
+        $abstract->reviewers()->attach([$request->reviewer_1_id, $request->reviewer_2_id]);
+
+        $abstract->status = 'under review';
+        $abstract->save();
 
         return redirect()->route('reviewer.editor.index')->with('success', 'Reviewer assigned and abstract status updated to under review');
     }
