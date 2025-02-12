@@ -19,6 +19,9 @@ use App\Http\Controllers\Admin\OralController;
 use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ManualReceiptController;
+use App\Http\Controllers\Admin\EmailCsvController;
+use App\Http\Controllers\Landing\landingPageController;
+use App\Http\Controllers\Landing\SpeakerController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -38,6 +41,7 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::post('manual-receipt', [ManualReceiptController::class, 'store'])->name('manual-receipt.store');
     Route::get('certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::put('certificates/{id}/toggle', [CertificateController::class, 'toggleStatus'])->name('certificates.toggle');
+    Route::get('email-csv', [EmailCsvController::class, 'index'])->name('email.csv');
 });
 
 Route::name('reviewer.')
@@ -84,6 +88,14 @@ Route::name('reviewer.')
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
     });
 
+Route::name('landing.')
+    ->prefix('landing')
+    ->namespace('App\Http\Controllers\Landing')
+    ->middleware(['auth', 'role:landing-editor'])
+    ->group(function () {
+        Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
+        Route::resource('speakers', 'SpeakerController');
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard');

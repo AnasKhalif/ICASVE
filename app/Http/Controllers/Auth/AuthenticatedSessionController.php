@@ -52,6 +52,14 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('reviewer.summary');
         }
 
+        $landingEditor = [
+            'landing-editor'
+        ];
+
+        if (array_intersect($roles, $landingEditor)) {
+            return redirect()->route('landing.landingpage.index');
+        }
+
         return redirect()->intended(route('admin.summary', absolute: false));
     }
 
