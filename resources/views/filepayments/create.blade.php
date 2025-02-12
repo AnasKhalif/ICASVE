@@ -45,44 +45,47 @@
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
                         File berhasil diunggah dan Jumlah pembayaran:
-                        <span id="existingAmount">Rp {{ number_format($existingPayment->amount, 0, ',', '.') }}</span>
+                        <span id="existingAmount">Rp {{ number_format($existingPayment->amount, 0, ',', '.') }} has been
+                            {{ $existingPayment->status }}</span>
                     </div>
                 @endif
 
-
                 <form action="{{ route('filepayments.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-
-                    <div class="form-group mb-4">
-                        <label for="amount">Jumlah Pembayaran (Rp)</label>
-                        <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
-                            name="amount" value="{{ old('amount') }}" placeholder="Contoh: 100000"
-                            @if (!$existingPayment) required @endif>
-                        <small class="form-text text-muted">
-                            Masukkan jumlah tanpa tanda titik atau koma
-                        </small>
-                        @error('amount')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
-                                name="file" @if (!$existingPayment) required @endif id="file">
-                            <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
+                    @if (!$existingPayment || $existingPayment->status !== 'verified')
+                        <div class="form-group mb-4">
+                            <label for="amount">Jumlah Pembayaran (Rp)</label>
+                            <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
+                                name="amount" value="{{ old('amount') }}" placeholder="Contoh: 100000"
+                                @if (!$existingPayment) required @endif>
+                            <small class="form-text text-muted">
+                                Masukkan jumlah tanpa tanda titik atau koma
+                            </small>
+                            @error('amount')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
 
-                    <small class="form-text text-muted mt-2">
-                        Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
-                    </small>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
+                                    name="file" @if (!$existingPayment) required @endif id="file">
+                                <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
+                            </div>
+                        </div>
+
+                        <small class="form-text text-muted mt-2">
+                            Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
+                        </small>
+                    @endif
 
                     <div class="input-group-append mt-3">
-                        <button type="submit" class="btn btn-primary mr-3">
-                            <i class="fas fa-save mr-1"></i>
-                            {{ $existingPayment ? 'Update' : 'Save' }}
-                        </button>
+                        @if (!$existingPayment || $existingPayment->status !== 'verified')
+                            <button type="submit" class="btn btn-primary mr-3">
+                                <i class="fas fa-save mr-1"></i>
+                                {{ $existingPayment ? 'Update' : 'Save' }}
+                            </button>
+                        @endif
                         @if ($existingPayment && $existingPayment->file_path)
                             <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
                                 <i class="fas fa-file mr-1"></i>
