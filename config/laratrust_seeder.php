@@ -53,6 +53,9 @@ return [
             'payments' => 'c',
             'abstracts' => 'c,r,u,d',
         ],
+        'landing-editor' => [
+            'speakers' => 'c,r,u,d',
+        ],
     ],
 
     'permissions_map' => [

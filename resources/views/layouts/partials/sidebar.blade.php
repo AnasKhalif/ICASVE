@@ -68,12 +68,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="abstracts-book.html">
-                    <i class="fa fa-clipboard menu-icon"></i>
-                    <span class="menu-title">Landing Page</span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="download-files.html">
                     <i class="fa fa-download menu-icon"></i>
                     <span class="menu-title">Download Files</span>
@@ -272,6 +266,19 @@
                 <a class="nav-link" href="{{ route('filepayments.create') }}">
                     <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endrole
+
+@role('landing-editor')
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Landing Page</span>
                 </a>
             </li>
         </ul>
