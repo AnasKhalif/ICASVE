@@ -23,8 +23,6 @@
 
         <!-- Login & Search -->
         <div class="d-flex align-items-center gap-3">
-            <a href="#" class="text-dark text-decoration-none fs-6 fw-regular">Register</a>
-            <a href="#" class="text-dark text-decoration-none fs-6 fw-regular">Login</a>
             <a href="#" class="text-dark text-decoration-none">
                 <i class="bi bi-search"></i> Search
             </a>

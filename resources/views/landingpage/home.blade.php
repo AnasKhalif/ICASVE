@@ -45,26 +45,25 @@
 <!-- About Section -->
 <section id="about" class="about section">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row align-items-xl-center gy-5">
-            <div class="col-xl-5 content">
+        <div class="row align-items-center justify-content-between gy-5">
+            <div class="col-12 col-xl-5 content">
                 <h3>About</h3>
                 <h2>ICASVE 2024</h2>
                 <p>
                     ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring together leading
-                    academic, researchers and practitioners to exchange and share their experiences and research results on all
-                    aspects of Entrepreneurship, Innovation and Creativity. It also provides a premier interdisciplinary platform for
-                    researchers, practitioners and educators to present and discuss the most recent innovations, trends, and concerns
-                    as well as practical challenges encountered and solutions through conference theme “Implemetation of Applied
+                    academic, researchers, and practitioners to exchange and share their experiences and research results on all
+                    aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier interdisciplinary platform for
+                    researchers, practitioners, and educators to present and discuss the most recent innovations, trends, and concerns
+                    as well as practical challenges encountered and solutions through the conference theme “Implementation of Applied
                     Science for Prosperity and Sustainability”.
                 </p>
                 <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
             </div>
-
-            <div class="col-xl-7">
-                <div class="row w-100 d-flex gap-4 justify-content-between gy-4 icon-boxes">
-                    <img src="assets/images/vokasi.png" class="w-100 animated" alt="" />
-                    <!-- End Icon Box -->
-                </div>
+        
+            <div class="d-none d-xl-block col-xl-2"></div>
+        
+            <div class="col-12 col-xl-5 d-flex justify-content-end">
+                <img src="../images/Lab-Vokasi.jpg" class="w-100 w-md-75 animated rounded-3" alt="gedung-vokasi" />
             </div>
         </div>
     </div>
@@ -224,34 +223,30 @@
 </section>
 <!-- /Team Section -->
 
+<div id="hero-topics" class="py-5 content-topics">
+    <div class="container">
+        <div class="contents-topics text-white text-left text-md-start">
+            <h2 class="fw-bold text-white mb-3">CALL FOR PAPER</h2>
+            <p>The topics include, but are not limited to:</p>
+            <ul class="list-topics">
+                <li>Economic and Business</li>
+                <li>Technological Engineering</li>
+                <li>Design Innovation</li>
+                <li>Governance and Public Administration</li>
+                <li>Environment and Conservation</li>
+                <li>Corporate Social Responsibility</li>
+                <li>Tourism and Hospitality</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 <!-- Details Section -->
 <section id="details" class="details section">
+   <div class="container"> 
     <!-- Section Title -->
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Details</h2>
-        <div><span>Check Our</span> <span class="description-title">Details</span></div>
-    </div>
     <!-- End Section Title -->
-
-    <div class="container">
-        <div class="row gy-4 align-items-center features-item">
-            <div class="col-md-5 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="100">
-                <img src="{{asset('images/details-1.png')}}" class="img-fluid" alt="" />
-            </div>
-            <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
-                <h3>CALL FOR PAPER</h3>
-                <p class="fst-italic">The topics include, but are not limited:</p>
-                <ul>
-                    <li><i class="bi bi-check"></i><span> Econimic and Business</span></li>
-                    <li><i class="bi bi-check"></i> <span>Technological Engineering</span></li>
-                    <li><i class="bi bi-check"></i> <span>Design Innovation</span></li>
-                    <li><i class="bi bi-check"></i> <span>Governance and Public Administration</span></li>
-                    <li><i class="bi bi-check"></i> <span>Environtment and Conservation</span></li>
-                    <li><i class="bi bi-check"></i> <span>Corporate Social Responsibility</span></li>
-                    <li><i class="bi bi-check"></i> <span>Tourism and Hospitality</span></li>
-                </ul>
-            </div>
-        </div>
         <!-- Features Item -->
 
         <div class="row gy-4 align-items-center features-item">

@@ -1192,6 +1192,20 @@ section,
     .details .features-item + .features-item {
         margin-top: 40px;
     }
+
+    .content-topics {
+        min-height: 18rem;
+    }
+    .list-topics li {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+    .contents-topics h2 {
+        font-size: 22px;
+    }
+    .contents-topics p {
+        font-size: 18px;
+    }
 }
 
 .details .features-item h3 {
@@ -1620,12 +1634,12 @@ section,
     }
 
     .section-title {
-        padding-bottom: 45px;
+        padding-bottom: 30px;
     }
 
     .section-title h2::after {
         margin: 5px 10px;
-        width: 70px;
+        width: 50px;
     }
     .title-location {
         margin-top: 20px;
@@ -1666,6 +1680,10 @@ section,
     #about {
         padding-top: 50px;
         padding-bottom: 0px;
+    }
+
+    #details {
+        padding-top: 20px;
     }
 }
 
@@ -1951,3 +1969,15 @@ section,
     max-width: 100px;
 }
 
+.content-topics {
+    position: relative;
+    width: 100%;
+    min-height: 22rem;
+    background: url("../images/vokasi.png") no-repeat center center/cover;
+    margin-bottom: 1rem;
+}
+.list-topics li {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-left: 20px;
+}
