@@ -68,7 +68,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="download-files.html">
+                <a class="nav-link" href="{{ route('admin.download.index') }}">
                     <i class="fa fa-download menu-icon"></i>
                     <span class="menu-title">Download Files</span>
                 </a>

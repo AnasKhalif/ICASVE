@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
 use App\Http\Controllers\Landing\landingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
+use App\Http\Controllers\Admin\DownloadController;
 
 Route::get('/', function () {
     return "Welcome to Laravel 11";
@@ -45,6 +46,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('abstract-by-symposium', [AbstractsController::class, 'showBySymposium'])->name('abstract.bySymposium');
     Route::get('abstract-download-all-pdf', [AbstractsController::class, 'downloadAllPdf'])->name('abstract.downloadAllPdf');
     Route::get('abstract-download-verified-pdf', [AbstractsController::class, 'downloadVerifiedPdf'])->name('abstract.downloadVerifiedPdf');
+    Route::get('download-files', [DownloadController::class, 'index'])->name('download.index');
+    Route::get('download/fullpaper', [DownloadController::class, 'downloadFullPaper'])->name('download.fullpaper');
+    Route::get('download/payment-proof', [DownloadController::class, 'downloadPaymentProof'])->name('download.paymentProof');
 });
 
 Route::name('reviewer.')
