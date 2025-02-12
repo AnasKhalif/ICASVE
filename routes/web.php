@@ -73,7 +73,7 @@ Route::prefix('archive')->group(function () {
 });
 
 Route::get('/previous-conference', function () {
-    return view('landingpage.previous_conference');
+    return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
 Route::get('/contact', function () {
