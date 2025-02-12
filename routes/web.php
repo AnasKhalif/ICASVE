@@ -42,6 +42,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('certificates', [CertificateController::class, 'index'])->name('certificates.index');
     Route::put('certificates/{id}/toggle', [CertificateController::class, 'toggleStatus'])->name('certificates.toggle');
     Route::get('email-csv', [EmailCsvController::class, 'index'])->name('email.csv');
+    Route::get('abstract-by-symposium', [AbstractsController::class, 'showBySymposium'])->name('abstract.bySymposium');
+    Route::get('abstract-download-all-pdf', [AbstractsController::class, 'downloadAllPdf'])->name('abstract.downloadAllPdf');
+    Route::get('abstract-download-verified-pdf', [AbstractsController::class, 'downloadVerifiedPdf'])->name('abstract.downloadVerifiedPdf');
 });
 
 Route::name('reviewer.')

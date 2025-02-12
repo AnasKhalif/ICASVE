@@ -8,6 +8,8 @@ use App\Models\AbstractModel;
 use App\Models\Symposium;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FullPaper;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\FilePayment;
 
 class AbstractsController extends Controller
 {
@@ -82,5 +84,62 @@ class AbstractsController extends Controller
     {
         $abstract->delete();
         return redirect()->route('admin.abstract.index')->with('success', 'Abstract deleted successfully');
+    }
+
+    public function showBySymposium()
+    {
+        $symposiums = Symposium::with('abstracts')->get();
+
+        foreach ($symposiums as $symposium) {
+            foreach ($symposium->abstracts as $abstract) {
+                $abstract->formattedAuthors = $this->formatAuthors($abstract->authors);
+                $abstract->formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+            }
+        }
+
+        return view('abstract.by_symposium', compact('symposiums'));
+    }
+
+    private function formatAuthors($authors)
+    {
+        return preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $authors);
+    }
+
+    private function formatAffiliations($affiliations)
+    {
+        $formattedAffiliations = preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $affiliations);
+        return nl2br($formattedAffiliations);
+    }
+
+    public function downloadAllPdf()
+    {
+        $abstracts = AbstractModel::with('symposium')->get();
+
+        foreach ($abstracts as $abstract) {
+            $abstract->formattedAuthors = $this->formatAuthors($abstract->authors);
+            $abstract->formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+        }
+
+        $pdf = PDF::loadView('abstract.all_pdf', compact('abstracts'));
+
+        return $pdf->stream('all-abstracts.pdf');
+    }
+
+    public function downloadVerifiedPdf()
+    {
+        $abstracts = AbstractModel::with('symposium')
+            ->whereHas('user.filePayment', function ($query) {
+                $query->where('status', 'verified');
+            })
+            ->get();
+
+        foreach ($abstracts as $abstract) {
+            $abstract->formattedAuthors = $this->formatAuthors($abstract->authors);
+            $abstract->formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+        }
+
+        $pdf = PDF::loadView('abstract.verified_pdf', compact('abstracts'));
+
+        return $pdf->stream('verified-abstracts.pdf');
     }
 }

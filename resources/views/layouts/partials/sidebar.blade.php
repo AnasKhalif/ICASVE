@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="abstracts-book.html">
+                <a class="nav-link" href="{{ route('admin.abstract.bySymposium') }}">
                     <i class="fa fa-clipboard menu-icon"></i>
                     <span class="menu-title">Abstracts Book</span>
                 </a>

@@ -50,7 +50,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        @if ($abstract->status === 'accepted' && $abstract->user->filePayment->status === 'verified')
+                                        @if ($abstract->status === 'accepted' && $abstract->user?->filePayment?->status === 'verified')
                                             <a href="{{ route('abstracts.acceptancePdf', $abstract->id) }}" target="_blank"
                                                 class="btn btn-primary">
                                                 Open LOA PDF
