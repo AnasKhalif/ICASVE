@@ -1685,6 +1685,13 @@ section,
     #details {
         padding-top: 20px;
     }
+
+    .teks-about {
+        order: 2;
+    }
+    .image-about {
+        order: 1;
+    }
 }
 
 /*--------------------------------------------------------------
