@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Abstracts by Symposium')
+@section('title', 'Abstracts Book')
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4">Abstracts by Symposium</h2>
+        <h2 class="mb-4">Abstracts Book</h2>
         <a href="{{ route('admin.abstract.downloadAllPdf') }}" class="btn btn-danger mb-3" target="_blank">
             <i class="fas fa-file-pdf"></i> Download All Abstracts as PDF
         </a>

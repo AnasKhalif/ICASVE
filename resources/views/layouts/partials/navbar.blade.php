@@ -4,7 +4,7 @@
          <a class="navbar-brand brand-logo mr-5" href="index.html">
              <img src="{{ asset('img/icasve_logo.jpg') }}" class="mr-2 w-10 h-15" alt="logo" />
          </a>
-         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('images/logo-mini.svg') }}"
+         <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('img/icasve_logo.jpg') }}"
                  alt="logo" /></a>
      </div>
      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">

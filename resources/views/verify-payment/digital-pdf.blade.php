@@ -77,7 +77,11 @@
 
 <body>
     <header>
-        <img src="{{ public_path('templates/letthead.png') }}" alt="Letterhead" style="width: 100%;">
+        @if ($letterHeader)
+            <img src="{{ $letterHeader }}" alt="Letterhead" style="width: 100%;">
+        @else
+            <p>No Letterhead Uploaded</p>
+        @endif
     </header>
 
     <div class="letter-wrapper">
@@ -100,7 +104,11 @@
         <p class="right-align">Sincerely,</p>
 
         <div class="signature">
-            <img src="{{ public_path('templates/signature.jpg') }}" alt="Signature">
+            @if ($signature)
+                <img src="{{ $signature }}" alt="Signature">
+            @else
+                <p>No Signature Uploaded</p>
+            @endif
             <p><strong>Dr. A. Fadida Bahama, SE.Par., M.Sc., CHE.</strong></p>
             <p>Conference Chairperson</p>
         </div>

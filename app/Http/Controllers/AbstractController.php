@@ -13,6 +13,7 @@ use App\Models\Certificate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
+use App\Models\Upload;
 
 class AbstractController extends Controller
 {
@@ -73,7 +74,13 @@ class AbstractController extends Controller
         $user = $abstract->user;
         $role = $user->roles->first()->name;
 
-        $templatePath = public_path('templates/certificate_presenter.pdf');
+        $templateUrl = Upload::getFilePath('certificate_presenter');
+        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Certificate template not found');
+        }
+
 
         $pdf = new Fpdi();
         $pdf->setSourceFile($templatePath);
@@ -244,7 +251,13 @@ class AbstractController extends Controller
     {
         $abstract = AbstractModel::with(['user'])->findOrFail($id);
 
-        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract'));
+        $letterHeaderUrl = Upload::getFilePath('letter_header');
+        $signatureUrl = Upload::getFilePath('signature');
+
+        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
+        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+
+        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature'));
 
         return $pdf->stream('abstract-acceptance.pdf');
     }
