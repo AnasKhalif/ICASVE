@@ -26,8 +26,64 @@ use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
 
 Route::get('/', function () {
-    return "Welcome to Laravel 11";
+    return view("landingpage.home");
+})->name('home');
+
+Route::prefix('committee')->group(function () {
+    Route::get('/steering', function () {
+        return view('landingpage.committee.steering');
+    })->name('committee.steering');
+
+    Route::get('/reviewer', function () {
+        return view('landingpage.committee.reviewer');
+    })->name('committee.reviewer');
+
+    Route::get('/organizing', function () {
+        return view('landingpage.committee.organizing');
+    })->name('committee.organizing');
 });
+
+Route::prefix('submission')->group(function () {
+    Route::get('/', function () {
+        return view('landingpage.submission.submission');
+    })->name('submissions');
+    Route::get('/abstract', function () {
+        return view('landingpage.submission.abstract');
+    })->name('submission.abstract');
+    Route::get('/fullpaper', function () {
+        return view('landingpage.submission.fullpaper');
+    })->name('submission.fullpaper');
+});
+
+Route::get('/gallery', function () {
+    return view('landingpage.gallery.gallery');
+})->name('gallery');
+
+Route::get('/conference-program', function () {
+    return view('landingpage.conference.program');
+})->name('conference.program');
+
+Route::prefix('archive')->group(function () {
+    Route::get('/2023', function () {
+        return view('landingpage.archive.index');
+    })->name('archive.index');
+
+    Route::get('/2024', function () {
+        return view('landingpage.archive.index');
+    })->name('archive.index');
+
+    Route::get('/2025', function () {
+        return view('landingpage.archive.index');
+    })->name('archive.2025');
+});
+
+Route::get('/previous-conference', function () {
+    return view('landingpage.prevconference.previous_conference');
+})->name('previous.conference');
+
+Route::get('/contact', function () {
+    return view('landingpage.contact.contact');
+})->name('contact');
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
