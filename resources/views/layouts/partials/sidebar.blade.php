@@ -74,7 +74,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="upload.html">
+                <a class="nav-link" href="{{ route('admin.upload.index') }}">
                     <i class="fa fa-upload menu-icon"></i>
                     <span class="menu-title">Upload</span>
                 </a>

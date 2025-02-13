@@ -18,6 +18,7 @@ use setasign\Fpdi\Fpdi;
 use App\Models\Certificate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\Upload;
 
 class RegisteredUserController extends Controller
 {
@@ -86,7 +87,12 @@ class RegisteredUserController extends Controller
     private function generateCertificate(User $user)
     {
         // Tentukan template sertifikat untuk peserta
-        $templatePath = public_path('templates/certificate_participant.pdf');
+        $templateUrl = Upload::getFilePath('certificate_participant');
+        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Certificate template not found');
+        }
 
         // Inisialisasi FPDI
         $pdf = new Fpdi();

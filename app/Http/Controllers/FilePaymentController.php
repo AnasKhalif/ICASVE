@@ -7,6 +7,7 @@ use App\Models\FilePayment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Upload;
 
 class FilePaymentController extends Controller
 {
@@ -83,7 +84,14 @@ class FilePaymentController extends Controller
     public function receipt($id)
     {
         $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
-        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment'));
+
+        $letterHeaderUrl = Upload::getFilePath('letter_header');
+        $signatureUrl = Upload::getFilePath('signature');
+
+        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
+        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+
+        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature'));
         return $pdf->stream('payment-digital.pdf');
     }
 }
