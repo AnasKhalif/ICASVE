@@ -68,7 +68,10 @@ class EditorController extends Controller
 
         $abstract->reviewers()->detach();
 
-        $abstract->reviewers()->attach([$request->reviewer_1_id, $request->reviewer_2_id]);
+        $abstract->reviewers()->attach([
+            $request->reviewer_1_id => ['created_at' => now(), 'updated_at' => now()],
+            $request->reviewer_2_id => ['created_at' => now(), 'updated_at' => now()],
+        ]);
 
         $abstract->status = 'under review';
         $abstract->save();

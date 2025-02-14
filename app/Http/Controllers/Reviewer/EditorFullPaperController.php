@@ -78,7 +78,10 @@ class EditorFullPaperController extends Controller
 
         $fullpaper->reviewers()->detach();
 
-        $fullpaper->reviewers()->attach([$request->reviewer_1_id, $request->reviewer_2_id]);
+        $fullpaper->reviewers()->attach([
+            $request->reviewer_1_id => ['created_at' => now(), 'updated_at' => now()],
+            $request->reviewer_2_id => ['created_at' => now(), 'updated_at' => now()],
+        ]);
 
         $fullpaper->status = 'under review';
         $fullpaper->save();

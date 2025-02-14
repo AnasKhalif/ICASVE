@@ -43,11 +43,11 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>
-                                        <a href="{{ route('reviewer.editor.showEditStatus', $fullpaper->id) }}"
+                                        <a href="{{ route('reviewer.editor-fullpaper.showEditStatus', $fullpaper->id) }}"
                                             class="btn btn-sm btn-warning">Edit Status</a>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('reviewer.editor.showAssignReviewer', $fullpaper->id) }}"
+                                        <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
                                             class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                 </tr>
