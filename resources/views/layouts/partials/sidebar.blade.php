@@ -80,9 +80,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="setting.html">
+                <a class="nav-link" href="{{ route('admin.settings.index') }}">
                     <i class="fa fa-cogs menu-icon"></i>
                     <span class="menu-title">Setting</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin.years.index') }}">
+                    <i class="fa fa-calendar menu-icon"></i>
+                    <span class="menu-title">Years</span>
                 </a>
             </li>
         </ul>
