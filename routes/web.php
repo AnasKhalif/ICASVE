@@ -25,6 +25,7 @@ use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\ConferenceSettingController;
+use App\Http\Controllers\Admin\YearController;
 
 Route::get('/', function () {
     return view("landingpage.home");
@@ -112,6 +113,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('upload/show/{type}', [UploadController::class, 'show'])->name('upload.show');
     Route::get('settings', [ConferenceSettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [ConferenceSettingController::class, 'update'])->name('settings.update');
+    Route::get('years', [YearController::class, 'index'])->name('years.index');
+    Route::post('years', [YearController::class, 'store'])->name('years.store');
+    Route::post('years/{id}/set-active', [YearController::class, 'setActive'])->name('years.setActive');
 });
 
 Route::name('reviewer.')
