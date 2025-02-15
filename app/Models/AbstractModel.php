@@ -38,4 +38,9 @@ class AbstractModel extends Model
     {
         return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id')->withTimestamps();
     }
+
+    public function filePayment()
+    {
+        return $this->hasOne(FilePayment::class, 'user_id', 'user_id');
+    }
 }
