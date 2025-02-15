@@ -15,32 +15,41 @@
                             <option value="non_presenter">Non-Presenter</option>
                             <option value="dditional_fee">Additional Fee</option>
                         </select>
+                        @error('role_type')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="category_name">Category Name</label>
                         <input type="text" class="form-control" name="category_name" id="category_name" required>
+                        @error('category_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="domestic_participants">Domestic Participants</label>
                         <input type="text" class="form-control" name="domestic_participants" id="domestic_participants" required>
+                        @error('domestic_participants')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="international_participants	">International Participants</label>
                         <input type="text" class="form-control" name="international_participants" id="international_participants" required>
+                        @error('international_participants')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="period_of_payment">Period of Payment</label>
                         <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" required>
+                        @error('period_of_payment')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>
             </div>
-            <script>
-                document.getElementById('image').addEventListener('change', function() {
-                    var fileName = this.files[0] ? this.files[0].name : 'Choose file';
-                    document.getElementById('fileLabel').innerText = fileName;
-                });
-            </script>
         </div>
     </div>
 @endsection

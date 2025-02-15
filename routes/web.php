@@ -164,6 +164,7 @@ Route::name('landing.')
         Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
         Route::resource('speakers', 'SpeakerController');
         Route::resource('registrationFee', 'RegistrationFeeController');
+        Route::resource('faq', 'FaqController');
     });
 
 Route::get('/dashboard', function () {

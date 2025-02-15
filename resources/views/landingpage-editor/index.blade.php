@@ -11,6 +11,7 @@
                     <a href="{{ route('landing.speakers.index') }}" class="btn btn-md btn-danger">Speakers</a>
                     <a href="{{ route('landing.registrationFee.index')}}" class="btn btn-md btn-primary">Registration Fee</a>
                     <a class="btn btn-md btn-warning">Location</a>
+                    <a href="{{ route('landing.faq.index') }}" class="btn btn-md btn-primary">FAQ</a>
                 </div>
             </div>
         </div>
