@@ -165,6 +165,7 @@ Route::name('landing.')
         Route::resource('speakers', 'SpeakerController');
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
+        Route::resource('publications-journal', 'PublicationsJournalController');
     });
 
 Route::get('/dashboard', function () {

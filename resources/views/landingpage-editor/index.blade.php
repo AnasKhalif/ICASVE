@@ -12,6 +12,7 @@
                     <a href="{{ route('landing.registrationFee.index')}}" class="btn btn-md btn-primary">Registration Fee</a>
                     <a class="btn btn-md btn-warning">Location</a>
                     <a href="{{ route('landing.faq.index') }}" class="btn btn-md btn-primary">FAQ</a>
+                    <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-md btn-primary">Publications Journal</a>
                 </div>
             </div>
         </div>
