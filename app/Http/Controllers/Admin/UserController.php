@@ -9,6 +9,9 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Traits\FlashAlert;
+use App\Models\AbstractModel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\Upload;
 
 class UserController extends Controller
 {
@@ -16,14 +19,38 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
         $rolesToDisplay = ['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'];
+
+        $totalUsers = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
+            $query->whereIn('name', $rolesToDisplay);
+        })->count();
+
+        $usersWithAbstracts = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
+            $query->whereIn('name', $rolesToDisplay);
+        })->whereHas('abstracts')->count();
+
+        $search = $request->query('search');
+
         $users = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
+        })->when($search, function ($query) use ($search) {
+            $query->where('name', 'LIKE', "%{$search}%");
         })->with('roles')->paginate(10);
-        return view('participants.index', compact('users'));
+
+        if ($request->ajax()) {
+            return response()->json([
+                'users' => $users->items(),
+                'pagination' => (string) $users->links(),
+            ]);
+        }
+
+        return view('participants.index', compact('users', 'totalUsers', 'usersWithAbstracts'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -77,7 +104,39 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('participants.detail', ['user' => User::findOrFail($id)]);
+        $user = User::with('abstracts.fullpaper', 'filePayment')->findOrFail($id);
+        return view('participants.detail', compact('user'));
+    }
+
+    public function showAbstract($id)
+    {
+        $abstract = AbstractModel::with('symposium')->findOrFail($id);
+        $formattedAuthors = $this->formatAuthors($abstract->authors);
+        $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+
+        return view('participants.detail-abstract', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+    }
+
+    public function downloadAbstractPdf($id)
+    {
+        $abstract = AbstractModel::with('symposium')->findOrFail($id);
+        $formattedAuthors = $this->formatAuthors($abstract->authors);
+        $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+
+        $pdf = Pdf::loadView('participants.pdf', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+
+        return $pdf->stream('abstract-detail.pdf');
+    }
+
+    private function formatAuthors($authors)
+    {
+        return preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $authors);
+    }
+
+    private function formatAffiliations($affiliations)
+    {
+        $formattedAffiliations = preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $affiliations);
+        return nl2br($formattedAffiliations);
     }
 
     /**
@@ -163,5 +222,20 @@ class UserController extends Controller
         } catch (ModelNotFoundException $e) {
             return redirect()->route('admin.participant.index')->with($this->alertNotFound());
         }
+    }
+
+    public function acceptancePdf($id)
+    {
+        $abstract = AbstractModel::with('user')->findOrFail($id);
+
+        $letterHeaderUrl = Upload::getFilePath('letter_header');
+        $signatureUrl = Upload::getFilePath('signature');
+
+        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
+        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+
+        $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature'));
+
+        return $pdf->stream('abstract-acceptance.pdf');
     }
 }
