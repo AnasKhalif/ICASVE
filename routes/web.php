@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
 use App\Http\Controllers\Landing\landingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
+use App\Http\Controllers\Landing\RegistrationFeeController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
 
@@ -162,6 +163,7 @@ Route::name('landing.')
     ->group(function () {
         Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
         Route::resource('speakers', 'SpeakerController');
+        Route::resource('registrationFee', 'RegistrationFeeController');
     });
 
 Route::get('/dashboard', function () {
