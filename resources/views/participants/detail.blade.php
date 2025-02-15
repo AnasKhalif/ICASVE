@@ -43,34 +43,63 @@
                 </section>
                 <section class="border rounded">
                     <header class="Card-title bg-light py-3 px-3 mb-0">
-                        <h5 class="mb-0">File</h5>
+                        <h5 class="mb-0">Information</h5>
                     </header>
-                    <div class="px-3 py-3">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <p class="mb-1"><strong>Abstract</strong></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Abstract</a>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <p class="mb-1"><strong>Decision</strong></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Decision</a>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <p class="mb-1"><strong>LETTER OF ACCEPTANCE</strong></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View LETTER OF ACCEPTANCE</a>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <p class="mb-1"><strong>Paper</strong></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Paper</a>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <p class="mb-1"><strong>Payment</strong></p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">View Payment</a>
+                    @foreach ($user->abstracts as $abstract)
+                        <div class="px-3 py-3">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1"><strong>Abstract</strong></p>
+                                    <a href="{{ route('admin.abstracts-participant.show', $abstract->id) }}"
+                                        class="btn btn-outline-primary btn-sm">View Abstract</a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1"><strong>Decision:</strong></p>
+                                    <span
+                                        class="badge 
+                                            @if ($abstract->status == 'Accepted') bg-success
+                                            @elseif ($abstract->status == 'Rejected') bg-danger
+                                            @else bg-warning @endif">
+                                        {{ ucfirst($abstract->status) }}
+                                    </span>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1"><strong>LETTER OF ACCEPTANCE</strong></p>
+                                    <a href="{{ route('admin.abstracts-participant.acceptancePdf', $abstract->id) }}"
+                                        target="_blank" class="btn btn-outline-primary btn-sm">View LOA</a>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1"><strong>Paper</strong></p>
+                                    @if ($abstract->fullPaper && $abstract->fullPaper->file_path)
+                                        <a href="{{ asset('storage/' . $abstract->fullPaper->file_path) }}" target="_blank"
+                                            class="d-block mt-1">
+                                            <i class="fa fa-download text-primary fa-2x mt-2"></i>
+                                        </a>
+                                    @else
+                                        <p class="text-muted">No Full Paper Uploaded</p>
+                                    @endif
+
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mb-1"><strong>Status Payment</strong></p>
+                                    <span
+                                        class="badge 
+                                        @if ($user->filePayment && $user->filePayment->status == 'verified') badge-success
+                                        @elseif ($user->filePayment && $user->filePayment->status == 'pending') badge-warning
+                                        @else badge-danger @endif">
+                                        {{ $user->filePayment->status ?? 'Not Submitted' }}
+                                    </span>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
+                    @endforeach
                 </section>
-                </section>
+                <div class="text-end mt-3">
+                    <a href="{{ route('admin.participant.index') }}" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Back
+                    </a>
+                </div>
             </div>
         </div>
     </div>

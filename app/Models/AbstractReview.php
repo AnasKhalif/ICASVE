@@ -9,6 +9,8 @@ class AbstractReview extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     protected $fillable = [
         'abstract_id',
         'reviewer_id',
