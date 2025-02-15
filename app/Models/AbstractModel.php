@@ -36,6 +36,6 @@ class AbstractModel extends Model
 
     public function reviewers()
     {
-        return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id');
+        return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id')->withTimestamps();
     }
 }

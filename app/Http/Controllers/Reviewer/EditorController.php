@@ -49,35 +49,50 @@ class EditorController extends Controller
 
     public function showAssignReviewer($abstractId)
     {
-        $abstract = AbstractModel::findOrFail($abstractId);
+        $abstract = AbstractModel::with('reviewers')->findOrFail($abstractId);
+
         $reviewers = User::whereHas('roles', function ($query) {
             $query->where('name', 'reviewer');
         })->get();
 
-        return view('editor.assignReviewer', compact('abstract', 'reviewers'));
+        $assignedReviewer1 = $abstract->reviewers->first() ? $abstract->reviewers[0]->id : null;
+        $assignedReviewer2 = $abstract->reviewers->count() > 1 ? $abstract->reviewers[1]->id : null;
+
+        return view('editor.assignReviewer', compact('abstract', 'reviewers', 'assignedReviewer1', 'assignedReviewer2'));
     }
+
 
     public function assignReviewer(Request $request, $abstractId)
     {
         $abstract = AbstractModel::findOrFail($abstractId);
 
         $request->validate([
-            'reviewer_1_id' => 'required|exists:users,id',
-            'reviewer_2_id' => 'required|exists:users,id|different:reviewer_1_id',
+            'reviewer_1_id' => 'nullable|exists:users,id',
+            'reviewer_2_id' => 'nullable|exists:users,id|different:reviewer_1_id',
         ]);
+
+        if (!$request->reviewer_1_id && !$request->reviewer_2_id) {
+            return back()->withErrors(['reviewer_1_id' => 'At least one reviewer must be assigned.']);
+        }
 
         $abstract->reviewers()->detach();
 
-        $abstract->reviewers()->attach([
-            $request->reviewer_1_id => ['created_at' => now(), 'updated_at' => now()],
-            $request->reviewer_2_id => ['created_at' => now(), 'updated_at' => now()],
-        ]);
+        $reviewers = [];
+        if ($request->reviewer_1_id) {
+            $reviewers[$request->reviewer_1_id] = ['created_at' => now(), 'updated_at' => now()];
+        }
+        if ($request->reviewer_2_id) {
+            $reviewers[$request->reviewer_2_id] = ['created_at' => now(), 'updated_at' => now()];
+        }
+
+        $abstract->reviewers()->attach($reviewers);
 
         $abstract->status = 'under review';
         $abstract->save();
 
-        return redirect()->route('reviewer.editor.index')->with('success', 'Reviewer assigned and abstract status updated to under review');
+        return redirect()->route('reviewer.editor.index')->with('success', 'Reviewer assigned successfully');
     }
+
 
     public function showEditStatus($abstractId)
     {
