@@ -24,7 +24,7 @@
                         <tbody>
                             @foreach ($publications_journals as $publications_journal)
                                 <tr>
-                                    <td>{{$publications_journal->id}}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{$publications_journal->image_type}}</td>
                                     <td><img src="{{ asset('storage/' . $publications_journal->image_path) }}" alt="" class="img-fluid"></td>
                                     <td>

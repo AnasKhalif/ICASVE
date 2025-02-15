@@ -23,7 +23,7 @@
                         <tbody>
                             @foreach ($faqs as $faq)
                                 <tr>
-                                    <td>{{$faq->id}}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{$faq->title}}</td>
                                     <td>
                                         <a href="{{ route('landing.faq.edit', $faq->id) }}"
