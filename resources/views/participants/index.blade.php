@@ -9,7 +9,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">Total Participants</h5>
-                        <p class="card-text fw-bold fs-4">5</p>
+                        <p class="card-text fw-bold fs-4">{{ $totalUsers }}</p>
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div class="card text-center">
                     <div class="card-body">
                         <h5 class="card-title">Uploaded Abstracts</h5>
-                        <p class="card-text fw-bold fs-4">3</p>
+                        <p class="card-text fw-bold fs-4">{{ $usersWithAbstracts }}</p>
                     </div>
                 </div>
             </div>

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'List Abstract')
+@section('title', 'Oral Presentation')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="card-title">List of Oral Presentation Abstracts</h4>
+                    <h4 class="card-title">List of Oral Presentation</h4>
                 </div>
 
                 @foreach ($symposiums as $symposium)
@@ -34,7 +34,7 @@
                                             <dt class="col-sm-3">Actions</dt>
                                             <dd class="col-sm-9">
                                                 <a href="{{ route('admin.oral.edit', $abstract->id) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</a>
                                             </dd>
                                         </dl>
                                     </div>

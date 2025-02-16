@@ -16,10 +16,48 @@ class AbstractsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $abstracts = AbstractModel::with(['symposium', 'fullPaper'])->paginate(10);
-        return view('abstract.index', compact('abstracts'));
+        $search = $request->query('search');
+
+        $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'filePayment'])
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'LIKE', "%{$search}%");
+            })
+            ->paginate(10);
+
+
+        $oralTotal = AbstractModel::where('presentation_type', 'Oral Presentation')
+            ->where('status', 'accepted')
+            ->count();
+
+        $oralPaid = AbstractModel::where('presentation_type', 'Oral Presentation')
+            ->where('status', 'accepted')
+            ->whereHas('filePayment', function ($query) {
+                $query->where('status', 'verified');
+            })
+            ->count();
+
+        $posterTotal = AbstractModel::where('presentation_type', 'Poster')
+            ->where('status', 'accepted')
+            ->count();
+
+        $posterPaid = AbstractModel::where('presentation_type', 'Poster')
+            ->where('status', 'accepted')
+            ->whereHas('filePayment', function ($query) {
+                $query->where('status', 'verified');
+            })
+            ->count();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'abstracts' => $abstracts->items(),
+                'pagination' => (string) $abstracts->links(),
+            ]);
+        }
+
+        return view('abstract.index', compact('abstracts', 'oralTotal', 'oralPaid', 'posterTotal', 'posterPaid'));
     }
 
     /**
