@@ -28,6 +28,8 @@ use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\OrganizingCommitteeController;
+use App\Http\Controllers\Landing\ContactController;
+
 
 Route::get('/', function () {
     return view("landingpage.home");
@@ -159,17 +161,18 @@ Route::name('reviewer.')
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
     });
 
-Route::name('landing.')
+    Route::name('landing.')
     ->prefix('landing')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
-        Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
-        Route::resource('speakers', 'SpeakerController');
+        Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::resource('speakers', SpeakerController::class);
         Route::resource('steering', SteeringCommitteeController::class);
         Route::resource('reviewer-committee', ReviewerCommitteeController::class);
         Route::resource('organizing', OrganizingCommitteeController::class);
-        Route::resource('registrationFee', 'RegistrationFeeController');
+        Route::resource('registrationFee', RegistrationFeeController::class);
+        Route::resource('contact', ContactController::class);
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
         Route::resource('conferance-program', 'ConferenceProgramController');

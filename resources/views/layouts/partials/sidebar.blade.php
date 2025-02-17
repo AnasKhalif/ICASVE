@@ -300,6 +300,12 @@
                     <span class="menu-title">Organizing Committe</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.contact.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Contact</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole
