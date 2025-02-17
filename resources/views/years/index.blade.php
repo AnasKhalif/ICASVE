@@ -37,12 +37,18 @@
                                 </td>
                                 <td>
                                     @if (!$year->is_active)
-                                        <form action="{{ route('admin.years.setActive', $year->id) }}" method="POST">
+                                        <form action="{{ route('admin.years.setActive', $year->id) }}" method="POST"
+                                            class="d-inline">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-warning">Set as Active</button>
+                                            <button type="submit" class="btn btn-warning btn-sm"
+                                                style="border-radius: 5px;">
+                                                <i class="fas fa-check-circle"></i> Set as Active
+                                            </button>
                                         </form>
                                     @else
-                                        <button class="btn btn-sm btn-success" disabled>Active</button>
+                                        <button class="btn btn-success btn-sm" disabled style="border-radius: 5px;">
+                                            <i class="fas fa-check-circle"></i> Active
+                                        </button>
                                     @endif
                                 </td>
                             </tr>
