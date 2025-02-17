@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Manual Receipt')
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card mt-4">
         <div class="card shadow-sm">

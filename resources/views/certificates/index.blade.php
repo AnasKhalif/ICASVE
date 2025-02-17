@@ -12,53 +12,56 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>User</th>
-                                <th>Certificate Type</th>
-                                <th>Payment Status</th>
-                                <th>File</th>
-                                <th>Status</th>
+                                <th class="text-center">No</th>
+                                <th class="text-center">User</th>
+                                <th class="text-center">Certificate Type</th>
+                                <th class="text-center">Payment Status</th>
+                                <th class="text-center">File</th>
+                                <th class="text-center">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($certificates as $key => $certificate)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $certificate->user->name }}</td>
-                                    <td>{{ $certificate->certificate_type }}</td>
-                                    <td>
+                                    <td class="text-center">{{ $key + 1 }}</td>
+                                    <td class="text-center">{{ $certificate->user->name }}</td>
+                                    <td class="text-center">{{ $certificate->certificate_type }}</td>
+                                    <td class="text-center">
                                         @if ($certificate->user->filePayment)
                                             @if ($certificate->user->filePayment->status === 'pending')
-                                                <span class="badge badge-warning">Pending</span>
+                                                <span class="badge bg-warning"><i class="fa fa-clock"></i> Pending</span>
                                             @elseif ($certificate->user->filePayment->status === 'verified')
-                                                <span class="badge badge-success">Verified</span>
+                                                <span class="badge bg-success"><i class="fa fa-check"></i> Verified</span>
                                             @else
-                                                <span class="badge badge-danger">not yet paid</span>
+                                                <span class="badge bg-danger"><i class="fa fa-times"></i> Not Yet
+                                                    Paid</span>
                                             @endif
                                         @else
-                                            <span class="badge badge-danger">not yet paid</span>
+                                            <span class="badge bg-danger"><i class="fa fa-times"></i> Not Yet Paid</span>
                                         @endif
                                     </td>
-                                    <td>
+
+                                    <td class="text-center">
                                         <a href="{{ asset('storage/' . $certificate->certificate_path) }}" target="_blank"
-                                            class="btn btn-sm btn-primary">
-                                            <i class="fa fa-file"></i> View
+                                            class="btn btn-light btn-sm" data-bs-toggle="tooltip">
+                                            <i class="fa fa-file"></i>
                                         </a>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <form action="{{ route('admin.certificates.toggle', $certificate->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status" class="form-control" onchange="this.form.submit()">
-                                                <option value="1" {{ $certificate->status ? 'selected' : '' }}>Aktif
-                                                </option>
-                                                <option value="0" {{ !$certificate->status ? 'selected' : '' }}>Non
-                                                    Aktif</option>
-                                            </select>
+                                            <div class="form-check form-switch">
+                                                <input type="hidden" name="status" value="0">
+                                                <input class="form-check-input" type="checkbox" name="status"
+                                                    value="1" id="toggle-{{ $certificate->id }}"
+                                                    onchange="this.form.submit()"
+                                                    {{ $certificate->status ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="toggle-{{ $certificate->id }}"></label>
+                                            </div>
                                         </form>
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
