@@ -84,49 +84,22 @@
 
         <div class="container">
             <div class="row gy-5">
+                @foreach ($keynoteSpeakers as $speaker)
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/ProfMuhammadAshfaq.png') }}"
+                        <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}"
                                 class="img-fluid" alt="" /></div>
                         <div class="member-info">
-                            <h4>Prof. Muhammad Ashfaq</h4>
-                            <span>IU International University</span>
+                            <h4>{{ $speaker->name }}</h4>
+                            <span>{{ $speaker->institution }}</span>
                             <div class="social">
-                                <span>Germany</span>
+                                <span>{{ $speaker->country }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
                 <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/ProfEkoGanis.png') }}" class="img-fluid"
-                                alt="" /></div>
-                        <div class="member-info">
-                            <h4>Prof. Eko Ganis Sukoharsono, Ph.D</h4>
-                            <span>Universitas Brawijaya</span>
-                            <div class="social">
-                                <span>Indonesia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/MiratulKhusnaMufida.png') }}"
-                                class="img-fluid" alt="" /></div>
-                        <div class="member-info">
-                            <h4>Miratul Khusna Mufida, Ph.D</h4>
-                            <span>Politeknik Negeri Batam</span>
-                            <div class="social">
-                                <span>Indonesia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -140,95 +113,22 @@
 
         <div class="container">
             <div class="row gy-5">
+                @foreach ($invitedSpeakers as $speaker)
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/XiaoQin.png') }}" class="img-fluid"
+                        <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}" class="img-fluid"
                                 alt="" /></div>
                         <div class="member-info">
-                            <h4>Xiao Qin, Ph.D</h4>
-                            <span>Shanghai University</span>
+                            <h4>{{ $speaker->name }}</h4>
+                            <span>{{ $speaker->institution }}</span>
                             <div class="social">
-                                <span>China</span>
+                                <span>{{ $speaker->country }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
                 <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/ProfRamayah.jpg') }}" class="img-fluid"
-                                alt="" /></div>
-                        <div class="member-info">
-                            <h4>Prof. Ramayah T</h4>
-                            <span>Universiti Sains Malaysia</span>
-                            <div class="social">
-                                <span>Malaysia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6 mb-5" data-aos="fade-up" data-aos-delay="300">
-                    <div class="member">
-                        <div class="pic">
-                            <img src="{{ asset('images/speakers/TalebRifai.png') }}" class="img-fluid" alt="" />
-                        </div>
-                        <div class="member-info">
-                            <h4>H.E. Dr. Taleb Rifai</h4>
-                            <span>Former Secretary General of UNWTO</span>
-                            <div class="social">
-                                <span>Jordan</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row gy-5">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/ProfMuhammadAshfaq.png') }}"
-                                class="img-fluid" alt="" /></div>
-                        <div class="member-info">
-                            <h4>Prof. Muhammad Ashfaq</h4>
-                            <span>IU International University</span>
-                            <div class="social">
-                                <span>Germany</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/ProfEkoGanis.png') }}" class="img-fluid"
-                                alt="" /></div>
-                        <div class="member-info">
-                            <h4>Prof. Eko Ganis Sukoharsono, Ph.D</h4>
-                            <span>Universitas Brawijaya</span>
-                            <div class="social">
-                                <span>Indonesia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Team Member -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="member">
-                        <div class="pic"><img src="{{ asset('images/speakers/MiratulKhusnaMufida.png') }}"
-                                class="img-fluid" alt="" /></div>
-                        <div class="member-info">
-                            <h4>Miratul Khusna Mufida, Ph.D</h4>
-                            <span>Politeknik Negeri Batam</span>
-                            <div class="social">
-                                <span>Indonesia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -331,18 +231,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($presenter as $fee)
                                 <tr>
-                                    <td>Regular (Early Bird)</td>
-                                    <td>IDR 2,000,000</td>
-                                    <td>US$ 200</td>
-                                    <td>Until September 20th, 2024</td>
+                                    <td>{{$fee->category_name}}</td>
+                                    <td>IDR {{number_format($fee->domestic_participants, 0, ',', '.')}} </td>
+                                    <td>US$ {{$fee->international_participants}}</td>
+                                    <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Regular</td>
-                                    <td>IDR 2,500,000</td>
-                                    <td>US$ 250</td>
-                                    <td>Until November 8th, 2024</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
@@ -356,18 +252,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($non_presenter as $fee)
                                 <tr>
-                                    <td>Additional Presenter or Attendant (Online Attendance)</td>
-                                    <td>IDR 500,000</td>
-                                    <td>US$ 50</td>
-                                    <td>Until November 8th, 2024</td>
+                                    <td>{{$fee->category_name}}</td>
+                                    <td>IDR {{number_format($fee->domestic_participants, 0, ',', '.')}}</td>
+                                    <td>US$ {{$fee->international_participants}}</td>
+                                    <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}</td>
                                 </tr>
-                                <tr>
-                                    <td>Additional Presenter or Attendant (On-Spot Attendance)</td>
-                                    <td>IDR 1,000,000</td>
-                                    <td>US$ 100</td>
-                                    <td>Until November 8th, 2024</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
@@ -381,12 +273,20 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($additional_fee as $fee)
                                 <tr>
-                                    <td>Journal Publication (Selected Article)</td>
-                                    <td>TBA</td>
-                                    <td>TBA</td>
-                                    <td>TBA</td>
+                                    <td>{{$fee->category_name}}</td>
+                                    <td>{{$fee->domestic_participants}}</td>
+                                    <td>{{$fee->international_participants}}</td>
+                                    <td>
+                                        @if (!empty($fee->period_of_payment) && $fee->period_of_payment !== 'TBA')
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
+                                        @else
+                                            {{$fee->period_of_payment}}
+                                        @endif
+                                    </td>                                    
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -480,24 +380,11 @@
                 <div><span>Publications</span> <span class="description-title"> Journal</span></div>
             </div>
             <div class="row text-center" style="display: flex; align-items: center">
+                @foreach ($publications_journal as $item)
                 <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-1.png') }}" alt="Logo 1" class="img-fluid" />
+                    <img src="{{  asset('storage/' . $item->image_path)}}" alt="Logo 1" class="img-fluid" />
                 </div>
-                <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-2.png') }}" alt="Logo 2" class="img-fluid" />
-                </div>
-                <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-3.jpg') }}" alt="Logo 3" class="img-fluid" />
-                </div>
-                <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-4.png') }}" alt="Logo 4" class="img-fluid" />
-                </div>
-                <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-5.png') }}" alt="Logo 5" class="img-fluid" />
-                </div>
-                <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                    <img src="{{ asset('images/logo/logo-6.jpeg') }}" alt="Logo 6" class="img-fluid" />
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -510,53 +397,30 @@
                 <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb;">
                     <div class="mb-4 text-center">
                         <h4 data-aos="fade-up">Hosted By</h4>
-                        <img src="{{ asset('images/logo/logo-hostedBy.png') }}" alt="Hosted Logo"
+                        @foreach ($hosted_by as $item)
+                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
                             class="img-fluid mb-2 w-50 mx-auto" data-aos="fade-up">
+                        @endforeach
                     </div>
                     <div class="text-center">
                         <h4 data-aos="fade-up">Co-Hosted By</h4>
-                        <img src="{{ asset('images/logo/logo-co1.png') }}" class="w-50 mx-auto mb-2"
+                        @foreach ($co_hosted_by as $item)
+                        <img src="{{ asset('storage/' . $item->image_path) }}" class="w-50 mx-auto mb-2"
                             alt="Co-Hosted Logo 1" class="img-fluid mb-2" data-aos="fade-up">
-                        <img src="{{ asset('images/logo/logo-co2.png') }}" class="w-50 mx-auto" alt="Co-Hosted Logo 2"
-                            class="img-fluid mb-2" data-aos="fade-up">
+                        @endforeach
+                        
                     </div>
                 </div>
                 <!-- Right Section (70%) -->
                 <div class="col-md-8 p-4">
                     <h4 class="text-center mb-4" data-aos="fade-up">Supported By</h4>
                     <div class="row text-center">
+                        @foreach ($supported_by as $item)
                         <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-7.png') }}" class="logo-support" alt="Sponsor Logo 1"
+                            <img src="{{ asset('storage/' . $item->image_path)}}" class="logo-support" alt="Sponsor Logo 1"
                                 class="img-fluid" data-aos="fade-up">
                         </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-8.png') }}" class="logo-support" alt="Sponsor Logo 2"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-9.jpg') }}" class="logo-support" alt="Sponsor Logo 3"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-10.png') }}" class="logo-support" alt="Sponsor Logo 4"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-11.jpg') }}" class="logo-support" alt="Sponsor Logo 4"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-12.png') }}" class="logo-support" alt="Sponsor Logo 4"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-13.jpeg') }}" class="logo-support" alt="Sponsor Logo 4"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <img src="{{ asset('images/logo/logo-14.png') }}" class="logo-support" alt="Sponsor Logo 4"
-                                class="img-fluid" data-aos="fade-up">
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

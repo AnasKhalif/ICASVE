@@ -28,11 +28,11 @@
                             @foreach ($registrationFees as $registrationfee)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{$registrationfee->category_name}}</td>
-                                    <td>{{$registrationfee->role_type}}</td>
-                                    <td>{{$registrationfee->domestic_participants}}</td>
-                                    <td>{{$registrationfee->international_participants}} </td>
-                                    <td>{{$registrationfee->period_of_payment}} </td>
+                                    <td>{{$registrationfee->category_name ?? 'TBA'}}</td>
+                                    <td>{{$registrationfee->role_type ?? 'TBA'}}</td>
+                                    <td>{{$registrationfee->domestic_participants ?? 'TBA'}}</td>
+                                    <td>{{$registrationfee->international_participants ?? 'TBA'}} </td>
+                                    <td>{{$registrationfee->period_of_payment ?? 'TBA'}} </td>
                                     <td>
                                         <a href="{{ route('landing.registrationFee.edit', $registrationfee->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('category_name');
             $table->string('role_type');
-            $table->integer('domestic_participants');
-            $table->integer('international_participants');
-            $table->date('period_of_payment');
+            $table->string('domestic_participants');
+            $table->string('international_participants');
+            $table->string('period_of_payment');
             $table->timestamps();
         });
     }

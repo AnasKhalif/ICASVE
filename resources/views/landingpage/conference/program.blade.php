@@ -26,36 +26,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($programs as $program)
                 <tr>
-                    <td>06:30 - 07:30</td>
-                    <td>Preparation</td>
-                    <td>-</td>
+                    <td>{{ $program->start_time }} - {{ $program->end_time }}</td>
+                    <td>{{$program->program_name}}</td>
+                    <td>{{$program->pic}}</td>
                 </tr>
-                <tr>
-                    <td>07:30 - 08:30</td>
-                    <td>Registration</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>08:30 - 08:35</td>
-                    <td>Opening by MC</td>
-                    <td>MC UB & MC Batam</td>
-                </tr>
-                <tr>
-                    <td>08:35 - 08:40</td>
-                    <td>Welcome Speech</td>
-                    <td>Conference Chair</td>
-                </tr>
-                <tr>
-                    <td>08:40 - 09:30</td>
-                    <td>Keynote Speaker 1</td>
-                    <td>Prof. Tomohiro Kuroda (Kyoto University, Japan)</td>
-                </tr>
-                <tr>
-                    <td>09:30 - 10:00</td>
-                    <td>Morning Break</td>
-                    <td>-</td>
-                </tr>
+               @endforeach
             </tbody>
         </table>
     </div>

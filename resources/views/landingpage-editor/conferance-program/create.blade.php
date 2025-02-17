@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label for="pic">PIC</label>
-                        <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic" id="pic" required>
+                        <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic" id="pic" >
                         @error('pic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

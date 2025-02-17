@@ -24,7 +24,7 @@ class PublicationsJournalController extends Controller
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['required', 'file', 'image', 'max:2048'],
+            'image_path' => ['required', 'file', 'image', 'max:2048','mimes:jpeg,png,jpg,svg'],
         ]);
 
         if ($request->hasFile('image_path')) {
@@ -45,7 +45,7 @@ class PublicationsJournalController extends Controller
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['nullable', 'file', 'image', 'max:2048'],
+            'image_path' => ['nullable', 'file', 'image', 'max:2048','mimes:jpeg,png,jpg,svg'],
         ]);
 
         if ($request->hasFile('image_path')) {

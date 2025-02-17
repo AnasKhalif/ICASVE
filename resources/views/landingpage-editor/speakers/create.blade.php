@@ -16,6 +16,10 @@
                         <input type="text" class="form-control" name="institution" id="institution" required>
                     </div>
                     <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" name="country" id="country" required>
+                    </div>
+                    <div class="form-group">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="" disabled selected>-- Select Role --</option>

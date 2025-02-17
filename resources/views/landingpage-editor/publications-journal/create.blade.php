@@ -22,7 +22,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="image_path" id="image_path" required>
-                                <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
+                                <label class="custom-file-label" for="image_path" id="image">Choose file</label>
                             </div>
                         </div>
                     </div>
@@ -30,9 +30,9 @@
                 </form>
             </div>
             <script>
-                document.getElementById('image').addEventListener('change', function() {
+                document.getElementById('image_path').addEventListener('change', function() {
                     var fileName = this.files[0] ? this.files[0].name : 'Choose file';
-                    document.getElementById('fileLabel').innerText = fileName;
+                    document.getElementById('image').innerText = fileName;
                 });
             </script>
         </div>

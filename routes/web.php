@@ -25,10 +25,17 @@ use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Landing\RegistrationFeeController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\ConferenceProgram;
+use App\Http\Controllers\GalleryLandingPage;
+use App\Http\Controllers\Landing\ConferenceProgramController;
+use App\Http\Controllers\landingpage;
 
-Route::get('/', function () {
-    return view("landingpage.home");
-})->name('home');
+
+
+Route::get('/', [landingpage::class, 'index'])->name('home');
+Route::get('/conference-program',[ConferenceProgram::class, 'index'])->name('conference.program');
+Route::get('/gallery', [GalleryLandingPage::class,'index'])->name('gallery');
+
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', function () {
@@ -55,14 +62,6 @@ Route::prefix('submission')->group(function () {
         return view('landingpage.submission.fullpaper');
     })->name('submission.fullpaper');
 });
-
-Route::get('/gallery', function () {
-    return view('landingpage.gallery.gallery');
-})->name('gallery');
-
-Route::get('/conference-program', function () {
-    return view('landingpage.conference.program');
-})->name('conference.program');
 
 Route::prefix('archive')->group(function () {
     Route::get('/2023', function () {
@@ -167,6 +166,7 @@ Route::name('landing.')
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
         Route::resource('conferance-program', 'ConferenceProgramController');
+        Route::resource('gallery', 'GalleryController');
     });
 
 Route::get('/dashboard', function () {

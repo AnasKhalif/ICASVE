@@ -13,7 +13,7 @@
                             <option value="" disabled selected>-- Select Role --</option>
                             <option value="presenter">Presenter</option>
                             <option value="non_presenter">Non-Presenter</option>
-                            <option value="dditional_fee">Additional Fee</option>
+                            <option value="additional_fee">Additional Fee</option>
                         </select>
                         @error('role_type')
                             <span class="text-danger">{{ $message }}</span>
@@ -28,21 +28,21 @@
                     </div>
                     <div class="form-group">
                         <label for="domestic_participants">Domestic Participants</label>
-                        <input type="text" class="form-control" name="domestic_participants" id="domestic_participants" required>
+                        <input type="text" class="form-control" name="domestic_participants" id="domestic_participants" >
                         @error('domestic_participants')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="international_participants	">International Participants</label>
-                        <input type="text" class="form-control" name="international_participants" id="international_participants" required>
+                        <input type="text" class="form-control" name="international_participants" id="international_participants" >
                         @error('international_participants')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="period_of_payment">Period of Payment</label>
-                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" required>
+                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" >
                         @error('period_of_payment')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

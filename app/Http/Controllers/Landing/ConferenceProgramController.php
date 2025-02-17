@@ -21,11 +21,13 @@ class ConferenceProgramController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'start_time'=> ['required', 'date_format:H:i'],
-            'end_time'=> ['required', 'date_format:H:i'],
+            'start_time'=> ['required'],
+            'end_time'=> ['required'],
             'program_name'=> ['required', 'string', 'max:255'],
-            'pic'=> ['required', 'string', 'max:255'],
+            'pic'=> ['nullable', 'string', 'max:255'],
         ]);
+
+        $validatedData['pic'] = $validatedData['pic'] ?? '-';
 
         conference_program::create($validatedData);
 
@@ -43,11 +45,13 @@ class ConferenceProgramController extends Controller
         $program = conference_program::findOrFail($id);
 
         $validatedData = $request->validate([
-            'start_time' => ['required', 'date_format:H:i'],
-            'end_time'   => ['required', 'date_format:H:i'],
+            'start_time' => ['required'],
+            'end_time'   => ['required'],
             'program_name'=> ['required', 'string', 'max:255'],
-            'pic'=> ['required', 'string', 'max:255'],
+            'pic'=> ['nullable', 'string', 'max:255'],
         ]);
+
+        $validatedData['pic'] = $validatedData['pic'] ?? '-';
 
         $program->update($validatedData);
 

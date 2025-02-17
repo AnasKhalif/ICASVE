@@ -10,10 +10,9 @@
                 <div class="table-responsive pt-3 d-flex justify-content-around">
                     <a href="{{ route('landing.speakers.index') }}" class="btn btn-md btn-danger">Speakers</a>
                     <a href="{{ route('landing.registrationFee.index')}}" class="btn btn-md btn-primary">Registration Fee</a>
-                    <a class="btn btn-md btn-warning">Location</a>
                     <a href="{{ route('landing.faq.index') }}" class="btn btn-md btn-primary">FAQ</a>
                     <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-md btn-primary">Publications Journal</a>
-                    <a href="{{ route('landing.conferance-program.index') }}" class="btn btn-md btn-danger">conferance program</a>
+                    {{-- <a href="{{ route('landing.conferance-program.index') }}" class="btn btn-md btn-danger">conferance program</a> --}}
                 </div>
             </div>
         </div>
