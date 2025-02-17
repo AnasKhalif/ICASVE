@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use App\Models\Role;
+use App\Models\Permission;
+use App\Models\User;
+use App\Models\OrganizingCommittee;
 
 class LaratrustSeeder extends Seeder
 {
@@ -31,7 +35,7 @@ class LaratrustSeeder extends Seeder
         foreach ($config as $key => $modules) {
 
             // Create a new role
-            $role = \App\Models\Role::firstOrCreate([
+            $role = Role::firstOrCreate([
                 'name' => $key,
                 'display_name' => ucwords(str_replace('_', ' ', $key)),
                 'description' => ucwords(str_replace('_', ' ', $key))
@@ -47,7 +51,7 @@ class LaratrustSeeder extends Seeder
 
                     $permissionValue = $mapPermission->get($perm);
 
-                    $permissions[] = \App\Models\Permission::firstOrCreate([
+                    $permissions[] = Permission::firstOrCreate([
                         'name' => $module . '-' . $permissionValue,
                         'display_name' => ucfirst($permissionValue) . ' ' . ucfirst($module),
                         'description' => ucfirst($permissionValue) . ' ' . ucfirst($module),
@@ -63,7 +67,7 @@ class LaratrustSeeder extends Seeder
             if (Config::get('laratrust_seeder.create_users')) {
                 $this->command->info("Creating '{$key}' user");
                 // Create default user for each role
-                $user = \App\Models\User::create([
+                $user = User::create([
                     'name' => ucwords(str_replace('_', ' ', $key)),
                     'email' => $key . '@app.test',
                     'password' => bcrypt('password')
@@ -71,6 +75,9 @@ class LaratrustSeeder extends Seeder
                 $user->addRole($role);
             }
         }
+
+        // Tambahkan Organizing Committee ke dalam database
+        $this->seedOrganizingCommittee();
     }
 
     /**
@@ -92,11 +99,39 @@ class LaratrustSeeder extends Seeder
             DB::table('permissions')->truncate();
 
             if (Config::get('laratrust_seeder.create_users')) {
-                $usersTable = (new \App\Models\User)->getTable();
+                $usersTable = (new User)->getTable();
                 DB::table($usersTable)->truncate();
             }
         }
 
         Schema::enableForeignKeyConstraints();
+    }
+
+    /**
+     * Seed Organizing Committee Data
+     *
+     * @return void
+     */
+    private function seedOrganizingCommittee()
+    {
+        $this->command->info("Seeding Organizing Committee...");
+
+        $data = [
+            ['category' => 'Chairperson', 'name' => 'Dr. Patricia Audrey R., SH., M.Kn.', 'title' => 'Chairperson', 'institution' => null],
+            ['category' => 'Vice Chairperson', 'name' => 'Dr.techn. Ir. Yusfan Adeputera Yusran, ST., MT.Ars., IPM., ASEAN Eng.', 'title' => 'Vice Chairperson', 'institution' => null],
+            ['category' => 'Secretary', 'name' => 'Dr. Indah Dwi Qurbani, S.H., M.H.', 'title' => 'Secretary', 'institution' => null],
+            ['category' => 'Secretary', 'name' => 'Felicia Nora Evelyn S.TP.', 'title' => 'Secretary', 'institution' => null],
+            ['category' => 'Treasurer', 'name' => 'Henny Rosalinda, S.IP., M.A., Ph.D.', 'title' => 'Treasurer', 'institution' => null],
+            ['category' => 'Scientific Publication', 'name' => 'Indah Yanti, S.Si., M.Si.', 'title' => 'Scientific Publication', 'institution' => null],
+            ['category' => 'Event', 'name' => 'Dr.Agr.Sc. Dimas Firmanda Al Riza, ST., M.Sc.', 'title' => 'Event', 'institution' => null],
+            ['category' => 'Hospitality', 'name' => 'Poespitasari Hazanah Ndaru, S.Pt., MP.', 'title' => 'Hospitality', 'institution' => null],
+            ['category' => 'IT, Design & Technical Support', 'name' => 'Gema Adha Hermanenda, S.Kom.', 'title' => 'IT, Design & Technical Support', 'institution' => null],
+        ];
+
+        foreach ($data as $entry) {
+            OrganizingCommittee::firstOrCreate($entry);
+        }
+
+        $this->command->info("Organizing Committee seeding completed.");
     }
 }

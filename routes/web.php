@@ -25,6 +25,9 @@ use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Landing\RegistrationFeeController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Landing\SteeringCommitteeController;
+use App\Http\Controllers\Landing\ReviewerCommitteeController;
+use App\Http\Controllers\Landing\OrganizingCommitteeController;
 
 Route::get('/', function () {
     return view("landingpage.home");
@@ -163,6 +166,9 @@ Route::name('landing.')
     ->group(function () {
         Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
         Route::resource('speakers', 'SpeakerController');
+        Route::resource('steering', SteeringCommitteeController::class);
+        Route::resource('reviewer-committee', ReviewerCommitteeController::class);
+        Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
