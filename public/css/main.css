@@ -48,7 +48,7 @@
 }
 
 .dark-background {
-    --background-color: #08005e;
+    --background-color: #0f0a41a9;
     --default-color: #ffffff;
     --heading-color: #ffffff;
     --surface-color: #0c0091;
@@ -147,7 +147,7 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-    --background-color: rgb(44, 47, 255);
+    --background-color: #3B5998;
     --default-color: #ffffff;
     --heading-color: #ffffff;
     color: var(--default-color);
@@ -180,7 +180,7 @@ h6 {
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-    --background-color: #10058c;
+    --background-color: #080057;
 }
 
 /*--------------------------------------------------------------
@@ -252,7 +252,7 @@ h6 {
     .navmenu li:hover > a:before,
     .navmenu .active:before {
         visibility: visible;
-        width: 25px;
+        width: 70%;
     }
 
     .navmenu li:hover > a,
@@ -454,7 +454,7 @@ h6 {
 --------------------------------------------------------------*/
 .footer {
     color: var(--default-color);
-    background-color: var(--background-color);
+    background-color: #080057;
     font-size: 14px;
     position: relative;
 }
@@ -798,7 +798,7 @@ section,
 --------------------------------------------------------------*/
 .hero {
     width: 100%;
-    /* min-height: 70vh; */
+    min-height: 80vh;
     position: relative;
     padding: 120px 0 120px 0;
     display: flex;
@@ -830,7 +830,7 @@ section,
 
 .hero h1 {
     margin: 0 0 20px 0;
-    font-size: 48px;
+    font-size: 78px;
     font-weight: 700;
     line-height: 56px;
     color: color-mix(in srgb, var(--heading-color), transparent 30%);
@@ -850,14 +850,14 @@ section,
 
 .hero .btn-get-started {
     color: var(--contrast-color);
-    background: var(--accent-color);
+    background: #10b842;
     font-family: var(--heading-font);
     font-weight: 400;
     font-size: 15px;
     letter-spacing: 1px;
     display: inline-block;
     padding: 10px 28px 12px 28px;
-    border-radius: 50px;
+    border-radius: 20px;
     transition: 0.5s;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
 }
@@ -896,14 +896,42 @@ section,
     animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 780px) {
     .hero h1 {
-        font-size: 28px;
+        font-size: 48px;
+        line-height: 36px;
+    }
+
+    .hero h4 {
+        font-size: 18px;
         line-height: 36px;
     }
 
     .hero p {
-        font-size: 18px;
+        font-size: 14px;
+        line-height: 24px;
+        margin-bottom: 30px;
+    }
+
+    .hero .btn-get-started,
+    .hero .btn-watch-video {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 38px;
+        line-height: 36px;
+    }
+
+    .hero h4 {
+        font-size: 14px;
+        line-height: 36px;
+    }
+
+    .hero p {
+        font-size: 12px;
         line-height: 24px;
         margin-bottom: 30px;
     }
@@ -1005,6 +1033,21 @@ section,
 
 .about .content h2 {
     font-weight: 700;
+    margin: 0.5rem 0 1rem 0;
+    transition: all 0.3s ease-in-out;
+}
+.about .content h2:hover {
+    transform: scale(1.02);
+}
+
+.about .content p {
+    line-height: 28px;
+    transition: all 0.3s ease-in-out;
+}
+
+.about .content p:hover {
+    transform: scale(1.02);
+    text-shadow: 1px 1px 5px rgba(0, 123, 255, 0.5);
 }
 
 .about .content p:last-child {
@@ -1024,6 +1067,8 @@ section,
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease-in-out;
+
 }
 
 .about .content .read-more i {
@@ -1036,10 +1081,21 @@ section,
 .about .content .read-more:hover {
     background: color-mix(in srgb, var(--accent-color), transparent 20%);
     padding-right: 19px;
+    transform: scale(1.02);
 }
 
 .about .content .read-more:hover i {
     margin-left: 10px;
+}
+
+.image-about img {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    will-change: transform, opacity;
+}
+
+.image-about:hover img {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
 }
 
 .about .icon-box {
@@ -1381,6 +1437,13 @@ section,
 --------------------------------------------------------------*/
 .team .member {
     position: relative;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.team .member:hover {
+    transform: translateY(-5px); /* Sedikit naik saat hover */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Bayangan lebih nyata */
+    background: #f8f9fa; /* Warna background sedikit lebih terang */
 }
 
 .team .member .pic {

@@ -2,21 +2,20 @@
 @section('title', 'Home')
 @section('content')
     <section id="hero" class="hero section dark-background">
-        <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
+        <img src="{{ asset('/images/Lab-Vokasi.jpg') }}" alt="" class="hero-bg" />
 
-        <div class="container">
-            <div class="row gy-4 justify-content-between">
-                <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
-                    <!-- img -->
-                </div>
+        <div class="container justify-content-center items-center text-center">
+            <div class="d-flex flex-column justify-content-center items-center text-center" data-aos="fade-in">
+                <h1>ICASVE 2025</span>
+                <h4 class="lh-base">International Conference on Applied Science for Vocational Education</h4>
+                <span class="justify-content-center mb-3">
+                    <p class="d-inline text-center px-1" style="background: #EAA829;">Implementation of Applied Science for Prosperity and Sustainability</p>
+                </span>
 
-                <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-in">
-                    <h1>International Conference on Applied Science for Vocational Education - <span> ICASVE 2025</span>
-                    </h1>
-                    <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
-                    <div class="d-flex">
-                        <a href="#about" class="btn-get-started">Register</a>
-                    </div>
+                <div class="w-28">
+                    <a href="#about" class="btn-get-started flex gap-5"><i class="fa-solid fa-user"></i> 
+                        Register <i class="fa-solid fa-arrow-right fa-lg" style="margin-left: 4px;"></i> 
+                    </a>
                 </div>
             </div>
         </div>
@@ -705,7 +704,7 @@
     <!-- /Testimonials Section -->
 
     <!-- Faq Section -->
-    <section id="faq" class="faq section light-background">
+    <section id="faq" class="faq container section light-background">
         <div class="container-fluid">
             <div class="row gy-4">
                 <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">

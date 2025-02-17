@@ -83,6 +83,10 @@ Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
+Route::get('/faq', function () {
+    return view('landingpage.faq.faq');
+})->name('faq');
+
 Route::get('/contact', function () {
     return view('landingpage.contact.contact');
 })->name('contact');
