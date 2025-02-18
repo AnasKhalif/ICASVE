@@ -166,6 +166,7 @@ class AbstractsController extends Controller
     public function downloadVerifiedPdf()
     {
         $abstracts = AbstractModel::with('symposium')
+            ->where('status', 'accepted')
             ->whereHas('user.filePayment', function ($query) {
                 $query->where('status', 'verified');
             })

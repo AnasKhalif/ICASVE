@@ -18,7 +18,15 @@ class DownloadController extends Controller
 
     public function downloadFullPaper()
     {
-        $fullPapers = FullPaper::where('status', 'verified')->get();
+        $fullPapers = FullPaper::where('status', 'accepted')
+            ->whereHas('abstract', function ($query) {
+                $query->whereHas('user', function ($subQuery) {
+                    $subQuery->whereHas('filePayment', function ($paymentQuery) {
+                        $paymentQuery->where('status', 'verified');
+                    });
+                });
+            })
+            ->get();
 
         if ($fullPapers->isEmpty()) {
             return back()->with('error', 'No verified full papers available for download.');
