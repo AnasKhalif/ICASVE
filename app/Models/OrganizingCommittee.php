@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Speaker extends Model
+class OrganizingCommittee extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'role', 'name', 'institution', 'image', 'country'
-    ];
+    protected $fillable = ['category', 'title', 'name', 'institution'];
 }

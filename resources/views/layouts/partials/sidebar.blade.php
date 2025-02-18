@@ -287,6 +287,42 @@
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.steering.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Steering Committe</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.reviewer-committee.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Reviewer</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.organizing.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Organizing Committe</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.contact.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Contact</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.conferance-program.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Conference Program</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.gallery.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Gallery</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole

@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Speaker extends Model
+class conference_program extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'role', 'name', 'institution', 'image', 'country'
+        'start_time',
+        'end_time',
+        'program_name',
+        'pic',
     ];
 }

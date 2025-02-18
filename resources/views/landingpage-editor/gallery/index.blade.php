@@ -1,38 +1,35 @@
 @extends('layouts.app')
-@section('title', 'Speaker')
+@section('title', 'Gallery')
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">Speakers</h4>
-                    <a href="{{ route('landing.speakers.create') }}" class="btn btn-sm btn-success">New Speaker</a>
+                    <h4 class="card-title">Gallery</h4>
+                    <a href="{{ route('landing.gallery.create') }}" class="btn btn-sm btn-success">New Gallery</a>
                 </div>
                 <p class="card-description">
-                    List of speakers
+                    List of Gallery
                 </p>
                 <div class="table-responsive pt-3">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>institution</th>
-                                <th>role</th>
-                                <th>Actions</th>
+                                <th>Gallery</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($speakers as $speaker)
+                            @foreach ($gallery as $image)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $speaker->name }}</td>
-                                    <td>{{ $speaker->institution }}</td>
-                                    <td> {{ str_replace('_', ' ', $speaker->role) }} </td>
+                                    <td><img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image"
+                                            style="max-width: 250px;"></td>
                                     <td>
-                                        <a href="{{ route('landing.speakers.edit', $speaker->id) }}"
+                                        <a href="{{ route('landing.gallery.edit', $image->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('landing.speakers.destroy', $speaker->id) }}" method="POST"
+                                        <form action="{{ route('landing.gallery.destroy', $image->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
@@ -48,5 +45,4 @@
             </div>
         </div>
     </div>
-
 @endsection

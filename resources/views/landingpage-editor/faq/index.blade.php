@@ -5,37 +5,31 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">Speakers</h4>
-                    <a href="{{ route('landing.speakers.create') }}" class="btn btn-sm btn-success">New Speaker</a>
+                    <h4 class="card-title">FAQ</h4>
+                    <a href="{{ route('landing.faq.create') }}" class="btn btn-sm btn-success">New FAQ</a>
                 </div>
                 <p class="card-description">
-                    List of speakers
+                    List of FAQ
                 </p>
                 <div class="table-responsive pt-3">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Name</th>
-                                <th>institution</th>
-                                <th>role</th>
+                                <th>Title</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($speakers as $speaker)
+                            @foreach ($faqs as $faq)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $speaker->name }}</td>
-                                    <td>{{ $speaker->institution }}</td>
-                                    <td> {{ str_replace('_', ' ', $speaker->role) }} </td>
+                                    <td>{{ $faq->title }}</td>
                                     <td>
-                                        <a href="{{ route('landing.speakers.edit', $speaker->id) }}"
+                                        <a href="{{ route('landing.faq.edit', $faq->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('landing.speakers.destroy', $speaker->id) }}" method="POST"
+                                        <form action=" {{ route('landing.faq.destroy', $faq->id) }}" method="POST"
                                             style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
@@ -48,5 +42,4 @@
             </div>
         </div>
     </div>
-
 @endsection

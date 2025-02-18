@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('speakers', function (Blueprint $table) {
+        Schema::create('registration_fees', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
-            $table->string('name');
-            $table->string('institution');
-            $table->string('image');
-            $table->string('country');
+            $table->string('category_name');
+            $table->string('role_type');
+            $table->string('domestic_participants');
+            $table->string('international_participants');
+            $table->string('period_of_payment');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('speakers');
+        Schema::dropIfExists('registration_fees');
     }
 };

@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('speakers', function (Blueprint $table) {
+        Schema::create('organizing_committees', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
             $table->string('name');
-            $table->string('institution');
-            $table->string('image');
-            $table->string('country');
+            $table->string('title')->nullable();
+            $table->string('institution')->nullable();
+            $table->string('category');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('speakers');
+        Schema::dropIfExists('organizing_committees');
     }
 };

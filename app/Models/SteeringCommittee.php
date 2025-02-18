@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Speaker extends Model
+class SteeringCommittee extends Model
 {
     use HasFactory;
+    protected $table = 'steering_committees';
     protected $fillable = [
-        'role', 'name', 'institution', 'image', 'country'
+        'name',
+        'title',
+        'institution',
     ];
 }
