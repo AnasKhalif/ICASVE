@@ -22,6 +22,7 @@ class GalleryController extends Controller
     public function store(Request $request){
         $validateData = $request->validate([
             'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'year' => ['required', 'string', 'max:255']
         ]);
 
         if ($request->hasFile('image_path')) {
@@ -42,7 +43,8 @@ class GalleryController extends Controller
     public function update(Request $request, $id){
         $gallery = gallery::findOrFail($id);
         $validateData = $request->validate([
-            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'image_path' => [ 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'year' => ['string', 'max:255']
         ]);
 
         if ($request->hasFile('image_path')) {
