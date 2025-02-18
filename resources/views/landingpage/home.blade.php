@@ -15,7 +15,7 @@
                     <p class="d-inline text-center">November 21st to 22nd, 2024 | Batam, Indonesia</p>
 
                     <div class="w-28">
-                        <a href="#about" class="btn-get-started flex gap-5"><i class="fa-solid fa-user"></i>
+                        <a href="/register" class="btn-get-started flex gap-5"><i class="fa-solid fa-user"></i>
                             Register <i class="fa-solid fa-arrow-right fa-lg" style="margin-left: 4px;"></i>
                         </a>
                     </div>
