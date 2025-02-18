@@ -1317,6 +1317,36 @@ section,
 }
 
 /*--------------------------------------------------------------
+# Conference Section
+--------------------------------------------------------------*/
+.conference .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 50px;
+}
+.conference h1 {
+    font-weight: bold;
+    color: #2c3e50;
+}
+.conference .table {
+    margin-top: 20px;
+}
+.conference .table thead {
+    background: #2c3e50;
+    color: white;
+}
+.conference .table tbody tr:hover {
+    background: #f1f1f1;
+    transition: 0.3s;
+}
+.conference .icon {
+    margin-right: 8px;
+    color: #1cc987;
+}
+
+/*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
 .testimonials {
