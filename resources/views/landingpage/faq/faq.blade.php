@@ -5,7 +5,7 @@
 <section id="faq" class="faq container section light-background">
     <div class="container-fluid">
         <div class="row gy-4">
-            <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+            <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1 w-100">
                 <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
                     <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
                     <p>
