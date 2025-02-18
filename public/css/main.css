@@ -246,13 +246,14 @@ h6 {
         visibility: hidden;
         width: 0px;
         transition: all 0.3s ease-in-out 0s;
+        text-align: center;
     }
 
     .navmenu a:hover:before,
     .navmenu li:hover > a:before,
     .navmenu .active:before {
         visibility: visible;
-        width: 70%;
+        width: 50%;
     }
 
     .navmenu li:hover > a,
