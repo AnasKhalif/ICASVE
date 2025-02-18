@@ -7,16 +7,18 @@
         <div class="container justify-content-center items-center text-center">
             <div class="d-flex flex-column justify-content-center items-center text-center" data-aos="fade-in">
                 <h1>ICASVE 2025</span>
-                <h4 class="lh-base">International Conference on Applied Science for Vocational Education</h4>
-                <span class="justify-content-center mb-3">
-                    <p class="d-inline text-center px-1" style="background: #EAA829;">Implementation of Applied Science for Prosperity and Sustainability</p>
-                </span>
+                    <h4 class="lh-base">International Conference on Applied Science for Vocational Education</h4>
+                    <span class="justify-content-center">
+                        <p class="d-inline text-center px-1" style="background: #EAA829;">Implementation of Applied Science
+                            for Prosperity and Sustainability</p>
+                    </span>
+                    <p class="d-inline text-center">November 21st to 22nd, 2024 | Batam, Indonesia</p>
 
-                <div class="w-28">
-                    <a href="#about" class="btn-get-started flex gap-5"><i class="fa-solid fa-user"></i> 
-                        Register <i class="fa-solid fa-arrow-right fa-lg" style="margin-left: 4px;"></i> 
-                    </a>
-                </div>
+                    <div class="w-28">
+                        <a href="#about" class="btn-get-started flex gap-5"><i class="fa-solid fa-user"></i>
+                            Register <i class="fa-solid fa-arrow-right fa-lg" style="margin-left: 4px;"></i>
+                        </a>
+                    </div>
             </div>
         </div>
 
@@ -255,21 +257,17 @@
     <!-- Details Section -->
     <section id="details" class="details section">
         <div class="container">
+            <div class="container section-title" data-aos="fade-up">
+                <h2>ICASVE Conference Timeline</h2>
+                <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
+            </div>
             <!-- Features Item -->
             <div class="row gy-4 align-items-center features-item">
-                <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
-                    data-aos-delay="200">
-                    <img src="{{ asset('images/poster.png') }}" class="poster-md img-fluid rounded-2" alt="" />
+                <div class="col-lg-5 col-md-6 d-flex justify-content-center" data-aos="zoom-out" data-aos-delay="200">
+                    <img src="{{ asset('images/poster.png') }}" class="img-fluid poster-md poster-icasve rounded-2"
+                        alt="" />
                 </div>
-                <div class="col-md-7 order-2 order-md-1">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>ICASVE Conference Timeline</h2>
-                        <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
-                    </div>
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-                        <img src="{{ asset('images/poster.png') }}" class="poster-sm img-fluid rounded-2"
-                            alt="" />
-                    </div>
+                <div class="col-lg-7 col-md-6">
                     <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
                         <thead>
                             <tr>
@@ -310,6 +308,7 @@
                     </table>
                     <a href="" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
                 </div>
+
             </div>
             <!-- Features Item -->
 
@@ -702,79 +701,6 @@
         </div>
     </section>
     <!-- /Testimonials Section -->
-
-    <!-- Faq Section -->
-    <section id="faq" class="faq container section light-background">
-        <div class="container-fluid">
-            <div class="row gy-4">
-                <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
-                    <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
-                        <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua. Duis aute irure dolor in reprehenderit
-                        </p>
-                    </div>
-
-                    <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-                        <div class="faq-item faq-active">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
-                                    curabitur gravida.
-                                    Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                    velit laoreet id donec
-                                    ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
-                                    pellentesque elit ullamcorper
-                                    dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                    pulvinar elementum
-                                    integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque
-                                    eu tincidunt.
-                                    Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed
-                                    odio morbi quis
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-                    </div>
-                </div>
-
-                <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
-                        data-aos-delay="100" />
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- /Faq Section -->
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">

@@ -844,7 +844,7 @@ section,
 .hero p {
     color: color-mix(in srgb, var(--default-color), transparent 30%);
     margin: 5px 0 30px 0;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 400;
 }
 
@@ -1178,6 +1178,10 @@ section,
 .features .features-item h3 a {
     color: var(--heading-color);
     transition: 0.3s;
+}
+
+.poster-icasve{
+    height: 40rem;
 }
 
 .features .features-item:hover {
