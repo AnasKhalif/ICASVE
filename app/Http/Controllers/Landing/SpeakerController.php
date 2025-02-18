@@ -26,7 +26,8 @@ class SpeakerController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'role' => ['required', 'string', 'max:255'],
             'institution' => ['required', 'string', 'max:255'],
-            'image' => ['required', 'file', 'image', 'max:2048'],
+            'image' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'country' => ['required', 'string', 'max:255']
         ]);
 
         if ($request->hasFile('image')) {
@@ -39,6 +40,7 @@ class SpeakerController extends Controller
             'role' => $validatedData['role'],
             'institution' => $validatedData['institution'],
             'image' => $validatedData['image'],
+            'country' => $validatedData['country']
         ]);
 
         return redirect()->route('landing.speakers.index')->with('success', 'Speaker created successfully.');
@@ -59,6 +61,7 @@ class SpeakerController extends Controller
             'role' => ['required', 'string', 'max:255'],
             'institution' => ['required', 'string', 'max:255'],
             'image' => ['nullable', 'file', 'image', 'max:2048'],
+            'country' => ['required', 'string', 'max:255']
         ]);
         if ($request->hasFile('image')) {
             if ($speaker->image) {

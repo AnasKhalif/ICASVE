@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            name="name" value="{{ old('name', $user->name) }}" placeholder="Name" required>
+                            name="name" value="{{ old('name', $user->name) }}" placeholder="E.g. Budi Utomo" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -21,7 +21,8 @@
                     <div class="form-group">
                         <label for="email">Email address</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                            name="email" value="{{ old('email', $user->email) }}" placeholder="Email" required>
+                            name="email" value="{{ old('email', $user->email) }}" placeholder="E.g. budiutomo@gmail.com"
+                            required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -30,7 +31,7 @@
                         <label for="institution">Institution</label>
                         <input type="text" class="form-control @error('institution') is-invalid @enderror"
                             id="institution" name="institution" value="{{ old('institution', $user->institution) }}"
-                            placeholder="Institution" required>
+                            placeholder="E.g. Faculty of Science, Brawijaya University" required>
                         @error('institution')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

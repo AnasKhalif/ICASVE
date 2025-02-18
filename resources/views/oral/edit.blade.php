@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Abstract Symposium')
+@section('title', 'Edit Oral Presentation')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">

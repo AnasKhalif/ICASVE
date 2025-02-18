@@ -9,6 +9,6 @@ class Speaker extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'role', 'name', 'institution', 'image'
+        'role', 'name', 'institution', 'image', 'country'
     ];
 }
