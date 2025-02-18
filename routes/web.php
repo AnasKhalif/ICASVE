@@ -167,6 +167,7 @@ Route::name('landing.')
         Route::resource('publications-journal', 'PublicationsJournalController');
         Route::resource('conferance-program', 'ConferenceProgramController');
         Route::resource('gallery', 'GalleryController');
+        Route::resource('deadline-dates', 'DeadlineDateController');
     });
 
 Route::get('/dashboard', function () {

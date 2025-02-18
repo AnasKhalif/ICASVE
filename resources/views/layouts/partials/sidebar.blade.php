@@ -293,6 +293,12 @@
                     <span class="menu-title">Gallery</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.deadline-dates.index') }}">
+                    <i class="fa fa-clipboard menu-icon"></i>
+                    <span class="menu-title">Deadline Dates</span>
+                </a>
+            </li>
         </ul>
     </nav>
     
