@@ -65,6 +65,16 @@ class SummaryController extends Controller
         $fullpaperAccepted = FullPaper::where('status', 'accepted')->count();
         $fullpaperRejected = FullPaper::where('status', 'rejected')->count();
 
+        $symposiums = Symposium::withCount([
+            'abstracts',
+            'abstracts as oral_presentation_count' => function ($query) {
+                $query->where('presentation_type', 'Oral Presentation');
+            },
+            'abstracts as poster_presentation_count' => function ($query) {
+                $query->where('presentation_type', 'Poster presentation');
+            }
+        ])->get();
+
         return view('admin.summary', compact(
             'totalUsers',
             'totalAmountPayment',
@@ -84,7 +94,8 @@ class SummaryController extends Controller
             'fullpaperUnderReview',
             'fullpaperRevision',
             'fullpaperAccepted',
-            'fullpaperRejected'
+            'fullpaperRejected',
+            'symposiums'
         ));
     }
 }
