@@ -505,7 +505,7 @@
         <div class="container">
             <div class="row">
                 <!-- Left Section (30%) -->
-                <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb;">
+                <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb; gap: 1.5rem; display: flex; flex-direction: column;">
                     <div class="mb-4 text-center">
                         <h4 data-aos="fade-up">Hosted By</h4>
                         <img src="{{ asset('images/logo/logo-hostedBy.png') }}" alt="Hosted Logo"
@@ -563,7 +563,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section dark-background">
+    {{-- <section id="testimonials" class="testimonials section dark-background">
         <img src="assets/images/testimonials-bg.jpg" class="testimonials-bg" alt="" />
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -699,7 +699,7 @@
                 <div class="swiper-pagination"></div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- /Testimonials Section -->
 
     <!-- Contact Section -->
