@@ -50,6 +50,7 @@ use App\Http\Controllers\Landing\PresentationGuidelineController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
+
 Route::get('/gallery', [GalleryLandingPage::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
@@ -99,6 +100,9 @@ Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
+Route::get('/faq', function () {
+    return view('landingpage.faq.faq');
+})->name('faq');
 Route::get('/contact', function () {
     return view('landingpage.contact.contact');
 })->name('contact');

@@ -35,6 +35,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('previous.conference') }}">Previous Conference</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
