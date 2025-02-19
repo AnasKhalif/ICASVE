@@ -37,9 +37,11 @@ use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPage;
 use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\ConferenceTitleController;
 use App\Http\Controllers\Landing\DeadlineDateController;
 use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\landingpage;
+use App\Http\Controllers\Landing\LogoController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -69,6 +71,9 @@ Route::prefix('submission')->group(function () {
     Route::get('/fullpaper', function () {
         return view('landingpage.submission.fullpaper');
     })->name('submission.fullpaper');
+    Route::get('/presentation', function () {
+        return view('landingpage.submission.presentation');
+    })->name('submission.presentation');
 });
 
 Route::prefix('archive')->group(function () {
@@ -190,6 +195,8 @@ Route::name('landing.')
         Route::resource('abouts', AboutController::class);
         Route::resource('poster', PosterController::class);
         Route::resource('deadlines', DeadlineDateController::class);
+        Route::resource('logos', LogoController::class);
+        Route::resource('conference-title', ConferenceTitleController::class);
     });
 
 Route::get('/dashboard', function () {

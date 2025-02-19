@@ -294,6 +294,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.logos.index') }}">
+                    <i class="fa-brands fa-slack menu-icon"></i>
+                    <span class="menu-title">Logo</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.poster.index') }}">
                     <i class="fa-solid fa-newspaper menu-icon"></i>
                     <span class="menu-title">Poster</span>

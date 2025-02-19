@@ -8,6 +8,7 @@
                     <h4 class="card-title">Edit Leading Page</h4>
                 </div>
                 <div class="table-responsive pt-3 d-flex justify-content-around">
+                    <a href="{{ route('landing.conference-title.index') }}" class="btn btn-md btn-danger">Title</a>
                     <a href="{{ route('landing.speakers.index') }}" class="btn btn-md btn-danger">Speakers</a>
                     <a href="{{ route('landing.registrationFee.index') }}" class="btn btn-md btn-primary">Registration
                         Fee</a>

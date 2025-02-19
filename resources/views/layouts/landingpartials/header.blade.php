@@ -21,6 +21,7 @@
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>
                         <li><a href="{{ route('submission.fullpaper') }}">Full Paper Submission</a></li>
+                        <li><a href="{{ route('submission.presentation') }}">Presentation Submission</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('gallery') }}">Gallery</a></li>
