@@ -56,7 +56,12 @@
 
                     <div class="form-group">
                         <label for="abstract">Abstract</label>
-                        <textarea class="form-control" id="abstract" name="abstract" required cols="40" rows="10">{{ old('abstract') }}</textarea>
+                        <textarea class="form-control" id="abstract" name="abstract" required cols="40" rows="10"
+                            oninput="countWords()">{{ old('abstract') }}</textarea>
+                        <small id="wordCount" class="text-muted">0 words (Max: {{ $maxWords ?? 350 }} words)</small>
+                        @error('abstract')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -65,5 +70,18 @@
             </div>
         </div>
     </div>
+    <script>
+        function countWords() {
+            let text = document.getElementById("abstract").value;
+            let words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            let maxWords = {{ $maxWords ?? 350 }};
+            document.getElementById("wordCount").innerText = words + " words (Max: " + maxWords + " words)";
+            if (words > maxWords) {
+                document.getElementById("wordCount").classList.add("text-danger");
+            } else {
+                document.getElementById("wordCount").classList.remove("text-danger");
+            }
+        }
+    </script>
 
 @endsection

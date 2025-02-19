@@ -8,7 +8,9 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="card-title">Abstracts</h4>
-                    <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">Add Abstract</a>
+                    @if ($openAbstractSubmission)
+                        <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">Add Abstract</a>
+                    @endif
                 </div>
                 <p class="card-description">
                     Abstracts submitted
@@ -65,8 +67,10 @@
                                         <a href="{{ route('abstracts.edit', $abstract->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                         @if ($abstract->status === 'accepted')
-                                            <a href="{{ route('fullpapers.create', $abstract->id) }}"
-                                                class="btn btn-sm btn-success">Upload Full Paper</a>
+                                            @if ($openFullPaperUpload)
+                                                <a href="{{ route('fullpapers.create', $abstract->id) }}"
+                                                    class="btn btn-sm btn-success">Upload Full Paper</a>
+                                            @endif
                                         @endif
 
                                         @php

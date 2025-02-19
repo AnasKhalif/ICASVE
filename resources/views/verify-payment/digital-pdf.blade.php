@@ -109,7 +109,7 @@
             @else
                 <p>No Signature Uploaded</p>
             @endif
-            <p><strong>Dr. A. Fadida Bahama, SE.Par., M.Sc., CHE.</strong></p>
+            <p><strong>{{ $conferenceChairPerson }}</strong></p>
             <p>Conference Chairperson</p>
         </div>
     </div>

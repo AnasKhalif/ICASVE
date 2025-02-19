@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
 
 class AbstractController extends Controller
 {
@@ -25,7 +26,10 @@ class AbstractController extends Controller
         $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'user.filePayment'])
             ->where('user_id', Auth::id())
             ->paginate(10);
-        return view('abstracts.index', compact('abstracts'));
+        $conferenceSetting = ConferenceSetting::first();
+        $openAbstractSubmission = $conferenceSetting->open_abstract_submission ?? false;
+        $openFullPaperUpload = $conferenceSetting->open_full_paper_upload ?? false;
+        return view('abstracts.index', compact('abstracts', 'openAbstractSubmission', 'openFullPaperUpload'));
     }
 
     /**
@@ -42,6 +46,26 @@ class AbstractController extends Controller
      */
     public function store(Request $request)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+        }
+
+        $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
+        $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
+
+        if ($currentAbstracts >= $maxAbstracts) {
+            return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+        }
+
+        $maxWords = $conferenceSetting->max_words_in_abstract_body;
+
+        $abstractWordCount = str_word_count($request->abstract);
+
+        if ($abstractWordCount > $maxWords) {
+            return redirect()->back()->withInput()->withErrors(['abstract' => "Abstract must not exceed $maxWords words. Currently: $abstractWordCount words."]);
+        }
+
         $request->validate([
             'title' => 'required',
             'authors' => 'required',
@@ -249,6 +273,8 @@ class AbstractController extends Controller
 
     public function acceptancePdf($id)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
         $abstract = AbstractModel::with(['user'])->findOrFail($id);
 
         $letterHeaderUrl = Upload::getFilePath('letter_header');
@@ -257,7 +283,7 @@ class AbstractController extends Controller
         $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
         $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature'));
+        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 
         return $pdf->stream('abstract-acceptance.pdf');
     }

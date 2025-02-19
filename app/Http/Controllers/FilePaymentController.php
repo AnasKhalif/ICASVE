@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
 
 class FilePaymentController extends Controller
 {
@@ -15,7 +16,8 @@ class FilePaymentController extends Controller
     {
         $users = Auth::user();
         $existingPayment = FilePayment::where('user_id', $users->id)->first();
-        return view('filepayments.create', compact('users', 'existingPayment'));
+        $conferenceSetting = ConferenceSetting::first();
+        return view('filepayments.create', compact('users', 'existingPayment', 'conferenceSetting'));
     }
     public function store(Request $request)
     {
@@ -83,6 +85,8 @@ class FilePaymentController extends Controller
 
     public function receipt($id)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
         $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
 
         $letterHeaderUrl = Upload::getFilePath('letter_header');
@@ -91,7 +95,7 @@ class FilePaymentController extends Controller
         $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
         $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature'));
+        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
         return $pdf->stream('payment-digital.pdf');
     }
 }

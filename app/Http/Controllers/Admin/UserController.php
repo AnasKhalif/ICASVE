@@ -13,6 +13,7 @@ use App\Models\AbstractModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
 use App\Models\Year;
+use App\Models\ConferenceSetting;
 
 class UserController extends Controller
 {
@@ -76,7 +77,8 @@ class UserController extends Controller
             'indonesia-participants',
             'foreign-participants'
         ])->get();
-        return view('participants.create', compact('roles'));
+        $conferenceSetting = ConferenceSetting::first();
+        return view('participants.create', compact('roles', 'conferenceSetting'));
     }
 
     /**
@@ -239,6 +241,8 @@ class UserController extends Controller
 
     public function acceptancePdf($id)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
         $abstract = AbstractModel::with('user')->findOrFail($id);
 
         $letterHeaderUrl = Upload::getFilePath('letter_header');
@@ -247,7 +251,7 @@ class UserController extends Controller
         $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
         $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature'));
+        $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 
         return $pdf->stream('abstract-acceptance.pdf');
     }
