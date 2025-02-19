@@ -5,12 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ConferenceSetting;
+use App\Models\Year;
 
 class ConferenceSettingController extends Controller
 {
     public function index()
     {
-        $settings = ConferenceSetting::first();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return redirect()->back()->with('error', 'No active year set.');
+        }
+
+        $settings = ConferenceSetting::whereYear('created_at', $activeYear->year)->first();
         return view('settings.index', compact('settings'));
     }
 

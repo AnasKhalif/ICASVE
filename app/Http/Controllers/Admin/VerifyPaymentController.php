@@ -9,12 +9,21 @@ use App\Models\User;
 use App\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\Year;
 
 class VerifyPaymentController extends Controller
 {
     public function index()
     {
-        $payments = FilePayment::with('user.roles')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $payments = FilePayment::with('user.roles')
+            ->whereYear('created_at', $activeYear->year)
+            ->get();
         return view('verify-payment.index', compact('payments'));
     }
 

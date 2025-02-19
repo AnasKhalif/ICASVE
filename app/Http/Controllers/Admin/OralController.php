@@ -7,14 +7,21 @@ use Illuminate\Http\Request;
 use App\Models\AbstractModel;
 use App\Models\Symposium;
 use App\Models\FullPaper;
+use App\Models\Year;
 
 class OralController extends Controller
 {
     public function index()
     {
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $symposiums = Symposium::with(['abstracts' => function ($query) {
             $query->where('presentation_type', 'Oral presentation');
-        }])->get();
+        }])->whereYear('created_at', $activeYear->year)->get();
 
         return view('oral.index', compact('symposiums'));
     }

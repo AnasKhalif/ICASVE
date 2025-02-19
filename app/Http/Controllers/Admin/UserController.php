@@ -12,6 +12,7 @@ use App\Traits\FlashAlert;
 use App\Models\AbstractModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\Year;
 
 class UserController extends Controller
 {
@@ -24,21 +25,33 @@ class UserController extends Controller
     {
         $rolesToDisplay = ['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'];
 
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $totalUsers = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->count();
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->count();
 
         $usersWithAbstracts = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->whereHas('abstracts')->count();
+        })->whereHas('abstracts')
+            ->whereYear('created_at', $activeYear->year)
+            ->count();
 
         $search = $request->query('search');
 
         $users = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', "%{$search}%");
-        })->with('roles')->paginate(10);
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })->with('roles')->paginate(10);
 
         if ($request->ajax()) {
             return response()->json([

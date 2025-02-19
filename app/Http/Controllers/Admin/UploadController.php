@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class UploadController extends Controller
 {
     public function index()
     {
-        $uploads = Upload::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+        $uploads = Upload::whereYear('created_at', $activeYear->year)->get();
         return view('upload.index', compact('uploads'));
     }
 
@@ -44,7 +50,15 @@ class UploadController extends Controller
 
     public function show($type)
     {
-        $upload = Upload::where('type', $type)->first();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return redirect()->back()->with('error', 'No active year set.');
+        }
+
+        $upload = Upload::where('type', $type)
+            ->whereYear('created_at', $activeYear->year)
+            ->first();
         if (!$upload) {
             return redirect()->back()->with('error', 'File tidak ditemukan!');
         }

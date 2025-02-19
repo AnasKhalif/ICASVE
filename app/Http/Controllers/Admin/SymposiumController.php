@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Symposium;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Traits\FlashAlert;
+use App\Models\Year;
 
 class SymposiumController extends Controller
 {
@@ -16,7 +17,15 @@ class SymposiumController extends Controller
      */
     public function index()
     {
-        $symposiums = Symposium::withCount('abstracts')->paginate(10);
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $symposiums = Symposium::withCount('abstracts')
+            ->whereYear('created_at', $activeYear->year)
+            ->paginate(10);
         return view('symposium.index', compact('symposiums'));
     }
 

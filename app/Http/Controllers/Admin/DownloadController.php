@@ -8,6 +8,7 @@ use App\Models\FullPaper;
 use App\Models\FilePayment;
 use ZipArchive;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class DownloadController extends Controller
 {
@@ -18,7 +19,14 @@ class DownloadController extends Controller
 
     public function downloadFullPaper()
     {
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $fullPapers = FullPaper::where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->whereHas('abstract', function ($query) {
                 $query->whereHas('user', function ($subQuery) {
                     $subQuery->whereHas('filePayment', function ($paymentQuery) {
@@ -54,7 +62,15 @@ class DownloadController extends Controller
      */
     public function downloadPaymentProof()
     {
-        $paymentProofs = FilePayment::where('status', 'verified')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $paymentProofs = FilePayment::where('status', 'verified')
+            ->whereYear('created_at', $activeYear->year)
+            ->get();
 
         if ($paymentProofs->isEmpty()) {
             return back()->with('error', 'No verified payment proofs available for download.');
