@@ -1,6 +1,6 @@
 @extends('layouts.landing')
 
-@section('title', 'Abstract')
+@section('title', 'Presentation')
 
 @section('content')
     <!-- Main Content -->
@@ -12,7 +12,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Abstract Submissions Guidelines</li>
+                        <li class="breadcrumb-item active" aria-current="page">Presentation</li>
                     </ol>
                 </nav>
 

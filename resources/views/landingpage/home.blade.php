@@ -4,22 +4,19 @@
     <section id="hero" class="hero section dark-background">
         <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
 
-        <div class="container">
+        <div class="container d-flex align-items-center" style="min-height: 60vh;">
             <div class="row gy-4 justify-content-between">
-                <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
-                    <!-- img -->
-                </div>
-
-                <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-in">
+                <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
                     <h1>International Conference on Applied Science for Vocational Education - <span> ICASVE 2025</span>
                     </h1>
                     <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
                     <div class="d-flex">
-                        <a href="#about" class="btn-get-started">Register</a>
+                        <a href="{{route('register')}}" target="_blank" class="btn-get-started">Register</a>
                     </div>
                 </div>
             </div>
         </div>
+        
 
         <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">
@@ -304,43 +301,6 @@
                         </small>
                     </p>
 
-                    <div class="d-flex justify-content-between align-items-center row text-center mt-5">
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="100">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <p><b>Bank Mandiri</b></p>
-                                    <p>Kode VA: 898187743</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="300">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <p><b>Bank Nasional Indonesia</b></p>
-                                    <p>Kode VA: 988081657743000</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="500">
-                            <div class="card border-danger">
-                                <div class="card-body">
-                                    <p><b>Bank Jatim</b></p>
-                                    <p>Kode VA: 151637743000</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-start mt-4" data-aos="fade-up">
-                        <button class="btn btn-success btn-sm btn-confirm">Payment Proof Upload and Attendance Confirmation
-                            -></button>
-                    </div>
                 </div>
             </div>
             <!-- Features Item -->
@@ -396,17 +356,16 @@
     <section id="hosted-supported-section" class="section">
         <div class="container">
             <div class="row">
-                <!-- Left Section (30%) -->
                 <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb;">
                     <div class="mb-4 text-center">
-                        <h4 data-aos="fade-up">Hosted By</h4>
+                        <h4 data-aos="fade-up mb-4">Hosted By</h4>
                         @foreach ($hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
                                 class="img-fluid mb-2 w-50 mx-auto" data-aos="fade-up">
                         @endforeach
                     </div>
                     <div class="text-center">
-                        <h4 data-aos="fade-up">Co-Hosted By</h4>
+                        <h4 data-aos="fade-up mb-4">Co-Hosted By</h4>
                         @foreach ($co_hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" class="w-50 mx-auto mb-2"
                                 alt="Co-Hosted Logo 1" class="img-fluid mb-2" data-aos="fade-up">
@@ -431,218 +390,78 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section dark-background">
-        <img src="assets/images/testimonials-bg.jpg" class="testimonials-bg" alt="" />
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper init-swiper">
-                <script type="application/json" class="swiper-config">
-                {
-                    "loop": true,
-                    "speed": 600,
-                    "autoplay": {
-                        "delay": 5000
-                    },
-                    "slidesPerView": "auto",
-                    "pagination": {
-                        "el": ".swiper-pagination",
-                        "type": "bullets",
-                        "clickable": true
-                    }
-                }
-            </script>
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-1.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Saul Goodman</h3>
-                            <h4>Ceo &amp; Founder</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-                                    rhoncus. Accusantium
-                                    quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-2.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Sara Wilsson</h3>
-                            <h4>Designer</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid
-                                    cillum eram malis quorum
-                                    velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-3.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Jena Karlis</h3>
-                            <h4>Store Owner</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam
-                                    duis minim tempor
-                                    labore quem eram duis noster aute amet eram fore quis sint minim.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-4.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Matt Brandon</h3>
-                            <h4>Freelancer</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat
-                                    minim velit minim
-                                    dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum
-                                    veniam.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-5.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>John Larson</h3>
-                            <h4>Entrepreneur</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster
-                                    veniam enim culpa
-                                    labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi
-                                    cillum quid.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-    <!-- /Testimonials Section -->
-
-    <!-- Faq Section -->
-    <section id="faq" class="faq section light-background">
-        <div class="container-fluid">
-            <div class="row gy-4">
-                <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
-                    <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
-                        <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua. Duis aute irure dolor in reprehenderit
-                        </p>
-                    </div>
-
-                    <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-                        <div class="faq-item faq-active">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
-                                    curabitur gravida.
-                                    Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                    velit laoreet id donec
-                                    ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
-                                    pellentesque elit ullamcorper
-                                    dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                    pulvinar elementum
-                                    integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque
-                                    eu tincidunt.
-                                    Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed
-                                    odio morbi quis
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-                    </div>
+ <!-- Faq Section -->
+<section id="faq" class="faq section light-background">
+    <div class="container-fluid">
+        <div class="row gy-4">
+            <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+                <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+                    <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit.
+                    </p>
                 </div>
 
-                <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
-                        data-aos-delay="100" />
+                <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-item faq-active">
+                        <i class="faq-icon bi bi-question-circle"></i>
+                        <h3>Non consectetur a erat nam at lectus urna duis?</h3>
+                        <div class="faq-content">
+                            <p>
+                                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
+                                curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                            </p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <!-- End Faq item -->
+
+                    <div class="faq-item">
+                        <i class="faq-icon bi bi-question-circle"></i>
+                        <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
+                        <div class="faq-content">
+                            <p>
+                                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
+                                velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec
+                                pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis
+                                massa tincidunt dui.
+                            </p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <!-- End Faq item -->
+
+                    <div class="faq-item">
+                        <i class="faq-icon bi bi-question-circle"></i>
+                        <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
+                        <div class="faq-content">
+                            <p>
+                                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
+                                pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum
+                                tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna
+                                molestie at elementum eu facilisis sed odio morbi quis.
+                            </p>
+                        </div>
+                        <i class="faq-toggle bi bi-chevron-right"></i>
+                    </div>
+                    <!-- End Faq item -->
+                  
+                <div class="text-start mt-4">
+                    <a href="" class="leaflet-button" data-aos="fade-up">More Question</a>
+                </div>
                 </div>
             </div>
+
+            <div class="col-lg-5 order-1 order-lg-2">
+                <img src="{{asset('images/faq.png')}}" class="img-fluid" alt="" data-aos="zoom-in"
+                    data-aos-delay="100" />
+            </div>
         </div>
-    </section>
-    <!-- /Faq Section -->
+    </div>
+</section>
+<!-- /Faq Section -->
+
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">

@@ -21,6 +21,7 @@
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>
                         <li><a href="{{ route('submission.fullpaper') }}">Full Paper Submission</a></li>
+                        <li><a href="{{ route('submission.presentation') }}">Presentation Submission</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('gallery') }}">Gallery</a></li>
@@ -34,6 +35,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('previous.conference') }}">Previous Conference</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Landing\FullPaperLandingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\Admin\ReviewerController;
 use App\Http\Controllers\Admin\SymposiumController;
 use App\Http\Controllers\AbstractController;
 use App\Http\Controllers\Admin\SummaryController;
-use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\Reviewer\SummaryReviewerController;
 use App\Http\Controllers\Reviewer\EditorController;
 use App\Http\Controllers\Reviewer\ReviewController;
@@ -35,11 +35,22 @@ use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
+use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\GalleryLandingPage;
+use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\AbstractGuidelineController;
+use App\Http\Controllers\Landing\AbstractLandingController;
+use App\Http\Controllers\Landing\ConferenceTitleController;
+use App\Http\Controllers\Landing\DeadlineDateController;
+use App\Http\Controllers\Landing\FullpaperGuidelineController;
+use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\landingpage;
+use App\Http\Controllers\Landing\LogoController;
+use App\Http\Controllers\Landing\PresentationGuidelineController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
+
 Route::get('/gallery', [GalleryLandingPage::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
@@ -66,6 +77,9 @@ Route::prefix('submission')->group(function () {
     Route::get('/fullpaper', function () {
         return view('landingpage.submission.fullpaper');
     })->name('submission.fullpaper');
+    Route::get('/presentation', function () {
+        return view('landingpage.submission.presentation');
+    })->name('submission.presentation');
 });
 
 Route::prefix('archive')->group(function () {
@@ -86,6 +100,9 @@ Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
+Route::get('/faq', function () {
+    return view('landingpage.faq.faq');
+})->name('faq');
 Route::get('/contact', function () {
     return view('landingpage.contact.contact');
 })->name('contact');
@@ -184,6 +201,14 @@ Route::name('landing.')
         Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
+        Route::resource('abouts', AboutController::class);
+        Route::resource('poster', PosterController::class);
+        Route::resource('deadlines', DeadlineDateController::class);
+        Route::resource('logos', LogoController::class);
+        Route::resource('conference-title', ConferenceTitleController::class);
+        Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
+        Route::resource('abstract-guidelines', AbstractGuidelineController::class);
+        Route::resource('presentation-guidelines', PresentationGuidelineController::class);
     });
 
 Route::get('/dashboard', function () {
