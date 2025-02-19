@@ -11,11 +11,14 @@
                     <a href="{{ route('landing.speakers.index') }}" class="btn btn-md btn-danger">Speakers</a>
                     <a href="{{ route('landing.registrationFee.index') }}" class="btn btn-md btn-primary">Registration
                         Fee</a>
+                    <a href="{{ route('landing.deadlines.index') }}" class="btn btn-md btn-primary">Deadline Dates</a>
                     <a class="btn btn-md btn-warning">Location</a>
                     <a href="{{ route('landing.faq.index') }}" class="btn btn-md btn-primary">FAQ</a>
                     <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-md btn-primary">Publications
                         Journal</a>
-                    <a href="{{ route('landing.steering.index') }}" class="btn btn-md btn-danger">Steering</a>
+                    <a href="{{ route('landing.poster.index') }}" class="btn btn-md btn-primary">Publications
+                        Poster</a>
+                  
                 </div>
             </div>
         </div>

@@ -6,8 +6,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="card-title">publications journal</h4>
-                    <a href="{{ route('landing.publications-journal.create') }}" class="btn btn-sm btn-success">New
-                        publications journal</a>
+                    <a href="{{ route('landing.publications-journal.create') }}" class="btn btn-sm btn-success">
+                        New publications journal</a>
                 </div>
                 <p class="card-description">
                     List of publications journal
@@ -27,7 +27,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $publications_journal->image_type }}</td>
-                                    <<td><img src="{{ asset('storage/' . $publications_journal->image_path) }}"
+                                    <td><img src="{{ asset('storage/' . $publications_journal->image_path) }}"
                                             alt="gambar" class="img-fluid"></td>
                                         <td>
                                             <a href="{{ route('landing.publications-journal.edit', $publications_journal->id) }}"

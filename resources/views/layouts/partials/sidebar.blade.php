@@ -283,31 +283,43 @@
         <ul class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-house-chimney menu-icon"></i>
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.abouts.index') }}">
+                    <i class="fa-solid fa-circle-question menu-icon"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.poster.index') }}">
+                    <i class="fa-solid fa-newspaper menu-icon"></i>
+                    <span class="menu-title">Poster</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.steering.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-users menu-icon"></i>
                     <span class="menu-title">Steering Committe</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.reviewer-committee.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-book-open-reader menu-icon"></i>
                     <span class="menu-title">Reviewer</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.organizing.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-sitemap menu-icon"></i>
                     <span class="menu-title">Organizing Committe</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.contact.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-phone-volume menu-icon"></i>
                     <span class="menu-title">Contact</span>
                 </a>
             </li>
@@ -319,7 +331,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.gallery.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-images menu-icon"></i>
                     <span class="menu-title">Gallery</span>
                 </a>
             </li>

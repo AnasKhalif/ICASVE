@@ -1,6 +1,6 @@
 @extends('layouts.landing')
 
-@section('title', 'Submission')
+@section('title', 'Fullpaper')
 
 @section('content')
 

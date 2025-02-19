@@ -36,6 +36,9 @@ use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPage;
+use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\DeadlineDateController;
+use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\landingpage;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
@@ -184,6 +187,9 @@ Route::name('landing.')
         Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
+        Route::resource('abouts', AboutController::class);
+        Route::resource('poster', PosterController::class);
+        Route::resource('deadlines', DeadlineDateController::class);
     });
 
 Route::get('/dashboard', function () {

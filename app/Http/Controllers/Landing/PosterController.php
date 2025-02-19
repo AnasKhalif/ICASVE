@@ -1,0 +1,68 @@
+<?php
+namespace App\Http\Controllers\Landing;
+
+use App\Http\Controllers\Controller;
+use App\Models\Poster;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class PosterController extends Controller {
+    public function index() {
+        $posters = Poster::latest()->get();
+        return view('landingpage-editor.poster.index', compact('posters'));
+    }
+
+    public function create() {
+        return view('landingpage-editor.poster.create');
+    }
+
+    public function store(Request $request) {
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'year' => 'required|digits:4|integer|min:2000|max:' . date('Y'),
+            'link' => 'nullable|url',
+        ]);
+    
+        $imagePath = $request->file('image')->store('posters', 'public');
+    
+        Poster::create([
+            'image' => $imagePath,
+            'year' => $request->year,
+            'link' => $request->link,
+        ]);
+    
+        return redirect()->route('landing.poster.index')->with('success', 'Poster added successfully.');
+    }
+    
+    public function update(Request $request, Poster $poster) {
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'year' => 'required|digits:4|integer|min:2000|max:' . date('Y'),
+            'link' => 'nullable|url',
+        ]);
+    
+        if ($request->hasFile('image')) {
+            Storage::delete('public/' . $poster->image);
+            $poster->image = $request->file('image')->store('posters', 'public');
+        }
+    
+        $poster->year = $request->year;
+        $poster->link = $request->link;
+        $poster->save();
+    
+        return redirect()->route('landing.poster.index')->with('success', 'Poster updated successfully.');
+    }
+    
+
+    public function edit(Poster $poster) {
+        return view('landingpage-editor.poster.edit', compact('poster'));
+    }
+
+
+    public function destroy(Poster $poster) {
+        Storage::delete('public/' . $poster->image);
+        $poster->delete();
+
+        return redirect()->route('landing.poster.index')->with('success', 'Poster deleted successfully.');
+    }
+}
