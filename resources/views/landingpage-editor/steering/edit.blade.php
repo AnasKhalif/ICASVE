@@ -12,12 +12,12 @@
                 <input type="text" class="form-control" name="name" value="{{ $steering->name }}" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" value="{{ $steering->title }}" required>
-            </div>
-            <div class="mb-3">
                 <label class="form-label">Institution</label>
                 <input type="text" class="form-control" name="institution" value="{{ $steering->institution }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-control" name="country" value="{{ $steering->country }}" required>
             </div>
             <button type="submit" class="btn btn-success">Update</button>
         </form>

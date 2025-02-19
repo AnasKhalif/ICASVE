@@ -11,12 +11,12 @@
                 <input type="text" class="form-control" name="name" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Title</label>
-                <input type="text" class="form-control" name="title" required>
-            </div>
-            <div class="mb-3">
                 <label class="form-label">Institution</label>
                 <input type="text" class="form-control" name="institution" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" class="form-control" name="country" required>
             </div>
             <button type="submit" class="btn btn-success">Save</button>
         </form>

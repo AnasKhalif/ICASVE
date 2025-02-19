@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Poster extends Model {
+class Poster extends Model
+{
     use HasFactory;
 
-    protected $fillable = ['image', 'year'];
+    protected $fillable = ['image', 'year', 'link'];
 }

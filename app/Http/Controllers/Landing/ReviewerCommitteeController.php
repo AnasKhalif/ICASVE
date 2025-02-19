@@ -21,7 +21,7 @@ class ReviewerCommitteeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
             'institution' => 'required|string|max:255',
         ]);
         ReviewerCommittee::create($request->all());
@@ -35,7 +35,7 @@ class ReviewerCommitteeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
             'institution' => 'required|string|max:255',
         ]);
         $reviewerCommittee->update($request->all());

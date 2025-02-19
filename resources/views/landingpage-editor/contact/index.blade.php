@@ -14,10 +14,8 @@
             <thead class="table-success">
                 <tr>
                     <th>No</th>
-                    <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>Website</th>
                     <th>Address</th>
                     <th>Action</th>
                 </tr>
@@ -26,10 +24,8 @@
                 @foreach ($contacts as $index => $contact)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $contact->name }}</td>
                         <td>{{ $contact->phone }}</td>
                         <td>{{ $contact->email }}</td>
-                        <td>{{ $contact->website }}</td>
                         <td>{{ $contact->address }}</td>
                         <td>
                             <a href="{{ route('landing.contact.edit', $contact->id) }}"

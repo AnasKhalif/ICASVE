@@ -16,6 +16,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="from-group">
+                        <div class="mb-3">
+                            <label class="form-label">Year</label>
+                            <input type="year" name="year" class="form-control" required>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>
             </div>

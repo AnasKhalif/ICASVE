@@ -11,12 +11,12 @@
                     </h1>
                     <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
                     <div class="d-flex">
-                        <a href="{{route('register')}}" target="_blank" class="btn-get-started">Register</a>
+                        <a href="{{ route('register') }}" target="_blank" class="btn-get-started">Register</a>
                     </div>
                 </div>
             </div>
         </div>
-        
+
 
         <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">
@@ -39,33 +39,26 @@
     <!-- About Section -->
     <section id="about" class="about section">
         <div class="container">
-            <div class="row align-items-center justify-content-between gy-5">
-                <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
-                    <h3>About</h3>
-                    <h2>ICASVE 2024</h2>
-                    <p>
-                        ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring
-                        together leading
-                        academic, researchers, and practitioners to exchange and share their experiences and research
-                        results on all
-                        aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier
-                        interdisciplinary platform for
-                        researchers, practitioners, and educators to present and discuss the most recent innovations,
-                        trends, and concerns
-                        as well as practical challenges encountered and solutions through the conference theme
-                        “Implementation of Applied
-                        Science for Prosperity and Sustainability”.
-                    </p>
-                    <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-                </div>
+            @foreach ($about as $item)
+                <div class="row align-items-center justify-content-between gy-5">
+                    <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
+                        <h3>About</h3>
+                        <h2>{{ $item->title }}</h2>
+                        <p>
+                            {{ $item->content }}
+                        </p>
+                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                    </div>
 
-                <div class="d-none d-xl-block col-xl-2"></div>
+                    <div class="d-none d-xl-block col-xl-2"></div>
 
-                <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up" data-aos-delay="100">
-                    <img src="{{ asset('/images/Lab-Vokasi.jpg') }}" class="w-100 w-md-75 animated rounded-3"
-                        alt="gedung-vokasi" />
+                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <img src="{{ asset('storage/' . $about->first()->image) }}" class="w-100 w-md-75 animated rounded-3"
+                            alt="gedung-vokasi" />
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </section>
     <!-- /About Section -->
@@ -154,61 +147,42 @@
     <section id="details" class="details section">
         <div class="container">
             <!-- Features Item -->
-            <div class="row gy-4 align-items-center features-item">
-                <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
-                    data-aos-delay="200">
-                    <img src="{{ asset('images/poster.png') }}" class="poster-md img-fluid rounded-2" alt="" />
-                </div>
-                <div class="col-md-7 order-2 order-md-1">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>ICASVE Conference Timeline</h2>
-                        <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
-                    </div>
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-                        <img src="{{ asset('images/poster.png') }}" class="poster-sm img-fluid rounded-2"
+            @foreach ($posters as $poster)
+                <div class="row gy-4 align-items-center features-item">
+                    <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
+                        data-aos-delay="200">
+                        <img src="{{ asset('storage/' . $poster->image) }}" class="poster-md img-fluid rounded-2"
                             alt="" />
                     </div>
-                    <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Abstract Submission</td>
-                                <td>July 2, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Abstract Notification</td>
-                                <td>July 3, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Participant (non-speaker) Registration Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Payment Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Conference Day</td>
-                                <td>July 17, 2024</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                    <div class="col-md-7 order-2 order-md-1">
+                        <div class="container section-title" data-aos="fade-up">
+                            <h2>ICASVE Conference Timeline</h2>
+                            <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
+                        </div>
+                        <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
+                            <img src="{{ asset('storage/' . $poster->image) }}" class="poster-sm img-fluid rounded-2"
+                                alt="" />
+                        </div>
+                        <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($deadline_date as $date)
+                                    <tr>
+                                        <td>{{ $date->name }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($date->date)->format('F j, Y') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <a href="{{ $poster->link }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                    </div>
                 </div>
-            </div>
+            @endforEach
             <!-- Features Item -->
 
             <div class="row gy-4 align-items-center features-item">
@@ -361,7 +335,7 @@
                         <h4 data-aos="fade-up mb-4">Hosted By</h4>
                         @foreach ($hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
-                                class="img-fluid mb-2 w-50 mx-auto" data-aos="fade-up">
+                                class="img-fluid mb-3 w-50 mx-auto" data-aos="fade-up">
                         @endforeach
                     </div>
                     <div class="text-center">
@@ -390,77 +364,79 @@
         </div>
     </section>
 
- <!-- Faq Section -->
-<section id="faq" class="faq section light-background">
-    <div class="container-fluid">
-        <div class="row gy-4">
-            <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
-                <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
-                    <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit.
-                    </p>
+    <!-- Faq Section -->
+    <section id="faq" class="faq section light-background">
+        <div class="container-fluid">
+            <div class="row gy-4">
+                <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1">
+                    <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
+                        <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit.
+                        </p>
+                    </div>
+
+                    <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
+                        <div class="faq-item faq-active">
+                            <i class="faq-icon bi bi-question-circle"></i>
+                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
+                            <div class="faq-content">
+                                <p>
+                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
+                                    curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus
+                                    non.
+                                </p>
+                            </div>
+                            <i class="faq-toggle bi bi-chevron-right"></i>
+                        </div>
+                        <!-- End Faq item -->
+
+                        <div class="faq-item">
+                            <i class="faq-icon bi bi-question-circle"></i>
+                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
+                            <div class="faq-content">
+                                <p>
+                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
+                                    velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec
+                                    pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus
+                                    turpis
+                                    massa tincidunt dui.
+                                </p>
+                            </div>
+                            <i class="faq-toggle bi bi-chevron-right"></i>
+                        </div>
+                        <!-- End Faq item -->
+
+                        <div class="faq-item">
+                            <i class="faq-icon bi bi-question-circle"></i>
+                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
+                            <div class="faq-content">
+                                <p>
+                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
+                                    pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum
+                                    tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna
+                                    molestie at elementum eu facilisis sed odio morbi quis.
+                                </p>
+                            </div>
+                            <i class="faq-toggle bi bi-chevron-right"></i>
+                        </div>
+                        <!-- End Faq item -->
+
+                        <div class="text-start mt-4">
+                            <a href="" class="leaflet-button" data-aos="fade-up">More Question</a>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-                    <div class="faq-item faq-active">
-                        <i class="faq-icon bi bi-question-circle"></i>
-                        <h3>Non consectetur a erat nam at lectus urna duis?</h3>
-                        <div class="faq-content">
-                            <p>
-                                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
-                                curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                            </p>
-                        </div>
-                        <i class="faq-toggle bi bi-chevron-right"></i>
-                    </div>
-                    <!-- End Faq item -->
-
-                    <div class="faq-item">
-                        <i class="faq-icon bi bi-question-circle"></i>
-                        <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
-                        <div class="faq-content">
-                            <p>
-                                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec
-                                pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis
-                                massa tincidunt dui.
-                            </p>
-                        </div>
-                        <i class="faq-toggle bi bi-chevron-right"></i>
-                    </div>
-                    <!-- End Faq item -->
-
-                    <div class="faq-item">
-                        <i class="faq-icon bi bi-question-circle"></i>
-                        <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                        <div class="faq-content">
-                            <p>
-                                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum
-                                tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna
-                                molestie at elementum eu facilisis sed odio morbi quis.
-                            </p>
-                        </div>
-                        <i class="faq-toggle bi bi-chevron-right"></i>
-                    </div>
-                    <!-- End Faq item -->
-                  
-                <div class="text-start mt-4">
-                    <a href="" class="leaflet-button" data-aos="fade-up">More Question</a>
+                <div class="col-lg-5 order-1 order-lg-2">
+                    <img src="{{ asset('images/faq.png') }}" class="img-fluid" alt="" data-aos="zoom-in"
+                        data-aos-delay="100" />
                 </div>
-                </div>
-            </div>
-
-            <div class="col-lg-5 order-1 order-lg-2">
-                <img src="{{asset('images/faq.png')}}" class="img-fluid" alt="" data-aos="zoom-in"
-                    data-aos-delay="100" />
             </div>
         </div>
-    </div>
-</section>
-<!-- /Faq Section -->
+    </section>
+    <!-- /Faq Section -->
 
 
     <!-- Contact Section -->
@@ -475,32 +451,33 @@
         <div class="container" data-aos="fade" data-aos-delay="100">
             <div class="row gy-4">
                 <div class="col-lg-4">
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                        <i class="bi bi-geo-alt flex-shrink-0"></i>
-                        <div>
-                            <h3>Address</h3>
-                            <p>Jl. Veteran 12-14 Malang City, East Java Indonesia</p>
+                    @foreach ($contacts as $contact)
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                            <i class="bi bi-geo-alt flex-shrink-0"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>{{ $contact->address }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Info Item -->
+                        <!-- End Info Item -->
 
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                        <i class="bi bi-telephone flex-shrink-0"></i>
-                        <div>
-                            <h3>Call Us</h3>
-                            <p>+6281217369484 (Kharisma)</p>
-                            <p>+6281233288666 (Sovia)</p>
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-telephone flex-shrink-0"></i>
+                            <div>
+                                <h3>Call Us</h3>
+                                <p>{{ $contact->phone }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Info Item -->
+                        <!-- End Info Item -->
 
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                        <i class="bi bi-envelope flex-shrink-0"></i>
-                        <div>
-                            <h3>Email Us</h3>
-                            <p>icasve@ub.ac.id</p>
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                            <i class="bi bi-envelope flex-shrink-0"></i>
+                            <div>
+                                <h3>Email Us</h3>
+                                <p>{{ $contact->email }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endforEach
                     <!-- End Info Item -->
                 </div>
 

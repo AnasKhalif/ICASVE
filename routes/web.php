@@ -47,6 +47,9 @@ use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\landingpage;
 use App\Http\Controllers\Landing\LogoController;
 use App\Http\Controllers\Landing\PresentationGuidelineController;
+use App\Http\Controllers\steeringLandingPage;
+use App\Http\Controllers\reviewerLandingPage;
+use App\Http\Controllers\Landing\ConferenceController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -54,13 +57,8 @@ Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('co
 Route::get('/gallery', [GalleryLandingPage::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
-    Route::get('/steering', function () {
-        return view('landingpage.committee.steering');
-    })->name('committee.steering');
-
-    Route::get('/reviewer', function () {
-        return view('landingpage.committee.reviewer');
-    })->name('committee.reviewer');
+    Route::get('/steering', [steeringLandingPage::class, 'index'])->name('committee.steering');
+    Route::get('/reviewer', [reviewerLandingPage::class, 'index'])->name('committee.reviewer');
 
     Route::get('/organizing', function () {
         return view('landingpage.committee.organizing');
@@ -205,6 +203,7 @@ Route::name('landing.')
         Route::resource('poster', PosterController::class);
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
+        Route::resource('conference', ConferenceController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);

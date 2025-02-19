@@ -11,7 +11,7 @@ class SteeringCommittee extends Model
     protected $table = 'steering_committees';
     protected $fillable = [
         'name',
-        'title',
         'institution',
+        'country',
     ];
 }
