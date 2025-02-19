@@ -13,8 +13,10 @@
                     <div class="row">
                         <div class="col-md-6">
                             <ul class="list-unstyled">
-                                <li><strong>Chairperson</strong><br>Dr. Patricia Audrey R., SH., M.Kn.</li>
-                                <li><strong>Vice Chairperson</strong><br>Dr.techn. Ir. Yusfan Adeputera Yusran, ST.,
+                                <li><strong>Chairperson</strong>
+                                    <br>Dr. Patricia Audrey R., SH., M.Kn.</li>
+                                <li><strong>Vice Chairperson</strong>
+                                    <br>Dr.techn. Ir. Yusfan Adeputera Yusran, ST.,
                                     MT.Ars., IPM., ASEAN Eng.</li>
                                 <li>
                                     <strong>Secretary</strong><br>

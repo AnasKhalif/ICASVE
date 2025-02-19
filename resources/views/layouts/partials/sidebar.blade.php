@@ -347,6 +347,12 @@
                     <span class="menu-title">Gallery</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.conference.index') }}">
+                    <i class="fa-solid fa-images menu-icon"></i>
+                    <span class="menu-title">Conference</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole

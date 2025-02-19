@@ -4,39 +4,32 @@
     <section id="steering-committee" class="steering-committee section">
         <div class="container" data-aos="fade-up">
             <h2 class="title-committee">STEERING COMMITTEE</h2>
-            <div class="line bg-success mx-auto rounded-pill" style="height: 2px; " />
+            <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="committee-container">
+                @php
+                    $committeeArray = $steeringCommittee->toArray(); 
+                    $totalItems = count($committeeArray);
+                    $half = ceil($totalItems / 2);
+                    $firstColumn = array_slice($committeeArray, 0, $half);
+                    $secondColumn = array_slice($committeeArray, $half);
+                @endphp
+
                 <div class="committee-column">
                     <ol>
-                        <li>Prof. Dr. Ir. Imam Santoso, MP. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Rosihan Asmara, S.E., M.P. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Nurjannah, S.Si., M.Phil., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Milda Istiqomah, S.H., MTCP., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Endrika Widyastuti, S.Pt., M.Sc., M.P., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Rizki Prafitri, S.Pt., M.A., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Prof. Dr. Titin Andri Wihastuti, S.Kp., M.Kes. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Prof. Dr.Sc. Asep Awaludin Prihanto, S.Pi., MP. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Prof. Dr. Ir. Anik Martinah Hariati, M.Sc. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Prof. Dr. Mohammad Saifur Rohman, Ph.D., Sp.JP(K). (Universitas Brawijaya, Indonesia)</li>
+                        @foreach ($firstColumn as $index => $item)
+                            <li>{{ $item['name'] }} ( {{ $item['institution'] }}, {{ $item['country'] }} )</li>
+                        @endforeach
                     </ol>
                 </div>
+                
                 <div class="committee-column">
-                    <ol start="11">
-                        <li>Ainur Rofiq, S.E., M.M., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Arik Prasetya, S.Sos., M.Si., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Afifuddin Latif Adirejo, S.P., M.Sc. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Eng. Ir. Indradi Wijatmiko, ST., M.Eng(Prac). (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr.rer.pol. Muhammad Faishal Aminuddin, S.S., M.Si. (Universitas Brawijaya, Indonesia)</li>
-                        <li>drg. Yuliana Ratna Kumala, Sp.KG. (Universitas Brawijaya, Indonesia)</li>
-                        <li>drh. Fajar Shodiq Permata, M.Biotech. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Eng. Ir. Herman Tolle, S.T., M.T. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Ulfa Andayani, S.Si., M.Si. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Dr. Nurul Badriyah, S.E., M.E. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Sahruddin, S.S., M.A., Ph.D. (Universitas Brawijaya, Indonesia)</li>
-                        <li>Arif Hidayat, S.Kom. (Universitas Brawijaya, Indonesia)</li>
+                    <ol start="{{ $half + 1 }}">
+                        @foreach ($secondColumn as $index => $item)
+                            <li>{{ $item['name'] }} ( {{ $item['institution'] }}, {{ $item['country'] }} )</li>
+                        @endforeach
                     </ol>
                 </div>
             </div>

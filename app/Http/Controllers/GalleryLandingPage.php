@@ -10,6 +10,7 @@ class GalleryLandingPage extends Controller
     public function index()
     {
         $gallery = gallery::all();
-        return view('landingpage.gallery.gallery', compact('gallery'));
+        $years = gallery::select('year')->distinct()->orderBy('year', 'desc')->get();
+        return view('landingpage.gallery.gallery', compact('gallery', 'years'));
     }
 }

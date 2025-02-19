@@ -10,20 +10,12 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
-                        <label class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ $contact->name }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Phone</label>
-                        <input type="text" name="phone" class="form-control" value="{{ $contact->phone }}" required>
-                    </div>
-                    <div class="mb-3">
                         <label class="form-label">Email</label>
                         <input type="email" name="email" class="form-control" value="{{ $contact->email }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Website</label>
-                        <input type="url" name="website" class="form-control" value="{{ $contact->website }}">
+                        <label class="form-label">Phone</label>
+                        <input type="text" name="phone" class="form-control" value="{{ $contact->phone }}" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Address</label>

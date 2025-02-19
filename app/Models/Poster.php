@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Poster extends Model {
     use HasFactory;
 
-    protected $fillable = ['image', 'year'];
+    protected $fillable = ['image', 'year', 'link'];
 }

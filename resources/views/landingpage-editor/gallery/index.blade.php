@@ -17,6 +17,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Gallery</th>
+                                <th>Tahun</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -26,7 +27,9 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td><img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image"
                                             style="max-width: 250px;"></td>
+                                    <td>{{$image->year}}</td>
                                     <td>
+
                                         <a href="{{ route('landing.gallery.edit', $image->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                         <form action="{{ route('landing.gallery.destroy', $image->id) }}" method="POST"

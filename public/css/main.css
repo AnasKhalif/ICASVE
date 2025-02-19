@@ -1692,6 +1692,15 @@ section,
     .image-about {
         order: 1;
     }
+
+    .navgallery {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .glightbox {
+        margin-bottom: 15px;
+    }
 }
 
 /*--------------------------------------------------------------

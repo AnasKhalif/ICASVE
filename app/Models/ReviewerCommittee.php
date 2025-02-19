@@ -10,7 +10,7 @@ class ReviewerCommittee extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'title',
-        'institution'
+        'institution',
+        'country',
     ];
 }

@@ -39,22 +39,13 @@
     <!-- About Section -->
     <section id="about" class="about section">
         <div class="container">
+            @foreach ($about as $item)
             <div class="row align-items-center justify-content-between gy-5">
                 <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
                     <h3>About</h3>
-                    <h2>ICASVE 2024</h2>
+                    <h2>{{ $item->title }}</h2>
                     <p>
-                        ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring
-                        together leading
-                        academic, researchers, and practitioners to exchange and share their experiences and research
-                        results on all
-                        aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier
-                        interdisciplinary platform for
-                        researchers, practitioners, and educators to present and discuss the most recent innovations,
-                        trends, and concerns
-                        as well as practical challenges encountered and solutions through the conference theme
-                        “Implementation of Applied
-                        Science for Prosperity and Sustainability”.
+                        {{ $item->content }}
                     </p>
                     <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
                 </div>
@@ -62,10 +53,11 @@
                 <div class="d-none d-xl-block col-xl-2"></div>
 
                 <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up" data-aos-delay="100">
-                    <img src="{{ asset('/images/Lab-Vokasi.jpg') }}" class="w-100 w-md-75 animated rounded-3"
+                    <img src="{{ asset('storage/' . $about->first()->image) }}" class="w-100 w-md-75 animated rounded-3"
                         alt="gedung-vokasi" />
                 </div>
             </div>
+            @endforeach
         </div>
     </section>
     <!-- /About Section -->
@@ -153,11 +145,12 @@
     <!-- Details Section -->
     <section id="details" class="details section">
         <div class="container">
+            @forEach($posters as $poster)
             <!-- Features Item -->
             <div class="row gy-4 align-items-center features-item">
                 <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
                     data-aos-delay="200">
-                    <img src="{{ asset('images/poster.png') }}" class="poster-md img-fluid rounded-2" alt="" />
+                    <img src="{{ asset('storage/' . $poster->image) }}" class="poster-md img-fluid rounded-2" alt="" />
                 </div>
                 <div class="col-md-7 order-2 order-md-1">
                     <div class="container section-title" data-aos="fade-up">
@@ -165,7 +158,7 @@
                         <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
                     </div>
                     <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-                        <img src="{{ asset('images/poster.png') }}" class="poster-sm img-fluid rounded-2"
+                        <img src="{{ asset('storage/' . $poster->image) }}" class="poster-sm img-fluid rounded-2"
                             alt="" />
                     </div>
                     <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
@@ -176,40 +169,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($deadline_date as $date)
                             <tr>
-                                <td>Abstract Submission</td>
-                                <td>July 2, 2024</td>
+                                <td>{{$date->name}}</td>
+                                <td>{{ \Carbon\Carbon::parse($date->date)->format('F j, Y') }}</td>
                             </tr>
-                            <tr>
-                                <td>Abstract Notification</td>
-                                <td>July 3, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Participant (non-speaker) Registration Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Payment Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Conference Day</td>
-                                <td>July 17, 2024</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
-                    <a href="" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                    <a href="{{$poster->link}}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
                 </div>
             </div>
             <!-- Features Item -->
+            @endforeach
 
             <div class="row gy-4 align-items-center features-item">
                 <div class="container">
@@ -361,7 +333,7 @@
                         <h4 data-aos="fade-up mb-4">Hosted By</h4>
                         @foreach ($hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
-                                class="img-fluid mb-2 w-50 mx-auto" data-aos="fade-up">
+                                class="img-fluid mb-3 w-50 mx-auto" data-aos="fade-up">
                         @endforeach
                     </div>
                     <div class="text-center">
@@ -475,11 +447,12 @@
         <div class="container" data-aos="fade" data-aos-delay="100">
             <div class="row gy-4">
                 <div class="col-lg-4">
+                    @forEach($contacts as $contact)
                     <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                         <i class="bi bi-geo-alt flex-shrink-0"></i>
                         <div>
                             <h3>Address</h3>
-                            <p>Jl. Veteran 12-14 Malang City, East Java Indonesia</p>
+                            <p>{{$contact->address}}</p>
                         </div>
                     </div>
                     <!-- End Info Item -->
@@ -488,8 +461,8 @@
                         <i class="bi bi-telephone flex-shrink-0"></i>
                         <div>
                             <h3>Call Us</h3>
-                            <p>+6281217369484 (Kharisma)</p>
-                            <p>+6281233288666 (Sovia)</p>
+                            <p>{{$contact->phone}}</p>
+                       
                         </div>
                     </div>
                     <!-- End Info Item -->
@@ -498,9 +471,10 @@
                         <i class="bi bi-envelope flex-shrink-0"></i>
                         <div>
                             <h3>Email Us</h3>
-                            <p>icasve@ub.ac.id</p>
+                            <p>{{$contact->email}}</p>
                         </div>
                     </div>
+                    @endforeach
                     <!-- End Info Item -->
                 </div>
 
