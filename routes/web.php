@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Landing\FullPaperLandingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -7,7 +8,6 @@ use App\Http\Controllers\Admin\ReviewerController;
 use App\Http\Controllers\Admin\SymposiumController;
 use App\Http\Controllers\AbstractController;
 use App\Http\Controllers\Admin\SummaryController;
-use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\Reviewer\SummaryReviewerController;
 use App\Http\Controllers\Reviewer\EditorController;
 use App\Http\Controllers\Reviewer\ReviewController;
@@ -35,14 +35,18 @@ use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
+use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\GalleryLandingPage;
 use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\AbstractGuidelineController;
 use App\Http\Controllers\Landing\AbstractLandingController;
 use App\Http\Controllers\Landing\ConferenceTitleController;
 use App\Http\Controllers\Landing\DeadlineDateController;
+use App\Http\Controllers\Landing\FullpaperGuidelineController;
 use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\landingpage;
 use App\Http\Controllers\Landing\LogoController;
+use App\Http\Controllers\Landing\PresentationGuidelineController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -198,8 +202,9 @@ Route::name('landing.')
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
-        Route::resource('abstractlanding', AbstractLandingController::class);
-        Route::post('abstractlanding/{abstractLanding}/upload', [AbstractLandingController::class, 'uploadTemplate'])->name('abstractlanding.upload');
+        Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
+        Route::resource('abstract-guidelines', AbstractGuidelineController::class);
+        Route::resource('presentation-guidelines', PresentationGuidelineController::class);
     });
 
 Route::get('/dashboard', function () {

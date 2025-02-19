@@ -3,34 +3,6 @@
 @section('title', 'Abstract')
 
 @section('content')
-
-    <!-- Header -->
-    <header class="bg-light">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <!-- Navigasi -->
-            <nav class="d-flex py-3 gap-3">
-                <a href="#" class="text-dark text-decoration-none fs-6 fw-regular">Current</a>
-                <a href="#" class="text-dark text-decoration-none fs-6 fw-regular">Archives</a>
-                <div class="dropdown">
-                    <a class="text-dark text-decoration-none fs-6 fw-regular dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown">About</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Conference Info</a></li>
-                        <li><a class="dropdown-item" href="#">Committee</a></li>
-                    </ul>
-                </div>
-            </nav>
-
-            <!-- Login & Search -->
-            <div class="d-flex align-items-center gap-3">
-                <a href="#" class="text-dark text-decoration-none">
-                    <i class="bi bi-search"></i> Search
-                </a>
-            </div>
-        </div>
-    </header>
-
     <!-- Main Content -->
     <div class="container mt-4">
         <div class="row">
@@ -40,7 +12,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Submissions</li>
+                        <li class="breadcrumb-item active" aria-current="page">Abstract Submissions Guidelines</li>
                     </ol>
                 </nav>
 

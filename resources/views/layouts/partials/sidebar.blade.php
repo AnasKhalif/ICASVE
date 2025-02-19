@@ -324,9 +324,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.abstractlanding.index') }}">
+                <a class="nav-link" href="{{ route('landing.abstract-guidelines.index') }}">
                     <i class="fa-solid fa-sitemap menu-icon"></i>
                     <span class="menu-title">Abstract Gudelines</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.fullpaper-guidelines.index') }}">
+                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <span class="menu-title">Fullpaper Gudelines</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.presentation-guidelines.index') }}">
+                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <span class="menu-title">Presentation Guidelines</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -345,6 +357,12 @@
                 <a class="nav-link" href="{{ route('landing.gallery.index') }}">
                     <i class="fa-solid fa-images menu-icon"></i>
                     <span class="menu-title">Gallery</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.faq.index') }}">
+                    <i class="fa-solid fa-question menu-icon"></i>
+                    <span class="menu-title">FAQ</span>
                 </a>
             </li>
         </ul>

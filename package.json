@@ -6,6 +6,7 @@
         "dev": "vite"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^44.2.0",
         "axios": "^1.7.9",
         "bootstrap": "^5.3.3"
     },
