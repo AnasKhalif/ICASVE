@@ -324,6 +324,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.abstractlanding.index') }}">
+                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <span class="menu-title">Abstract Gudelines</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.contact.index') }}">
                     <i class="fa-solid fa-phone-volume menu-icon"></i>
                     <span class="menu-title">Contact</span>

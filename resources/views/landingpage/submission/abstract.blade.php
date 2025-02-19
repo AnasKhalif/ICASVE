@@ -71,36 +71,23 @@
                             font; employs italics, rather than underlining (except with URL addresses); and all
                             illustrations, figures, and tables are placed within the text at the appropriate points, rather
                             than at the end.</li>
-                        <li><i class="bi bi-check-circle text-success me-2"></i> The text adheres to the stylistic and
-                            bibliographic requirements outlined in the Author Guidelines.</li>
+                        <li>
+                            <i class="bi bi-check-circle text-success me-2"></i> The text adheres to the stylistic and
+                            bibliographic requirements outlined in the Author Guidelines.
+                        </li>
                     </ul>
                 </div>
 
-                <!-- Section Articles -->
-                <div class="articles-section">
-                    <h4 class="fw-bold mt-4">Articles</h4>
-                    <div>Section default policy</div>
-                </div>
-                <!-- Section Articles -->
-                <div class="articles-section">
-                    <h4 class="fw-bold mt-4">Privacy Statement</h4>
-                    <div>The names and email addresses entered in this journal site will be used exclusively for the stated
-                        purposes of this journal and will not be made available for any other purpose or to any other party.
+
+                <!-- Sidebar -->
+                <div class="col-lg-3 my-3">
+                    <div class="d-flex flex-column gap-2">
+                        <a href="#" class="btn text-white"
+                            style="background: linear-gradient(to right, navy, orange);">
+                            Download Paper Template
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Sidebar -->
-            <div class="col-lg-3 my-3">
-                <div class="d-flex flex-column gap-2">
-                    <a href="#" class="btn text-white"
-                        style="background: linear-gradient(to right, navy, orange);">Download Paper Template</a>
-                    <a href="#" class="btn text-white"
-                        style="background: linear-gradient(to right, navy, orange);">Author Guidelines</a>
-                    <a href="#" class="btn text-white"
-                        style="background: linear-gradient(to right, navy, orange);">Submission Guidelines</a>
-                </div>
-            </div>
         </div>
-    </div>
-@endsection
+    @endsection

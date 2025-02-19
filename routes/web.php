@@ -37,6 +37,7 @@ use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPage;
 use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\AbstractLandingController;
 use App\Http\Controllers\Landing\ConferenceTitleController;
 use App\Http\Controllers\Landing\DeadlineDateController;
 use App\Http\Controllers\Landing\PosterController;
@@ -197,6 +198,8 @@ Route::name('landing.')
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
+        Route::resource('abstractlanding', AbstractLandingController::class);
+        Route::post('abstractlanding/{abstractLanding}/upload', [AbstractLandingController::class, 'uploadTemplate'])->name('abstractlanding.upload');
     });
 
 Route::get('/dashboard', function () {
