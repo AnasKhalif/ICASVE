@@ -97,7 +97,21 @@ class EditorController extends Controller
     public function showEditStatus($abstractId)
     {
         $abstract = AbstractModel::findOrFail($abstractId);
-        return view('editor.editStatus', compact('abstract'));
+        $formattedAuthors = $this->formatAuthors($abstract->authors);
+        $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+        return view('editor.editStatus', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+    }
+
+    private function formatAuthors($authors)
+    {
+        return preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $authors);
+    }
+
+
+    private function formatAffiliations($affiliations)
+    {
+        $formattedAffiliations = preg_replace('/\[(\d+)\]/', '<sup>$1</sup>', $affiliations);
+        return nl2br($formattedAffiliations);
     }
 
     public function updateStatus(Request $request, $abstractId)
