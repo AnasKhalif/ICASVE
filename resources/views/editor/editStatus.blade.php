@@ -3,7 +3,25 @@
 @section('title', 'Edit Status Abstract')
 
 @section('content')
-    <div class="col-lg-12 grid-margin stretch-card">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h4 id="abstract_title" class="card-title">{{ $abstract->title }}</h4>
+                        <p id="abstract_abstract"><strong>Abstract</strong></p>
+                        <div id="abstract_body">
+                            {!! nl2br(e($abstract->abstract)) !!}
+                        </div>
+
+                        <hr>
+
+                        <p id="abstract_symposium"><strong>Symposium:</strong> {{ $abstract->symposium->name }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Status for Abstract: {{ $abstract->title }}</h4>

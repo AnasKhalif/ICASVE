@@ -137,34 +137,34 @@
                             <div class="table-responsive mt-4">
                                 <div class="list-group">
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Accepted for ORAL</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Accepted for ORAL</span>
                                         <span>{{ $acceptedForOral }} <small
                                                 class="text-success">({{ $acceptedForOralPaid }} paid)</small></span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Accepted for POSTER</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Accepted for POSTER</span>
                                         <span>{{ $acceptedForPoster }} <small
                                                 class="text-success">({{ $acceptedForPosterPaid }} paid)</small></span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Submitted full papers</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Submitted full papers</span>
                                         <span>{{ $submittedFullpaper }}</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Full papers under
+                                        <span><i class="fa fa-check-circle text-success"></i> Full papers under
                                             review</span>
                                         <span>{{ $fullpaperUnderReview }}</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Full papers in revision</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Full papers in revision</span>
                                         <span>{{ $fullpaperRevision }}</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Full papers accepted</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Full papers accepted</span>
                                         <span>{{ $fullpaperAccepted }}</span>
                                     </div>
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span><i class="fa fa-check-circle text-success"></i>Full papers rejected</span>
+                                        <span><i class="fa fa-check-circle text-success"></i> Full papers rejected</span>
                                         <span>{{ $fullpaperRejected }}</span>
                                     </div>
                                 </div>
@@ -178,18 +178,17 @@
                         <div class="card-body">
                             <p class="card-title mb-0">Symposiums</p>
                             <div class="table-responsive mt-4">
-                                <table class="table table-striped table-borderless">
-                                    <tbody>
-                                        <tr>
-                                            <td>Search Engine Marketing</td>
-
-                                            <td>21 Sep 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="list-group">
+                                    @foreach ($symposiums as $symposium)
+                                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                            <span><i class="fa fa-check-circle text-success"></i>
+                                                {{ $symposium->name }}</span>
+                                            <span>{{ $symposium->abstracts_count }} <small class="text-muted">(Oral:
+                                                    {{ $symposium->oral_presentation_count }}, Poster:
+                                                    {{ $symposium->poster_presentation_count }})</small></span>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

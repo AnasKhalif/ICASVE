@@ -12,6 +12,8 @@ use App\Traits\FlashAlert;
 use App\Models\AbstractModel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\Year;
+use App\Models\ConferenceSetting;
 
 class UserController extends Controller
 {
@@ -24,21 +26,33 @@ class UserController extends Controller
     {
         $rolesToDisplay = ['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'];
 
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $totalUsers = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->count();
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->count();
 
         $usersWithAbstracts = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->whereHas('abstracts')->count();
+        })->whereHas('abstracts')
+            ->whereYear('created_at', $activeYear->year)
+            ->count();
 
         $search = $request->query('search');
 
         $users = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->when($search, function ($query) use ($search) {
-            $query->where('name', 'LIKE', "%{$search}%");
-        })->with('roles')->paginate(10);
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })->with('roles')->paginate(10);
 
         if ($request->ajax()) {
             return response()->json([
@@ -63,7 +77,8 @@ class UserController extends Controller
             'indonesia-participants',
             'foreign-participants'
         ])->get();
-        return view('participants.create', compact('roles'));
+        $conferenceSetting = ConferenceSetting::first();
+        return view('participants.create', compact('roles', 'conferenceSetting'));
     }
 
     /**
@@ -226,6 +241,8 @@ class UserController extends Controller
 
     public function acceptancePdf($id)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
         $abstract = AbstractModel::with('user')->findOrFail($id);
 
         $letterHeaderUrl = Upload::getFilePath('letter_header');
@@ -234,7 +251,7 @@ class UserController extends Controller
         $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
         $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature'));
+        $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 
         return $pdf->stream('abstract-acceptance.pdf');
     }

@@ -73,13 +73,22 @@
                         <select class="form-control @error('attendance') is-invalid @enderror" id="attendance"
                             name="attendance" required>
                             <option value="">-- Select Attendance Type --</option>
-                            <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite</option>
-                            <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>Online</option>
+
+                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'onsite')
+                                <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite
+                                </option>
+                            @endif
+
+                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'online')
+                                <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>Online
+                                </option>
+                            @endif
                         </select>
                         @error('attendance')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="role_id">Role</label>
                         <select class="form-control @error('role_id') is-invalid @enderror" id="role_id" name="role_id"

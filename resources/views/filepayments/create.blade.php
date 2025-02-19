@@ -15,20 +15,27 @@
                     <h5 class="font-weight-bold text-primary mb-4">Universitas Brawijaya</h5>
 
                     <div class="payment-options">
-                        <div class="payment-method mb-3">
-                            <p class="py-3 px-4 bg-light rounded border">
-                                <span class="font-weight-bold">VA Mandiri: 891187776</span>
-                            </p>
-                        </div>
+                        @if (!empty($conferenceSetting->bank_account))
+                            @php
+                                $bankAccounts = explode(',', $conferenceSetting->bank_account);
+                            @endphp
 
-                        <p class="text-center">OR</p>
+                            @foreach ($bankAccounts as $index => $bankAccount)
+                                <div class="payment-method mb-3">
+                                    <p class="py-3 px-4 bg-light rounded border">
+                                        <span class="font-weight-bold">{{ trim($bankAccount) }}</span>
+                                    </p>
+                                </div>
 
-                        <div class="payment-method">
-                            <p class="py-3 px-4 bg-light rounded border">
-                                <span class="font-weight-bold">VA BNI: 0516377760000</span>
-                            </p>
-                        </div>
+                                @if ($index !== count($bankAccounts) - 1)
+                                    <p class="text-center">OR</p>
+                                @endif
+                            @endforeach
+                        @else
+                            <p class="text-center text-danger">No payment methods available</p>
+                        @endif
                     </div>
+
                 </div>
             </div>
         </div>

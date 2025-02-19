@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\ConferenceSetting;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,7 +17,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceTitle = $conferenceSetting->conference_title;
+        $conferenceAbbreviation = $conferenceSetting->conference_abbreviation;
+        return view('auth.login', compact('conferenceTitle', 'conferenceAbbreviation'));
     }
 
     /**

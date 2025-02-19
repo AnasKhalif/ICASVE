@@ -19,6 +19,7 @@ use App\Models\Certificate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +34,11 @@ class RegisteredUserController extends Controller
             'indonesia-participants',
             'foreign-participants'
         ])->get();
-        return view('auth.register', compact('role'));
+        $conferenceSetting = ConferenceSetting::first();
+        $openRegistration = $conferenceSetting->open_registration ?? false;
+        $conferenceTitle = $conferenceSetting->conference_title;
+        $conferenceAbbreviation = $conferenceSetting->conference_abbreviation;
+        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting'));
     }
 
     /**
@@ -43,6 +48,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_registration) {
+            return redirect()->route('register')->with('error', 'Registration Closed.');
+        }
+
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],

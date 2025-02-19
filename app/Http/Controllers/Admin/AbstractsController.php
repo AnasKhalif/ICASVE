@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FullPaper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\FilePayment;
+use App\Models\Year;
 
 class AbstractsController extends Controller
 {
@@ -21,7 +22,14 @@ class AbstractsController extends Controller
     {
         $search = $request->query('search');
 
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'filePayment'])
+            ->whereYear('created_at', $activeYear->year)
             ->when($search, function ($query) use ($search) {
                 $query->where('title', 'LIKE', "%{$search}%");
             })
@@ -30,10 +38,12 @@ class AbstractsController extends Controller
 
         $oralTotal = AbstractModel::where('presentation_type', 'Oral Presentation')
             ->where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->count();
 
         $oralPaid = AbstractModel::where('presentation_type', 'Oral Presentation')
             ->where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->whereHas('filePayment', function ($query) {
                 $query->where('status', 'verified');
             })
@@ -41,10 +51,12 @@ class AbstractsController extends Controller
 
         $posterTotal = AbstractModel::where('presentation_type', 'Poster')
             ->where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->count();
 
         $posterPaid = AbstractModel::where('presentation_type', 'Poster')
             ->where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->whereHas('filePayment', function ($query) {
                 $query->where('status', 'verified');
             })
@@ -126,7 +138,15 @@ class AbstractsController extends Controller
 
     public function showBySymposium()
     {
-        $symposiums = Symposium::with('abstracts')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $symposiums = Symposium::with('abstracts')
+            ->whereYear('created_at', $activeYear->year)
+            ->get();
 
         foreach ($symposiums as $symposium) {
             foreach ($symposium->abstracts as $abstract) {
@@ -151,7 +171,15 @@ class AbstractsController extends Controller
 
     public function downloadAllPdf()
     {
-        $abstracts = AbstractModel::with('symposium')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $abstracts = AbstractModel::with('symposium')
+            ->whereYear('created_at', $activeYear->year)
+            ->get();
 
         foreach ($abstracts as $abstract) {
             $abstract->formattedAuthors = $this->formatAuthors($abstract->authors);
@@ -165,7 +193,15 @@ class AbstractsController extends Controller
 
     public function downloadVerifiedPdf()
     {
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $abstracts = AbstractModel::with('symposium')
+            ->where('status', 'accepted')
+            ->whereYear('created_at', $activeYear->year)
             ->whereHas('user.filePayment', function ($query) {
                 $query->where('status', 'verified');
             })

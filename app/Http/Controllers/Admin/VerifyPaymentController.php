@@ -9,12 +9,22 @@ use App\Models\User;
 use App\Models\Role;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\Year;
+use App\Models\ConferenceSetting;
 
 class VerifyPaymentController extends Controller
 {
     public function index()
     {
-        $payments = FilePayment::with('user.roles')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
+        $payments = FilePayment::with('user.roles')
+            ->whereYear('created_at', $activeYear->year)
+            ->get();
         return view('verify-payment.index', compact('payments'));
     }
 
@@ -29,6 +39,8 @@ class VerifyPaymentController extends Controller
 
     public function digitalPdf($id)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
         $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
 
         $letterHeaderUrl = Upload::getFilePath('letter_header');
@@ -37,7 +49,7 @@ class VerifyPaymentController extends Controller
         $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
         $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature'));
+        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
         return $pdf->stream('payment-digital.pdf');
     }
 }
