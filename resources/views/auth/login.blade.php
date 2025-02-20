@@ -33,11 +33,11 @@
                     </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
-                            {{ $conferenceTitle }}
+                            {{-- {{ $conferenceTitle }} --}}
                         </h1>
                         <p class="text-warning mt-3 d-flex align-items-center">
                             <i class="fas fa-info-circle mr-2"></i>
-                            {{ $conferenceAbbreviation }}
+                            {{-- {{ $conferenceAbbreviation }} --}}
                         </p>
                     </div>
                 </div>

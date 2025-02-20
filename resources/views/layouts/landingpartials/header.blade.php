@@ -1,7 +1,11 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            <img src="{{ asset('images/logo-icasve-white.png') }}" width="200" height="100%" alt="Logo" />
+            @if(isset($logo) && $logo->image)
+                <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
+            @else
+                <img src="{{ asset('images/logo-icasve-white.png') }}" width="200" height="100%" alt="Logo" />
+            @endif
         </a>
 
         <nav id="navmenu" class="navmenu">
