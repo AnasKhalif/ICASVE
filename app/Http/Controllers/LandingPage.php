@@ -10,6 +10,7 @@ use App\Models\DeadlineDate;
 use App\Models\About;
 use App\Models\Poster;
 use App\Models\Contact;
+use App\Models\Venue;
 
 class LandingPage extends Controller
 {
@@ -28,6 +29,7 @@ class LandingPage extends Controller
         $contacts = Contact::all();
         $posters = Poster::all();
         $about = About::all();
-        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'deadline_date', 'about', 'posters', 'contacts'));
+        $venues = Venue::all();
+        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'deadline_date', 'about', 'posters', 'contacts', 'venues'));
     }
 }

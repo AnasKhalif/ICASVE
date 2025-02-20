@@ -10,25 +10,22 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="image">Image</label>
-                        <div class="mb-2">
-                            @if ($gallery->image)
-                                <img src="{{ asset('storage/' . $gallery->image) }}" alt="Current Image"
-                                    style="max-width: 150px; display: block;">
-                            @endif
-                        </div>
-                        <div class="input-group">
+                        <img src="{{ asset('storage/' . $gallery->image_path) }}" alt="Image" width="100"
+                            style="margin-top: 15px">
+                        <div class="input-group mt-3">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="image_path" id="image_path">
                                 <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
                             </div>
                         </div>
                     </div>
-                    <div class="from-group">
-                        <div class="mb-3">
-                            <label class="form-label">Year</label>
-                            <input type="year" name="year" class="form-control" value="{{ $gallery->year }}" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="string" class="form-control @error('year') is-invalid @enderror" name="year"
+                            id="year" required value="{{ $gallery->year }}">
+                        @error('year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>

@@ -19,7 +19,7 @@
                         Journal</a>
                     <a href="{{ route('landing.poster.index') }}" class="btn btn-md btn-primary">Publications
                         Poster</a>
-                  
+                    <a href="{{ route('landing.venue.index') }}" class="btn btn-md btn-primary">Venue</a>
                 </div>
             </div>
         </div>

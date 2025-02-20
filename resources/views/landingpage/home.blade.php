@@ -284,26 +284,26 @@
                     <h2>Venue</h2>
                     <div><span>Our</span> <span class="description-title"> Venue</span></div>
                 </div>
-                <div class="row align-items-start">
-                    <div class="col-md-6" data-aos="fade-up">
-                        <img src="{{ asset('images/widyaloka.png') }}" alt="Venue Building"
-                            class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
+                @foreach ($venues as $venue)
+                    <div class="row align-items-start">
+                        <div class="col-md-6" data-aos="fade-up">
+                            <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
+                                class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
+                        </div>
+                        <div class="location col-md-6" data-aos="fade-up">
+                            <h3 class="title-location">{{ $venue->venue_name }}</h3>
+                            <p class="text-muted">{{ $venue->address }}</p>
+                            <p class="font-weight-bold">Date: {{ $venue->date }}</p>
+                            <a href="{{ $venue->map_link }}" target="_blank" class="btn btn-primary btn-map">See on
+                                Map</a>
+                        </div>
                     </div>
-                    <div class="location col-md-6" data-aos="fade-up">
-                        <h3 class="title-location">Convention Hall Universitas Brawijaya</h3>
-                        <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
-                        <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
-                        <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank"
-                            class="btn btn-primary btn-map">See on Map</a>
+                    <div class="mt-4" data-aos="fade-up">
+                        <iframe src="{{ $venue->map }}" width="100%" height="400" style="border: 0"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
-                </div>
-                <div class="mt-4" data-aos="fade-up">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
-                        width="100%" height="400" style="border: 0" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
+                @endforeach
             </div>
             <!-- Features Item -->
         </div>

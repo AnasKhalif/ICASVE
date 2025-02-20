@@ -16,11 +16,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="from-group">
-                        <div class="mb-3">
-                            <label class="form-label">Year</label>
-                            <input type="year" name="year" class="form-control" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="string" class="form-control @error('year') is-invalid @enderror" name="year"
+                            id="year" required>
+                        @error('year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>

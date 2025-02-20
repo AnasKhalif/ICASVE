@@ -50,6 +50,7 @@ use App\Http\Controllers\Landing\PresentationGuidelineController;
 use App\Http\Controllers\steeringLandingPage;
 use App\Http\Controllers\reviewerLandingPage;
 use App\Http\Controllers\Landing\ConferenceController;
+use App\Http\Controllers\Landing\VenueController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -208,6 +209,7 @@ Route::name('landing.')
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);
         Route::resource('presentation-guidelines', PresentationGuidelineController::class);
+        Route::resource('venue', 'VenueController');
     });
 
 Route::get('/dashboard', function () {
