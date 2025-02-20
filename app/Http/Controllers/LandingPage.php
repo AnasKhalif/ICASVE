@@ -11,6 +11,8 @@ use App\Models\About;
 use App\Models\Poster;
 use App\Models\Contact;
 use App\Models\Venue;
+use App\Models\Symposium;
+
 
 class LandingPage extends Controller
 {
@@ -30,6 +32,7 @@ class LandingPage extends Controller
         $posters = Poster::all();
         $about = About::all();
         $venues = Venue::all();
-        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'deadline_date', 'about', 'posters', 'contacts', 'venues'));
+        $symposiums = Symposium::all();
+        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'deadline_date', 'about', 'posters', 'contacts', 'venues', 'symposiums'));
     }
 }

@@ -5,6 +5,10 @@
 @section('content')
 
     <div class="container my-5">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Conference Program</h2>
+            <div><span>Check Our</span> <span class="description-title">Conference Program</span></div>
+        </div>
         <!-- Header -->
         @foreach ($conferences as $conference)
             <div class="text-center">
@@ -19,7 +23,7 @@
 
         <div class="table-responsive">
             <table class="table table-striped table-hover shadow-sm rounded">
-                <thead class="table-dark">
+                <thead class="table-primary">
                     <tr>
                         <th scope="col"><i class="bi bi-clock"></i> Time</th>
                         <th scope="col"><i class="bi bi-journal-text"></i> Program</th>

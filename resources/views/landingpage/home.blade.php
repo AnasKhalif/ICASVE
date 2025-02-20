@@ -130,13 +130,9 @@
                 <h2 class="fw-bold text-white mb-3" data-aos="fade-up">CALL FOR PAPER</h2>
                 <p data-aos="fade-up">The topics include, but are not limited to:</p>
                 <ul class="list-topics" data-aos="fade-up" data-aos-delay="200">
-                    <li>Economic and Business</li>
-                    <li>Technological Engineering</li>
-                    <li>Design Innovation</li>
-                    <li>Governance and Public Administration</li>
-                    <li>Environment and Conservation</li>
-                    <li>Corporate Social Responsibility</li>
-                    <li>Tourism and Hospitality</li>
+                    @foreach($symposiums as $symposium)
+                    <li>{{$symposium->name}}</li>
+                    @endforeach
                 </ul>
             </div>
         </div>
