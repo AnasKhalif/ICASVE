@@ -18,8 +18,8 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         $conferenceSetting = ConferenceSetting::first();
-        $conferenceTitle = $conferenceSetting->conference_title;
-        $conferenceAbbreviation = $conferenceSetting->conference_abbreviation;
+        $conferenceTitle = optional($conferenceSetting)->conference_title ?? 'The 3rd International Conference on Applied Science for Vocational Education';
+        $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
         return view('auth.login', compact('conferenceTitle', 'conferenceAbbreviation'));
     }
 

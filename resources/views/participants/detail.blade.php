@@ -39,6 +39,10 @@
                                 <p><strong>Attendance:</strong> <span class="text-success">{{ $user->attendance }}</span>
                                 </p>
                             </div>
+                            <div class="col-md-6">
+                                <p><strong>Country:</strong> {{ $user->country }}
+                                </p>
+                            </div>
 
                         </div>
                     </div>

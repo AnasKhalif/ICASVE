@@ -9,24 +9,6 @@
         <div class="row m-0 h-100">
             <section class="col-lg-6 d-flex align-items-center p-5 vh-100 position-relative overflow-hidden"
                 style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
-
-                <div class="position-absolute w-100 h-100" style="top: 0; left: 0; z-index: 1;">
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width: 100%; height: 100%; opacity: 0.1;">
-                        <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:white;stop-opacity:0.2" />
-                                <stop offset="100%" style="stop-color:white;stop-opacity:0" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grad)">
-                            <animate attributeName="d" dur="20s" repeatCount="indefinite"
-                                values="M0,0 L100,0 L100,100 L0,100 Z;
-                                       M0,50 L50,0 L100,50 L50,100 Z;
-                                       M0,0 L100,0 L100,100 L0,100 Z" />
-                        </path>
-                    </svg>
-                </div>
-
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
                     <div class="d-flex align-items-center mb-4">
                         <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid"
@@ -55,24 +37,23 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="row">
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-user text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" name="name" id="name"
-                                            class="form-control form-control-md border-left-0" placeholder="Full Name"
-                                            value="{{ old('name') }}" required />
-                                    </div>
-                                    @if ($errors->has('name'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('name') }}</span>
-                                    @endif
-                                </div>
                                 <div class="col-md-6">
-
+                                    <div class="form-group mb-4 ">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-user text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="name" id="name"
+                                                class="form-control form-control-md border-left-0" placeholder="Full Name"
+                                                value="{{ old('name') }}" required />
+                                        </div>
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('name') }}</span>
+                                        @endif
+                                    </div>
 
                                     <div class="form-group mb-4">
                                         <div class="input-group">
@@ -167,6 +148,24 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-globe text-success"></i>
+                                                </span>
+                                            </div>
+                                            <select name="country" id="country"
+                                                class="form-control form-control-md border-left-0" required>
+                                                <option value="" disabled selected>Select Country</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('country'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('country') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
                                                     <i class="fas fa-lock text-success"></i>
                                                 </span>
                                             </div>
@@ -203,17 +202,10 @@
                                         <select name="attendance" id="attendance" class="form-control form-control-md"
                                             required>
                                             <option value="" disabled selected>Select Attendance Plan</option>
-                                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'onsite')
-                                                <option value="onsite"
-                                                    {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite
-                                                </option>
-                                            @endif
-
-                                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'online')
-                                                <option value="online"
-                                                    {{ old('attendance') == 'online' ? 'selected' : '' }}>Online
-                                                </option>
-                                            @endif
+                                            <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>
+                                                Onsite</option>
+                                            <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>
+                                                Online</option>
                                         </select>
                                         @if ($errors->has('attendance'))
                                             <span class="text-danger"
@@ -249,7 +241,23 @@
             </section>
         </div>
     </main>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://restcountries.com/v3.1/all")
+                .then(response => response.json())
+                .then(data => {
+                    let countrySelect = document.getElementById("country");
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    data.forEach(country => {
+                        let option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        countrySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching country data:", error));
+        });
+    </script>
     <style>
         .input-group-text {
             border-radius: 15px 0 0 15px;
