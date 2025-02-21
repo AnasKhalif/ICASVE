@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Speaker;
 use App\Models\RegistrationFee;
 use App\Models\PublicationsJournal;
+use App\Models\Venue;
 
 class LandingPageController extends Controller
 {
@@ -20,6 +21,7 @@ class LandingPageController extends Controller
         $hosted_by = PublicationsJournal::where('image_type', 'hosted_by')->get();
         $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->get();
         $supported_by = PublicationsJournal::where('image_type', 'supported_by')->get();
-        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'));
+        $venues = Venue::all();
+        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'venues'));
     }
 }

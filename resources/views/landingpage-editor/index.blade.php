@@ -16,6 +16,7 @@
                     <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-md btn-primary">Publications
                         Journal</a>
                     <a href="{{ route('landing.steering.index') }}" class="btn btn-md btn-danger">Steering</a>
+                    <a href="{{ route('landing.venue.index') }}" class="btn btn-md btn-primary">Venue</a>
                 </div>
             </div>
         </div>

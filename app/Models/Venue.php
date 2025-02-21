@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Gallery extends Model
+class Venue extends Model
 {
     use HasFactory;
-    protected $fillable = ['image_path', 'year'];
+
+    protected $fillable = ['image_path', 'venue_name', 'address', 'date', 'link_map', 'map'];
 }

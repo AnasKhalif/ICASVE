@@ -37,6 +37,7 @@ use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgramController as ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPageController;
 use App\Http\Controllers\LandingPageController as LandingPage;
+use App\Http\Controllers\Landing\VenueController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -184,6 +185,7 @@ Route::name('landing.')
         Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
+        Route::resource('venue', 'VenueController');
     });
 
 Route::get('/dashboard', function () {
