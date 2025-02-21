@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class publications_journal extends Model
+class ConferenceProgram extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'image_type',
-        'image_path',
+        'start_time',
+        'end_time',
+        'program_name',
+        'pic',
     ];
 }

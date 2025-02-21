@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
-use App\Http\Controllers\Landing\landingPageController;
+use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
@@ -34,13 +34,13 @@ use App\Http\Controllers\Landing\ContactController;
 use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
-use App\Http\Controllers\ConferenceProgram;
-use App\Http\Controllers\GalleryLandingPage;
-use App\Http\Controllers\landingpage;
+use App\Http\Controllers\ConferenceProgramController as ConferenceProgram;
+use App\Http\Controllers\GalleryLandingPageController;
+use App\Http\Controllers\LandingPageController as LandingPage;
 
-Route::get('/', [landingpage::class, 'index'])->name('home');
+Route::get('/', [LandingPage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
-Route::get('/gallery', [GalleryLandingPage::class, 'index'])->name('gallery');
+Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', function () {

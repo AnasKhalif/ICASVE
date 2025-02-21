@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\gallery;
+use App\Models\Gallery;
 
-class GalleryLandingPage extends Controller
+class GalleryLandingPageController extends Controller
 {
     public function index()
     {
-        $gallery = gallery::all();
+        $gallery = Gallery::all();
         return view('landingpage.gallery.gallery', compact('gallery'));
     }
 }

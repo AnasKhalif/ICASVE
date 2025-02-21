@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\conference_program;
+use App\Models\ConferenceProgram;
 
-class ConferenceProgram extends Controller
+class ConferenceProgramController extends Controller
 {
     public function index()
     {
-        $programs = conference_program::all();
+        $programs = ConferenceProgram::all();
         return view('landingpage.conference.program', compact('programs'));
     }
 }
