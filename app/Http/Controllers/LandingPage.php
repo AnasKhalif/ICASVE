@@ -12,7 +12,7 @@ use App\Models\Poster;
 use App\Models\Contact;
 use App\Models\Venue;
 use App\Models\Symposium;
-
+use App\Models\Faq;
 
 class LandingPage extends Controller
 {
@@ -33,6 +33,26 @@ class LandingPage extends Controller
         $about = About::all();
         $venues = Venue::all();
         $symposiums = Symposium::all();
-        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'deadline_date', 'about', 'posters', 'contacts', 'venues', 'symposiums'));
+        $faqs = Faq::limit(3)->get();
+    
+        return view('landingpage.home', compact(
+            'keynoteSpeakers',
+            'invitedSpeakers',
+            'presenter',
+            'non_presenter',
+            'additional_fee',
+            'publications_journal',
+            'hosted_by',
+            'co_hosted_by',
+            'supported_by',
+            'deadline_date',
+            'about',
+            'posters',
+            'contacts',
+            'venues',
+            'symposiums',
+            'faqs' // Kirim data FAQ ke view
+        ));
     }
+    
 }

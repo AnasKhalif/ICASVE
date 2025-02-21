@@ -35,6 +35,7 @@ use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgram;
+use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\FullPaperController;
 use App\Http\Controllers\GalleryLandingPage;
 use App\Http\Controllers\Landing\AboutController;
@@ -99,9 +100,8 @@ Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
-Route::get('/faq', function () {
-    return view('landingpage.faq.faq');
-})->name('faq');
+Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
+
 Route::get('/contact', function () {
     return view('landingpage.contact.contact');
 })->name('contact');
