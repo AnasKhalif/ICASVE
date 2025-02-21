@@ -18,6 +18,7 @@
     <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <title>

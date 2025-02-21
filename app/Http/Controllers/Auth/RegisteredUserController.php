@@ -51,6 +51,7 @@ class RegisteredUserController extends Controller
             'phone_number' => ['required', 'string', 'max:15', 'regex:/^[0-9\-\+\(\)\s]*$/'],
             'attendance' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'country' => ['required', 'string', 'max:255'],
             'role_id' => ['required', 'exists:roles,id'],
         ]);
 
@@ -61,6 +62,7 @@ class RegisteredUserController extends Controller
             'job_title' => $validatedData['job_title'],
             'phone_number' => $validatedData['phone_number'],
             'attendance' => $validatedData['attendance'],
+            'country' => $validatedData['country'],
             'password' => Hash::make($validatedData['password']),
         ]);
 

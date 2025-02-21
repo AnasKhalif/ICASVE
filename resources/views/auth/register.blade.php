@@ -54,23 +54,22 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="row">
-                            <div class="form-group mb-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-transparent border-right-0">
-                                            <i class="fas fa-user text-success"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" name="name" id="name"
-                                        class="form-control form-control-md border-left-0" placeholder="Full Name"
-                                        value="{{ old('name') }}" required />
-                                </div>
-                                @if ($errors->has('name'))
-                                    <span class="text-danger" style="font-size: 12px;">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
                             <div class="col-md-6">
-
+                                <div class="form-group mb-4 ">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-right-0">
+                                                <i class="fas fa-user text-success"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" name="name" id="name"
+                                            class="form-control form-control-md border-left-0" placeholder="Full Name"
+                                            value="{{ old('name') }}" required />
+                                    </div>
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger" style="font-size: 12px;">{{ $errors->first('name') }}</span>
+                                    @endif
+                                </div>
 
                                 <div class="form-group mb-4">
                                     <div class="input-group">
@@ -165,10 +164,26 @@
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-transparent border-right-0">
+                                                <i class="fas fa-globe text-success"></i>
+                                            </span>
+                                        </div>
+                                        <select name="country" id="country" class="form-control form-control-md border-left-0" required>
+                                            <option value="" disabled selected>Select Country</option>
+                                        </select>
+                                    </div>
+                                    @if ($errors->has('country'))
+                                        <span class="text-danger" style="font-size: 12px;">{{ $errors->first('country') }}</span>
+                                    @endif
+                                </div>
+
+                                <div class="form-group mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-right-0">
                                                 <i class="fas fa-lock text-success"></i>
                                             </span>
                                         </div>
-                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                        <input type="" name="password_confirmation" id="password_confirmation"
                                             class="form-control form-control-md border-left-0"
                                             placeholder="Confirm Password" required />
                                     </div>
@@ -225,6 +240,23 @@
                     </form>
                 </div>
             </section>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    fetch("https://restcountries.com/v3.1/all")
+                        .then(response => response.json())
+                        .then(data => {
+                            let countrySelect = document.getElementById("country");
+                            data.sort((a, b) => a.name.common.localeCompare(b.name.common)); 
+                            data.forEach(country => {
+                                let option = document.createElement("option");
+                                option.value = country.name.common;
+                                option.textContent = country.name.common;
+                                countrySelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error("Error fetching country data:", error));
+                });
+            </script>
         </div>
     </main>
 

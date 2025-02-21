@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('attendance')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('country')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

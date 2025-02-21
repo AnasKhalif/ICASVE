@@ -79,6 +79,7 @@ class UserController extends Controller
             'phone_number' => ['required', 'string', 'max:15', 'regex:/^[0-9\-\+\(\)\s]*$/'],
             'attendance' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'country' => ['required', 'string', 'max:255'],
             'role_id' => ['required']
         ]);
 
@@ -89,6 +90,7 @@ class UserController extends Controller
             'job_title' => $validatedData['job_title'],
             'phone_number' => $validatedData['phone_number'],
             'attendance' => $validatedData['attendance'],
+            'country' => $validatedData['country'],
             'password' => Hash::make($validatedData['password']),
         ]);
 
@@ -174,6 +176,7 @@ class UserController extends Controller
                 'job_title' => ['required', 'string', 'max:255'],
                 'phone_number' => ['required', 'string', 'max:15', 'regex:/^[0-9\-\+\(\)\s]*$/'],
                 'attendance' => ['required', 'string', 'max:255'],
+                'country' => ['required', 'string', 'max:255'],
                 'role_id' => ['required']
             ]);
 
@@ -183,6 +186,7 @@ class UserController extends Controller
                 'institution' => $validatedData['institution'],
                 'job_title' => $validatedData['job_title'],
                 'phone_number' => $validatedData['phone_number'],
+                'country' => $validatedData['country'],
                 'attendance' => $validatedData['attendance']
             ]);
 
