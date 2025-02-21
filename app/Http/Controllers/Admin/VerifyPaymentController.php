@@ -46,8 +46,8 @@ class VerifyPaymentController extends Controller
         $letterHeaderUrl = Upload::getFilePath('letter_header');
         $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+        $letterHeader = storage_path('app/public/' . str_replace(asset('storage/'), '', $letterHeaderUrl));
+        $signature = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
 
         $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
         return $pdf->stream('payment-digital.pdf');

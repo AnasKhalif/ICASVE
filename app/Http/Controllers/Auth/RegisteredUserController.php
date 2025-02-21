@@ -101,7 +101,7 @@ class RegisteredUserController extends Controller
     {
         // Tentukan template sertifikat untuk peserta
         $templateUrl = Upload::getFilePath('certificate_participant');
-        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Certificate template not found');
