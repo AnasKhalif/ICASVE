@@ -67,20 +67,19 @@ Route::prefix('committee')->group(function () {
     Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
 
+
+
 Route::prefix('submission')->group(function () {
-    Route::get('/', function () {
-        return view('landingpage.submission.submission');
-    })->name('submissions');
-    Route::get('/abstract', function () {
-        return view('landingpage.submission.abstract');
-    })->name('submission.abstract');
-    Route::get('/fullpaper', function () {
-        return view('landingpage.submission.fullpaper');
-    })->name('submission.fullpaper');
-    Route::get('/presentation', function () {
-        return view('landingpage.submission.presentation');
-    })->name('submission.presentation');
+    Route::get('/abstract', [AbstractGuidelineController::class, 'showLandingPage'])
+        ->name('submission.abstract');
+
+    Route::get('/fullpaper', [FullpaperGuidelineController::class, 'showLandingPage'])
+        ->name('submission.fullpaper');
+
+    Route::get('/presentation', [PresentationGuidelineController::class, 'showLandingPage'])
+        ->name('submission.presentation');
 });
+
 
 Route::prefix('archive')->group(function () {
     Route::get('/2023', function () {

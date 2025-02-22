@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class PresentationGuidelineController extends Controller
 {
+    public function showLandingPage()
+    {
+        $guidelines = PresentationGuideline::orderBy('year', 'desc')->get();
+        return view('landingpage.submission.presentation', compact('guidelines'));
+    }
+
     public function index()
     {
         $guidelines = PresentationGuideline::orderBy('year', 'desc')->get();
@@ -36,7 +42,7 @@ class PresentationGuidelineController extends Controller
             'pdf_file' => $pdfPath
         ]);
 
-        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Guideline berhasil ditambahkan');
+        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Presentation Guideline berhasil ditambahkan');
     }
 
     public function edit(PresentationGuideline $presentationGuideline)
@@ -67,7 +73,7 @@ class PresentationGuidelineController extends Controller
             'pdf_file' => $pdfPath
         ]);
 
-        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Guideline berhasil diperbarui');
+        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Presentation Guideline berhasil diperbarui');
     }
 
     public function destroy(PresentationGuideline $presentationGuideline)
@@ -77,6 +83,6 @@ class PresentationGuidelineController extends Controller
         }
         $presentationGuideline->delete();
 
-        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Guideline berhasil dihapus');
+        return redirect()->route('landing.presentation-guidelines.index')->with('success', 'Presentation Guideline berhasil dihapus');
     }
 }

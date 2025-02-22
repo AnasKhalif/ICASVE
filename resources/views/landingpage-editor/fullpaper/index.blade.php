@@ -1,45 +1,68 @@
 @extends('layouts.app')
-@section('title', 'Fullpaper Submission Guidelines')
-@section('content')
-    <div class="container">
-        <h2>Fullpaper Submission Guidelines</h2>
-        <a href="{{ route('landing.fullpaper-guidelines.create') }}" class="btn btn-success">Tambah Guideline</a>
+@section('title', 'Presentation Submission Guidelines')
 
-        <table class="table mt-3">
-            <thead>
-                <tr>
-                    <th>Tahun</th>
-                    <th>Guideline</th>
-                    <th>Template PDF</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($guidelines as $guideline)
+@section('content')
+    <div class="container mt-4">
+        <h2 class="text-center fw-bold">Presentation Submission Guidelines</h2>
+        <hr class="border border-success mb-4">
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <div class="d-flex justify-content-between mb-3">
+            <h4 class="fw-bold">List of Guidelines</h4>
+            <a href="{{ route('landing.presentation-guidelines.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Tambah Guideline
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-success">
                     <tr>
-                        <td>{{ $guideline->year }}</td>
-                        <td>{!! Str::limit($guideline->content, 100) !!}</td>
-                        <td>
-                            @if ($guideline->pdf_file)
-                                <a href="{{ asset('storage/' . $guideline->pdf_file) }}" target="_blank">Download</a>
-                            @else
-                                Tidak ada file
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('landing.fullpaper-guidelines.edit', $guideline->id) }}"
-                                class="btn btn-warning">Edit</a>
-                            <form action="{{ route('landing.fullpaper-guidelines.destroy', $guideline->id) }}" method="POST"
-                                style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Hapus guideline ini?')">Hapus</button>
-                            </form>
-                        </td>
+                        <th class="text-center">Tahun</th>
+                        <th class="text-center">Guideline</th>
+                        <th class="text-center">File PDF</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($guidelines as $guideline)
+                        <tr>
+                            <td class="fw-bold">{{ $guideline->year }}</td>
+                            <td>{!! Str::limit(strip_tags($guideline->content), 50) !!}</td>
+                            <td>
+                                @if ($guideline->pdf_file)
+                                    <a href="{{ asset('storage/' . $guideline->pdf_file) }}" 
+                                       class="btn btn-sm btn-outline-success" target="_blank">
+                                        <i class="fas fa-file-pdf"></i> Download
+                                    </a>
+                                @else
+                                    <span class="text-muted">Tidak ada file</span>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('landing.presentation-guidelines.edit', $guideline->id) }}" 
+                                   class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('landing.presentation-guidelines.destroy', $guideline->id) }}" 
+                                      method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection

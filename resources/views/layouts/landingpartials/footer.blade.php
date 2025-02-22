@@ -3,7 +3,8 @@
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
                 <a href="index.html" class="logo d-flex align-items-center">
-                    <span class="sitename">ICASVE 2025</span>
+                    <span class="sitename">ICASVE {{ date('Y') }}</p>
+                    </span>
                 </a>
                 <div class="footer-contact pt-3">
                     <p>Jl. Veteran 12-14 Malang City</p>
@@ -56,6 +57,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-        <p>Copyright © 2025 icasve.ub.ac.id</p>
+        <p>Copyright ©{{ date('Y') }} icasve.ub.ac.id</p>
+
     </div>
 </footer>

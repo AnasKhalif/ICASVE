@@ -1,9 +1,11 @@
 @extends('layouts.app')
+
 @section('title', 'Edit Presentation Guideline')
+
 @section('content')
     <div class="container">
         <h2>Edit Presentation Guideline</h2>
-        <form action="{{ route('presentation-guidelines.update', $presentationGuideline->id) }}" method="POST"
+        <form action="{{ route('landing.presentation-guidelines.update', $presentationGuideline->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -33,15 +35,4 @@
             <button type="submit" class="btn btn-success">Update</button>
         </form>
     </div>
-@endsection
-
-@section('scripts')
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            CKEDITOR.replace('editor', {
-                height: 300
-            });
-        });
-    </script>
 @endsection

@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AbstractGuidelineController extends Controller
 {
+    public function showLandingPage()
+{
+    $guidelines = AbstractGuideline::orderBy('year', 'desc')->get(); // Ambil semua guidelines
+    return view('landingpage.submission.abstract', compact('guidelines'));
+}
+
     public function index()
     {
         $guidelines = AbstractGuideline::orderBy('year', 'desc')->get();

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Edit Abstract Guideline')
+
 @section('content')
     <div class="container">
         <h2>Edit Abstract Guideline</h2>
@@ -9,17 +10,17 @@
             @method('PUT')
 
             <div class="mb-3">
-                <label>Tahun</label>
+                <label for="year" class="form-label">Tahun</label>
                 <input type="number" name="year" class="form-control" value="{{ $abstractGuideline->year }}" required>
             </div>
 
             <div class="mb-3">
-                <label>Guideline</label>
-                <textarea name="content" class="form-control ckeditor">{{ $abstractGuideline->content }}</textarea>
+                <label for="content" class="form-label">Guideline</label>
+                <textarea name="content" id="editor" class="form-control">{{ $abstractGuideline->content }}</textarea>
             </div>
 
             <div class="mb-3">
-                <label>Upload PDF (Opsional, biarkan kosong jika tidak ingin mengganti)</label>
+                <label for="pdf_file" class="form-label">Upload PDF (Opsional)</label>
                 <input type="file" name="pdf_file" class="form-control">
             </div>
 
@@ -30,36 +31,6 @@
                 </div>
             @endif
 
-            <button type="submit" class="btn btn-primary">Update</button>
-        </form>
-    </div>
-@endsection
-@extends('layouts.app')
-@section('title', 'Edit Fullpaper Guideline')
-@section('content')
-    <div class="container">
-        <h2>Edit Fullpaper Guideline</h2>
-        <form action="{{ route('landing.fullpaper-guidelines.update', $fullpaperGuideline->id) }}" method="POST"
-            enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-
-            <div class="mb-3">
-                <label for="year" class="form-label">Tahun</label>
-                <input type="number" name="year" class="form-control" value="{{ $fullpaperGuideline->year }}" required>
-            </div>
-            <div class="mb-3">
-                <label for="content" class="form-label">Guideline</label>
-                <textarea name="content" id="editor" class="form-control">{{ $fullpaperGuideline->content }}</textarea>
-            </div>
-            <div class="mb-3">
-                <label for="pdf_file" class="form-label">Upload Template Paper (PDF)</label>
-                <input type="file" name="pdf_file" class="form-control">
-                @if ($fullpaperGuideline->pdf_file)
-                    <p>File saat ini: <a href="{{ asset('storage/' . $fullpaperGuideline->pdf_file) }}"
-                            target="_blank">Download</a></p>
-                @endif
-            </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

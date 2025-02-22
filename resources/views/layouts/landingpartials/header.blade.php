@@ -20,7 +20,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="{{ route('submissions') }}"><span>Submission</span> <i
+                    <a href="#"><span>Submission</span> <i
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>

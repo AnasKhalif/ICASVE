@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class FullpaperGuidelineController extends Controller
 {
+    public function showLandingPage()
+{
+    $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();
+    return view('landingpage.submission.fullpaper', compact('guidelines'));
+}
+
     public function index()
     {
         $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();
@@ -36,7 +42,7 @@ class FullpaperGuidelineController extends Controller
             'pdf_file' => $pdfPath
         ]);
 
-        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Guideline berhasil ditambahkan');
+        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Fullpaper Guideline berhasil ditambahkan');
     }
 
     public function edit(FullpaperGuideline $fullpaperGuideline)
@@ -52,10 +58,10 @@ class FullpaperGuidelineController extends Controller
             'pdf_file' => 'nullable|file|mimes:pdf|max:2048'
         ]);
 
-        // Jika ada file baru yang diunggah, hapus yang lama dan simpan yang baru
+        // Hapus file lama jika ada file baru
         if ($request->hasFile('pdf_file')) {
             if ($fullpaperGuideline->pdf_file) {
-                Storage::delete($fullpaperGuideline->pdf_file);
+                Storage::disk('public')->delete($fullpaperGuideline->pdf_file);
             }
             $pdfPath = $request->file('pdf_file')->store('landingpage-editor', 'public');
         } else {
@@ -68,17 +74,16 @@ class FullpaperGuidelineController extends Controller
             'pdf_file' => $pdfPath
         ]);
 
-        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Guideline berhasil diperbarui');
+        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Fullpaper Guideline berhasil diperbarui');
     }
-
 
     public function destroy(FullpaperGuideline $fullpaperGuideline)
     {
         if ($fullpaperGuideline->pdf_file) {
-            Storage::delete($fullpaperGuideline->pdf_file);
+            Storage::disk('public')->delete($fullpaperGuideline->pdf_file);
         }
         $fullpaperGuideline->delete();
 
-        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Guideline berhasil dihapus');
+        return redirect()->route('landing.fullpaper-guidelines.index')->with('success', 'Fullpaper Guideline berhasil dihapus');
     }
 }
