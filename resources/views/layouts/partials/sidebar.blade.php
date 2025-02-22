@@ -348,7 +348,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.conferance-program.index') }}">
+                <a class="nav-link" href="{{ route('landing.conference-program.index') }}">
                     <i class="fa fa-clipboard menu-icon"></i>
                     <span class="menu-title">Conference Program</span>
                 </a>

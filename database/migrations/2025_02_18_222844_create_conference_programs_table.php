@@ -6,13 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('conference_programs', function (Blueprint $table) {
             $table->id();
+            $table->integer('year'); // Menambahkan kolom tahun
+            $table->integer('day_number');
             $table->time('start_time');
             $table->time('end_time');
             $table->string('program_name');
@@ -21,9 +20,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('conference_programs');

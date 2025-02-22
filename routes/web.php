@@ -53,7 +53,9 @@ use App\Http\Controllers\FaqLandingController;
 
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
+
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
+
 Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
@@ -192,7 +194,7 @@ Route::name('landing.')
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
-        Route::resource('conferance-program', 'ConferenceProgramController');
+        Route::resource('conference-program', 'ConferenceProgramController');
         Route::resource('steering', SteeringCommitteeController::class);
         Route::resource('reviewer-committee', ReviewerCommitteeController::class);
         Route::resource('organizing', OrganizingCommitteeController::class);
