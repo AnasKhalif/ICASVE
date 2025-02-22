@@ -312,9 +312,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.reviewer-committee.index') }}">
+                <a class="nav-link" href="{{ route('landing.reviewer.index') }}">
                     <i class="fa-solid fa-book-open-reader menu-icon"></i>
-                    <span class="menu-title">Reviewer</span>
+                    <span class="menu-title">Reviewer Committee</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -325,19 +325,19 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.abstract-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                   <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Abstract Gudelines</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.fullpaper-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                   <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Fullpaper Gudelines</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.presentation-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                   <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Presentation Guidelines</span>
                 </a>
             </li>

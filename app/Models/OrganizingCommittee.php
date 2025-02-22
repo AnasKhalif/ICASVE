@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class OrganizingCommittee extends Model
 {
     use HasFactory;
-    protected $fillable = ['category', 'title', 'name', 'institution'];
+    protected $fillable = ['name', 'category', 'year'];
+
 }

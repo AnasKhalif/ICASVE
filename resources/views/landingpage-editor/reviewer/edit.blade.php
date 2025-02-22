@@ -8,7 +8,7 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         <div class="card p-4">
-            <form action="{{ route('landing.reviewer-committee.update', $reviewerCommittee->id) }}" method="POST">
+            <form action="{{ route('landing.reviewer.update', $reviewerCommittee->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
@@ -35,8 +35,16 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control @error('year') is-invalid @enderror" id="year"
+                        name="year" value="{{ old('year', $reviewerCommittee->year) }}" required min="2000" max="2100">
+                    @error('year')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('landing.reviewer-committee.index') }}" class="btn btn-secondary">Back</a>
+                    <a href="{{ route('landing.reviewer.index') }}" class="btn btn-secondary">Back</a>
                     <button type="submit" class="btn btn-success">Update</button>
                 </div>
             </form>

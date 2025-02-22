@@ -2,16 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class SteeringCommittee extends Model
 {
     use HasFactory;
-    protected $table = 'steering_committees';
-    protected $fillable = [
-        'name',
-        'institution',
-        'country',
-    ];
+
+    protected $fillable = ['name', 'institution', 'country', 'year'];
 }

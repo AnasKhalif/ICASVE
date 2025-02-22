@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('steering_committees', function (Blueprint $table) {
@@ -16,13 +13,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('institution');
             $table->string('country');
+            $table->year('year');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('steering_committees');

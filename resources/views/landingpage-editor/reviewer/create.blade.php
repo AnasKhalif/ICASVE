@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <h2 class="fw-bold">Add Reviewer Committee</h2>
         <hr>
-        <form action="{{ route('landing.reviewer-committee.store') }}" method="POST">
+        <form action="{{ route('landing.reviewer.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -18,7 +18,15 @@
                 <label for="country" class="form-label">Country</label>
                 <input type="text" class="form-control" id="country" name="country" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="number" id="year" name="year" class="form-control" min="2000" max="{{ date('Y') }}" value="{{ date('Y') }}" required>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <a href="{{ route('landing.reviewer.index') }}" class="btn btn-secondary">Back</a>
+                <button type="submit" class="btn btn-success">Add</button>
+            </div>
         </form>
     </div>
 @endsection
