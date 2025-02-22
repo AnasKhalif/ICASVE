@@ -69,6 +69,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="phone_number">Country</label>
+                        <select name="country" id="country" class="form-control form-control-md border-left-0" required>
+                            <option value="" disabled selected>Select Country</option>
+                        </select>
+                        @if ($errors->has('country'))
+                            <span class="text-danger" style="font-size: 12px;">{{ $errors->first('country') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="attendance">Attendance Type</label>
                         <select class="form-control @error('attendance') is-invalid @enderror" id="attendance"
                             name="attendance" required>
@@ -110,4 +119,21 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://restcountries.com/v3.1/all")
+                .then(response => response.json())
+                .then(data => {
+                    let countrySelect = document.getElementById("country");
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    data.forEach(country => {
+                        let option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        countrySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching country data:", error));
+        });
+    </script>
 @endsection

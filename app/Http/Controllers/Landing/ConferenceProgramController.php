@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\conference_program;
+use App\Models\ConferenceProgram;
 
 class ConferenceProgramController extends Controller
 {
     public function index()
     {
-        $programs = conference_program::all();
+        $programs = ConferenceProgram::all();
         return view('landingpage-editor.conferance-program.index', compact('programs'));
     }
     public function create()
@@ -28,17 +28,17 @@ class ConferenceProgramController extends Controller
 
         $validatedData['pic'] = $validatedData['pic'] ?? '-';
 
-        conference_program::create($validatedData);
+        ConferenceProgram::create($validatedData);
         return redirect()->route('landing.conferance-program.index')->with('success', 'Conference Program created successfully.');
     }
     public function edit($id)
     {
-        $program = conference_program::findOrFail($id);
+        $program = ConferenceProgram::findOrFail($id);
         return view('landingpage-editor.conferance-program.edit', compact('program'));
     }
     public function update(Request $request, $id)
     {
-        $program = conference_program::findOrFail($id);
+        $program = ConferenceProgram::findOrFail($id);
         $validatedData = $request->validate([
             'start_time' => ['required'],
             'end_time'   => ['required'],
@@ -53,7 +53,7 @@ class ConferenceProgramController extends Controller
     }
     public function destroy($id)
     {
-        $program = conference_program::findOrFail($id);
+        $program = ConferenceProgram::findOrFail($id);
         $program->delete();
         return redirect()->route('landing.conferance-program.index')->with('success', 'Conference Program deleted successfully.');
     }

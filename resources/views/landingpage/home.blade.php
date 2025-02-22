@@ -4,18 +4,14 @@
     <section id="hero" class="hero section dark-background">
         <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
 
-        <div class="container">
+        <div class="container d-flex align-items-center" style="min-height: 60vh;">
             <div class="row gy-4 justify-content-between">
-                <div class="col-lg-4 order-lg-last hero-img" data-aos="zoom-out" data-aos-delay="100">
-                    <!-- img -->
-                </div>
-
-                <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-in">
+                <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
                     <h1>International Conference on Applied Science for Vocational Education - <span> ICASVE 2025</span>
                     </h1>
                     <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
                     <div class="d-flex">
-                        <a href="#about" class="btn-get-started">Register</a>
+                        <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                     </div>
                 </div>
             </div>
@@ -42,33 +38,26 @@
     <!-- About Section -->
     <section id="about" class="about section">
         <div class="container">
-            <div class="row align-items-center justify-content-between gy-5">
-                <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
-                    <h3>About</h3>
-                    <h2>ICASVE 2024</h2>
-                    <p>
-                        ICASVE – International Conference on Entrepreneurship, Innovation and Creativity aims to bring
-                        together leading
-                        academic, researchers, and practitioners to exchange and share their experiences and research
-                        results on all
-                        aspects of Entrepreneurship, Innovation, and Creativity. It also provides a premier
-                        interdisciplinary platform for
-                        researchers, practitioners, and educators to present and discuss the most recent innovations,
-                        trends, and concerns
-                        as well as practical challenges encountered and solutions through the conference theme
-                        “Implementation of Applied
-                        Science for Prosperity and Sustainability”.
-                    </p>
-                    <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-                </div>
+            @foreach ($about as $item)
+                <div class="row align-items-center justify-content-between gy-5">
+                    <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
+                        <h3>About</h3>
+                        <h2>{{ $item->title }}</h2>
+                        <p>
+                            {{ $item->content }}
+                        </p>
+                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                    </div>
 
-                <div class="d-none d-xl-block col-xl-2"></div>
+                    <div class="d-none d-xl-block col-xl-2"></div>
 
-                <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up" data-aos-delay="100">
-                    <img src="{{ asset('/images/Lab-Vokasi.jpg') }}" class="w-100 w-md-75 animated rounded-3"
-                        alt="gedung-vokasi" />
+                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <img src="{{ asset('storage/' . $about->first()->image) }}" class="w-100 w-md-75 animated rounded-3"
+                            alt="gedung-vokasi" />
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </section>
     <!-- /About Section -->
@@ -140,13 +129,9 @@
                 <h2 class="fw-bold text-white mb-3" data-aos="fade-up">CALL FOR PAPER</h2>
                 <p data-aos="fade-up">The topics include, but are not limited to:</p>
                 <ul class="list-topics" data-aos="fade-up" data-aos-delay="200">
-                    <li>Economic and Business</li>
-                    <li>Technological Engineering</li>
-                    <li>Design Innovation</li>
-                    <li>Governance and Public Administration</li>
-                    <li>Environment and Conservation</li>
-                    <li>Corporate Social Responsibility</li>
-                    <li>Tourism and Hospitality</li>
+                    @foreach ($symposiums as $symposium)
+                        <li>{{ $symposium->name }}</li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -156,62 +141,42 @@
     <!-- Details Section -->
     <section id="details" class="details section">
         <div class="container">
-            <!-- Features Item -->
-            <div class="row gy-4 align-items-center features-item">
-                <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
-                    data-aos-delay="200">
-                    <img src="{{ asset('images/poster.png') }}" class="poster-md img-fluid rounded-2" alt="" />
-                </div>
-                <div class="col-md-7 order-2 order-md-1">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>ICASVE Conference Timeline</h2>
-                        <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
-                    </div>
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-                        <img src="{{ asset('images/poster.png') }}" class="poster-sm img-fluid rounded-2"
+            @foreach ($posters as $poster)
+                <div class="row gy-4 align-items-center features-item">
+                    <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
+                        data-aos-delay="200">
+                        <img src="{{ asset('storage/' . $poster->image) }}" class="poster-md img-fluid rounded-2"
                             alt="" />
                     </div>
-                    <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Abstract Submission</td>
-                                <td>July 2, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Abstract Notification</td>
-                                <td>July 3, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Participant (non-speaker) Registration Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Payment Deadline</td>
-                                <td>July 10, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Full Paper Deadline</td>
-                                <td>July 12, 2024</td>
-                            </tr>
-                            <tr>
-                                <td>Conference Day</td>
-                                <td>July 17, 2024</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                    <div class="col-md-7 order-2 order-md-1">
+                        <div class="container section-title" data-aos="fade-up">
+                            <h2>ICASVE Conference Timeline</h2>
+                            <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
+                        </div>
+                        <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
+                            <img src="{{ asset('storage/' . $poster->image) }}" class="poster-sm img-fluid rounded-2"
+                                alt="" />
+                        </div>
+                        <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($deadline_date as $date)
+                                    <tr>
+                                        <td>{{ $date->name }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($date->date)->format('F j, Y') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <a href="{{ $poster->link }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                    </div>
                 </div>
-            </div>
+            @endforeach
             <!-- Features Item -->
 
             <div class="row gy-4 align-items-center features-item">
@@ -303,44 +268,6 @@
                             3. Certificate fee: Participants can attend the event without certificate.
                         </small>
                     </p>
-
-                    <div class="d-flex justify-content-between align-items-center row text-center mt-5">
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="100">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <p><b>Bank Mandiri</b></p>
-                                    <p>Kode VA: 898187743</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="300">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <p><b>Bank Nasional Indonesia</b></p>
-                                    <p>Kode VA: 988081657743000</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bank col-md-4" data-aos="fade-up" data-aos-delay="500">
-                            <div class="card border-danger">
-                                <div class="card-body">
-                                    <p><b>Bank Jatim</b></p>
-                                    <p>Kode VA: 151637743000</p>
-                                    <p>Seminar Dan Kegiatan Sejenis Yang Menunjang Biaya</p>
-                                    <p>Unit Kerja: Direktorat Administrasi dan Layanan Akademik</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="text-start mt-4" data-aos="fade-up">
-                        <button class="btn btn-success btn-sm btn-confirm">Payment Proof Upload and Attendance Confirmation
-                            -></button>
-                    </div>
                 </div>
             </div>
             <!-- Features Item -->
@@ -350,26 +277,27 @@
                     <h2>Venue</h2>
                     <div><span>Our</span> <span class="description-title"> Venue</span></div>
                 </div>
-                <div class="row align-items-start">
-                    <div class="col-md-6" data-aos="fade-up">
-                        <img src="{{ asset('images/widyaloka.png') }}" alt="Venue Building"
-                            class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
+                @foreach ($venues as $venue)
+                    <div class="row align-items-start">
+                        <div class="col-md-6" data-aos="fade-up">
+                            <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
+                                class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
+                        </div>
+                        <div class="location col-md-6" data-aos="fade-up">
+                            <h3 class="title-location">{{ $venue->venue_name }}</h3>
+                            <p class="text-muted">{{ $venue->address }}</p>
+                            <p class="font-weight-bold">Date: {{ $venue->date }}</p>
+                            <a href="{{ $venue->map_link }}" target="_blank" class="btn btn-primary btn-map">See on
+                                Map</a>
+                        </div>
                     </div>
-                    <div class="location col-md-6" data-aos="fade-up">
-                        <h3 class="title-location">Convention Hall Universitas Brawijaya</h3>
-                        <p class="text-muted">Jl. Seminar Raya No. 1, Kota Event, Indonesia</p>
-                        <p class="font-weight-bold">Date: November 20th - 22nd, 2024</p>
-                        <a href="https://maps.app.goo.gl/5goJdTDuFaAWxUWG9" target="_blank"
-                            class="btn btn-primary btn-map">See on Map</a>
+
+                    <div class="mt-4" data-aos="fade-up">
+                        <iframe src="{{ $venue->map }}" width="100%" height="400" style="border: 0"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
-                </div>
-                <div class="mt-4" data-aos="fade-up">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4566125772426!2d112.6110645750068!3d-7.951675092072795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827f2d620cf1%3A0xf45788aac2a0e437!2sConvention%20Hall%20Universitas%20Brawijaya!5e0!3m2!1sid!2sid!4v1737982475129!5m2!1sid!2sid"
-                        width="100%" height="400" style="border: 0" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
+                @endforeach
             </div>
             <!-- Features Item -->
         </div>
@@ -399,14 +327,14 @@
                 <!-- Left Section (30%) -->
                 <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb;">
                     <div class="mb-4 text-center">
-                        <h4 data-aos="fade-up">Hosted By</h4>
+                        <h4 data-aos="fade-up mb-4">Hosted By</h4>
                         @foreach ($hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
-                                class="img-fluid mb-2 w-50 mx-auto" data-aos="fade-up">
+                                class="img-fluid mb-3 w-50 mx-auto" data-aos="fade-up">
                         @endforeach
                     </div>
                     <div class="text-center">
-                        <h4 data-aos="fade-up">Co-Hosted By</h4>
+                        <h4 data-aos="fade-up mb-4">Co-Hosted By</h4>
                         @foreach ($co_hosted_by as $item)
                             <img src="{{ asset('storage/' . $item->image_path) }}" class="w-50 mx-auto mb-2"
                                 alt="Co-Hosted Logo 1" class="img-fluid mb-2" data-aos="fade-up">
@@ -431,146 +359,6 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section dark-background">
-        <img src="assets/images/testimonials-bg.jpg" class="testimonials-bg" alt="" />
-
-        <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="swiper init-swiper">
-                <script type="application/json" class="swiper-config">
-                {
-                    "loop": true,
-                    "speed": 600,
-                    "autoplay": {
-                        "delay": 5000
-                    },
-                    "slidesPerView": "auto",
-                    "pagination": {
-                        "el": ".swiper-pagination",
-                        "type": "bullets",
-                        "clickable": true
-                    }
-                }
-            </script>
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-1.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Saul Goodman</h3>
-                            <h4>Ceo &amp; Founder</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit
-                                    rhoncus. Accusantium
-                                    quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-2.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Sara Wilsson</h3>
-                            <h4>Designer</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid
-                                    cillum eram malis quorum
-                                    velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-3.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Jena Karlis</h3>
-                            <h4>Store Owner</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam
-                                    duis minim tempor
-                                    labore quem eram duis noster aute amet eram fore quis sint minim.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-4.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>Matt Brandon</h3>
-                            <h4>Freelancer</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat
-                                    minim velit minim
-                                    dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum
-                                    veniam.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="assets/images/testimonials/testimonials-5.jpg" class="testimonial-img"
-                                alt="" />
-                            <h3>John Larson</h3>
-                            <h4>Entrepreneur</h4>
-                            <div class="stars">
-                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                    class="bi bi-star-fill"></i>
-                            </div>
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster
-                                    veniam enim culpa
-                                    labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi
-                                    cillum quid.</span>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                        </div>
-                    </div>
-                    <!-- End testimonial item -->
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-    <!-- /Testimonials Section -->
-
     <!-- Faq Section -->
     <section id="faq" class="faq section light-background">
         <div class="container-fluid">
@@ -579,66 +367,28 @@
                     <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
                         <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua. Duis aute irure dolor in reprehenderit
+                            Temukan jawaban dari pertanyaan yang sering diajukan mengenai konferensi ini.
                         </p>
                     </div>
 
                     <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
-                        <div class="faq-item faq-active">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Non consectetur a erat nam at lectus urna duis?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
-                                    curabitur gravida.
-                                    Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                                </p>
+                        @foreach ($faqs as $index => $faq)
+                            <div class="faq-item {{ $index === 0 ? 'faq-active' : '' }}">
+                                <i class="faq-icon bi bi-question-circle"></i>
+                                <h3>{{ $faq->title }}</h3>
+                                <div class="faq-content">
+                                    <p>{{ $faq->description }}</p>
+                                </div>
+                                <i class="faq-toggle bi bi-chevron-right"></i>
                             </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                    velit laoreet id donec
-                                    ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
-                                    pellentesque elit ullamcorper
-                                    dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
-
-                        <div class="faq-item">
-                            <i class="faq-icon bi bi-question-circle"></i>
-                            <h3>Dolor sit amet consectetur adipiscing elit pellentesque?</h3>
-                            <div class="faq-content">
-                                <p>
-                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                    pulvinar elementum
-                                    integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque
-                                    eu tincidunt.
-                                    Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed
-                                    odio morbi quis
-                                </p>
-                            </div>
-                            <i class="faq-toggle bi bi-chevron-right"></i>
-                        </div>
-                        <!-- End Faq item-->
+                        @endforeach
                     </div>
                 </div>
 
-                <div class="col-lg-5 order-1 order-lg-2">
+                {{-- <div class="col-lg-5 order-1 order-lg-2">
                     <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
                         data-aos-delay="100" />
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -656,33 +406,31 @@
         <div class="container" data-aos="fade" data-aos-delay="100">
             <div class="row gy-4">
                 <div class="col-lg-4">
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                        <i class="bi bi-geo-alt flex-shrink-0"></i>
-                        <div>
-                            <h3>Address</h3>
-                            <p>Jl. Veteran 12-14 Malang City, East Java Indonesia</p>
+                    @foreach ($contacts as $contact)
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                            <i class="bi bi-geo-alt flex-shrink-0"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>{{ $contact->address }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Info Item -->
 
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                        <i class="bi bi-telephone flex-shrink-0"></i>
-                        <div>
-                            <h3>Call Us</h3>
-                            <p>+6281217369484 (Kharisma)</p>
-                            <p>+6281233288666 (Sovia)</p>
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-telephone flex-shrink-0"></i>
+                            <div>
+                                <h3>Call Us</h3>
+                                <p>{{ $contact->phone }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Info Item -->
 
-                    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                        <i class="bi bi-envelope flex-shrink-0"></i>
-                        <div>
-                            <h3>Email Us</h3>
-                            <p>icasve@ub.ac.id</p>
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                            <i class="bi bi-envelope flex-shrink-0"></i>
+                            <div>
+                                <h3>Email Us</h3>
+                                <p>{{ $contact->email }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <!-- End Info Item -->
+                    @endforeach
                 </div>
 
                 <div class="col-lg-8">

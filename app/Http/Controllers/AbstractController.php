@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Upload;
 use App\Models\ConferenceSetting;
+use Illuminate\Support\Facades\File;
 
 class AbstractController extends Controller
 {
@@ -99,7 +100,7 @@ class AbstractController extends Controller
         $role = $user->roles->first()->name;
 
         $templateUrl = Upload::getFilePath('certificate_presenter');
-        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Certificate template not found');
@@ -161,7 +162,7 @@ class AbstractController extends Controller
             ->first();
 
         if ($certificate) {
-            return response()->file(public_path('storage/' . $certificate->certificate_path));
+            return response()->file(storage_path('app/public/' . $certificate->certificate_path));
         } else {
             return redirect()->route('abstracts.show', $id)->with('error', 'Certificate not generated yet.');
         }
@@ -280,8 +281,8 @@ class AbstractController extends Controller
         $letterHeaderUrl = Upload::getFilePath('letter_header');
         $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+        $letterHeader = storage_path('app/public/' . str_replace(asset('storage/'), '', $letterHeaderUrl));
+        $signature = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
 
         $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 

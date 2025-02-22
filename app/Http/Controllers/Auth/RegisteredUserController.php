@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Upload;
 use App\Models\ConferenceSetting;
+use Illuminate\Support\Facades\File;
 
 class RegisteredUserController extends Controller
 {
@@ -36,8 +37,8 @@ class RegisteredUserController extends Controller
         ])->get();
         $conferenceSetting = ConferenceSetting::first();
         $openRegistration = $conferenceSetting->open_registration ?? false;
-        $conferenceTitle = $conferenceSetting->conference_title;
-        $conferenceAbbreviation = $conferenceSetting->conference_abbreviation;
+        $conferenceTitle = optional($conferenceSetting)->conference_title ?? 'The 3rd International Conference on Applied Science for Vocational Education';
+        $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
         return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting'));
     }
 
@@ -60,6 +61,7 @@ class RegisteredUserController extends Controller
             'job_title' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:15', 'regex:/^[0-9\-\+\(\)\s]*$/'],
             'attendance' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role_id' => ['required', 'exists:roles,id'],
         ]);
@@ -71,6 +73,7 @@ class RegisteredUserController extends Controller
             'job_title' => $validatedData['job_title'],
             'phone_number' => $validatedData['phone_number'],
             'attendance' => $validatedData['attendance'],
+            'country' => $validatedData['country'],
             'password' => Hash::make($validatedData['password']),
         ]);
 
@@ -98,7 +101,7 @@ class RegisteredUserController extends Controller
     {
         // Tentukan template sertifikat untuk peserta
         $templateUrl = Upload::getFilePath('certificate_participant');
-        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Certificate template not found');

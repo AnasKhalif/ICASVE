@@ -21,9 +21,8 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:100',
             'email' => 'nullable|email|max:255',
-            'website' => 'nullable|url|max:255',
             'address' => 'required|string',
         ]);
         Contact::create($request->all());
@@ -32,7 +31,7 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        return view('landing.contact.edit', compact('contact'));
+        return view('landingpage-editor.contact.edit', compact('contact'));
     }
     public function update(Request $request, $id)
     {
@@ -40,7 +39,6 @@ class ContactController extends Controller
             'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
-            'website' => 'nullable|url|max:255',
             'address' => 'required|string',
         ]);
         $contact = Contact::findOrFail($id);

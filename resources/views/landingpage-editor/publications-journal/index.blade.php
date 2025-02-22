@@ -27,18 +27,20 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $publications_journal->image_type }}</td>
-                                    <<td><img src="{{ asset('storage/' . $publications_journal->image_path) }}"
-                                            alt="gambar" class="img-fluid"></td>
-                                        <td>
-                                            <a href="{{ route('landing.publications-journal.edit', $publications_journal->id) }}"
-                                                class="btn btn-sm btn-warning">Edit</a>
-                                            <form
-                                                action="{{ route('landing.publications-journal.destroy', $publications_journal->id) }}"
-                                                method="POST" style="display: inline-block;">
-                                                <button type="submit" class="btn btn-sm btn-danger"
-                                                    onclick="return confirm('Are you sure?')">Delete</button>
-                                            </form>
-                                        </td>
+                                    <td>
+                                        <img src="{{ asset('storage/' . $publications_journal->image_path) }}"
+                                            alt="gambar" class="img-fluid">
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('landing.publications-journal.edit', $publications_journal->id) }}"
+                                            class="btn btn-sm btn-warning">Edit</a>
+                                        <form
+                                            action="{{ route('landing.publications-journal.destroy', $publications_journal->id) }}"
+                                            method="POST" style="display: inline-block;">
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

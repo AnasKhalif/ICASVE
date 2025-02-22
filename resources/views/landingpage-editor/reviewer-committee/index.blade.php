@@ -11,10 +11,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>No</th>
                     <th>Name</th>
-                    <th>Title</th>
                     <th>Institution</th>
+                    <th>Country</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -23,8 +23,8 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $committee->name }}</td>
-                        <td>{{ $committee->title }}</td>
                         <td>{{ $committee->institution }}</td>
+                        <td>{{ $committee->country }}</td>
                         <td>
                             <a href="{{ route('landing.reviewer-committee.edit', $committee->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
