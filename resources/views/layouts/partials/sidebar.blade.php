@@ -95,7 +95,7 @@
     </nav>
 @endrole
 @role(['chief-editor', 'editor'])
-    <nav class="sidebar sidebar-offcanvas">
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item {{ request()->routeIs('reviewer.summary') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('reviewer.summary') }}">
