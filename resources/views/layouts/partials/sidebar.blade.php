@@ -287,24 +287,15 @@
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.abouts.index') }}">
-                    <i class="fa-solid fa-circle-question menu-icon"></i>
-                    <span class="menu-title">About</span>
-                </a>
-            </li>
+            
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.logos.index') }}">
                     <i class="fa-brands fa-slack menu-icon"></i>
                     <span class="menu-title">Logo</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.poster.index') }}">
-                    <i class="fa-solid fa-newspaper menu-icon"></i>
-                    <span class="menu-title">Poster</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.steering.index') }}">
                     <i class="fa-solid fa-users menu-icon"></i>
@@ -329,12 +320,7 @@
                     <span class="menu-title">Abstract Gudelines</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.contact.index') }}">
-                    <i class="fa-solid fa-phone-volume menu-icon"></i>
-                    <span class="menu-title">Contact</span>
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.conferance-program.index') }}">
                     <i class="fa fa-clipboard menu-icon"></i>

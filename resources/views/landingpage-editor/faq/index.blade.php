@@ -1,45 +1,41 @@
 @extends('layouts.app')
-@section('title', 'Speaker')
+@section('title', 'FAQ')
 @section('content')
-    <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">FAQ</h4>
-                    <a href="{{ route('landing.faq.create') }}" class="btn btn-sm btn-success">New FAQ</a>
-                </div>
-                <p class="card-description">
-                    List of FAQ
-                </p>
-                <div class="table-responsive pt-3">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Title</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($faqs as $faq)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $faq->title }}</td>
-                                    <td>
-                                        <a href="{{ route('landing.faq.edit', $faq->id) }}"
-                                            class="btn btn-sm btn-warning">Edit</a>
-                                        <form action=" {{ route('landing.faq.destroy', $faq->id) }}" method="POST"
-                                            style="display: inline-block;">
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="container mt-4">
+        <h2 class="text-center fw-bold text-uppercase">FAQ</h2>
+        <hr class="border border-success">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('landing.faq.create') }}" class="btn btn-primary">Add FAQ</a>
         </div>
+        <table class="table table-bordered table-striped">
+            <thead class="table-success">
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($faqs as $faq)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $faq->title }}</td>
+                        <td>
+                            <a href="{{ route('landing.faq.edit', $faq->id) }}"
+                                class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('landing.faq.destroy', $faq->id) }}" method="POST"
+                                class="d-inline" onsubmit="return confirm('Are you sure?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection

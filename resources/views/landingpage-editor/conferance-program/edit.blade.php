@@ -1,14 +1,15 @@
 @extends('layouts.app')
-@section('title', 'edit Conference Program')
+@section('title', 'Edit Contact')
 @section('content')
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">edit Conference Program</h4>
+    <div class="container mt-4">
+        <h2 class="text-center fw-bold">Edit Conference Program</h2>
+        <hr class="border border-success">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
                 <form action="{{ route('landing.conferance-program.update', $program->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="start_time">Time Start</label>
                         <input type="time" class="form-control @error('start_time') is-invalid @enderror" name="start_time"
                             id="start_time" value="{{ $program->start_time }}" required>
@@ -16,7 +17,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="end_time">Time End</label>
                         <input type="time" class="form-control @error('time_end') is-invalid @enderror" name="end_time"
                             id="end_time" value="{{ $program->end_time }}" required>
@@ -24,7 +25,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="program_name">Program</label>
                         <input type="text" class="form-control @error('program_name') is-invalid @enderror"
                             name="program_name" id="program_name" value="{{ $program->program_name }}" required>
@@ -32,7 +33,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="pic">PIC</label>
                         <input type="text" class="form-control @error('pic') is-invalid @enderror" name="pic"
                             id="pic" value="{{ $program->pic }}" required>
@@ -40,7 +41,8 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                    <a href="{{ route('landing.conferance-program.index') }}" class="btn btn-secondary">Back</a>
                 </form>
             </div>
         </div>

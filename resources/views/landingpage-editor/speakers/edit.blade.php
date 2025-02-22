@@ -1,30 +1,16 @@
 @extends('layouts.app')
 @section('title', 'Edit Speaker')
 @section('content')
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Edit Speaker</h4>
-                <form action="{{ route('landing.speakers.update', $speaker->id) }}" method="POST"
-                    enctype="multipart/form-data">
+    <div class="container mt-4">
+        <h2 class="text-center fw-bold">Edit Speaker</h2>
+        <hr class="border border-success">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="{{ route('landing.speakers.update', $speaker->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name"
-                            value="{{ old('name', $speaker->name) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="institution">Institution</label>
-                        <input type="text" class="form-control" name="institution" id="institution"
-                            value="{{ old('institution', $speaker->institution) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <input type="text" class="form-control" name="country" id="country"
-                            value="{{ old('country', $speaker->country) }}" required>
-                    </div>
-                    <div class="form-group">
+                
+                    <div class="mb-3">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="keynote_speaker" {{ $speaker->role == 'keynote_speaker' ? 'selected' : '' }}>
@@ -32,8 +18,34 @@
                             <option value="invited_speaker" {{ $speaker->role == 'invited_speaker' ? 'selected' : '' }}>
                                 Invited Speaker</option>
                         </select>
+                        @error('role')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $speaker->name) }}" required>
+                        </div>
+                        @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="institution">Institution</label>
+                        <input type="text" class="form-control" name="institution" id="institution" value="{{ old('institution', $speaker->institution) }}" required>
+                        @error('institution')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" name="country" id="country" value="{{ old('country', $speaker->country) }}" required>
+                        @error('country')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
                         <label for="image">Image</label>
                         <div class="mb-2">
                             @if ($speaker->image)
@@ -47,7 +59,11 @@
                                 <label class="custom-file-label" for="image" id="fileLabel">Choose file</label>
                             </div>
                         </div>
+                        @error('image')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+            
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
