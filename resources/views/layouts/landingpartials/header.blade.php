@@ -1,7 +1,11 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            <img src="{{ asset('images/logo-icasve-white.png') }}" width="200" height="100%" alt="Logo" />
+            @if (isset($logo) && $logo->image)
+                <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
+            @else
+                <img src="{{ asset('images/logo-icasve-white.png') }}" width="200" height="100%" alt="Logo" />
+            @endif
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -21,6 +25,7 @@
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>
                         <li><a href="{{ route('submission.fullpaper') }}">Full Paper Submission</a></li>
+                        <li><a href="{{ route('submission.presentation') }}">Presentation Submission</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('gallery') }}">Gallery</a></li>
@@ -34,6 +39,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('previous.conference') }}">Previous Conference</a></li>
+                <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

@@ -20,18 +20,18 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                        name="title" value="{{ old('title', $reviewerCommittee->title) }}" required>
-                    @error('title')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
                     <label for="institution" class="form-label">Institution</label>
                     <input type="text" class="form-control @error('institution') is-invalid @enderror" id="institution"
                         name="institution" value="{{ old('institution', $reviewerCommittee->institution) }}" required>
                     @error('institution')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control @error('country') is-invalid @enderror" id="country"
+                        name="country" value="{{ old('country', $reviewerCommittee->country) }}" required>
+                    @error('country')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

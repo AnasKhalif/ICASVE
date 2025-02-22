@@ -7,6 +7,12 @@ use App\Models\Speaker;
 use App\Models\RegistrationFee;
 use App\Models\PublicationsJournal;
 use App\Models\Venue;
+use App\Models\DeadlineDate;
+use App\Models\About;
+use App\Models\Poster;
+use App\Models\Contact;
+use App\Models\Symposium;
+use App\Models\Faq;
 
 class LandingPageController extends Controller
 {
@@ -22,6 +28,29 @@ class LandingPageController extends Controller
         $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->get();
         $supported_by = PublicationsJournal::where('image_type', 'supported_by')->get();
         $venues = Venue::all();
-        return view('landingpage.home', compact('keynoteSpeakers', 'invitedSpeakers', 'presenter', 'non_presenter', 'additional_fee', 'publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by', 'venues'));
+        $deadline_date = DeadlineDate::all();
+        $contacts = Contact::all();
+        $posters = Poster::all();
+        $about = About::all();
+        $symposiums = Symposium::all();
+        $faqs = Faq::limit(3)->get();
+        return view('landingpage.home', compact(
+            'keynoteSpeakers',
+            'invitedSpeakers',
+            'presenter',
+            'non_presenter',
+            'additional_fee',
+            'publications_journal',
+            'hosted_by',
+            'co_hosted_by',
+            'supported_by',
+            'venues',
+            'deadline_date',
+            'contacts',
+            'posters',
+            'about',
+            'symposiums',
+            'faqs'
+        ));
     }
 }

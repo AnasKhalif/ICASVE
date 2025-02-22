@@ -13,8 +13,8 @@
                 <tr>
                     <th>No</th>
                     <th>Nama</th>
-                    <th>Gelar</th>
                     <th>Institusi</th>
+                    <th>Country</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -23,8 +23,8 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $committee->name }}</td>
-                        <td>{{ $committee->title }}</td>
                         <td>{{ $committee->institution }}</td>
+                        <td>{{ $committee->country }}</td>
                         <td>
                             <a href="{{ route('landing.steering.edit', $committee->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>

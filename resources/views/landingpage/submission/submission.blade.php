@@ -75,19 +75,6 @@
                             bibliographic requirements outlined in the Author Guidelines.</li>
                     </ul>
                 </div>
-
-                <!-- Section Articles -->
-                <div class="articles-section">
-                    <h4 class="fw-bold mt-4">Articles</h4>
-                    <div>Section default policy</div>
-                </div>
-                <!-- Section Articles -->
-                <div class="articles-section">
-                    <h4 class="fw-bold mt-4">Privacy Statement</h4>
-                    <div>The names and email addresses entered in this journal site will be used exclusively for the stated
-                        purposes of this journal and will not be made available for any other purpose or to any other party.
-                    </div>
-                </div>
             </div>
 
             <!-- Sidebar -->
@@ -95,10 +82,6 @@
                 <div class="d-flex flex-column gap-2">
                     <a href="#" class="btn text-white"
                         style="background: linear-gradient(to right, navy, orange);">Download Paper Template</a>
-                    <a href="#" class="btn text-white"
-                        style="background: linear-gradient(to right, navy, orange);">Author Guidelines</a>
-                    <a href="#" class="btn text-white"
-                        style="background: linear-gradient(to right, navy, orange);">Submission Guidelines</a>
                 </div>
             </div>
         </div>

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('steering_committees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('title');
             $table->string('institution');
+            $table->string('country');
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ class SteeringCommitteeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
             'institution' => 'required|string|max:255',
         ]);
         SteeringCommittee::create($request->all());
@@ -36,7 +36,7 @@ class SteeringCommitteeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
             'institution' => 'required|string|max:255',
         ]);
         $steering = SteeringCommittee::findOrFail($id);

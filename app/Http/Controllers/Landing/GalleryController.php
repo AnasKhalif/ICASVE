@@ -11,7 +11,7 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $gallery = gallery::all();
+        $gallery = Gallery::all();
         return view('landingpage-editor.gallery.index', compact('gallery'));
     }
     public function create()
@@ -22,26 +22,26 @@ class GalleryController extends Controller
     {
         $validateData = $request->validate([
             'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
-            'year' => ['required', 'string', 'max:255']
+            'year' => ['required', 'integer']
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('gallery', 'public');
             $validateData['image_path'] = $imagePath;
         }
-        gallery::create($validateData);
+        Gallery::create($validateData);
         return redirect()->route('landing.gallery.index')->with('success', 'Gallery created successfully.');
     }
     public function edit($id)
     {
-        $gallery = gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
         return view('landingpage-editor.gallery.edit', compact('gallery'));
     }
     public function update(Request $request, $id)
     {
-        $gallery = gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
         $validateData = $request->validate([
             'image_path' => ['file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
-            'year' => ['string', 'max:255']
+            'year'  => ['required', 'integer']
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('gallery', 'public');
@@ -52,7 +52,7 @@ class GalleryController extends Controller
     }
     public function destroy($id)
     {
-        $gallery = gallery::findOrFail($id);
+        $gallery = Gallery::findOrFail($id);
         $gallery->delete();
         return redirect()->route('landing.gallery.index')->with('success', 'Gallery deleted successfully.');
     }

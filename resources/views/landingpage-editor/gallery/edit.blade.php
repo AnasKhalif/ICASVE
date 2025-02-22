@@ -27,6 +27,12 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="from-group">
+                        <div class="mb-3">
+                            <label class="form-label">Year</label>
+                            <input type="year" name="year" class="form-control" value="{{ $gallery->year }}" required>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
