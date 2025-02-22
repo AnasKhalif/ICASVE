@@ -52,7 +52,7 @@ class EditorController extends Controller
         $abstract = AbstractModel::with('reviewers')->findOrFail($abstractId);
 
         $reviewers = User::whereHas('roles', function ($query) {
-            $query->where('name', 'reviewer');
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
         })->get();
 
         $assignedReviewer1 = $abstract->reviewers->first() ? $abstract->reviewers[0]->id : null;
@@ -67,7 +67,7 @@ class EditorController extends Controller
         $abstract = AbstractModel::findOrFail($abstractId);
 
         $request->validate([
-            'reviewer_1_id' => 'nullable|exists:users,id',
+            'reviewer_1_id' => 'required|exists:users,id',
             'reviewer_2_id' => 'nullable|exists:users,id|different:reviewer_1_id',
         ]);
 
@@ -90,7 +90,7 @@ class EditorController extends Controller
         $abstract->status = 'under review';
         $abstract->save();
 
-        return redirect()->route('reviewer.editor.index')->with('success', 'Reviewer assigned successfully');
+        return redirect()->route('reviewer.editor.noReviewer')->with('success', 'Reviewer assigned successfully');
     }
 
 

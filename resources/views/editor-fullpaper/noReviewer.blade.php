@@ -36,16 +36,13 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        @if ($fullpaper->fullPaperReviews->isEmpty())
-                                            <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
-                                                class="btn btn-sm btn-primary">Assign Reviewer</a>
-                                        @else
-                                            @foreach ($fullpaper->fullPaperReviews as $review)
-                                                <div>
-                                                    <strong>{{ $review->reviewer->name }}</strong><br>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                        @foreach ($fullpaper->fullPaperReviews as $review)
+                                            <div>
+                                                <strong>{{ $review->reviewer->name }}</strong><br>
+                                            </div>
+                                        @endforeach
+                                        <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
+                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>

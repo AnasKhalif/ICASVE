@@ -10,8 +10,8 @@
                 <form action="{{ route('reviewer.editor.assignReviewer', $abstract->id) }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="reviewer_1_id">Select Reviewer 1 (Optional)</label>
-                        <select class="form-control" name="reviewer_1_id" id="reviewer_1_id">
+                        <label for="reviewer_1_id">Select Reviewer 1</label>
+                        <select class="form-control" name="reviewer_1_id" id="reviewer_1_id" required>
                             <option value="">-- Select Reviewer 1 --</option>
                             @foreach ($reviewers as $reviewer)
                                 <option value="{{ $reviewer->id }}"
@@ -38,7 +38,7 @@
 
 
                     <button type="submit" class="btn btn-sm btn-success">Assign Reviewers</button>
-                    <a href="{{ route('reviewer.editor.index') }}" class="btn btn-sm btn-light">Cancel</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>
             </div>
         </div>

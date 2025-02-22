@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-sm btn-success">Update Status</button>
-                    <a href="{{ route('reviewer.editor.index') }}" class="btn btn-sm btn-light">Cancel</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>
             </div>
         </div>

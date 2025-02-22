@@ -59,12 +59,15 @@ class EditorFullPaperController extends Controller
 
     public function showAssignReviewer($fullpaperId)
     {
-        $fullpaper = FullPaper::findOrFail($fullpaperId);
+        $fullpaper = FullPaper::with('reviewers')->findOrFail($fullpaperId);
         $reviewers = User::whereHas('roles', function ($query) {
-            $query->where('name', 'reviewer');
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
         })->get();
 
-        return view('editor-fullpaper.assignReviewer', compact('fullpaper', 'reviewers'));
+        $assignedReviewer1 = $fullpaper->reviewers->first() ? $fullpaper->reviewers[0]->id : null;
+        $assignedReviewer2 = $fullpaper->reviewers->count() > 1 ? $fullpaper->reviewers[1]->id : null;
+
+        return view('editor-fullpaper.assignReviewer', compact('fullpaper', 'reviewers', 'assignedReviewer1', 'assignedReviewer2'));
     }
 
     public function assignReviewer(Request $request, $fullpaperId)
@@ -73,20 +76,29 @@ class EditorFullPaperController extends Controller
 
         $request->validate([
             'reviewer_1_id' => 'required|exists:users,id',
-            'reviewer_2_id' => 'required|exists:users,id|different:reviewer_1_id',
+            'reviewer_2_id' => 'nullable|exists:users,id|different:reviewer_1_id',
         ]);
+
+        if (!$request->reviewer_1_id && !$request->reviewer_2_id) {
+            return back()->withErrors(['reviewer_1_id' => 'At least one reviewer must be assigned.']);
+        }
 
         $fullpaper->reviewers()->detach();
 
-        $fullpaper->reviewers()->attach([
-            $request->reviewer_1_id => ['created_at' => now(), 'updated_at' => now()],
-            $request->reviewer_2_id => ['created_at' => now(), 'updated_at' => now()],
-        ]);
+        $reviewers = [];
+        if ($request->reviewer_1_id) {
+            $reviewers[$request->reviewer_1_id] = ['created_at' => now(), 'updated_at' => now()];
+        }
+        if ($request->reviewer_2_id) {
+            $reviewers[$request->reviewer_2_id] = ['created_at' => now(), 'updated_at' => now()];
+        }
+
+        $fullpaper->reviewers()->attach($reviewers);
 
         $fullpaper->status = 'under review';
         $fullpaper->save();
 
-        return redirect()->route('reviewer.editor-fullpaper.index')->with('success', 'Reviewer berhasil diperbarui.');
+        return redirect()->route('reviewer.editor-fullpaper.noReviewer')->with('success', 'Reviewer berhasil diperbarui.');
     }
 
 

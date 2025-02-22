@@ -144,7 +144,7 @@ Route::name('reviewer.')
     ->middleware(['auth', 'role:reviewer|chief-editor|editor'])
     ->group(function () {
         Route::get('summary', [SummaryReviewerController::class, 'index'])->name('summary');
-        Route::get('editor-allabstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('all-abstract', [EditorController::class, 'index'])->name('editor.index');
 
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
@@ -156,13 +156,13 @@ Route::name('reviewer.')
         Route::get('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'showEditStatus'])->name('editor.showEditStatus');
         Route::post('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'updateStatus'])->name('editor.updateStatus');
 
-        Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
-        Route::get('/review-abstract/review-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
+        Route::get('/review-abstract', [ReviewController::class, 'index'])->name('review-abstract.index');
+        Route::get('/review-abstract-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
 
         Route::get('/review-abstract/{abstractId}', [ReviewController::class, 'showReviewForm'])->name('review.showReviewForm');
         Route::post('/review-abstract/{abstractId}', [ReviewController::class, 'storeReview'])->name('review.storeReview');
 
-        Route::get('editor-all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
 
         Route::get('/editor-fullpaper/no-reviewer', [EditorFullPaperController::class, 'noReviewer'])->name('editor-fullpaper.noReviewer');
         Route::get('/editor-fullpaper/no-decision', [EditorFullPaperController::class, 'noDecision'])->name('editor-fullpaper.noDecision');
@@ -176,7 +176,7 @@ Route::name('reviewer.')
         Route::post('/editor-fullpaper/edit-status/{fullpaperId}', [EditorFullPaperController::class, 'updateStatus'])->name('editor-fullpaper.updateStatus');
 
         Route::get('/review-fullpaper', [ReviewFullPaperController::class, 'index'])->name('review-fullpaper.index');
-        Route::get('/review-fullpaper/review-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
+        Route::get('/review-fullpaper-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
 
         Route::get('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'showReviewForm'])->name('review-fullpaper.showReviewForm');
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');

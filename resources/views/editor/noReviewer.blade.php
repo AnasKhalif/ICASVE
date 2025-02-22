@@ -36,14 +36,12 @@
                                         @endforeach
                                     </td>
                                     <td class="text-center">
-                                        @if ($abstract->abstractReviews->isEmpty())
-                                            <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
-                                                class="btn btn-sm btn-primary">Assign Reviewer</a>
-                                        @else
-                                            @foreach ($abstract->abstractReviews as $review)
-                                                <strong>{{ $review->reviewer->name }} <br></strong>
-                                            @endforeach
-                                        @endif
+                                        @foreach ($abstract->abstractReviews as $review)
+                                            <strong>{{ $review->reviewer->name }} <br></strong>
+                                        @endforeach
+
+                                        <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
+                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($abstract->status) }}</span><br><br>

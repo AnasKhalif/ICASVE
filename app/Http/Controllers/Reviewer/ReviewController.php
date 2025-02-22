@@ -76,6 +76,6 @@ class ReviewController extends Controller
             ]);
         }
 
-        return redirect()->route('reviewer.review.index')->with('success', 'Review submitted successfully');
+        return redirect()->route('reviewer.review-abstract.index')->with('success', 'Review submitted successfully');
     }
 }
