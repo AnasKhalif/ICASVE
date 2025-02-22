@@ -9,10 +9,16 @@
         <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control" value="{{ $about->title }}" required>
+            @error('title')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-3">
             <label class="form-label">Content</label>
             <textarea name="content" class="form-control" rows="5" required>{{ $about->content }}</textarea>
+            @error('content')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="mb-3">
             <label class="form-label">Current Image</label>
@@ -23,6 +29,9 @@
         <div class="mb-3">
             <label class="form-label">New Image (optional)</label>
             <input type="file" name="image" class="form-control" accept="image/*">
+            @error('image')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <button type="submit" class="btn btn-success">Update</button>
     </form>

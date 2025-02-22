@@ -11,11 +11,11 @@ class ConferenceProgramController extends Controller
     public function index()
     {
         $programs = conference_program::all();
-        return view('landingpage-editor.conferance-program.index', compact('programs'));
+        return view('landingpage-editor.conference.conferance-program.index', compact('programs'));
     }
     public function create()
     {
-        return view('landingpage-editor.conferance-program.create');
+        return view('landingpage-editor.conference.conferance-program.create');
     }
     public function store(Request $request)
     {
@@ -34,7 +34,7 @@ class ConferenceProgramController extends Controller
     public function edit($id)
     {
         $program = conference_program::findOrFail($id);
-        return view('landingpage-editor.conferance-program.edit', compact('program'));
+        return view('landingpage-editor.conference.conferance-program.edit', compact('program'));
     }
     public function update(Request $request, $id)
     {

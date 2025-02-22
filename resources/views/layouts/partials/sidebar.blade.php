@@ -282,53 +282,54 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
-                    <i class="fa-solid fa-house-chimney menu-icon"></i>
-                    <span class="menu-title">Landing Page</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.committee.index') }}">
-                    <i class="fa-solid fa-house-chimney menu-icon"></i>
-                    <span class="menu-title">Committee</span>
-                </a>
-            </li>
-            
-
-            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.logos.index') }}">
                     <i class="fa-brands fa-slack menu-icon"></i>
                     <span class="menu-title">Logo</span>
                 </a>
             </li>
             
-           
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.abstractlanding.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
-                    <span class="menu-title">Abstract Gudelines</span>
+                <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
+                    <i class="fa-solid fa-globe menu-icon"></i>
+                    <span class="menu-title">Landing Page</span>
                 </a>
             </li>
-
+            
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.conferance-program.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
-                    <span class="menu-title">Conference Program</span>
+                <a class="nav-link" href="{{ route('landing.committee.index') }}">
+                    <i class="fa-solid fa-users menu-icon"></i>
+                    <span class="menu-title">Committee</span>
                 </a>
             </li>
+            
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.gallery.index') }}">
                     <i class="fa-solid fa-images menu-icon"></i>
                     <span class="menu-title">Gallery</span>
                 </a>
             </li>
+            
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.conference.index') }}">
-                    <i class="fa-solid fa-images menu-icon"></i>
-                    <span class="menu-title">Conference</span>
+                <a class="nav-link" href="{{ route('landing.conferencelanding.index') }}">
+                    <i class="fa-solid fa-calendar-alt menu-icon"></i>
+                    <span class="menu-title">Conference Program</span>
                 </a>
             </li>
+            
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.abstractlanding.index') }}">
+                    <i class="fa-solid fa-file-alt menu-icon"></i>
+                    <span class="menu-title">Abstract Guidelines</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.whatsapp.index') }}">
+                    <i class="fa-solid fa-envelope menu-icon"></i>
+                    <span class="menu-title">Whatsapp</span>
+                </a>
+            </li>
+            
         </ul>
     </nav>
 @endrole

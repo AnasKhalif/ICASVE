@@ -47,6 +47,8 @@ use App\Http\Controllers\steeringLandingPage;
 use App\Http\Controllers\reviewerLandingPage;
 use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\Landing\CommitteeController;
+use App\Http\Controllers\Landing\ConferenceIndexController;
+use App\Http\Controllers\Landing\WhatsappController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -183,6 +185,7 @@ Route::name('landing.')
     ->group(function () {
         Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
         Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
+        Route::get('conferencelanding', [ConferenceIndexController::class, 'index'])->name('conferencelanding.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
@@ -191,6 +194,7 @@ Route::name('landing.')
         Route::resource('steering', SteeringCommitteeController::class);
         Route::resource('reviewer-committee', ReviewerCommitteeController::class);
         Route::resource('organizing', OrganizingCommitteeController::class);
+        Route::resource('whatsapp', WhatsappController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
         Route::resource('abouts', AboutController::class);

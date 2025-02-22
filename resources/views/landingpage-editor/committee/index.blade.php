@@ -1,17 +1,34 @@
 @extends('layouts.app')
+
 @section('title', 'Committee')
+
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
-        <div class="card">
+        <div class="card shadow-lg border-0">
+            <div class="card-header bg-primary text-white text-center py-2">
+                <h5 class="mb-0">Edit Committee</h5>
+            </div>
             <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">Edit Committee</h4>
-                </div>
-                <div class="table-responsive pt-3 d-flex justify-content-around">
-                   
-                    <a href="{{ route('landing.steering.index') }}" class="btn btn-md btn-danger">Steering Commitee</a>
-                    <a href="{{ route('landing.reviewer-committee.index') }}" class="btn btn-md btn-danger">Reviewer Committee</a>
-                    <a href="{{ route('landing.organizing.index') }}" class="btn btn-md btn-danger">Organizing Committee</a>
+                <div class="row g-3 justify-content-center">
+
+                    <div class="col-md-4">
+                        <a href="{{ route('landing.steering.index') }}" class="btn btn-danger w-100 py-2">
+                            <i class="fa-solid fa-chalkboard-teacher"></i> Steering Committee
+                        </a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <a href="{{ route('landing.reviewer-committee.index') }}" class="btn btn-warning w-100 py-2">
+                            <i class="fa-solid fa-search"></i> Reviewer Committee
+                        </a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <a href="{{ route('landing.organizing.index') }}" class="btn btn-success w-100 py-2">
+                            <i class="fa-solid fa-users"></i> Organizing Committee
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>

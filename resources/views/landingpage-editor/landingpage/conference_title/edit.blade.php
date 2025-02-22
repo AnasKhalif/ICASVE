@@ -11,14 +11,23 @@
                 <div class="mb-3">
                     <label class="form-label">Title</label>
                     <input type="text" name="title" class="form-control" value="{{ $conferenceTitle->title }}" required>
+                    @error('title')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Description</label>
                     <textarea name="description" class="form-control" required>{{ $conferenceTitle->description }}</textarea>
+                    @error('description')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Year</label>
                     <input type="number" name="year" class="form-control" value="{{ $conferenceTitle->year }}" required min="2000" max="{{ date('Y') }}">
+                    @error('year')
+                       <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>

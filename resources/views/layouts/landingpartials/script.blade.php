@@ -1,6 +1,9 @@
-<a href="https://wa.me/6285156914705" class="whatsapp-float" target="_blank">
+@php
+    $whatsapp = \App\Models\Whatsapp::first();
+@endphp
+<a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp whatsapp-icon"></i>
-    </a>
+</a>
 
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"></a>
 

@@ -5,7 +5,6 @@
 <div class="container">
     <h2 class="mb-4">Conference Titles</h2>
 
-    <!-- Filter berdasarkan tahun -->
     <form action="{{ route('landing.conference-title.index') }}" method="GET" class="mb-3">
         <div class="d-flex gap-2">
             <select name="year" class="form-select w-auto">
@@ -18,12 +17,10 @@
         </div>
     </form>
 
-    <!-- Tombol tambah judul -->
     <a href="{{ route('landing.conference-title.create') }}" class="btn btn-success mb-3">
         <i class="bi bi-plus-circle"></i> Add Conference Title
     </a>
 
-    <!-- Daftar conference titles -->
     @if($conferenceTitles->count() > 0)
         <div class="row">
             @foreach($conferenceTitles as $title)

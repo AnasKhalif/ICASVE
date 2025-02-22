@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Add Steering Committee')
+@section('title', 'Edit Conference Title')
 @section('content')
     <div class="container mt-4">
-        <h2 class="fw-bold">Add Steering Committee</h2>
+        <h2 class="fw-bold">Edit Conference Title</h2>
         <hr>
         <form action="{{ route('landing.conference.update', $conference->id) }}" method="POST">
             @csrf
