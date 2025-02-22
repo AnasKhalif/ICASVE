@@ -12,11 +12,11 @@ class PublicationsJournalController extends Controller
     public function index()
     {
         $publications_journals = publications_journal::all();
-        return view('landingpage-editor.publications-journal.index', compact('publications_journals'));
+        return view('landingpage-editor.landingpage.publications-journal.index', compact('publications_journals'));
     }
     public function create()
     {
-        return view('landingpage-editor.publications-journal.create');
+        return view('landingpage-editor.landingpage.publications-journal.create');
     }
     public function store(Request $request)
     {
@@ -33,7 +33,7 @@ class PublicationsJournalController extends Controller
     }
     public function edit(publications_journal $publications_journal)
     {
-        return view('landingpage-editor.publications-journal.edit', compact('publications_journal'));
+        return view('landingpage-editor.landingpage.publications-journal.edit', compact('publications_journal'));
     }
     public function update(Request $request, publications_journal $publications_journal)
     {

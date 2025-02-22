@@ -11,11 +11,11 @@ class OrganizingCommitteeController extends Controller
     public function index()
     {
         $committees = OrganizingCommittee::all();
-        return view('landingpage-editor.organizing.index', compact('committees'));
+        return view('landingpage-editor.committee.organizing.index', compact('committees'));
     }
     public function create()
     {
-        return view('landingpage-editor.organizing.create');
+        return view('landingpage-editor.committee.organizing.create');
     }
     public function store(Request $request)
     {
@@ -32,7 +32,7 @@ class OrganizingCommitteeController extends Controller
     public function edit($id)
     {
         $committee = OrganizingCommittee::findOrFail($id);
-        return view('landingpage-editor.organizing.edit', compact('committee'));
+        return view('landingpage-editor.committee.organizing.edit', compact('committee'));
     }
     public function update(Request $request, $id)
     {

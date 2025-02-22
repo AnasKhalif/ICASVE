@@ -11,11 +11,11 @@ class FaqController extends Controller
     public function index()
     {
         $faqs = Faq::all();
-        return view('landingpage-editor.faq.index', compact('faqs'));
+        return view('landingpage-editor.landingpage.faq.index', compact('faqs'));
     }
     public function create()
     {
-        return view('landingpage-editor.faq.create');
+        return view('landingpage-editor.landingpage.faq.create');
     }
     public function store(Request $request)
     {
@@ -31,7 +31,7 @@ class FaqController extends Controller
     public function edit($id)
     {
         $faq = Faq::findOrFail($id);
-        return view('landingpage-editor.faq.edit', compact('faq'));
+        return view('landingpage-editor.landingpage.faq.edit', compact('faq'));
     }
     public function update(Request $request, $id)
     {

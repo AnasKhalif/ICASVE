@@ -11,11 +11,11 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return view('landingpage-editor.contact.index', compact('contacts'));
+        return view('landingpage-editor.landingpage.contact.index', compact('contacts'));
     }
     public function create()
     {
-        return view('landingpage-editor.contact.create');
+        return view('landingpage-editor.landingpage.contact.create');
     }
     public function store(Request $request)
     {
@@ -30,7 +30,7 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        return view('landingpage-editor.contact.edit', compact('contact'));
+        return view('landingpage-editor.landingpage.contact.edit', compact('contact'));
     }
     public function update(Request $request, $id)
     {

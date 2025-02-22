@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class DeadlineDateController extends Controller {
     public function index() {
         $deadlines = DeadlineDate::orderBy('date')->get();
-        return view('landingpage-editor.deadlinedates.index', compact('deadlines'));
+        return view('landingpage-editor.landingpage.deadlinedates.index', compact('deadlines'));
     }
 
     public function create() {
-        return view('landingpage-editor.deadlinedates.create');
+        return view('landingpage-editor.landingpage.deadlinedates.create');
     }
 
     public function store(Request $request) {
@@ -28,7 +28,7 @@ class DeadlineDateController extends Controller {
     }
 
     public function edit(DeadlineDate $deadline) {
-        return view('landingpage-editor.deadlinedates.edit', compact('deadline'));
+        return view('landingpage-editor.landingpage.deadlinedates.edit', compact('deadline'));
     }
 
     public function update(Request $request, DeadlineDate $deadline) {

@@ -46,6 +46,7 @@ use App\Http\Controllers\Landing\LogoController;
 use App\Http\Controllers\steeringLandingPage;
 use App\Http\Controllers\reviewerLandingPage;
 use App\Http\Controllers\Landing\ConferenceController;
+use App\Http\Controllers\Landing\CommitteeController;
 
 Route::get('/', [landingpage::class, 'index'])->name('home');
 Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
@@ -181,6 +182,7 @@ Route::name('landing.')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
         Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');

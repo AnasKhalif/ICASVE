@@ -19,12 +19,12 @@ class ConferenceTitleController extends Controller {
         $conferenceTitles = $query->get();
         $years = ConferenceTitle::distinct()->orderByDesc('year')->pluck('year');
     
-        return view('landingpage-editor.conference_title.index', compact('conferenceTitles', 'years'));
+        return view('landingpage-editor.landingpage.conference_title.index', compact('conferenceTitles', 'years'));
     }
     
 
     public function create() {
-        return view('landingpage-editor.conference_title.create');
+        return view('landingpage-editor.landingpage.conference_title.create');
     }
 
     public function store(Request $request) {
@@ -40,7 +40,7 @@ class ConferenceTitleController extends Controller {
     }
 
     public function edit(ConferenceTitle $conferenceTitle) {
-        return view('landingpage-editor.conference_title.edit', compact('conferenceTitle'));
+        return view('landingpage-editor.landingpage.conference_title.edit', compact('conferenceTitle'));
     }
 
     public function update(Request $request, ConferenceTitle $conferenceTitle) {

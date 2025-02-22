@@ -11,11 +11,11 @@ class ReviewerCommitteeController extends Controller
     public function index()
     {
         $committees = ReviewerCommittee::all();
-        return view('landingpage-editor.reviewer-committee.index', compact('committees'));
+        return view('landingpage-editor.committee.reviewer-committee.index', compact('committees'));
     }
     public function create()
     {
-        return view('landingpage-editor.reviewer-committee.create');
+        return view('landingpage-editor.committee.reviewer-committee.create');
     }
     public function store(Request $request)
     {
@@ -29,7 +29,7 @@ class ReviewerCommitteeController extends Controller
     }
     public function edit(ReviewerCommittee $reviewerCommittee)
     {
-        return view('landingpage-editor.reviewer-committee.edit', compact('reviewerCommittee'));
+        return view('landingpage-editor.committee.reviewer-committee.edit', compact('reviewerCommittee'));
     }
     public function update(Request $request, ReviewerCommittee $reviewerCommittee)
     {
