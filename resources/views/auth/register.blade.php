@@ -11,8 +11,7 @@
                 style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
                     <div class="d-flex align-items-center mb-4">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid"
-                            style="max-width: 180px;">
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid" style="max-width: 180px;">
                     </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
@@ -30,7 +29,7 @@
                 style="background: #F1F8E9;">
                 <div class="login-container w-100 px-4 py-2">
                     <header class="text-center">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid mb-3 mt-3"
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid mb-3 mt-3"
                             style="max-width: 180px;">
                     </header>
                     @if ($openRegistration)

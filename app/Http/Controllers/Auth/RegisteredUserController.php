@@ -39,7 +39,9 @@ class RegisteredUserController extends Controller
         $openRegistration = $conferenceSetting->open_registration ?? false;
         $conferenceTitle = optional($conferenceSetting)->conference_title ?? 'The 3rd International Conference on Applied Science for Vocational Education';
         $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
-        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting'));
+        $logo = Upload::where('type', 'logo')->latest()->first();
+        $logoPath = $logo ? asset('storage/' . $logo->file_path) : asset('img/Logo_ICASVE_rmbg.png');
+        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting', 'logoPath'));
     }
 
     /**
