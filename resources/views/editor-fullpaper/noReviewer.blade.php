@@ -15,7 +15,6 @@
                                 <th class="text-center">Title</th>
                                 <th class="text-center">Symposium</th>
                                 <th class="text-center">Requested Presentation</th>
-                                <th class="text-center">Reviewer Comment</th>
                                 <th class="text-center">Assign Reviewer</th>
                                 <th class="text-center">Editor Decision</th>
                             </tr>
@@ -27,14 +26,6 @@
                                     <td class="text-wrap">{{ $fullpaper->abstract->title }}</td>
                                     <td>{{ $fullpaper->abstract->symposium->name }}</td>
                                     <td>{{ $fullpaper->abstract->presentation_type }}</td>
-                                    <td>
-                                        @foreach ($fullpaper->fullPaperReviews as $review)
-                                            <div>
-                                                <span>Comment:</span>
-                                                <strong>{{ $review->comment ?? 'No comment' }}</strong><br><br>
-                                            </div>
-                                        @endforeach
-                                    </td>
                                     <td>
                                         @foreach ($fullpaper->fullPaperReviews as $review)
                                             <div>

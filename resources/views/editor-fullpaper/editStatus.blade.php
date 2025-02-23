@@ -3,7 +3,32 @@
 @section('title', 'Edit Status Full Paper')
 
 @section('content')
-    <div class="col-lg-12 grid-margin stretch-card">
+    <div class="container-fluid">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Reviewer Recommendations & Comments</h4>
+                @if ($fullpaper->fullPaperReviews->isEmpty())
+                    <p class="text-center"><i class="fas fa-exclamation-circle"></i> No reviews available.</p>
+                @else
+                    @foreach ($fullpaper->fullPaperReviews as $review)
+                        <div class="border rounded p-3 mb-3 shadow-sm d-flex align-items-start">
+                            <i class="fas fa-user-circle text-primary me-3" style="font-size: 1.8rem;"></i>
+                            <div>
+                                <h5 class="mb-1">{{ $review->reviewer->name }}</h5>
+                                <p class="text-muted mb-1">
+                                    <i class="fas fa-check-circle text-success"></i>
+                                    <strong>Recommendation:</strong> {{ $review->recommendation ?? 'No recommendation' }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-comment-alt text-secondary"></i>
+                                    <strong>Comment:</strong> {{ $review->comment ?? 'No comment' }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Status for Full Paper: {{ $fullpaper->title }}</h4>

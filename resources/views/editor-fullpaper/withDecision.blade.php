@@ -36,6 +36,10 @@
                                     <td>
                                         @foreach ($fullpaper->fullPaperReviews as $review)
                                             <div>
+                                                <span>Rekomendation:</span>
+                                                <strong>{{ $review->recommendation ?? 'No Recommendation' }}</strong><br><br>
+                                            </div>
+                                            <div>
                                                 <span>Comment:</span>
                                                 <strong>{{ $review->comment ?? 'No comment' }}</strong><br><br>
                                             </div>
