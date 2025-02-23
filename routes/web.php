@@ -145,6 +145,7 @@ Route::name('reviewer.')
     ->group(function () {
         Route::get('summary', [SummaryReviewerController::class, 'index'])->name('summary');
         Route::get('all-abstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('/abstract-workload', [EditorController::class, 'workLoad'])->name('editor.workLoad');
 
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
@@ -163,6 +164,7 @@ Route::name('reviewer.')
         Route::post('/review-abstract/{abstractId}', [ReviewController::class, 'storeReview'])->name('review.storeReview');
 
         Route::get('all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('/fullpaper-workload', [EditorFullPaperController::class, 'workLoad'])->name('editor-fullpaper.workLoad');
 
         Route::get('/editor-fullpaper/no-reviewer', [EditorFullPaperController::class, 'noReviewer'])->name('editor-fullpaper.noReviewer');
         Route::get('/editor-fullpaper/no-decision', [EditorFullPaperController::class, 'noDecision'])->name('editor-fullpaper.noDecision');

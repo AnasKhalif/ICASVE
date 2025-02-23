@@ -121,4 +121,25 @@ class EditorFullPaperController extends Controller
 
         return redirect()->route('reviewer.editor-fullpaper.index')->with('success', 'Status updated successfully');
     }
+
+    public function workLoad()
+    {
+        $reviewers = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
+        })->get();
+
+        $workloads = $reviewers->map(function ($reviewer) {
+            $assigned = $reviewer->fullPaperReviews()->count();
+            $completed = $reviewer->fullPaperReviews()->whereNotNull('comment')->count();
+            $inReview = $assigned - $completed;
+
+            return [
+                'name' => $reviewer->name,
+                'in_review' => $inReview,
+                'completed' => $completed,
+                'assigned' => $assigned
+            ];
+        });
+        return view('editor-fullpaper.workload', compact('workloads'));
+    }
 }

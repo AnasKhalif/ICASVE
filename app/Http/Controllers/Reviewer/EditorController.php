@@ -127,4 +127,26 @@ class EditorController extends Controller
 
         return redirect()->route('reviewer.editor.index')->with('success', 'Status updated successfully');
     }
+
+    public function workLoad()
+    {
+        $reviewers = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
+        })->with([
+            'abstractReviews.abstract' => function ($query) {
+                $query->select('id', 'title');
+            }
+        ])->get();
+
+        $workloads = $reviewers->map(function ($reviewer) {
+            return [
+                'name' => $reviewer->name,
+                'in_review' => $reviewer->abstractReviews->whereNull('comment')->count(),
+                'completed' => $reviewer->abstractReviews->whereNotNull('comment')->count(),
+                'assigned' => $reviewer->abstractReviews->count(),
+            ];
+        });
+
+        return view('editor.workload', compact('workloads'));
+    }
 }

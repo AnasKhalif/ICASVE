@@ -228,6 +228,12 @@
                     </span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('reviewer.editor.workLoad') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('reviewer.editor.workLoad') }}">
+                    <i class="fa fa-tasks menu-icon"></i>
+                    <span class="menu-title">Review Workload</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" aria-expanded="false" aria-controls="tables">
                     <i class="fa fa-book menu-icon"></i>
@@ -300,7 +306,12 @@
                     </span>
                 </a>
             </li>
-
+            <li class="nav-item {{ request()->routeIs('reviewer.editor-fullpaper.workLoad') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('reviewer.editor-fullpaper.workLoad') }}">
+                    <i class="fa fa-tasks menu-icon"></i>
+                    <span class="menu-title">Review Workload</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole
