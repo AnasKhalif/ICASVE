@@ -1,7 +1,7 @@
 @extends('layouts.landing')
 @section('title', 'FAQ')
 @section('content')
-    <section id="faq" class="faq container section light-background">
+    <section id="faq" class="faq container section">
         <div class="container-fluid">
             <div class="row gy-4">
                 <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1 w-100">

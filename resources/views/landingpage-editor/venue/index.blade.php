@@ -30,8 +30,10 @@
                                     <td>
                                         <a href="{{ route('landing.venue.edit', $venue->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
-                                        <form action="{{ route('landing.venue.destroy', $venue->id) }} " method="POST"
+                                        <form action="{{ route('landing.venue.destroy', $venue->id) }}" method="POST"
                                             style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger"
                                                 onclick="return confirm('Are you sure?')">Delete</button>
                                         </form>
@@ -44,5 +46,4 @@
             </div>
         </div>
     </div>
-
 @endsection

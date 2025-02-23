@@ -10,17 +10,6 @@
             <div><span>Check Our</span> <span class="description-title">Conference Program</span></div>
         </div>
 
-        <!-- Detail Conference -->
-        @foreach ($conferences as $conference)
-            <div class="text-center mb-4 p-4 rounded shadow-sm bg-light">
-                <h1 class="fw-bold text-primary">{{ $conference->title }}</h1>
-                <p class="fs-5 text-muted">{{ $conference->theme }}</p>
-                <p class="text-muted mb-1"><strong>Hosted by:</strong> {{ $conference->university }}</p>
-                <p class="text-muted mb-1"><strong>Location:</strong> {{ $conference->hosted }}</p>
-                <p class="fw-bold text-dark"><i class="bi bi-calendar-event"></i> {{ $conference->date }}</p>
-            </div>
-        @endforeach
-
         <!-- Dropdown Pilihan Day -->
         <div class="d-flex justify-content-start mb-3">
             <div class="w-25">

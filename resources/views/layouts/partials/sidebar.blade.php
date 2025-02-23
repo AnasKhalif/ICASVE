@@ -306,6 +306,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.themes.index') }}">
+                    <i class="fa-solid fa-list-check menu-icon"></i>
+                    <span class="menu-title">Theme</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.steering.index') }}">
                     <i class="fa-solid fa-users menu-icon"></i>
                     <span class="menu-title">Steering Committe</span>
@@ -349,20 +355,20 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.conference-program.index') }}">
-                    <i class="fa fa-clipboard menu-icon"></i>
+                    <i class="fa-solid fa-calendar-days menu-icon"></i>
                     <span class="menu-title">Conference Program</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.conference-detail.index') }}">
+                    <i class="fa-solid fa-circle-info menu-icon"></i>
+                    <span class="menu-title">Conference Detail</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.gallery.index') }}">
                     <i class="fa-solid fa-images menu-icon"></i>
                     <span class="menu-title">Gallery</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.conference.index') }}">
-                    <i class="fa-solid fa-images menu-icon"></i>
-                    <span class="menu-title">Conference</span>
                 </a>
             </li>
             <li class="nav-item">

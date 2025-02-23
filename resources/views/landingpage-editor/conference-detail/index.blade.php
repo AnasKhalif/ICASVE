@@ -7,7 +7,7 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <a href="{{ route('landing.conference.create') }}" class="btn btn-primary mb-3">Add New Conference</a>
+        <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary mb-3">Add New Conference</a>
         <table class="table table-bordered">
             <thead class="table-success">
                 <tr>
@@ -26,9 +26,9 @@
                         <td>{{ $conference->theme }}</td>
                         <td>{{ $conference->date }}</td>
                         <td>
-                            <a href="{{ route('landing.conference.edit', $conference->id) }}"
+                            <a href="{{ route('landing.conference-detail.edit', $conference->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('landing.conference.destroy', $conference->id) }}" method="POST"
+                            <form action="{{ route('landing.conference-detail.destroy', $conference->id) }}" method="POST"
                                 class="d-inline" onsubmit="return confirm('Are you sure you want to delete this?')">
                                 @csrf
                                 @method('DELETE')

@@ -8,37 +8,52 @@
                 <form action="{{ route('landing.gallery.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="image">Image</label>
+                        <label for="images">Images</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="image_path" id="image_path" required>
-                                <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
+                                <input type="file" class="custom-file-input" name="images[]" id="images" multiple required>
+                                <label class="custom-file-label" for="images" id="fileLabel">Choose files</label>
                             </div>
                         </div>
+                        <div id="preview" class="mt-3"></div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="year">Year</label>
-                        <input type="string" class="form-control @error('year') is-invalid @enderror" name="year"
+                        <input type="number" class="form-control @error('year') is-invalid @enderror" name="year"
                             id="year" required>
                         @error('year')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="from-group">
-                        <div class="mb-3">
-                            <label class="form-label">Year</label>
-                            <input type="year" name="year" class="form-control" required>
-                        </div>
-                    </div>
+
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>
             </div>
-            <script>
-                document.getElementById('image_path').addEventListener('change', function() {
-                    var fileName = this.files[0] ? this.files[0].name : 'Choose file';
-                    document.getElementById('fileLabel').innerText = fileName;
-                });
-            </script>
         </div>
     </div>
+
+    <script>
+        document.getElementById('images').addEventListener('change', function(event) {
+            let files = event.target.files;
+            let fileLabel = document.getElementById('fileLabel');
+            let previewContainer = document.getElementById('preview');
+
+            fileLabel.innerText = files.length > 0 ? `${files.length} files selected` : 'Choose files';
+            previewContainer.innerHTML = ''; // Clear previous previews
+
+            Array.from(files).forEach(file => {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100px';
+                    img.style.margin = '5px';
+                    img.classList.add('rounded');
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
 @endsection

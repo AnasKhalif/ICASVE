@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold">Presentation Submission Guidelines</h2>
+        <h2 class="text-center fw-bold">Fullpaper Submission Guidelines</h2>
         <hr class="border border-success mb-4">
 
         @if (session('success'))
@@ -15,7 +15,7 @@
 
         <div class="d-flex justify-content-between mb-3">
             <h4 class="fw-bold">List of Guidelines</h4>
-            <a href="{{ route('landing.presentation-guidelines.create') }}" class="btn btn-primary">
+            <a href="{{ route('landing.fullpaper-guidelines.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Tambah Guideline
             </a>
         </div>
@@ -46,11 +46,11 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('landing.presentation-guidelines.edit', $guideline->id) }}" 
+                                <a href="{{ route('landing.fullpaper-guidelines.edit', $guideline->id) }}" 
                                    class="btn btn-sm btn-warning">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
-                                <form action="{{ route('landing.presentation-guidelines.destroy', $guideline->id) }}" 
+                                <form action="{{ route('landing.fullpaper-guidelines.destroy', $guideline->id) }}" 
                                       method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
                                     @csrf
                                     @method('DELETE')

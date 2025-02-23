@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Landing\GalleryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -20,7 +21,7 @@ use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
-use App\Http\Controllers\Landing\LandingPageController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
@@ -50,13 +51,16 @@ use App\Http\Controllers\SteeringLandingPageController;
 use App\Http\Controllers\ReviewerLandingPageController;
 use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
-
+use App\Http\Controllers\Landing\ConferenceDetailController;
+use App\Http\Controllers\Landing\ThemeController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
-Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
+Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 
-Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('gallery');
+Route::get('/conference-program', [ConferenceProgramController::class, 'showLandingPage'])->name('conference.program');
+
+Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
@@ -95,15 +99,14 @@ Route::prefix('archive')->group(function () {
     })->name('archive.2025');
 });
 
+
 Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
-Route::get('/contact', function () {
-    return view('landingpage.contact.contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'showLandingpage'])->name('contact');
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
@@ -208,7 +211,8 @@ Route::name('landing.')
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);
         Route::resource('presentation-guidelines', PresentationGuidelineController::class);
-        Route::resource('conference', ConferenceController::class);
+        Route::resource('conference-detail', ConferenceDetailController::class);
+Route::resource('themes', ThemeController::class);
     });
 
 Route::get('/dashboard', function () {

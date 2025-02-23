@@ -129,14 +129,18 @@
                 <h2 class="fw-bold text-white mb-3" data-aos="fade-up">CALL FOR PAPER</h2>
                 <p data-aos="fade-up">The topics include, but are not limited to:</p>
                 <ul class="list-topics" data-aos="fade-up" data-aos-delay="200">
-                    @foreach ($symposiums as $symposium)
-                        <li>{{ $symposium->name }}</li>
+                    @foreach ($themes as $theme)
+                        <li>
+                            <a href="{{ route('themes.show', $theme->id) }}" class="text-white text-decoration-underline">
+                                {{ $theme->title }} ({{ $theme->year }})
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             </div>
         </div>
     </div>
-
+    
 
     <!-- Details Section -->
     <section id="details" class="details section">
@@ -270,8 +274,6 @@
                     </p>
                 </div>
             </div>
-            <!-- Features Item -->
-
             <div class="row gy-4 align-items-center features-item">
                 <div class="container section-title" data-aos="fade-up">
                     <h2>Venue</h2>
@@ -279,27 +281,29 @@
                 </div>
                 @foreach ($venues as $venue)
                     <div class="row align-items-start">
-                        <div class="col-md-6" data-aos="fade-up">
+                        <!-- Kolom Gambar: Tambahkan margin bawah untuk perangkat kecil -->
+                        <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-up">
                             <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
                                 class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
                         </div>
-                        <div class="location col-md-6" data-aos="fade-up">
+                        <!-- Kolom Teks: Tambahkan margin atas untuk perangkat kecil -->
+                        <div class="location col-md-6 mt-4 mt-md-0" data-aos="fade-up">
                             <h3 class="title-location">{{ $venue->venue_name }}</h3>
                             <p class="text-muted">{{ $venue->address }}</p>
                             <p class="font-weight-bold">Date: {{ $venue->date }}</p>
-                            <a href="{{ $venue->map_link }}" target="_blank" class="btn btn-primary btn-map">See on
-                                Map</a>
+                            <a href="{{ $venue->link_map }}" target="_blank" class="btn btn-primary btn-map">See on Map</a>
                         </div>
                     </div>
-
-                    <div class="mt-4" data-aos="fade-up">
-                        <iframe src="{{ $venue->map }}" width="100%" height="400" style="border: 0"
-                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+            
+                    <!-- Map Section -->
+                    <div class="mt-4 full-screen-map" data-aos="fade-up">
+                        <div class="mt-4 full-screen-map" data-aos="fade-up">
+                            {!! $venue->map !!}
+                        </div>
                     </div>
                 @endforeach
             </div>
-            <!-- Features Item -->
+            
         </div>
     </section>
     <!-- /Details Section -->
@@ -384,11 +388,6 @@
                         @endforeach
                     </div>
                 </div>
-
-                {{-- <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
-                        data-aos-delay="100" />
-                </div> --}}
             </div>
         </div>
     </section>
@@ -434,39 +433,76 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
-                        data-aos-delay="200">
+                    <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
                         <div class="row gy-4">
                             <div class="col-md-6">
-                                <input type="text" name="name" class="form-control" placeholder="Your Name"
-                                    required="" />
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required />
                             </div>
-
+                
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" placeholder="Your Email"
-                                    required="" />
+                                <input type="email" name="email" class="form-control" placeholder="Your Email" required />
                             </div>
-
+                
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="subject" placeholder="Subject"
-                                    required="" />
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" required />
                             </div>
-
+                
                             <div class="col-md-12">
-                                <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                                <textarea name="message" class="form-control" rows="6" placeholder="Message" required></textarea>
                             </div>
-
+                
                             <div class="col-md-12 text-center">
                                 <div class="loading">Loading</div>
                                 <div class="error-message"></div>
                                 <div class="sent-message">Your message has been sent. Thank you!</div>
-
+                
                                 <button type="submit">Send Message</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </section>
+    @php
+    $contact = \App\Models\Contact::latest()->first();
+    $whatsappNumber = null;
+
+    if ($contact) {
+        $whatsappNumber = $contact->phone;
+        if (substr($whatsappNumber, 0, 1) === '0') {
+            $whatsappNumber = '+62' . substr($whatsappNumber, 1);
+        }
+    }
+@endphp
+
+
+<script>
+    const whatsappNumber = "{{ $whatsappNumber }}";
+
+    document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.querySelector("input[name='name']").value;
+        const email = document.querySelector("input[name='email']").value;
+        const subject = document.querySelector("input[name='subject']").value;
+        const message = document.querySelector("textarea[name='message']").value;
+
+        const text = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
+
+        const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(text)}`;
+
+        window.open(url, '_blank');
+    });
+</script>
+
+
+    <style>
+        .full-screen-map iframe{
+            width: 100% !important;
+            height: 300px !important;
+            border: none;
+        }
+    </style>
 @endsection

@@ -8,6 +8,13 @@ use App\Models\Contact;
 
 class ContactController extends Controller
 {
+    public function showLandingpage()
+    {
+        $latestYear = Contact::max('created_at');
+        $contacts = Contact::whereYear('created_at', date('Y', strtotime($latestYear)))->get();
+    
+        return view('landingpage.contact.contact', compact('contacts'));
+    }
     public function index()
     {
         $contacts = Contact::all();
@@ -20,7 +27,6 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
             'phone' => 'required|string|max:100',
             'email' => 'nullable|email|max:255',
             'address' => 'required|string',
@@ -36,7 +42,6 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
             'email' => 'nullable|email|max:255',
             'address' => 'required|string',
@@ -50,4 +55,6 @@ class ContactController extends Controller
         Contact::findOrFail($id)->delete();
         return redirect()->route('landing.contact.index')->with('success', 'Contact deleted successfully!');
     }
+
+
 }

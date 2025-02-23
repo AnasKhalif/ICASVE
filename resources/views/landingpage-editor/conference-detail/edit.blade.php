@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <h2 class="fw-bold">Add Steering Committee</h2>
         <hr>
-        <form action="{{ route('landing.conference.update', $conference->id) }}" method="POST">
+        <form action="{{ route('landing.conference-detail.update', $conference->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">

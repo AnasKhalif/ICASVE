@@ -14,9 +14,9 @@
                 <li class="dropdown">
                     <a href="#"><span>Committe</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="{{ route('committee.steering') }}">Steering Committe</a></li>
-                        <li><a href="{{ route('committee.reviewer') }}">Reviewer</a></li>
-                        <li><a href="{{ route('committee.organizing') }}">Organizing Committe</a></li>
+                        <li><a href="{{ route('committee.steering') }}">Steering Committee</a></li>
+                        <li><a href="{{ route('committee.reviewer') }}">Reviewer Committee</a></li>
+                        <li><a href="{{ route('committee.organizing') }}">Organizing Committee</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -24,7 +24,7 @@
                             class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>
-                        <li><a href="{{ route('submission.fullpaper') }}">Full Paper Submission</a></li>
+                        <li><a href="{{ route('submission.fullpaper') }}">Fullpaper Submission</a></li>
                         <li><a href="{{ route('submission.presentation') }}">Presentation Submission</a></li>
                     </ul>
                 </li>
