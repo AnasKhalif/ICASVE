@@ -26,6 +26,15 @@ class EditorController extends Controller
         return view('editor.noReviewer', compact('abstracts'));
     }
 
+    public function revision()
+    {
+        $abstracts = AbstractModel::with('abstractReviews.reviewer')
+            ->where('status', 'revision')
+            ->paginate(10);
+
+        return view('editor.revision', compact('abstracts'));
+    }
+
     public function noDecision()
     {
         $abstracts = AbstractModel::with('abstractReviews.reviewer')
@@ -119,7 +128,7 @@ class EditorController extends Controller
         $abstract = AbstractModel::findOrFail($abstractId);
 
         $request->validate([
-            'status' => 'required|string|in:open,under review,accepted,rejected'
+            'status' => 'required|string|in:open,under review,accepted,revision,rejected'
         ]);
 
         $abstract->status = $request->status;

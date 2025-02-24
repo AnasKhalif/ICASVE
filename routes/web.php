@@ -50,6 +50,7 @@ use App\Http\Controllers\SteeringLandingPageController;
 use App\Http\Controllers\ReviewerLandingPageController;
 use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
@@ -150,6 +151,7 @@ Route::name('reviewer.')
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
         Route::get('/editor-abstract/with-decision', [EditorController::class, 'withDecision'])->name('editor.withDecision');
+        Route::get('/editor-abstract/revision', [EditorController::class, 'revision'])->name('editor.revision');
 
         Route::get('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'showAssignReviewer'])->name('editor.showAssignReviewer');
         Route::post('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'assignReviewer'])->name('editor.assignReviewer');
@@ -212,23 +214,23 @@ Route::name('landing.')
         Route::resource('conference', ConferenceController::class);
     });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
-    Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
-    Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
-});
-
-Route::middleware('auth')->group(function () {
     Route::resource('abstracts', AbstractController::class);
     Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
     Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
-    Route::get('create/{abstractId}', [FullPaperController::class, 'create'])->name('fullpapers.create');
+    Route::get('/fullpaper-create', function () {
+        return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+    });
+    Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
     Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
     Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
+
+
+    Route::get('payment', [FilePaymentController::class, 'create'])->name('filepayments.create');
+    Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
+    Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
 });
 
 Route::middleware('auth')->group(function () {

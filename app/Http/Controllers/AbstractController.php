@@ -24,7 +24,7 @@ class AbstractController extends Controller
      */
     public function index()
     {
-        $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'user.filePayment'])
+        $abstracts = AbstractModel::with(['symposium', 'fullPaper.fullPaperReviews.reviewer', 'user.filePayment', 'reviewers'])
             ->where('user_id', Auth::id())
             ->paginate(10);
         $conferenceSetting = ConferenceSetting::first();
@@ -38,6 +38,16 @@ class AbstractController extends Controller
      */
     public function create()
     {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
+            return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
+        }
+        $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
+        $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
+
+        if ($currentAbstracts >= $maxAbstracts) {
+            return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+        }
         $symposiums = Symposium::all();
         return view('abstracts.create', compact('symposiums'));
     }
@@ -184,7 +194,7 @@ class AbstractController extends Controller
      */
     public function edit(AbstractModel $abstract)
     {
-        if ($abstract->status != 'open') {
+        if (!in_array($abstract->status, ['open', 'revision'])) {
             return back()->with('error', 'Cannot edit abstract in review process');
         }
 
@@ -197,7 +207,7 @@ class AbstractController extends Controller
      */
     public function update(Request $request, AbstractModel $abstract)
     {
-        if ($abstract->status != 'open') {
+        if (!in_array($abstract->status, ['open', 'revision'])) {
             return back()->with('error', 'Cannot edit abstract in review process');
         }
 
@@ -226,27 +236,33 @@ class AbstractController extends Controller
         if ($abstract->status != 'open') {
             return back()->with('error', 'Cannot delete abstract in review process');
         }
+        $user = $abstract->user;
+        $certificate = $user->certificates()->where('certificate_type', 'presenter')->first();
 
-        $certificate = $abstract->user->certificates()->first();
-        if ($certificate && $certificate->certificate_path) {
+        if ($certificate) {
             $certificatePath = $certificate->certificate_path;
             if (Storage::disk('public')->exists($certificatePath)) {
                 Storage::disk('public')->delete($certificatePath);
             }
-            $certificate->delete(); // Hapus data sertifikat dari DB
+            $certificate->delete();
         }
 
-        // // Pastikan file abstrak juga dihapus jika ada
-        // if ($abstract->fullPaper) {
-        //     $fullPaperPath = 'public/' . $abstract->fullPaper->file_path; // Periksa path file full paper
-        //     if (Storage::exists($fullPaperPath)) {
-        //         Storage::delete($fullPaperPath);
-        //     }
-        // }
+        if ($abstract->fullPaper) {
+            $fullPaperPath = $abstract->fullPaper->file_path;
 
+            if (Storage::disk('public')->exists($fullPaperPath)) {
+                Storage::disk('public')->delete($fullPaperPath);
+            } else {
+                dd("File tidak ditemukan: " . $fullPaperPath);
+            }
+
+            $abstract->fullPaper->delete();
+        }
         $abstract->delete();
+
         return redirect()->route('abstracts.index')->with('success', 'Abstract deleted successfully');
     }
+
 
 
     private function formatAuthors($authors)

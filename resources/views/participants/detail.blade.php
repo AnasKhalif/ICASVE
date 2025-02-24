@@ -63,8 +63,8 @@
                                     <p class="mb-1"><strong>Decision:</strong></p>
                                     <span
                                         class="badge 
-                                            @if ($abstract->status == 'Accepted') bg-success
-                                            @elseif ($abstract->status == 'Rejected') bg-danger
+                                            @if ($abstract->status == 'accepted') bg-success
+                                            @elseif ($abstract->status == 'rejected') bg-danger
                                             @else bg-warning @endif">
                                         {{ ucfirst($abstract->status) }}
                                     </span>

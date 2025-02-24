@@ -10,7 +10,7 @@
                 <form action="{{ route('fullpapers.store', $abstract->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="file">Upload Full Paper (PDF only)</label>
+                        <label for="file">Upload Full Paper (Docx, Pdf)</label>
                         <input type="file" class="form-control" name="file" id="file" required>
                         @error('file')
                             <div class="invalid-feedback">{{ $message }}</div>

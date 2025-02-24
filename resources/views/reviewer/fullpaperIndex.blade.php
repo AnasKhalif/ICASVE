@@ -23,10 +23,11 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td class="text-wrap">{{ $fullPaper->abstract->title }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if ($fullPaper->file_path)
                                             <a href="{{ asset('storage/' . $fullPaper->file_path) }}" target="_blank"><i
-                                                    class="fa fa-download text-primary fa-3x mt-2"></i></a>
+                                                    class="fa fa-download text-primary fa-3x mt-2"></i>
+                                            </a>
                                         @else
                                             <span class="text-muted">No file available</span>
                                         @endif

@@ -60,6 +60,8 @@
                                 Review</option>
                             <option value="accepted" {{ $abstract->status == 'accepted' ? 'selected' : '' }}>Accepted
                             </option>
+                            <option value="revision" {{ $abstract->status == 'revision' ? 'selected' : '' }}>Revision
+                            </option>
                             <option value="rejected" {{ $abstract->status == 'rejected' ? 'selected' : '' }}>Rejected
                             </option>
                         </select>

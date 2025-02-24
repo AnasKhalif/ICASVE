@@ -25,8 +25,11 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td class="text-wrap">{{ $abstract->title }}</td>
                                     <td>{{ $abstract->symposium->name }}</td>
-                                    <td>{{ $abstract->presentation_type }}</td>
-                                    <td><span class="badge badge-info">{{ ucfirst($abstract->status) }}</span></td>
+                                    <td class="text-center">{{ $abstract->presentation_type }}</td>
+                                    <td>
+                                        <span class="badge badge-info">{{ ucfirst($abstract->status) }}
+                                        </span>
+                                    </td>
                                     <td class="text-center">
                                         <a href="{{ route('reviewer.review.showReviewForm', $abstract->id) }}"
                                             class="btn btn-sm btn-primary">Review</a>

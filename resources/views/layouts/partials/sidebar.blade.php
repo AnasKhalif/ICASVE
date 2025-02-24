@@ -113,7 +113,7 @@
                         ) {
                             $query->where('reviewer_id', auth()->id());
                         })
-                            ->where('status', 'under review')
+                            ->whereIn('status', ['under review', 'revision'])
                             ->count();
                     @endphp
                     <span
@@ -146,7 +146,7 @@
                         $countPendingPapers = \App\Models\FullPaper::whereHas('fullPaperReviews', function ($query) {
                             $query->where('reviewer_id', auth()->id());
                         })
-                            ->where('status', 'under review')
+                            ->whereIn('status', ['under review', 'revision'])
                             ->count();
                     @endphp
                     <span
@@ -189,6 +189,17 @@
                     <span
                         class="badge {{ $noReviewCount > 0 ? 'badge-danger' : 'badge-secondary' }}">{{ $noReviewCount }}
                     </span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('reviewer.editor.revision') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('reviewer.editor.revision') }}">
+                    <i class="fa fa-edit menu-icon"></i>
+                    <span class="menu-title">Revision Req</span>
+                    @php
+                        $revision = \App\Models\AbstractModel::where('status', 'revision')->count();
+                    @endphp
+                    <span
+                        class="badge {{ $revision > 0 ? 'badge-warning' : 'badge-secondary' }}">{{ $revision }}</span>
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('reviewer.editor.noDecision') ? 'active' : '' }}">
@@ -335,7 +346,7 @@
                         ) {
                             $query->where('reviewer_id', auth()->id());
                         })
-                            ->where('status', 'under review')
+                            ->whereIn('status', ['under review', 'revision'])
                             ->count();
                     @endphp
                     <span
@@ -369,7 +380,7 @@
                         $countPendingPapers = \App\Models\FullPaper::whereHas('fullPaperReviews', function ($query) {
                             $query->where('reviewer_id', auth()->id());
                         })
-                            ->where('status', 'under review')
+                            ->whereIn('status', ['under review', 'revision'])
                             ->count();
                     @endphp
                     <span
