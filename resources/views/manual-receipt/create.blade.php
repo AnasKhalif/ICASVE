@@ -24,8 +24,7 @@
 
                     <div class="form-outline mb-4">
                         <label class="form-label" for="user_id">Participants Name</label>
-                        <select name="user_id" id="attendance" class="form-select @error('attendance') is-invalid @enderror"
-                            required>
+                        <select name="user_id" id="attendance" class="form-select @error('attendance') is-invalid @enderror" required>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
                                     {{ $user->name }}
@@ -38,10 +37,23 @@
                     </div>
 
                     <div class="form-group mb-4">
-                        <label for="amount">Payment Amount (Rp)</label>
-                        <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
-                            name="amount" value="{{ old('amount') }}" placeholder="Example: 100000"
-                            @if ($users->where('id', old('attendance'))->first()?->hasPayment) required @endif>
+                        <label for="currency">Select Currency</label>
+                        <select class="form-control" id="currency" name="currency">
+                            <option value="IDR">Rupiah (IDR)</option>
+                            <option value="USD">Dollar (USD)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="amount">Payment Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="currency-symbol">Rp</span>
+                            </div>
+                            <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
+                                name="amount" value="{{ old('amount') }}" placeholder="Example: 100000"
+                                @if ($users->where('id', old('attendance'))->first()?->hasPayment) required @endif>
+                        </div>
                         <small class="form-text text-muted">
                             Enter the amount without dots or commas
                         </small>
@@ -73,6 +85,11 @@
                 document.getElementById('file').addEventListener('change', function() {
                     var fileName = this.files[0] ? this.files[0].name : 'Choose file';
                     document.getElementById('fileLabel').innerText = fileName;
+                });
+
+                document.getElementById('currency').addEventListener('change', function() {
+                    let currencySymbol = this.value === 'USD' ? '$' : 'Rp';
+                    document.getElementById('currency-symbol').innerText = currencySymbol;
                 });
             </script>
         </div>

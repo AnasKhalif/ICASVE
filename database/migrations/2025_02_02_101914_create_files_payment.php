@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('file_path')->nullable();
             $table->string('status')->default('pending');
+            $table->string('currency')->default('IDR');
             $table->timestamps();
         });
     }
