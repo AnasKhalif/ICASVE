@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\ConferenceSettingController;
 use App\Http\Controllers\Admin\YearController;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Landing\RegistrationFeeController;
 use App\Http\Controllers\Landing\FaqController;
 use App\Http\Controllers\Landing\PublicationsJournalController;
@@ -85,19 +86,8 @@ Route::prefix('submission')->group(function () {
 });
 
 
-Route::prefix('archive')->group(function () {
-    Route::get('/2023', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.index');
-
-    Route::get('/2024', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.index');
-
-    Route::get('/2025', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.2025');
-});
+Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
+Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archives.show');
 
 
 Route::get('/previous-conference', function () {

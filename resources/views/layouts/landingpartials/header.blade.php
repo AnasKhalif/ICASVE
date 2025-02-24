@@ -10,7 +10,7 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="{{ route('home') }}" class="active">Home</a></li>
+                <li><a href="{{ route('home') }}">Home</a></li>
                 <li class="dropdown">
                     <a href="#"><span>Committe</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
@@ -30,14 +30,7 @@
                 </li>
                 <li><a href="{{ route('gallery') }}">Gallery</a></li>
                 <li><a href="{{ route('conference.program') }}">Conference Program</a></li>
-                <li class="dropdown">
-                    <a href="#"><span>Archive</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul>
-                        <li><a href="{{ route('archive.index') }}">ICASVE 2023</a></li>
-                        <li><a href="{{ route('archive.index') }}">ICASVE 2024</a></li>
-                        <li><a href="{{ route('archive.index') }}">ICASVE 2025</a></li>
-                    </ul>
-                </li>
+                <li><a href="{{ route('archives.index') }}">Archives</a></li>
                 <li><a href="{{ route('previous.conference') }}">Previous Conference</a></li>
                 <li><a href="{{ route('faq') }}">FAQ</a></li>
                 <li><a href="{{ route('contact') }}">Contact</a></li>
