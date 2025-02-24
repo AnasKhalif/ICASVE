@@ -38,10 +38,10 @@
                                                 <strong>{{ $review->reviewer->name }}</strong><br>
                                             </div>
                                         @endforeach
-                                        @if ($abstract->status !== 'accepted')
+                                        {{-- @if ($abstract->status !== 'accepted')
                                             <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
                                                 class="btn btn-sm btn-primary">Assign Reviewer</a>
-                                        @endif
+                                        @endif --}}
                                     </td>
                                     <td>
                                         @foreach ($abstract->abstractReviews as $review)

@@ -101,8 +101,8 @@
                         @endif
                         @if ($existingPayment && $existingPayment->status === 'verified')
                             <a href="{{ route('filepayments.receipt', $existingPayment->id) }}" target="_blank"
-                                class="btn btn-primary">
-                                Open Digital PDF
+                                class="btn btn-outline-primary ml-2">
+                                Digital PDF
                             </a>
                         @endif
                     </div>

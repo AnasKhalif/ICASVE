@@ -16,7 +16,7 @@ class ReviewFullPaperController extends Controller
         $fullPapers = FullPaper::whereHas('fullPaperReviews', function ($query) use ($reviewerId) {
             $query->where('reviewer_id', $reviewerId);
         })
-            ->where('status', 'under review')
+            ->whereIn('status', ['under review', 'revision'])
             ->get();
 
         return view('reviewer.fullpaperIndex', compact('fullPapers'));
@@ -49,15 +49,18 @@ class ReviewFullPaperController extends Controller
     public function storeReview(Request $request, $fullpaperId)
     {
         $request->validate([
+            'recommendation' => 'required|string',
             'comment' => 'nullable|string',
         ]);
 
         $fullpaperReview = FullPaperReview::firstOrCreate(
             ['full_paper_id' => $fullpaperId, 'reviewer_id' => auth()->id()],
+            ['recommendation' => $request->recommendation, 'comment' => $request->comment]
         );
 
         if ($fullpaperReview->wasRecentlyCreated === false) {
             $fullpaperReview->update([
+                'recommendation' => $request->recommendation,
                 'comment' => $request->comment
             ]);
         }

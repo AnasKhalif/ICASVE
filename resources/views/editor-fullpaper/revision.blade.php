@@ -17,14 +17,13 @@
                                 <th class="text-center">Reviewer</th>
                                 <th class="text-center">Reviewer Comment</th>
                                 <th class="text-center">Editor Decision</th>
-                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($fullpapers as $key => $fullpaper)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td class="text-wrap">{{ $fullpaper->title }}</td>
+                                    <td class="text-wrap">{{ $fullpaper->abstract->title }}</td>
                                     <td>{{ $fullpaper->abstract->symposium->name }}</td>
                                     <td>
                                         @foreach ($fullpaper->fullPaperReviews as $review)
@@ -45,10 +44,6 @@
                                         <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>
                                         <a href="{{ route('reviewer.editor-fullpaper.showEditStatus', $fullpaper->id) }}"
                                             class="btn btn-sm btn-warning">Edit Status</a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
-                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                 </tr>
                             @empty

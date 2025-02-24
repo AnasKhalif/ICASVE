@@ -15,7 +15,7 @@ class ReviewController extends Controller
         $abstracts = AbstractModel::whereHas('abstractReviews', function ($query) use ($reviewerId) {
             $query->where('reviewer_id', $reviewerId);
         })
-            ->where('status', 'under review')
+            ->whereIn('status', ['under review', 'revision'])
             ->get();
 
         return view('reviewer.index', compact('abstracts'));
@@ -76,6 +76,6 @@ class ReviewController extends Controller
             ]);
         }
 
-        return redirect()->route('reviewer.review.index')->with('success', 'Review submitted successfully');
+        return redirect()->route('reviewer.review-abstract.index')->with('success', 'Review submitted successfully');
     }
 }

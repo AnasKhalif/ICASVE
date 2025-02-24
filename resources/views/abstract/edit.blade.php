@@ -92,7 +92,9 @@
                         <small class="form-text text-muted mb-2">
                             Please see formatting guidance below, if needed
                         </small>
-                        <textarea class="form-control" id="abstract" name="abstract" cols="20" rows="10" required>{{ old('abstract', $abstract->abstract) }}</textarea>
+                        <textarea class="form-control" id="abstract" name="abstract" cols="20" rows="10" required
+                            oninput="countWords()">{{ old('abstract', $abstract->abstract) }}</textarea>
+                        <small id="wordCount" class="text-muted">0 words (Max: {{ $maxWords ?? 350 }} words)</small>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -184,5 +186,17 @@
             </div>
         </div>
     </div>
-
+    <script>
+        function countWords() {
+            let text = document.getElementById("abstract").value;
+            let words = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            let maxWords = {{ $maxWords ?? 350 }};
+            document.getElementById("wordCount").innerText = words + " words (Max: " + maxWords + " words)";
+            if (words > maxWords) {
+                document.getElementById("wordCount").classList.add("text-danger");
+            } else {
+                document.getElementById("wordCount").classList.remove("text-danger");
+            }
+        }
+    </script>
 @endsection

@@ -36,7 +36,7 @@ class AbstractModel extends Model
 
     public function reviewers()
     {
-        return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'abstract_reviews', 'abstract_id', 'reviewer_id')->withPivot(['comment', 'recommendation'])->withTimestamps();
     }
 
     public function filePayment()

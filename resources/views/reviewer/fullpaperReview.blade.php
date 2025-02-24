@@ -12,9 +12,9 @@
                     <div class="form-group">
                         <label for="recommendation">Recommendation</label>
                         <select class="form-control" name="recommendation" id="recommendation" required>
-                            <option value="Oral"
-                                {{ old('recommendation', $fullpaperReview->recommendation ?? '') == 'Oral' ? 'selected' : '' }}>
-                                Oral</option>
+                            <option value="Publish"
+                                {{ old('recommendation', $fullpaperReview->recommendation ?? '') == 'Publish' ? 'selected' : '' }}>
+                                Published</option>
                             <option value="Poster"
                                 {{ old('recommendation', $fullpaperReview->recommendation ?? '') == 'Poster' ? 'selected' : '' }}>
                                 Poster</option>

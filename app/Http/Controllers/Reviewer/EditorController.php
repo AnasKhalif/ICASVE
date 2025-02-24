@@ -26,6 +26,15 @@ class EditorController extends Controller
         return view('editor.noReviewer', compact('abstracts'));
     }
 
+    public function revision()
+    {
+        $abstracts = AbstractModel::with('abstractReviews.reviewer')
+            ->where('status', 'revision')
+            ->paginate(10);
+
+        return view('editor.revision', compact('abstracts'));
+    }
+
     public function noDecision()
     {
         $abstracts = AbstractModel::with('abstractReviews.reviewer')
@@ -52,7 +61,7 @@ class EditorController extends Controller
         $abstract = AbstractModel::with('reviewers')->findOrFail($abstractId);
 
         $reviewers = User::whereHas('roles', function ($query) {
-            $query->where('name', 'reviewer');
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
         })->get();
 
         $assignedReviewer1 = $abstract->reviewers->first() ? $abstract->reviewers[0]->id : null;
@@ -67,7 +76,7 @@ class EditorController extends Controller
         $abstract = AbstractModel::findOrFail($abstractId);
 
         $request->validate([
-            'reviewer_1_id' => 'nullable|exists:users,id',
+            'reviewer_1_id' => 'required|exists:users,id',
             'reviewer_2_id' => 'nullable|exists:users,id|different:reviewer_1_id',
         ]);
 
@@ -90,7 +99,7 @@ class EditorController extends Controller
         $abstract->status = 'under review';
         $abstract->save();
 
-        return redirect()->route('reviewer.editor.index')->with('success', 'Reviewer assigned successfully');
+        return redirect()->route('reviewer.editor.noReviewer')->with('success', 'Reviewer assigned successfully');
     }
 
 
@@ -119,12 +128,34 @@ class EditorController extends Controller
         $abstract = AbstractModel::findOrFail($abstractId);
 
         $request->validate([
-            'status' => 'required|string|in:open,under review,accepted,rejected'
+            'status' => 'required|string|in:open,under review,accepted,revision,rejected'
         ]);
 
         $abstract->status = $request->status;
         $abstract->save();
 
         return redirect()->route('reviewer.editor.index')->with('success', 'Status updated successfully');
+    }
+
+    public function workLoad()
+    {
+        $reviewers = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', ['reviewer', 'editor', 'chief-editor']);
+        })->with([
+            'abstractReviews.abstract' => function ($query) {
+                $query->select('id', 'title');
+            }
+        ])->get();
+
+        $workloads = $reviewers->map(function ($reviewer) {
+            return [
+                'name' => $reviewer->name,
+                'in_review' => $reviewer->abstractReviews->whereNull('comment')->count(),
+                'completed' => $reviewer->abstractReviews->whereNotNull('comment')->count(),
+                'assigned' => $reviewer->abstractReviews->count(),
+            ];
+        });
+
+        return view('editor.workload', compact('workloads'));
     }
 }

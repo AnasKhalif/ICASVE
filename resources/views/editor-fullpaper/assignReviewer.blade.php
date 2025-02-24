@@ -15,7 +15,7 @@
                             <option value="">-- Select Reviewer 1 --</option>
                             @foreach ($reviewers as $reviewer)
                                 <option value="{{ $reviewer->id }}"
-                                    {{ old('reviewer_1_id') == $reviewer->id ? 'selected' : '' }}>
+                                    {{ old('reviewer_1_id', $assignedReviewer1) == $reviewer->id ? 'selected' : '' }}>
                                     {{ $reviewer->name }}
                                 </option>
                             @endforeach
@@ -23,12 +23,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="reviewer_2_id">Select Reviewer 2</label>
-                        <select class="form-control" name="reviewer_2_id" id="reviewer_2_id" required>
+                        <label for="reviewer_2_id">Select Reviewer 2 (Optional)</label>
+                        <select class="form-control" name="reviewer_2_id" id="reviewer_2_id">
                             <option value="">-- Select Reviewer 2 --</option>
                             @foreach ($reviewers as $reviewer)
                                 <option value="{{ $reviewer->id }}"
-                                    {{ old('reviewer_2_id') == $reviewer->id ? 'selected' : '' }}>
+                                    {{ old('reviewer_2_id', $assignedReviewer2) == $reviewer->id ? 'selected' : '' }}>
                                     {{ $reviewer->name }}
                                 </option>
                             @endforeach
@@ -36,7 +36,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-sm btn-success">Assign Reviewers</button>
-                    <a href="{{ route('reviewer.editor-fullpaper.index') }}" class="btn btn-sm btn-light">Cancel</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>
             </div>
         </div>

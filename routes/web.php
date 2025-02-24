@@ -50,6 +50,7 @@ use App\Http\Controllers\SteeringLandingPageController;
 use App\Http\Controllers\ReviewerLandingPageController;
 use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
@@ -144,11 +145,13 @@ Route::name('reviewer.')
     ->middleware(['auth', 'role:reviewer|chief-editor|editor'])
     ->group(function () {
         Route::get('summary', [SummaryReviewerController::class, 'index'])->name('summary');
-        Route::get('editor-allabstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('all-abstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('/abstract-workload', [EditorController::class, 'workLoad'])->name('editor.workLoad');
 
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
         Route::get('/editor-abstract/with-decision', [EditorController::class, 'withDecision'])->name('editor.withDecision');
+        Route::get('/editor-abstract/revision', [EditorController::class, 'revision'])->name('editor.revision');
 
         Route::get('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'showAssignReviewer'])->name('editor.showAssignReviewer');
         Route::post('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'assignReviewer'])->name('editor.assignReviewer');
@@ -156,13 +159,14 @@ Route::name('reviewer.')
         Route::get('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'showEditStatus'])->name('editor.showEditStatus');
         Route::post('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'updateStatus'])->name('editor.updateStatus');
 
-        Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
-        Route::get('/review-abstract/review-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
+        Route::get('/review-abstract', [ReviewController::class, 'index'])->name('review-abstract.index');
+        Route::get('/review-abstract-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
 
         Route::get('/review-abstract/{abstractId}', [ReviewController::class, 'showReviewForm'])->name('review.showReviewForm');
         Route::post('/review-abstract/{abstractId}', [ReviewController::class, 'storeReview'])->name('review.storeReview');
 
-        Route::get('editor-all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('/fullpaper-workload', [EditorFullPaperController::class, 'workLoad'])->name('editor-fullpaper.workLoad');
 
         Route::get('/editor-fullpaper/no-reviewer', [EditorFullPaperController::class, 'noReviewer'])->name('editor-fullpaper.noReviewer');
         Route::get('/editor-fullpaper/no-decision', [EditorFullPaperController::class, 'noDecision'])->name('editor-fullpaper.noDecision');
@@ -176,7 +180,7 @@ Route::name('reviewer.')
         Route::post('/editor-fullpaper/edit-status/{fullpaperId}', [EditorFullPaperController::class, 'updateStatus'])->name('editor-fullpaper.updateStatus');
 
         Route::get('/review-fullpaper', [ReviewFullPaperController::class, 'index'])->name('review-fullpaper.index');
-        Route::get('/review-fullpaper/review-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
+        Route::get('/review-fullpaper-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
 
         Route::get('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'showReviewForm'])->name('review-fullpaper.showReviewForm');
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
@@ -210,23 +214,23 @@ Route::name('landing.')
         Route::resource('conference', ConferenceController::class);
     });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
-    Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
-    Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
-});
-
-Route::middleware('auth')->group(function () {
     Route::resource('abstracts', AbstractController::class);
     Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
     Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
-    Route::get('create/{abstractId}', [FullPaperController::class, 'create'])->name('fullpapers.create');
+    Route::get('/fullpaper-create', function () {
+        return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+    });
+    Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
     Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
     Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
+
+
+    Route::get('payment', [FilePaymentController::class, 'create'])->name('filepayments.create');
+    Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
+    Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
 });
 
 Route::middleware('auth')->group(function () {

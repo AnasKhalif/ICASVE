@@ -28,11 +28,13 @@ class UploadController extends Controller
             'signature' => 'jpg',
             'certificate_presenter' => 'pdf',
             'certificate_participant' => 'pdf',
+            'logo' => 'png,jpg'
         ];
 
         $request->validate([
             'type' => 'required|in:' . implode(',', array_keys($mimeTypes)),
             'file' => 'required|mimes:' . $mimeTypes[$request->type] . '|max:2048',
+            'logo' => 'nullable|mimes:png,jpg|max:2024'
         ]);
 
         // Simpan file
@@ -41,7 +43,7 @@ class UploadController extends Controller
 
         Upload::updateOrCreate(
             ['type' => $request->type],
-            ['file_path' => $filePath]
+            ['file_path' => $filePath],
         );
 
         return redirect()->back()->with('success', 'File berhasil diupload!');

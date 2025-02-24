@@ -48,7 +48,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-sm btn-success">Submit Review</button>
-                    <a href="{{ route('reviewer.review.index') }}" class="btn btn-sm btn-light">Cancel</a>
+                    <a href="{{ route('reviewer.review-abstract.index') }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>
             </div>
         </div>
