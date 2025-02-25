@@ -18,13 +18,13 @@ class SteeringCommitteeController extends Controller
             ? SteeringCommittee::all()
             : SteeringCommittee::where('year', $selectedYear)->get();
     
-        return view('landingpage-editor.steering.index', compact('committees', 'years', 'selectedYear'));
+        return view('landingpage-editor.committee.steering.index', compact('committees', 'years', 'selectedYear'));
     }
     
 
     public function create()
     {
-        return view('landingpage-editor.steering.create');
+        return view('landingpage-editor.committee.steering.create');
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class SteeringCommitteeController extends Controller
     public function edit($id)
 {
     $steering = SteeringCommittee::findOrFail($id);
-    return view('landingpage-editor.steering.edit', compact('steering'));
+    return view('landingpage-editor.committee.steering.edit', compact('steering'));
 }
 
 public function update(Request $request, $id)

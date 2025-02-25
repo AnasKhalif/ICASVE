@@ -18,7 +18,7 @@ class OrganizingCommitteeController extends Controller
          ->orderBy('category')
          ->get();
  
-     return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
+     return view('landingpage.committee.committee.organizing', compact('committees', 'latestYear'));
 }
 
 public function index(Request $request)
@@ -37,13 +37,13 @@ public function index(Request $request)
         ? OrganizingCommittee::orderBy('year', 'desc')->orderBy('category')->get()
         : OrganizingCommittee::where('year', $selectedYear)->orderBy('category')->get();
 
-    return view('landingpage-editor.organizing.index', compact('committees', 'years', 'selectedYear'));
+    return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'selectedYear'));
 }
 
 
     public function create()
     {
-        return view('landingpage-editor.organizing.create');
+        return view('landingpage-editor.committee.organizing.create');
     }
 
     public function store(Request $request)
@@ -62,7 +62,7 @@ public function index(Request $request)
     public function edit($id)
     {
         $committee = OrganizingCommittee::findOrFail($id);
-        return view('landingpage-editor.organizing.edit', compact('committee'));
+        return view('landingpage-editor.committee.organizing.edit', compact('committee'));
     }
 
     public function update(Request $request, $id)

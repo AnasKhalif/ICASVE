@@ -13,6 +13,7 @@
     use App\Models\Contact;
     use App\Models\Faq;
     use App\Models\Theme;
+    use App\Models\ConferenceTitle;
 
     class LandingPageController extends Controller
     {
@@ -34,6 +35,7 @@
             $about = About::all();
             $themes = Theme::orderBy('year', 'desc')->get(); // Ambil tema dengan urutan terbaru
             $faqs = Faq::limit(3)->get();
+            $conference_title = ConferenceTitle::all();
         
             return view('landingpage.home', compact(
                 'keynoteSpeakers',
@@ -51,7 +53,8 @@
                 'posters',
                 'about',
                 'themes',
-                'faqs'
+                'faqs',
+                'conference_title'
             ));
         }
         

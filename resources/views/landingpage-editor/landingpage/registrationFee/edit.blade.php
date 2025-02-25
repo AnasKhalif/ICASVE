@@ -5,7 +5,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Edit Registration Fee</h4>
-                <form action="{{ route('landing.registrationFee.update', $registrationFee->id) }}" method="POST">
+                <form action="{{ route('landing.registrationFee.update', $registrationFee->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -64,8 +64,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    <button type="submit" class="btn btn-success">Update</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
                 </form>
             </div>
         </div>

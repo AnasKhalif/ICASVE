@@ -1,32 +1,40 @@
 @extends('layouts.app')
-@section('title', 'FAQ')
+@section('title', 'Registration Fee')
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold text-uppercase">FAQ</h2>
+        <h2 class="text-center fw-bold text-uppercase">Registration Fee</h2>
         <hr class="border border-success">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('landing.faq.create') }}" class="btn btn-primary">Add FAQ</a>
+            <a href="{{ route('landing.registrationFee.create') }}" class="btn btn-primary">Add Registration Fee</a>
         </div>
         <table class="table table-bordered table-striped">
             <thead class="table-success">
                 <tr>
                     <th>No</th>
-                    <th>Title</th>
+                    <th>category name</th>
+                    <th>Role</th>
+                    <th>domestic_participants</th>
+                    <th>international_participants</th>
+                    <th>period of payment</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($faqs as $faq)
+                @foreach ($registrationFees as $registrationfee)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $faq->title }}</td>
+                                    <td>{{ $registrationfee->category_name }}</td>
+                                    <td>{{ $registrationfee->role_type }}</td>
+                                    <td>{{ $registrationfee->domestic_participants  }}</td>
+                                    <td>{{ $registrationfee->international_participants }} </td>
+                                    <td>{{ $registrationfee->period_of_payment }} </td>
                         <td>
-                            <a href="{{ route('landing.faq.edit', $faq->id) }}"
+                            <a href="{{ route('landing.registrationFee.edit', $registrationfee->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('landing.faq.destroy', $faq->id) }}" method="POST"
+                            <form action="{{ route('landing.registrationFee.destroy', $registrationfee->id) }}" method="POST"
                                 class="d-inline" onsubmit="return confirm('Are you sure?');">
                                 @csrf
                                 @method('DELETE')

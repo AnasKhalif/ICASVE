@@ -1,32 +1,36 @@
 @extends('layouts.app')
-@section('title', 'FAQ')
+@section('title', 'Speaker')
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold text-uppercase">FAQ</h2>
+        <h2 class="text-center fw-bold text-uppercase">Speaker</h2>
         <hr class="border border-success">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         <div class="d-flex justify-content-end mb-3">
-            <a href="{{ route('landing.faq.create') }}" class="btn btn-primary">Add FAQ</a>
+            <a href="{{ route('landing.speakers.create') }}" class="btn btn-primary">Add Speaker</a>
         </div>
         <table class="table table-bordered table-striped">
             <thead class="table-success">
                 <tr>
                     <th>No</th>
-                    <th>Title</th>
+                    <th>Name</th>
+                    <th>institution</th>
+                    <th>role</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($faqs as $faq)
+                @foreach ($speakers as $speaker)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $faq->title }}</td>
+                        <td>{{ $speaker->name }}</td>
+                        <td>{{ $speaker->institution }}</td>
+                        <td> {{ str_replace('_', ' ', $speaker->role) }} </td>
                         <td>
-                            <a href="{{ route('landing.faq.edit', $faq->id) }}"
+                            <a href="{{ route('landing.speakers.edit', $speaker->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('landing.faq.destroy', $faq->id) }}" method="POST"
+                            <form action="{{ route('landing.speakers.destroy', $speaker->id) }}" method="POST"
                                 class="d-inline" onsubmit="return confirm('Are you sure?');">
                                 @csrf
                                 @method('DELETE')

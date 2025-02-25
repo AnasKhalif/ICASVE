@@ -7,12 +7,14 @@
         <div class="container d-flex align-items-center" style="min-height: 60vh;">
             <div class="row gy-4 justify-content-between">
                 <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
-                    <h1>International Conference on Applied Science for Vocational Education - <span> ICASVE 2025</span>
+                    @foreach($conference_title as $item)
+                    <h1> {{ $item->title }} - <span> ICASVE {{ $item->year }}</span>
                     </h1>
-                    <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
+                    <p>{{ $item->description }}</p>
                     <div class="d-flex">
                         <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>

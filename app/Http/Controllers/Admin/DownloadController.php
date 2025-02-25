@@ -57,9 +57,7 @@ class DownloadController extends Controller
         return response()->download($zipPath)->deleteFileAfterSend(true);
     }
 
-    /**
-     * Download all verified payment proofs as a ZIP file.
-     */
+    
     public function downloadPaymentProof()
     {
         $activeYear = Year::where('is_active', true)->first();

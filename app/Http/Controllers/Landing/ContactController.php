@@ -13,16 +13,16 @@ class ContactController extends Controller
         $latestYear = Contact::max('created_at');
         $contacts = Contact::whereYear('created_at', date('Y', strtotime($latestYear)))->get();
     
-        return view('landingpage.contact.contact', compact('contacts'));
+        return view('landingpage.contact.landingpage.contact', compact('contacts'));
     }
     public function index()
     {
         $contacts = Contact::all();
-        return view('landingpage-editor.contact.index', compact('contacts'));
+        return view('landingpage-editor.landingpage.contact.index', compact('contacts'));
     }
     public function create()
     {
-        return view('landingpage-editor.contact.create');
+        return view('landingpage-editor.landingpage.contact.create');
     }
     public function store(Request $request)
     {
@@ -37,7 +37,7 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        return view('landingpage-editor.contact.edit', compact('contact'));
+        return view('landingpage-editor.landingpage.contact.edit', compact('contact'));
     }
     public function update(Request $request, $id)
     {

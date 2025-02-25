@@ -44,6 +44,7 @@ use App\Http\Controllers\Landing\AboutController;
 use App\Http\Controllers\Landing\DeadlineDateController;
 use App\Http\Controllers\Landing\PosterController;
 use App\Http\Controllers\Landing\LogoController;
+use App\Http\Controllers\Landing\LandingPageController as LandingPageEditorController;
 use App\Http\Controllers\Landing\ConferenceTitleController;
 use App\Http\Controllers\Landing\AbstractGuidelineController;
 use App\Http\Controllers\Landing\FullpaperGuidelineController;
@@ -54,6 +55,9 @@ use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\Landing\ConferenceDetailController;
 use App\Http\Controllers\Landing\ThemeController;
+use App\Http\Controllers\PreviousConferences;
+use App\Http\Controllers\Landing\CommitteeController;
+use App\Http\Controllers\Landing\ConferenceIndexController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -62,6 +66,9 @@ Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('t
 Route::get('/conference-program', [ConferenceProgramController::class, 'showLandingPage'])->name('conference.program');
 
 Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gallery');
+
+Route::get('/previous-conference', [PreviousConferences::class, 'index'])->name('previous.conference');
+Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
@@ -90,9 +97,7 @@ Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.ind
 Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archives.show');
 
 
-Route::get('/previous-conference', function () {
-    return view('landingpage.prevconference.previous_conference');
-})->name('previous.conference');
+
 
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
@@ -181,7 +186,9 @@ Route::name('landing.')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
-        Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::get('landingpage', [LandingPageEditorController::class, 'index'])->name('landingpage.index');
+        Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
+        Route::get('conferencelanding', [ConferenceIndexController::class, 'index'])->name('conferencelanding.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
