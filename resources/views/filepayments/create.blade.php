@@ -35,7 +35,31 @@
                             <p class="text-center text-danger">No payment methods available</p>
                         @endif
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="card-title border-bottom pb-3">Payment Instruction</h4>
+                <div class="payment-details my-4">
+                    <p class="card-description font-italic mb-3">
+                        Please make your payment through the following details:
+                    </p>
+                    <ol class="pl-3">
+                        <li>Transfer the registration fee to the bank account listed above.</li>
+                        <li>Take a screenshot or download the payment receipt.</li>
+                        <li>Return to this payment page and select the currency that matches your transfer.</li>
+                        <li>After selecting the currency, enter the exact amount you transferred in the "Payment Amount"
+                            field.</li>
+                        <li>Upload the payment receipt using the form below.</li>
+                        <li>Click the "Save" button to submit your payment details.</li>
+                        <li>Wait for verification. You will be notified once it is confirmed.</li>
+                        <li>Once your payment is verified, you will be able to download your receipt as proof of payment.
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
