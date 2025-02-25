@@ -39,6 +39,7 @@ use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgramController as ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPageController;
 use App\Http\Controllers\LandingPageController as LandingPage;
+use App\Http\Controllers\Landing\LandingPageController as LandingPageEditorController;
 use App\Http\Controllers\Landing\VenueController;
 use App\Http\Controllers\Landing\AboutController;
 use App\Http\Controllers\Landing\DeadlineDateController;
@@ -181,7 +182,7 @@ Route::name('landing.')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
-        Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::get('landingpage', [LandingPageEditorController::class, 'index'])->name('landingpage.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
