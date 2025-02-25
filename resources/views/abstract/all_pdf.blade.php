@@ -71,6 +71,10 @@
             padding-bottom: 10px;
             width: 100%;
         }
+
+        .abstract:nth-of-type(n+2) {
+            page-break-before: always;
+        }
     </style>
 </head>
 
