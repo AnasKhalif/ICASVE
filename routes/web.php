@@ -107,6 +107,7 @@ Route::get('/contact', function () {
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
+    Route::get('participant-excel', [UserController::class, 'exportExcel'])->name('participant.export');
     Route::get('abstracts-participant/{id}', 'UserController@showAbstract')->name('abstracts-participant.show');
     Route::get('abstracts-participant/{id}/download', 'UserController@downloadAbstractPdf')->name('abstracts-participant.downloadPdf');
     Route::get('abstracts-participant/{id}/acceptance-pdf', 'UserController@acceptancePdf')->name('abstracts-participant.acceptancePdf');
