@@ -21,8 +21,9 @@ class ConferenceProgramController extends Controller
         
         // Filter program berdasarkan day_number yang dipilih
         $programs = ConferenceProgram::where('day_number', $selectedDay)->get();
-    
+      
         return view('landingpage.conference.program', compact('conferences', 'programs', 'daysAvailable', 'selectedDay'));
+        
     }
 
     public function index(Request $request)

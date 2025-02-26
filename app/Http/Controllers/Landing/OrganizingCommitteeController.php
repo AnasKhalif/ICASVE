@@ -18,7 +18,7 @@ class OrganizingCommitteeController extends Controller
          ->orderBy('category')
          ->get();
  
-     return view('landingpage.committee.committee.organizing', compact('committees', 'latestYear'));
+     return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
 }
 
 public function index(Request $request)

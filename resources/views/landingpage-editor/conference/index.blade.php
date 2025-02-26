@@ -12,7 +12,7 @@
                 <div class="row g-3 justify-content-center">
 
                     <div class="col-md-5">
-                        <a href="{{ route('landing.conference-title.index') }}" class="btn btn-danger w-100 py-2">
+                        <a href="{{ route('landing.conference-detail.index') }}" class="btn btn-danger w-100 py-2">
                             <i class="fa-solid fa-heading"></i> Conference Title
                         </a>
                     </div>

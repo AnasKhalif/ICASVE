@@ -5,10 +5,16 @@
 @section('content')
 
     <div class="container my-5">
-        <div class="container section-title" data-aos="fade-up">
-            <h2>Conference Program</h2>
-            <div><span>Check Our</span> <span class="description-title">Conference Program</span></div>
+        @foreach ($conferences as $conference)
+        <div class="text-center">
+            <h1 class="fw-bold">Conference Program</h1>
+            <p class="fs-5 text-muted">{{ $conference->title }}</p>
+            <p class="fw-bold">({{ $conference->theme }})</p>
+            <p class="text-muted">{{ $conference->university }}</p>
+            <p class="text-muted">{{ $conference->hosted }}</p>
+            <p class="fw-bold">{{ \Carbon\Carbon::parse($conference->date)->format('d, F Y') }}</p>
         </div>
+        @endforeach
 
         <!-- Dropdown Pilihan Day -->
         <div class="d-flex justify-content-start mb-3">
