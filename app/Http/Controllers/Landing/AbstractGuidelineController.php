@@ -18,12 +18,12 @@ class AbstractGuidelineController extends Controller
     public function index()
     {
         $guidelines = AbstractGuideline::orderBy('year', 'desc')->get();
-        return view('landingpage-editor.abstract.index', compact('guidelines'));
+        return view('landingpage-editor.submission.abstract.index', compact('guidelines'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.abstract.create');
+        return view('landingpage-editor.submission.abstract.create');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class AbstractGuidelineController extends Controller
 
     public function edit(AbstractGuideline $abstractGuideline)
     {
-        return view('landingpage-editor.abstract.edit', compact('abstractGuideline'));
+        return view('landingpage-editor.submission.abstract.edit', compact('abstractGuideline'));
     }
 
     public function update(Request $request, AbstractGuideline $abstractGuideline)

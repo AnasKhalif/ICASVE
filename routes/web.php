@@ -58,6 +58,8 @@ use App\Http\Controllers\Landing\ThemeController;
 use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Landing\CommitteeController;
 use App\Http\Controllers\Landing\ConferenceIndexController;
+use App\Http\Controllers\Landing\SubmissionIndexController;
+use App\Http\Controllers\Landing\WhatsappController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -189,6 +191,7 @@ Route::name('landing.')
         Route::get('landingpage', [LandingPageEditorController::class, 'index'])->name('landingpage.index');
         Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
         Route::get('conferencelanding', [ConferenceIndexController::class, 'index'])->name('conferencelanding.index');
+        Route::get('submission', [SubmissionIndexController::class, 'index'])->name('submission.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
@@ -204,6 +207,7 @@ Route::name('landing.')
         Route::resource('poster', PosterController::class);
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
+        Route::resource('whatsapp', WhatsappController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);

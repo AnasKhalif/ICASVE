@@ -13,7 +13,7 @@ class ContactController extends Controller
         $latestYear = Contact::max('created_at');
         $contacts = Contact::whereYear('created_at', date('Y', strtotime($latestYear)))->get();
     
-        return view('landingpage.contact.landingpage.contact', compact('contacts'));
+        return view('landingpage.contact.contact', compact('contacts'));
     }
     public function index()
     {

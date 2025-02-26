@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold">Abstract Guidelines</h2>
+        <h2 class="text-center fw-bold">Abstract Submission Guidelines</h2>
         <hr class="border border-success mb-4">
 
         @if (session('success'))

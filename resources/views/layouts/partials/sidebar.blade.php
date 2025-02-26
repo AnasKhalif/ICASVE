@@ -282,18 +282,19 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.logos.index') }}">
+                    <i class="fa-brands fa-slack menu-icon"></i>
+                    <span class="menu-title">Logo</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
                     <i class="fa-solid fa-house-chimney menu-icon"></i>
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
     
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.logos.index') }}">
-                    <i class="fa-brands fa-slack menu-icon"></i>
-                    <span class="menu-title">Logo</span>
-                </a>
-            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.themes.index') }}">
                     <i class="fa-solid fa-list-check menu-icon"></i>
@@ -304,6 +305,13 @@
                 <a class="nav-link" href="{{ route('landing.committee.index') }}">
                     <i class="fa-solid fa-users menu-icon"></i>
                     <span class="menu-title"> Committe</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.submission.index') }}">
+                   <i class="fa-brands fa-readme menu-icon"></i>
+                    <span class="menu-title">Submission Guidelines</span>
                 </a>
             </li>
 
@@ -328,23 +336,10 @@
                 </a>
             </li>
 
-            
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.abstract-guidelines.index') }}">
-                   <i class="fa-brands fa-readme menu-icon"></i>
-                    <span class="menu-title">Abstract Gudelines</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.fullpaper-guidelines.index') }}">
-                   <i class="fa-brands fa-readme menu-icon"></i>
-                    <span class="menu-title">Fullpaper Gudelines</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.presentation-guidelines.index') }}">
-                   <i class="fa-brands fa-readme menu-icon"></i>
-                    <span class="menu-title">Presentation Guidelines</span>
+                <a class="nav-link" href="{{ route('landing.whatsapp.index') }}">
+                    <i class="fa-solid fa-envelope menu-icon"></i>
+                    <span class="menu-title">Whatsapp</span>
                 </a>
             </li>
             
