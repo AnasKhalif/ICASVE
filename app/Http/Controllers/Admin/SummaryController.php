@@ -9,6 +9,7 @@ use App\Models\AbstractModel;
 use App\Models\Symposium;
 use App\Models\FullPaper;
 use App\Models\Year;
+use App\Models\Role;
 
 class SummaryController extends Controller
 {
@@ -28,9 +29,22 @@ class SummaryController extends Controller
             ->whereYear('created_at', $activeYear->year)
             ->count();
 
-        $totalAmountPayment = FilePayment::where('status', 'verified')
+        $usdToIdrRate = 16330;
+
+        $payments = FilePayment::where('status', 'verified')
             ->whereYear('created_at', $activeYear->year)
-            ->sum('amount');
+            ->selectRaw('currency, SUM(amount) as total')
+            ->groupBy('currency')
+            ->get();
+
+        $totalAmountPayment = 0;
+        foreach ($payments as $payment) {
+            if ($payment->currency === 'USD') {
+                $totalAmountPayment += $payment->total * $usdToIdrRate; // Konversi ke IDR
+            } else {
+                $totalAmountPayment += $payment->total; // IDR langsung ditambahkan
+            }
+        }
 
         $verifiedPaymentsCount = FilePayment::where('status', 'verified')
             ->whereYear('created_at', $activeYear->year)
@@ -108,6 +122,24 @@ class SummaryController extends Controller
                 }
             ])->get();
 
+        $roles = Role::whereIn('name', [
+            'indonesia-presenter',
+            'foreign-presenter',
+            'indonesia-participants',
+            'foreign-participants'
+        ])->get();
+
+        $countryParticipants = User::whereHas('roles', function ($query) use ($roles) {
+            $query->whereIn('name', $roles->pluck('name'));
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->selectRaw('country, COUNT(*) as count')
+            ->groupBy('country')
+            ->orderByDesc('count')
+            ->get();
+
+        $topCountry = $countryParticipants->first();
+
         return view('admin.summary', compact(
             'totalUsers',
             'totalAmountPayment',
@@ -128,7 +160,9 @@ class SummaryController extends Controller
             'fullpaperRevision',
             'fullpaperAccepted',
             'fullpaperRejected',
-            'symposiums'
+            'symposiums',
+            'countryParticipants',
+            'topCountry'
         ));
     }
 }
