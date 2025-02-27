@@ -29,14 +29,19 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}"
-                            required>
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title"
+                            class="form-control @error('title') is-invalid @enderror"
+                            value="{{ old('title', $abstract->title ?? '') }}">
+                        @error('title')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="symposium_id">Symposium</label>
-                        <select class="form-control" id="symposium_id" name="symposium_id" required>
+                        <label for="symposium_id" class="form-label">Symposium</label>
+                        <select class="form-select @error('symposium_id') is-invalid @enderror" id="symposium_id"
+                            name="symposium_id" required>
                             <option value="">-- Select Symposium --</option>
                             @foreach ($symposiums as $symposium)
                                 <option value="{{ $symposium->id }}"
@@ -45,6 +50,9 @@
                                 </option>
                             @endforeach
                         </select>
+                        @error('symposium_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
@@ -56,12 +64,16 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="authors">Authors</label>
+                        <label for="authors" class="form-label">Authors</label>
                         <small class="form-text text-muted mb-2">
                             Martin Karplus*[1], Werner Heisenberg[2], Ada Lovelace[2,3]
                         </small>
-                        <input type="text" class="form-control" id="authors" name="authors"
-                            value="{{ old('authors') }}" required>
+                        <input type="text" name="authors" id="authors"
+                            class="form-control @error('authors') is-invalid @enderror"
+                            value="{{ old('authors', $abstract->authors ?? '') }}">
+                        @error('authors')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
@@ -76,18 +88,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="corresponding_email">Corresponding Email</label>
-                        <input type="email" class="form-control" id="corresponding_email" name="corresponding_email"
-                            value="{{ old('corresponding_email') }}" required>
+                        <label for="corresponding_email" class="form-label">Corresponding Email</label>
+                        <input type="email" name="corresponding_email" id="corresponding_email"
+                            class="form-control @error('corresponding_email') is-invalid @enderror"
+                            value="{{ old('corresponding_email', $abstract->corresponding_email ?? '') }}">
+                        @error('corresponding_email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="abstract">Abstract</label>
+                        <label for="abstract" class="form-label">Abstract</label>
                         <small class="form-text text-muted mb-2">
                             Please see formatting guidance below, if needed
                         </small>
-                        <textarea class="form-control" id="abstract" name="abstract" required cols="40" rows="10"
-                            oninput="countWords()">{{ old('abstract') }}</textarea>
+                        <textarea class="form-control @error('abstract') is-invalid @enderror" id="abstract" name="abstract" required
+                            cols="40" rows="10" oninput="countWords()">{{ old('abstract', $abstract->abstract ?? '') }}</textarea>
                         <small id="wordCount" class="text-muted">0 words (Max: {{ $maxWords ?? 350 }} words)</small>
                         @error('abstract')
                             <div class="text-danger">{{ $message }}</div>
