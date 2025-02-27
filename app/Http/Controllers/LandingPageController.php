@@ -31,7 +31,7 @@
             $venues = Venue::all();
             $deadline_date = DeadlineDate::all();
             $contacts = Contact::all();
-            $posters = Poster::all();
+            $posters = Poster::where('year', now()->year)->get();
             $about = About::all();
             $themes = Theme::orderBy('year', 'desc')->get(); // Ambil tema dengan urutan terbaru
             $faqs = Faq::limit(3)->get();

@@ -71,6 +71,8 @@ Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gal
 
 Route::get('/previous-conference', [PreviousConferences::class, 'index'])->name('previous.conference');
 Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
+Route::get('download-abstract/{id}', [ArchiveController::class, 'downloadPdf'])->name('download.abstract');
+
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
