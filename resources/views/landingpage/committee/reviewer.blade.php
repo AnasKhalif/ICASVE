@@ -9,6 +9,7 @@
             <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
+       
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="committee-container">
                 @php
@@ -37,7 +38,7 @@
             </div>
 
             @if ($reviewers->isEmpty())
-                <p class="text-center text-muted">No reviewer committee available for {{ $latestYear }}.</p>
+                <p class="text-center text-muted">No reviewer committee members found.</p>
             @endif
         </div>
     </section>

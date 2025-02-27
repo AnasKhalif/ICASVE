@@ -22,7 +22,7 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <title>
         @hasSection('title')
-            @yield('title') | ICasve 2025
+            @yield('title') | ICASVE {{ date('Y') }}
         @else
             ICasve
         @endif

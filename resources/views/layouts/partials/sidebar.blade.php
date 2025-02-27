@@ -298,7 +298,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.themes.index') }}">
                     <i class="fa-solid fa-list-check menu-icon"></i>
-                    <span class="menu-title">Theme</span>
+                    <span class="menu-title">Call for Paper</span>
                 </a>
             </li>
             <li class="nav-item">

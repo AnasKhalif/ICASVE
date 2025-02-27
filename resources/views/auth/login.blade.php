@@ -11,8 +11,14 @@
                 style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
                     <div class="d-flex align-items-center mb-2">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid"
-                            style="max-width: 180px;">
+                        @php 
+                            $logo = \App\Models\Logo::first();
+                        @endphp
+                        @if (isset($logo) && $logo->image)
+                           <img src="{{ asset('storage/' . $logo->image) }}" width="180"  alt="Logo" />
+                        @else
+                            <img src="{{ asset('images/logo-icasve-white.png') }}" max-width="130" alt="Logo" />
+                        @endif
                     </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
@@ -30,8 +36,14 @@
                 style="background: #F1F8E9;">
                 <div class="login-container w-100 p-3 "style="max-width: 450px;">
                     <header class="text-center">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="mb-3 img-fluid"
-                            style="max-width: 150px;">
+                        @php 
+                            $logo = \App\Models\Logo::first();
+                        @endphp
+                        @if (isset($logo) && $logo->image)
+                           <img src="{{ asset('storage/' . $logo->image) }}" width="160" alt="Logo" />
+                        @else
+                            <img src="{{ asset('images/logo-icasve-white.png') }}"  alt="Logo" />
+                        @endif
                     </header>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

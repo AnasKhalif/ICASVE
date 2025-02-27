@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="container my-5">
+      @if ($conferences->count() > 0)
         @foreach ($conferences as $conference)
         <div class="text-center">
             <h1 class="fw-bold">Conference Program</h1>
@@ -15,6 +16,12 @@
             <p class="fw-bold">{{ \Carbon\Carbon::parse($conference->date)->format('d, F Y') }}</p>
         </div>
         @endforeach
+      @else
+        <div class="text-center">
+            <h1 class="fw-bold">Conference Program</h1>
+            <p class="fs-5 text-muted">No conference found.</p>
+        </div>
+      @endif
 
         <!-- Dropdown Pilihan Day -->
         <div class="d-flex justify-content-start mb-3">
@@ -28,30 +35,32 @@
             </div>
         </div>
 
-        <!-- Table Program -->
-        <div class="table-responsive">
-            <table class="table table-hover rounded-2 overflow-hidden shadow-sm">
-                <thead>
-                    <tr>
-                        <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-clock"></i> Time</th>
-                        <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-journal-text"></i> Program
-                        </th>
-                        <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-person"></i> PIC</th>
-                    </tr>
-                </thead>
-                <tbody id="programTable">
-                    @foreach ($programs as $program)
-                        <tr class="align-middle">
-                            <td class="p-3">{{ $program->start_time }} - {{ $program->end_time }}</td>
-                            <td class="p-3">{{ $program->program_name }}</td>
-                            <td class="p-3">{{ $program->pic }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        @if($programs->count() > 0)
+           <div class="table-responsive">
+               <table class="table table-hover rounded-2 overflow-hidden shadow-sm">
+                   <thead>
+                       <tr>
+                           <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-clock"></i> Time</th>
+                           <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-journal-text"></i> Program
+                           </th>
+                           <th scope="col" class="p-3 text-white" style="background-color:#08005e;"><i class="bi bi-person"></i> PIC</th>
+                       </tr>
+                   </thead>
+                   <tbody id="programTable">
+                       @foreach ($programs as $program)
+                           <tr class="align-middle">
+                               <td class="p-3">{{ $program->start_time }} - {{ $program->end_time }}</td>
+                               <td class="p-3">{{ $program->program_name }}</td>
+                               <td class="p-3">{{ $program->pic }}</td>
+                           </tr>
+                       @endforeach
+                   </tbody>
+               </table>
+           </div>
+        @else
+            <p class="text-center">No programs available for the selected day.</p>
+        @endif
     </div>
-
     <script>
         document.getElementById('dayFilter').addEventListener('change', function() {
             const selectedDay = this.value;

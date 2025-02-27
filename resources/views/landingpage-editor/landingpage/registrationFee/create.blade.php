@@ -28,14 +28,14 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="domestic_participants">Domestic Participants</label>
+                        <label for="domestic_participants">Domestic Participants(optional)</label>
                         <input type="text" class="form-control" name="domestic_participants" id="domestic_participants">
                         @error('domestic_participants')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="international_participants	">International Participants</label>
+                        <label for="international_participants	">International Participants(optional)</label>
                         <input type="text" class="form-control" name="international_participants"
                             id="international_participants">
                         @error('international_participants')
@@ -43,7 +43,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="period_of_payment">Period of Payment</label>
+                        <label for="period_of_payment">Period of Payment(optional)</label>
                         <input type="date" class="form-control" name="period_of_payment" id="period_of_payment">
                         @error('period_of_payment')
                             <span class="text-danger">{{ $message }}</span>

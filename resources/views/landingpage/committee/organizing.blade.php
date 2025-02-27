@@ -44,5 +44,9 @@
                 </div>
             </div>
         </div>
+
+        @if ($committees->isEmpty())
+            <p class="text-center text-muted">No organizing committee members found.</p>
+        @endif
     </section>
 @endsection

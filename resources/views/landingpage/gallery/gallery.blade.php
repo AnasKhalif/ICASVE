@@ -35,6 +35,9 @@
                 @endforeach
             </div>
         </div>
+        @if ($gallery->isEmpty())
+            <p class="text-center text-muted">No gallery images found.</p>
+        @endif
     </section>
 
     <script>
