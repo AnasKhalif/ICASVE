@@ -35,6 +35,11 @@
                 <a class="nav-link" href="{{ route('admin.payment.index') }}">
                     <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
+                    @php
+                        $noVerified = \App\Models\FilePayment::where('status', 'pending')->count();
+                    @endphp
+                    <span class="badge {{ $noVerified > 0 ? 'badge-danger' : 'badge-secondary' }}">{{ $noVerified }}
+                    </span>
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('admin.manual-receipt.create') ? 'active' : '' }}">
@@ -94,6 +99,7 @@
         </ul>
     </nav>
 @endrole
+
 @role(['chief-editor', 'editor'])
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
