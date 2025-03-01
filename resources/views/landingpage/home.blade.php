@@ -50,7 +50,7 @@
     @if ($about->isNotEmpty())
     <section id="about" class="about section">
         <div class="container">
-            @foreach ($about as $item)
+            @foreach ($about as $item)  
                 <div class="row align-items-center justify-content-between gy-5">
                     <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
                         <h3>About</h3>

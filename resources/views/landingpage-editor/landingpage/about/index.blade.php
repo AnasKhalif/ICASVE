@@ -4,7 +4,6 @@
     <div class="container">
         <h2 class="mb-4">About Section</h2>
         <a href="{{ route('landing.abouts.create') }}" class="btn btn-primary mb-3">Add About</a>
-
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -30,5 +29,6 @@
                 </div>
             @endforeach
         </div>
+        
     </div>
 @endsection
