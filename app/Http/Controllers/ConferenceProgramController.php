@@ -8,10 +8,17 @@ use App\Models\Conference;
 
 class ConferenceProgramController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $programs = ConferenceProgram::all();
         $conferences = Conference::all();
-        return view('landingpage.conference.program', compact('programs', 'conferences'));
+        $daysAvailable = ConferenceProgram::select('day_number')->distinct()->pluck('day_number');
+
+
+        $selectedDay = $request->query('day', $daysAvailable->first());
+
+
+        $programs = ConferenceProgram::where('day_number', $selectedDay)->get();
+
+        return view('landingpage.conference.program', compact('conferences', 'programs', 'daysAvailable', 'selectedDay'));
     }
 }

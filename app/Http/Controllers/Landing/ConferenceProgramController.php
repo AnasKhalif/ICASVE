@@ -8,18 +8,31 @@ use App\Models\ConferenceProgram;
 
 class ConferenceProgramController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $programs = ConferenceProgram::all();
-        return view('landingpage-editor.conferance-program.index', compact('programs'));
+        $years = ConferenceProgram::selectRaw('DISTINCT year')->orderBy('year', 'desc')->pluck('year');
+
+        $query = ConferenceProgram::query();
+
+        if ($request->has('year') && $request->year) {
+            $query->where('year', $request->year);
+        }
+
+        $programs = $query->orderBy('year', 'desc')->orderBy('day_number')->orderBy('start_time')->paginate(10);
+
+        return view('landingpage-editor.conference-program.index', compact('programs', 'years'));
     }
+
     public function create()
     {
-        return view('landingpage-editor.conferance-program.create');
+        return view('landingpage-editor.conference-program.create');
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'year' => ['required', 'integer'],
+            'day_number' => ['required', 'integer'],
             'start_time' => ['required'],
             'end_time' => ['required'],
             'program_name' => ['required', 'string', 'max:255'],
@@ -29,19 +42,24 @@ class ConferenceProgramController extends Controller
         $validatedData['pic'] = $validatedData['pic'] ?? '-';
 
         ConferenceProgram::create($validatedData);
-        return redirect()->route('landing.conferance-program.index')->with('success', 'Conference Program created successfully.');
+        return redirect()->route('landing.conference-program.index')->with('success', 'Conference Program created successfully.');
     }
+
     public function edit($id)
     {
         $program = ConferenceProgram::findOrFail($id);
-        return view('landingpage-editor.conferance-program.edit', compact('program'));
+        return view('landingpage-editor.conference-program.edit', compact('program'));
     }
+
     public function update(Request $request, $id)
     {
         $program = ConferenceProgram::findOrFail($id);
+
         $validatedData = $request->validate([
+            'year' => ['required', 'integer'],
+            'day_number' => ['required', 'integer'],
             'start_time' => ['required'],
-            'end_time'   => ['required'],
+            'end_time' => ['required'],
             'program_name' => ['required', 'string', 'max:255'],
             'pic' => ['nullable', 'string', 'max:255'],
         ]);
@@ -49,12 +67,13 @@ class ConferenceProgramController extends Controller
         $validatedData['pic'] = $validatedData['pic'] ?? '-';
 
         $program->update($validatedData);
-        return redirect()->route('landing.conferance-program.index')->with('success', 'Conference Program updated successfully.');
+        return redirect()->route('landing.conference-program.index')->with('success', 'Conference Program updated successfully.');
     }
+
     public function destroy($id)
     {
         $program = ConferenceProgram::findOrFail($id);
         $program->delete();
-        return redirect()->route('landing.conferance-program.index')->with('success', 'Conference Program deleted successfully.');
+        return redirect()->route('landing.conference-program.index')->with('success', 'Conference Program deleted successfully.');
     }
 }

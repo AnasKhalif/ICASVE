@@ -33,6 +33,9 @@
     @include('layouts.landingpartials.header')
     <main class="w-full mb-5">
         @yield('content')
+        <a href="https://wa.me/6285156914705" class="whatsapp-float text-white" target="_blank">
+            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+        </a>
     </main>
     @include('layouts.landingpartials.footer')
     @include('layouts.landingpartials.script')

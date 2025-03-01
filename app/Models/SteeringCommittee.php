@@ -9,9 +9,5 @@ class SteeringCommittee extends Model
 {
     use HasFactory;
     protected $table = 'steering_committees';
-    protected $fillable = [
-        'name',
-        'institution',
-        'country',
-    ];
+    protected $fillable = ['name', 'institution', 'country', 'year'];
 }

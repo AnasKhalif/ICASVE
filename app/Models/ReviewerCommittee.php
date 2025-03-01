@@ -8,9 +8,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ReviewerCommittee extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name',
-        'institution',
-        'country'
-    ];
+    protected $fillable = ['name', 'institution', 'country', 'year'];
 }

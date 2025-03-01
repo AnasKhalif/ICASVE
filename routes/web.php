@@ -59,11 +59,10 @@ Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('ga
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
-    Route::get('/reviewer', [SteeringLandingPageController::class, 'index'])->name('committee.reviewer');
+    Route::get('/reviewer', [ReviewerCommitteeController::class, 'showLandingPage'])
+        ->name('committee.reviewer');
 
-    Route::get('/organizing', function () {
-        return view('landingpage.committee.organizing');
-    })->name('committee.organizing');
+    Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
 
 Route::prefix('submission')->group(function () {
@@ -197,9 +196,9 @@ Route::name('landing.')
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
-        Route::resource('conferance-program', 'ConferenceProgramController');
+        Route::resource('conference-program', 'ConferenceProgramController');
         Route::resource('steering', SteeringCommitteeController::class);
-        Route::resource('reviewer-committee', ReviewerCommitteeController::class);
+        Route::resource('reviewer', ReviewerCommitteeController::class);
         Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
