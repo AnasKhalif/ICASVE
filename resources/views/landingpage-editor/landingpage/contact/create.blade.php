@@ -6,7 +6,7 @@
         <hr class="border border-success">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form action="{{ route('landing.contact.store') }}" method="POST">
+                <form action="{{ route('landing.contact.store') }}" method="POST" id="contactForm">
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Email</label>
@@ -28,15 +28,15 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contactForm');
             const submitBtn = document.getElementById('submitBtn');
             const inputs = form.querySelectorAll('input, textarea');
 
             function validateForm() {
                 let valid = true;
                 inputs.forEach(input => {
-                    if (input.value.trim().length < input.minLength) {
+                    if (input.value.trim().length < (input.minLength || 1)) {
                         valid = false;
                     }
                 });
@@ -44,8 +44,11 @@
             }
 
             inputs.forEach(input => {
-                input.addEventListener('input', validateForm);
+                input.addEventListener('keyup', validateForm);
+                input.addEventListener('change', validateForm);
             });
+
+            validateForm(); // Cek validasi saat halaman dimuat
         });
     </script>
 @endsection
