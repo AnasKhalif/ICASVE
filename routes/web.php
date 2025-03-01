@@ -54,6 +54,7 @@ use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\Landing\CommitteeController;
 use App\Http\Controllers\Landing\ConferenceIndexController;
 use App\Http\Controllers\Landing\SubmissionIndexController;
+use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\WhatsappController;
 use App\Http\Controllers\Landing\ThemeController;
 use App\Http\Controllers\Landing\ConferenceDetailController;

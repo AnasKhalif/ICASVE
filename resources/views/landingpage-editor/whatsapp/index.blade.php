@@ -35,36 +35,8 @@
                             </form>
                         </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse ($committees as $index => $committee)
-                        <tr class="text-center">
-                            <td>{{ $index + 1 }}</td>
-                            <td class="text-start">{{ $committee->name }}</td>
-                            <td>{{ $committee->category }}</td>
-                            <td>{{ $committee->year }}</td>
-                            <td>
-                                <a href="{{ route('landing.organizing.edit', $committee->id) }}"
-                                    class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <form action="{{ route('landing.organizing.destroy', $committee->id) }}" method="POST"
-                                    class="d-inline" onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">No committee members available.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection

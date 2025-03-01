@@ -10,6 +10,7 @@ class WhatsappController extends Controller
     public function index()
     {
         $whatsapp = Whatsapp::all();
+        
         return view('landingpage-editor.whatsapp.index', compact('whatsapp'));
     }
 

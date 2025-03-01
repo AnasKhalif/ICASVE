@@ -8,8 +8,9 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <form action="{{ route('landing.whatsapp.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('landing.whatsapp.update', $whatsapp->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="mb-3">
                 <label for="nomor" class="form-label">Number</label>
                 <input type="text" class="form-control" id="nomor" name="nomor" value="{{ $whatsapp->nomor }}" required>

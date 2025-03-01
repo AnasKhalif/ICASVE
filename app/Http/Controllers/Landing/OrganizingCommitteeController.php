@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\ReviewerCommittee;
 use App\Models\OrganizingCommittee;
 
-class ReviewerCommitteeController extends Controller
+class OrganizingCommitteeController extends Controller
 {
     public function showLandingPage()
 {
-     // Ambil tahun terbaru yang tersedia dalam database
      $latestYear = OrganizingCommittee::max('year');
 
-     // Ambil data hanya untuk tahun terbaru
      $committees = OrganizingCommittee::where('year', $latestYear)
          ->orderBy('category')
          ->get();
@@ -24,7 +22,6 @@ class ReviewerCommitteeController extends Controller
 
 public function index(Request $request)
 {
-    // Ambil semua tahun yang tersedia dalam database
     $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
 
     // Tambahkan opsi "All Years"
