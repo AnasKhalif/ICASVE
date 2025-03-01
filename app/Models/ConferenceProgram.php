@@ -9,6 +9,8 @@ class ConferenceProgram extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'year',
+        'day_number',
         'start_time',
         'end_time',
         'program_name',

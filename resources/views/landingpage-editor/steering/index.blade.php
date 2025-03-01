@@ -1,37 +1,56 @@
 @extends('layouts.app')
+
 @section('title', 'Steering Committee')
+
 @section('content')
-    <div class="container mt-4">
+    <div class="container my-4">
         <h2 class="text-center fw-bold">STEERING COMMITTEE</h2>
         <hr class="border border-success">
+
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <a href="{{ route('landing.steering.create') }}" class="btn btn-primary mb-3">Add New</a>
-        <table class="table table-bordered">
-            <thead class="table-success">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="w-25">
+                <label for="yearFilter" class="form-label fw-bold">Select Year:</label>
+                <select id="yearFilter" class="form-select" onchange="filterYear()">
+                    <option value="all" {{ $selectedYear == 'all' ? 'selected' : '' }}>All Years</option>
+                    @foreach ($years as $year)
+                        <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>
+                            {{ $year }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <a href="{{ route('landing.steering.create') }}" class="btn btn-primary">Add Committee</a>
+        </div>
+
+        <table class="table table-hover table-bordered shadow-sm">
+            <thead class="table-dark text-center">
                 <tr>
                     <th>No</th>
-                    <th>Nama</th>
-                    <th>Institusi</th>
+                    <th>Name</th>
+                    <th>Institution</th>
                     <th>Country</th>
-                    <th>Aksi</th>
+                    <th>Year</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($committees as $index => $committee)
-                    <tr>
+                    <tr class="text-center">
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $committee->name }}</td>
                         <td>{{ $committee->institution }}</td>
                         <td>{{ $committee->country }}</td>
+                        <td>{{ $committee->year }}</td>
                         <td>
-                            <a href="{{ route('landing.steering.edit', $committee->id) }}"
+                            <a href="{{ route('landing.steering.edit', $committee) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('landing.steering.destroy', $committee->id) }}" method="POST"
-                                class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                @csrf
-                                @method('DELETE')
+                            <form action="{{ route('landing.steering.destroy', $committee) }}" method="POST"
+                                class="d-inline" onsubmit="return confirm('Are you sure?');">
+                                @csrf @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
@@ -40,4 +59,15 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        function filterYear() {
+            const selectedYear = document.getElementById('yearFilter').value;
+            const url = selectedYear === "all" ?
+                `{{ route('landing.steering.index') }}` :
+                `{{ route('landing.steering.index') }}?year=${selectedYear}`;
+            window.location.href = url;
+        }
+    </script>
+
 @endsection

@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('conference_programs', function (Blueprint $table) {
             $table->id();
+            $table->integer('year'); // Menambahkan kolom tahun
+            $table->integer('day_number');
             $table->time('start_time');
             $table->time('end_time');
             $table->string('program_name');
