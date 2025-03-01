@@ -2,14 +2,14 @@
 @section('title', 'New Registration Fee')
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold">ADD Registration Fee</h2>
+        <h2 class="text-center fw-bold">Add Registration Fee</h2>
         <hr class="border border-success">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form action="{{ route('landing.registrationFee.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="role_type">Role</label>
+                        <label for="role_type" class="form-label">Role <span class="text-danger">*</span></label>
                         <select name="role_type" id="role_type" class="form-control" required>
                             <option value="" disabled selected>-- Select Role --</option>
                             <option value="presenter">Presenter</option>
@@ -21,37 +21,37 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="category_name">Category Name</label>
-                        <input type="text" class="form-control" name="category_name" id="category_name" required>
+                        <label for="category_name" class="form-label">Category Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category (e.g., Student, Professional)" required>
                         @error('category_name')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="domestic_participants">Domestic Participants(optional)</label>
-                        <input type="text" class="form-control" name="domestic_participants" id="domestic_participants">
+                        <label for="domestic_participants" class="form-label">Domestic Participants (optional)</label>
+                        <input type="text" class="form-control" name="domestic_participants" id="domestic_participants" placeholder="Enter price in numbers (e.g., 100000)">
                         @error('domestic_participants')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="international_participants	">International Participants(optional)</label>
-                        <input type="text" class="form-control" name="international_participants"
-                            id="international_participants">
+                        <label for="international_participants" class="form-label">International Participants (optional)</label>
+                        <input type="text" class="form-control" name="international_participants" id="international_participants" placeholder="Enter price in numbers (e.g., 200000)">
                         @error('international_participants')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="period_of_payment">Period of Payment(optional)</label>
-                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment">
+                        <label for="period_of_payment" class="form-label">Period of Payment <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" required>
                         @error('period_of_payment')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-            
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('landing.registrationFee.index') }}" class="btn btn-secondary">Back</a>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="{{ route('landing.registrationFee.index') }}" class="btn btn-secondary">Back</a>
+                    </div>
                 </form>
             </div>
         </div>
