@@ -23,9 +23,9 @@ class AboutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'title' => 'required|string|max:255|min:5',
+            'content' => 'required|string|min:10',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $path = $request->file('image') ? $request->file('image')->store('abouts', 'public') : null;
@@ -47,9 +47,9 @@ class AboutController extends Controller
     public function update(Request $request, About $about)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'title' => 'required|string|max:255|min:5',
+            'content' => 'required|string|min:10',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('image')) {

@@ -32,8 +32,8 @@ class ConferenceTitleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'title' => 'required|string|max:255|min:5',
+            'description' => 'required|string|min:10',
             'year' => 'required|integer|min:2000|max:' . date('Y'),
         ]);
 
@@ -50,8 +50,8 @@ class ConferenceTitleController extends Controller
     public function update(Request $request, ConferenceTitle $conferenceTitle)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
+            'title' => 'required|string|max:255|min:5',
+            'description' => 'required|string|min:10',
             'year' => 'required|integer|min:2000|max:' . date('Y'),
         ]);
 
