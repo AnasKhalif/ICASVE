@@ -41,18 +41,29 @@ class AbstractController extends Controller
      */
     public function create()
     {
-        $conferenceSetting = ConferenceSetting::first();
-        if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
-            return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
-        }
-        $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
-        $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
+        try {
+            if (
+                request()->user()->hasRole('indonesia-presenter')
+            ) {
+                dd(request()->user()->roles);
+                $conferenceSetting = ConferenceSetting::first();
+                if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
+                    return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
+                }
+                $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
+                $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
 
-        if ($currentAbstracts >= $maxAbstracts) {
-            return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+                if ($currentAbstracts >= $maxAbstracts) {
+                    return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+                }
+                $symposiums = Symposium::all();
+                return view('abstracts.create', compact('symposiums'));
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to create abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
         }
-        $symposiums = Symposium::all();
-        return view('abstracts.create', compact('symposiums'));
     }
 
     /**

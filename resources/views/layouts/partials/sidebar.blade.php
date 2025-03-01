@@ -412,7 +412,7 @@
     </nav>
 @endrole
 
-@role(['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'])
+@role(['indonesia-presenter', 'foreign-presenter'])
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -425,6 +425,25 @@
                 <a class="nav-link" href="{{ route('abstracts.index') }}">
                     <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Abstract</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('filepayments.create') }}">
+                    <i class="fa fa-credit-card-alt menu-icon"></i>
+                    <span class="menu-title">Payment</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endrole
+
+@role(['indonesia-participants', 'foreign-participants'])
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <i class="fa fa-clone menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">

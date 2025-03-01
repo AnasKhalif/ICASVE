@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Registration Confirmation</title>
+    <title>Abstract Acceptance Confirmation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,30 +78,26 @@
 <body>
     <div class="email-container">
         <div class="email-header">
-            <h1>Registration Confirmation</h1>
+            <h1>Abstract Acceptance Notification</h1>
         </div>
         <div class="email-body">
-            <p>Dear Sir/Madam,</p>
-            <p>Thank you for your registration for <strong>{{ $details['conference_title'] }}</strong>. Below are your
-                registration details:</p>
-            <p><strong>Name:</strong> {{ $details['name'] }}</p>
-            <p><strong>Institution:</strong> {{ $details['institution'] }}</p>
-            <p><strong>Job Title:</strong> {{ $details['job_title'] }}</p>
-            <p><strong>Email Address:</strong> {{ $details['email'] }}</p>
-            <p><strong>Password:</strong> {{ $details['password'] }}</p>
-            <p><strong>Phone Number:</strong> {{ $details['phone_number'] }}</p>
-            <p><strong>Registration Type:</strong> {{ $details['registration_type'] }}</p>
+            <p>Dear {{ $user->name }},</p>
+            <p>We are pleased to inform you that your submission has been accepted for the
+                {{ $conference->conference_title }} ({{ $conference->conference_abbreviation }}). In conclusion of the
+                rolling review process, {{ $conference->conference_abbreviation }} Program Committee is pleased to
+                invite you to share the research findings at the conference.
+            </p>
 
             <p class="highlight">
-                The registered email and password are required for submitting your presentation abstract.<br>
-                If you choose to give a presentation, you must submit an abstract for review. Please visit the following
-                page:<br>
-                <a href="{{ route('abstracts.index') }}">Submit Abstract</a>
+                You can now proceed with your full paper submission and presentation preparation.<br>
+                To review the guidelines, please visit:<br>
+                <a href="{{ url('/full-paper-guidelines') }}">Full Paper Submission Guidelines</a>
             </p>
-            <p>All attendants are required to pay a registration fee. Payment instructions will be announced soon.</p>
+
+            <p>We look forward to your participation. Please contact us if you have any questions.</p>
         </div>
         <div class="email-footer">
-            <p>Sincerely,<br>Committee Members,<br><strong>{{ $details['conference_title'] }}</strong></p>
+            <p>Best regards,<br>Conference Committee<br><strong>{{ $conference->conference_title }}</strong></p>
         </div>
     </div>
 </body>

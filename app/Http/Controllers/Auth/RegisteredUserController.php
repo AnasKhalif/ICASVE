@@ -94,6 +94,7 @@ class RegisteredUserController extends Controller
             'phone_number' => $validatedData['phone_number'],
             'registration_type' => $role->display_name,
             'conference_title' => $conference->conference_title,
+            'password' => $validatedData['password'],
         ];
 
         Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));

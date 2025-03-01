@@ -218,16 +218,17 @@ Route::name('landing.')
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('abstracts', AbstractController::class);
-    Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
-    Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
-    Route::get('/fullpaper-create', function () {
-        return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+    Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter'])->group(function () {
+        Route::resource('abstracts', AbstractController::class);
+        Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
+        Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
+        Route::get('/fullpaper-create', function () {
+            return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+        });
+        Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
+        Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
+        Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
     });
-    Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
-    Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
-    Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
-
 
     Route::get('payment', [FilePaymentController::class, 'create'])->name('filepayments.create');
     Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
