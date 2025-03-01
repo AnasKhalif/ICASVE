@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Landing\GalleryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -20,23 +21,24 @@ use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
-use App\Http\Controllers\Landing\LandingPageController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
 use App\Http\Controllers\Admin\ConferenceSettingController;
 use App\Http\Controllers\Admin\YearController;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\Landing\RegistrationFeeController;
 use App\Http\Controllers\Landing\FaqController;
 use App\Http\Controllers\Landing\PublicationsJournalController;
 use App\Http\Controllers\Landing\ConferenceProgramController;
 use App\Http\Controllers\Landing\ContactController;
-use App\Http\Controllers\Landing\OrganizingCommitteeController;
 use App\Http\Controllers\Landing\ReviewerCommitteeController;
 use App\Http\Controllers\Landing\SteeringCommitteeController;
 use App\Http\Controllers\ConferenceProgramController as ConferenceProgram;
 use App\Http\Controllers\GalleryLandingPageController;
 use App\Http\Controllers\LandingPageController as LandingPage;
+use App\Http\Controllers\Landing\LandingPageController as LandingPageEditorController;
 use App\Http\Controllers\Landing\VenueController;
 use App\Http\Controllers\Landing\AboutController;
 use App\Http\Controllers\Landing\DeadlineDateController;
@@ -49,60 +51,64 @@ use App\Http\Controllers\Landing\PresentationGuidelineController;
 use App\Http\Controllers\SteeringLandingPageController;
 use App\Http\Controllers\ReviewerLandingPageController;
 use App\Http\Controllers\Landing\ConferenceController;
+use App\Http\Controllers\Landing\CommitteeController;
+use App\Http\Controllers\Landing\ConferenceIndexController;
+use App\Http\Controllers\Landing\SubmissionIndexController;
+use App\Http\Controllers\Landing\WhatsappController;
+use App\Http\Controllers\Landing\ThemeController;
+use App\Http\Controllers\Landing\ConferenceDetailController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\Landing\PaymentGuidelineController;
+use App\Http\Controllers\PreviousConferences;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
-Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
-Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('gallery');
+
+Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
+
+Route::get('/payment-guidelines', [PaymentGuidelineController::class, 'showLandingPage'])->name('payment_guidelines.landing');
+
+Route::get('/conference-program', [ConferenceProgramController::class, 'showLandingPage'])->name('conference.program');
+
+Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gallery');
+
+Route::get('/previous-conference', [PreviousConferences::class, 'index'])->name('previous.conference');
+Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
+Route::get('download-abstract/{id}', [ArchiveController::class, 'downloadPdf'])->name('download.abstract');
+
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
+
     Route::get('/reviewer', [ReviewerCommitteeController::class, 'showLandingPage'])
-        ->name('committee.reviewer');
+    ->name('committee.reviewer');
 
     Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
 
 Route::prefix('submission')->group(function () {
-    Route::get('/', function () {
-        return view('landingpage.submission.submission');
-    })->name('submissions');
-    Route::get('/abstract', function () {
-        return view('landingpage.submission.abstract');
-    })->name('submission.abstract');
-    Route::get('/fullpaper', function () {
-        return view('landingpage.submission.fullpaper');
-    })->name('submission.fullpaper');
-    Route::get('/presentation', function () {
-        return view('landingpage.submission.presentation');
-    })->name('submission.presentation');
+    Route::get('/abstract', [AbstractGuidelineController::class, 'showLandingPage'])
+        ->name('submission.abstract');
+
+    Route::get('/fullpaper', [FullpaperGuidelineController::class, 'showLandingPage'])
+        ->name('submission.fullpaper');
+
+    Route::get('/presentation', [PresentationGuidelineController::class, 'showLandingPage'])
+        ->name('submission.presentation');
 });
 
-Route::prefix('archive')->group(function () {
-    Route::get('/2023', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.index');
 
-    Route::get('/2024', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.index');
+Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
+Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archives.show');
+Route::get('/abstracts/{id}/download', [AbstractController::class, 'downloadPdf'])->name('abstracts.download');
 
-    Route::get('/2025', function () {
-        return view('landingpage.archive.index');
-    })->name('archive.2025');
-});
 
-Route::get('/previous-conference', function () {
-    return view('landingpage.prevconference.previous_conference');
-})->name('previous.conference');
+
 
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
-Route::get('/contact', function () {
-    return view('landingpage.contact.contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'showLandingpage'])->name('contact');
+Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
@@ -191,7 +197,10 @@ Route::name('landing.')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
-        Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::get('landingpage', [LandingPageEditorController::class, 'index'])->name('landingpage.index');
+        Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
+        Route::get('conferencelanding', [ConferenceIndexController::class, 'index'])->name('conferencelanding.index');
+        Route::get('submission', [SubmissionIndexController::class, 'index'])->name('submission.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
@@ -207,11 +216,14 @@ Route::name('landing.')
         Route::resource('poster', PosterController::class);
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
+        Route::resource('whatsapp', WhatsappController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);
         Route::resource('presentation-guidelines', PresentationGuidelineController::class);
-        Route::resource('conference', ConferenceController::class);
+        Route::resource('conference-detail', ConferenceDetailController::class);
+        Route::resource('themes', ThemeController::class);
+        Route::resource('payment_guidelines', PaymentGuidelineController::class);
     });
 
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {

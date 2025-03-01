@@ -19,3 +19,4 @@
 <script src="{{ asset('js/dashboard.js') }}"></script>
 <script src="{{ asset('js/Chart.roundedBarCharts.js') }}"></script>
 <!-- End custom js for this page-->
+

@@ -12,12 +12,12 @@ class AboutController extends Controller
     public function index()
     {
         $abouts = About::all();
-        return view('landingpage-editor.about.index', compact('abouts'));
+        return view('landingpage-editor.landingpage.about.index', compact('abouts'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.about.create');
+        return view('landingpage-editor.landingpage.about.create');
     }
 
     public function store(Request $request)
@@ -41,7 +41,7 @@ class AboutController extends Controller
 
     public function edit(About $about)
     {
-        return view('landingpage-editor.about.edit', compact('about'));
+        return view('landingpage-editor.landingpage.about.edit', compact('about'));
     }
 
     public function update(Request $request, About $about)
