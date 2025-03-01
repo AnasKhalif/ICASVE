@@ -18,12 +18,12 @@ class PresentationGuidelineController extends Controller
     public function index()
     {
         $guidelines = PresentationGuideline::orderBy('year', 'desc')->get();
-        return view('landingpage-editor.presentation.index', compact('guidelines'));
+        return view('landingpage-editor.submission.presentation.index', compact('guidelines'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.presentation.create');
+        return view('landingpage-editor.submission.presentation.create');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class PresentationGuidelineController extends Controller
 
     public function edit(PresentationGuideline $presentationGuideline)
     {
-        return view('landingpage-editor.presentation.edit', compact('presentationGuideline'));
+        return view('landingpage-editor.submission.presentation.edit', compact('presentationGuideline'));
     }
 
     public function update(Request $request, PresentationGuideline $presentationGuideline)

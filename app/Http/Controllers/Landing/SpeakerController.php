@@ -12,12 +12,12 @@ class SpeakerController extends Controller
     public function index()
     {
         $speakers = Speaker::all();
-        return view('landingpage-editor.speakers.index', compact('speakers'));
+        return view('landingpage-editor.landingpage.speakers.index', compact('speakers'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.speakers.create');
+        return view('landingpage-editor.landingpage.speakers.create');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class SpeakerController extends Controller
     public function edit($id)
     {
         $speaker = Speaker::findOrFail($id);
-        return view('landingpage-editor.speakers.edit', compact('speaker'));
+        return view('landingpage-editor.landingpage.speakers.edit', compact('speaker'));
     }
 
     public function update(Request $request, $id)

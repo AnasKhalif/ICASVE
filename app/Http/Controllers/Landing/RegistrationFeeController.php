@@ -12,11 +12,11 @@ class RegistrationFeeController extends Controller
     public function index()
     {
         $registrationFees = RegistrationFee::all();
-        return view('landingpage-editor.registrationFee.index', compact('registrationFees'));
+        return view('landingpage-editor.landingpage.registrationFee.index', compact('registrationFees'));
     }
     public function create()
     {
-        return view('landingpage-editor.registrationFee.create');
+        return view('landingpage-editor.landingpage.registrationFee.create');
     }
     public function store(Request $request)
     {
@@ -39,7 +39,7 @@ class RegistrationFeeController extends Controller
     public function edit($id)
     {
         $registrationFee = RegistrationFee::findOrFail($id);
-        return view('landingpage-editor.registrationFee.edit', compact('registrationFee'));
+        return view('landingpage-editor.landingpage.registrationFee.edit', compact('registrationFee'));
     }
     public function update(Request $request, $id)
     {

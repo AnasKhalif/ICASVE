@@ -13,6 +13,7 @@
     use App\Models\Contact;
     use App\Models\Faq;
     use App\Models\Theme;
+    use App\Models\ConferenceTitle;
 
     class LandingPageController extends Controller
     {
@@ -30,10 +31,11 @@
             $venues = Venue::all();
             $deadline_date = DeadlineDate::all();
             $contacts = Contact::all();
-            $posters = Poster::all();
+            $posters = Poster::where('year', now()->year)->get();
             $about = About::all();
-            $themes = Theme::orderBy('year', 'desc')->get(); // Ambil tema dengan urutan terbaru
+            $themes = Theme::orderBy('year', 'desc')->get(); 
             $faqs = Faq::limit(3)->get();
+            $conference_title = ConferenceTitle::where('year', now()->year)->get();
         
             return view('landingpage.home', compact(
                 'keynoteSpeakers',
@@ -51,7 +53,8 @@
                 'posters',
                 'about',
                 'themes',
-                'faqs'
+                'faqs',
+                'conference_title'
             ));
         }
         

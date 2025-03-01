@@ -18,12 +18,12 @@ class FullpaperGuidelineController extends Controller
     public function index()
     {
         $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();
-        return view('landingpage-editor.fullpaper.index', compact('guidelines'));
+        return view('landingpage-editor.submission.fullpaper.index', compact('guidelines'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.fullpaper.create');
+        return view('landingpage-editor.submission.fullpaper.create');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class FullpaperGuidelineController extends Controller
 
     public function edit(FullpaperGuideline $fullpaperGuideline)
     {
-        return view('landingpage-editor.fullpaper.edit', compact('fullpaperGuideline'));
+        return view('landingpage-editor.submission.fullpaper.edit', compact('fullpaperGuideline'));
     }
 
     public function update(Request $request, FullpaperGuideline $fullpaperGuideline)

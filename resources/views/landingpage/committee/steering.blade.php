@@ -7,6 +7,7 @@
             <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
+       
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="committee-container">
                 @php
@@ -32,5 +33,8 @@
                 </div>
             </div>
         </div>
+        @if ($steeringCommittee->isEmpty())
+          <p class="text-center text-muted">No steering committee members found.</p>
+         @endif
     </section>
 @endsection

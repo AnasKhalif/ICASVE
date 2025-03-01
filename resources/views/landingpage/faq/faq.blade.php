@@ -21,6 +21,9 @@
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div>
                         @endforeach
+                        @if ($faqs->isEmpty())
+                            <p class="text-muted mt-3" data-aos="fade-up">No faq found.</p>
+                        @endif
                     </div>
                 </div>
 

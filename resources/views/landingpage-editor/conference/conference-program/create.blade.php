@@ -51,9 +51,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="pic">PIC</label>
+                        <label for="pic">PIC(optional)</label>
                         <input type="text" class="form-control @error('pic') is-invalid @enderror" 
-                            name="pic" id="pic" value="{{ old('pic') }}" required>
+                            name="pic" id="pic" value="{{ old('pic') }}" >
                         @error('pic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

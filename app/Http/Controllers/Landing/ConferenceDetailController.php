@@ -11,12 +11,12 @@ class ConferenceDetailController extends Controller
     public function index()
     {
         $conferences = ConferenceDetail::latest()->get();
-        return view('landingpage-editor.conference-detail.index', compact('conferences'));
+        return view('landingpage-editor.conference.conference-detail.index', compact('conferences'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.conference-detail.create');
+        return view('landingpage-editor.conference.conference-detail.create');
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class ConferenceDetailController extends Controller
 
     public function edit(ConferenceDetail $conferenceDetail)
     {
-        return view('landingpage-editor.conference-detail.edit', compact('conferenceDetail'));
+        return view('landingpage-editor.conference.conference-detail.edit', compact('conferenceDetail'));
     }
 
     public function update(Request $request, ConferenceDetail $conferenceDetail)

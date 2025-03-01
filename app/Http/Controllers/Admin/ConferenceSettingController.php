@@ -12,6 +12,7 @@ class ConferenceSettingController extends Controller
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
+        
 
         if (!$activeYear) {
             return redirect()->back()->with('error', 'No active year set.');

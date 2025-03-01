@@ -12,12 +12,12 @@ class PosterController extends Controller
     public function index()
     {
         $posters = Poster::latest()->get();
-        return view('landingpage-editor.poster.index', compact('posters'));
+        return view('landingpage-editor.landingpage.poster.index', compact('posters'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.poster.create');
+        return view('landingpage-editor.landingpage.poster.create');
     }
 
     public function store(Request $request)
@@ -62,7 +62,7 @@ class PosterController extends Controller
 
     public function edit(Poster $poster)
     {
-        return view('landingpage-editor.poster.edit', compact('poster'));
+        return view('landingpage-editor.landingpage.poster.edit', compact('poster'));
     }
 
 

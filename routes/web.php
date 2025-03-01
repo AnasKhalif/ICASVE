@@ -55,6 +55,11 @@ use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\Landing\ConferenceDetailController;
 use App\Http\Controllers\Landing\ThemeController;
+use App\Http\Controllers\PreviousConferences;
+use App\Http\Controllers\Landing\CommitteeController;
+use App\Http\Controllers\Landing\ConferenceIndexController;
+use App\Http\Controllers\Landing\SubmissionIndexController;
+use App\Http\Controllers\Landing\WhatsappController;
 use App\Http\Controllers\Landing\PaymentGuidelineController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
@@ -66,6 +71,11 @@ Route::get('/payment-guidelines', [PaymentGuidelineController::class, 'showLandi
 Route::get('/conference-program', [ConferenceProgramController::class, 'showLandingPage'])->name('conference.program');
 
 Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gallery');
+
+Route::get('/previous-conference', [PreviousConferences::class, 'index'])->name('previous.conference');
+Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
+Route::get('download-abstract/{id}', [ArchiveController::class, 'downloadPdf'])->name('download.abstract');
+
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
@@ -93,9 +103,7 @@ Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archiv
 Route::get('/abstracts/{id}/download', [AbstractController::class, 'downloadPdf'])->name('abstracts.download');
 
 
-Route::get('/previous-conference', function () {
-    return view('landingpage.prevconference.previous_conference');
-})->name('previous.conference');
+
 
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
@@ -186,6 +194,9 @@ Route::name('landing.')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
         Route::get('landingpage', [LandingPageEditorController::class, 'index'])->name('landingpage.index');
+        Route::get('committee', [CommitteeController::class, 'index'])->name('committee.index');
+        Route::get('conferencelanding', [ConferenceIndexController::class, 'index'])->name('conferencelanding.index');
+        Route::get('submission', [SubmissionIndexController::class, 'index'])->name('submission.index');
         Route::resource('speakers', SpeakerController::class);
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
@@ -201,6 +212,7 @@ Route::name('landing.')
         Route::resource('poster', PosterController::class);
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
+        Route::resource('whatsapp', WhatsappController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);

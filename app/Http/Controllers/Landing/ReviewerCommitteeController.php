@@ -23,13 +23,13 @@ class ReviewerCommitteeController extends Controller
         }
         $reviewers = $query->get();
 
-        return view('landingpage-editor.reviewer.index', compact('reviewers', 'years', 'selectedYear'));
+        return view('landingpage-editor.committee.reviewer.index', compact('reviewers', 'years', 'selectedYear'));
     }
     
 
     public function create()
     {
-        return view('landingpage-editor.reviewer.create');
+        return view('landingpage-editor.committee.reviewer.create');
     }
 
     public function store(Request $request)
@@ -50,7 +50,7 @@ class ReviewerCommitteeController extends Controller
     public function edit($id)
 {
     $reviewerCommittee = ReviewerCommittee::findOrFail($id);
-    return view('landingpage-editor.reviewer.edit', compact('reviewerCommittee'));
+    return view('landingpage-editor.committee.reviewer.edit', compact('reviewerCommittee'));
 }
 
 public function update(Request $request, $id)
