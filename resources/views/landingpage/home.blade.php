@@ -4,34 +4,31 @@
     <section id="hero" class="hero section dark-background">
         <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
 
-        @if($conference_title->count() > 0)
-        <div class="container d-flex align-items-center" style="min-height: 60vh;">
-            <div class="row gy-4 justify-content-between">
-                <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
-                    @foreach($conference_title as $item)
-                    <h1> {{ $item->title }} - <span> ICASVE {{ $item->year }}</span>
-                    </h1>
-                    <p>{{ $item->description }}</p>
-                    <div class="d-flex">
-                        <a href="{{ route('register') }}" class="btn-get-started">Register</a>
-                    </div>
-                    @endforeach
+        @if($conference_title)
+    <div class="container d-flex align-items-center" style="min-height: 60vh;">
+        <div class="row gy-4 justify-content-between">
+            <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
+                <h1>{{ $conference_title->title }} - <span>ICASVE {{ $conference_title->year }}</span></h1>
+                <p>{{ $conference_title->description }}</p>
+                <div class="d-flex">
+                    <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
             </div>
         </div>
-        @else
-        <div class="container d-flex align-items-center" style="min-height: 60vh;">
-            <div class="row gy-4 justify-content-between">
-                <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
-                    <h1> ICASVE {{ date('Y') }} </h1>
-                    <p>International Conference on Applied Science and Engineering</p>
-                    <div class="d-flex">
-                        <a href="{{ route('register') }}" class="btn-get-started">Register</a>
-                    </div>
+    </div>
+@else
+    <div class="container d-flex align-items-center" style="min-height: 60vh;">
+        <div class="row gy-4 justify-content-between">
+            <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
+                <h1>ICASVE {{ date('Y') }}</h1>
+                <p>International Conference on Applied Science and Engineering</p>
+                <div class="d-flex">
+                    <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
             </div>
         </div>
-        @endif
+    </div>
+@endif
 
         <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">

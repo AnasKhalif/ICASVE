@@ -9,16 +9,24 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Title</label>
-                        <input type="text" name="title" class="form-control" required>
+                        <input type="text" name="title" class="form-control @error('title') is-invalid @enderror" required>
+                        @error('title')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea name="description" class="form-control" required></textarea>
+                        <label class="form-label">Tema</label>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" required></textarea>
+                        @error('description')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Year</label>
-                        <input type="number" name="year" class="form-control" required min="2000"
-                            max="{{ date('Y') }}">
+                        <input type="number" name="year" class="form-control @error('year') is-invalid @enderror" required min="2000" max="{{ date('Y') }}" value="{{ date('Y') }}">
+                        @error('year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-success">Save</button>
                 </form>
