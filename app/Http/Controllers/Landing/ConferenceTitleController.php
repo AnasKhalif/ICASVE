@@ -31,10 +31,6 @@ class ConferenceTitleController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-<<<<<<< HEAD
-            'title' => 'required|string|max:255|min:5',
-            'description' => 'required|string|min:10',
-=======
             'title' => [
                 'required',
                 'string',
@@ -47,7 +43,6 @@ class ConferenceTitleController extends Controller
                 'min:10',
                 'regex:/^[a-zA-Z\s]{10,}$/'
             ],
->>>>>>> 3125d70f2501f82282a379c560966fbbb3547176
             'year' => 'required|integer|min:2000|max:' . date('Y'),
         ], [
             'title.required' => 'Title tidak boleh kosong.',
@@ -77,14 +72,6 @@ class ConferenceTitleController extends Controller
     }
 
     public function update(Request $request, ConferenceTitle $conferenceTitle)
-<<<<<<< HEAD
-    {
-        $request->validate([
-            'title' => 'required|string|max:255|min:5',
-            'description' => 'required|string|min:10',
-            'year' => 'required|integer|min:2000|max:' . date('Y'),
-        ]);
-=======
 {
     $request->validate([
         'title' => [
@@ -105,7 +92,6 @@ class ConferenceTitleController extends Controller
         'title.string' => 'Title harus berupa teks.',
         'title.min' => 'Title harus memiliki minimal 5 karakter.',
         'title.regex' => 'Title hanya boleh mengandung huruf dan spasi.',
->>>>>>> 3125d70f2501f82282a379c560966fbbb3547176
 
         'description.required' => 'Deskripsi tidak boleh kosong.',
         'description.string' => 'Deskripsi harus berupa teks.',
