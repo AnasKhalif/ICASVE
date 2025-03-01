@@ -33,9 +33,9 @@
             $contacts = Contact::all();
             $posters = Poster::where('year', now()->year)->get();
             $about = About::all();
-            $themes = Theme::orderBy('year', 'desc')->get(); // Ambil tema dengan urutan terbaru
+            $themes = Theme::orderBy('year', 'desc')->get(); 
             $faqs = Faq::limit(3)->get();
-            $conference_title = ConferenceTitle::all();
+            $conference_title = ConferenceTitle::where('year', now()->year)->get();
         
             return view('landingpage.home', compact(
                 'keynoteSpeakers',
