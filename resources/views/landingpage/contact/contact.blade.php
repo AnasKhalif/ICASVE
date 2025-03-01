@@ -3,16 +3,8 @@
 @section('content')
 
 @php
-    // Ambil kontak terbaru dari koleksi contacts
     $latestContact = $contacts->sortByDesc('created_at')->first();
-
-    // Ambil nomor telepon dari contact, jika tidak ada gunakan default
-    $whatsappNumber = $latestContact ? $latestContact->phone : '6281905920176';
-
-    // Jika nomor diawali dengan '0', ubah menjadi '62'
-    if (substr($whatsappNumber, 0, 1) === '0') {
-        $whatsappNumber = '62' . substr($whatsappNumber, 1);
-    }
+    $emailTo = $latestContact ? $latestContact->email : 'contact@example.com';
 @endphp
 
 <div class="container py-5">
@@ -29,20 +21,19 @@
                 <div class="card-body p-4">
                     <h4 class="card-title mb-4">Send Us a Message</h4>
                     <form id="contactForm">
-                        @csrf
                         <div class="mb-3">
                             <label class="form-label">Your Name</label>
-                            <input type="text" class="form-control form-control-lg fs-6" name="name" placeholder="Enter your name" required>
+                            <input type="text" class="form-control form-control-lg fs-6" id="name" placeholder="Enter your name" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email Address</label>
-                            <input type="email" class="form-control form-control-lg fs-6" name="email" placeholder="you@example.com" required>
+                            <input type="email" class="form-control form-control-lg fs-6" id="email" placeholder="you@example.com" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Message</label>
-                            <textarea class="form-control form-control-lg fs-6" name="message" rows="4" placeholder="Write your message here" required></textarea>
+                            <textarea class="form-control form-control-lg fs-6" id="message" rows="4" placeholder="Write your message here" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        <button type="button" class="btn btn-primary w-100" onclick="sendEmail()">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -65,13 +56,7 @@
                             </p>
                             <p class="mb-2">
                                 <i class="bi bi-telephone me-2"></i>
-                                @php
-                                $phone = $latestContact->phone;
-                                if (substr($phone, 0, 1) === '0') {
-                                    $phone = '+62' . substr($phone, 1);
-                                }
-                            @endphp
-                            <strong>Phone:</strong> {{ $phone }}
+                                <strong>Phone:</strong> {{ $latestContact->phone }}
                             </p>
                         </address>
                     @else
@@ -93,34 +78,33 @@
                         </a>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
 </div>
 
-<!-- Script untuk kirim pesan via WhatsApp -->
 <script>
-    // Nomor WhatsApp yang diambil dari database (sudah dikonversi)
-    const whatsappNumber = "{{ $whatsappNumber }}";
+    function sendEmail() {
+        let name = document.getElementById("name").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let message = document.getElementById("message").value.trim();
 
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+        if (!name || !email || !message) {
+            alert("Please fill out all fields before sending.");
+            return;
+        }
 
-        // Ambil nilai dari form
-        let name = document.querySelector("input[name='name']").value;
-        let email = document.querySelector("input[name='email']").value;
-        let message = document.querySelector("textarea[name='message']").value;
+        let subject = `Contact Us - ${name}`;
+        let body = `Dear Support Team,\n\n` +
+                   `My Name: ${name}\n` +
+                   `My Email: ${email}\n\n` +
+                   `Message:\n${message}\n\n` +
+                   `Best regards,\n${name}`;
 
-        // Format pesan yang akan dikirim
-        let text = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
-
-        // Buat URL WhatsApp API
-        let url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(text)}`;
-
-        // Buka WhatsApp (pada perangkat mobile atau WhatsApp Web)
-        window.open(url, '_blank');
-    });
+        let mailtoLink = `mailto:{{ $emailTo }}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        window.location.href = mailtoLink;
+    }
 </script>
 
 @endsection

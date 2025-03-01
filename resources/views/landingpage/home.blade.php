@@ -46,7 +46,6 @@
                         <p>
                             {{ $item->content }}
                         </p>
-                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
                     </div>
 
                     <div class="d-none d-xl-block col-xl-2"></div>
@@ -205,13 +204,12 @@
                                         <td>{{ $fee->category_name }}</td>
                                         <td>IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }} </td>
                                         <td>US$ {{ $fee->international_participants }}</td>
-                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                        </td>
+                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
+            
                         <table class="table table-bordered">
                             <thead class="thead-light">
                                 <tr>
@@ -227,13 +225,12 @@
                                         <td>{{ $fee->category_name }}</td>
                                         <td>IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}</td>
                                         <td>US$ {{ $fee->international_participants }}</td>
-                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                        </td>
+                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
+            
                         <table class="table table-bordered" data-aos="fade-up">
                             <thead class="thead-light">
                                 <tr>
@@ -251,8 +248,7 @@
                                         <td>{{ $fee->international_participants }}</td>
                                         <td>
                                             @if (!empty($fee->period_of_payment) && $fee->period_of_payment !== 'TBA')
-                                                Until
-                                                {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
+                                                Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
                                             @else
                                                 {{ $fee->period_of_payment }}
                                             @endif
@@ -262,18 +258,25 @@
                             </tbody>
                         </table>
                     </div>
-
+            
                     <p class="text-muted mt-3" data-aos="fade-up">
                         <small>
                             <b>Please note:</b><br />
-                            1. The registration fee serves only for conference fee, and it cannot be waived for
-                            authors.<br />
+                            1. The registration fee serves only for conference fee, and it cannot be waived for authors.<br />
                             2. Authors need to pay for publishing if accepted.<br />
                             3. Certificate fee: Participants can attend the event without certificate.
                         </small>
                     </p>
+            
+                    {{-- Tombol Lihat Tatacara Pembayaran --}}
+                    <div class="text-start mt-4" data-aos="fade-up">
+                        <a href="{{ route('payment_guidelines.landing') }}" class="btn btn-success btn-md fs-6">
+                            <i class="fas fa-money-check-alt"></i> Lihat Tatacara Pembayaran
+                        </a>
+                    </div>
                 </div>
             </div>
+            
             <div class="row gy-4 align-items-center features-item">
                 <div class="container section-title" data-aos="fade-up">
                     <h2>Venue</h2>

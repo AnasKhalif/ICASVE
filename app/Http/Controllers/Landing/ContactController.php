@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 
@@ -56,5 +57,26 @@ class ContactController extends Controller
         return redirect()->route('landing.contact.index')->with('success', 'Contact deleted successfully!');
     }
 
+    public function sendEmail(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
+
+    $details = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'message' => $request->message,
+    ];
+
+    Mail::send('emails.contact', $details, function ($message) use ($details) {
+        $message->to('admin@example.com') // Ganti dengan email tujuan
+                ->subject('New Contact Message from ' . $details['name']);
+    });
+
+    return redirect()->back()->with('success', 'Your message has been sent successfully!');
+}
 
 }

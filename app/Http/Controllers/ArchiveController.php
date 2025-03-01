@@ -7,38 +7,25 @@ use App\Models\AbstractModel;
 
 class ArchiveController extends Controller
 {
-    public function index()
-    {
-        // Ambil tahun-tahun unik dari abstrak yang diterima
-        $years = AbstractModel::where('status', 'accepted')
-            ->selectRaw('YEAR(created_at) as year')
-            ->distinct()
-            ->orderByDesc('year')
-            ->pluck('year');
+    public function index(Request $request)
+{
+    // Ambil daftar tahun unik dari abstrak yang diterima
+    $years = AbstractModel::where('status', 'accepted')
+        ->selectRaw('YEAR(created_at) as year')
+        ->distinct()
+        ->orderByDesc('year')
+        ->pluck('year');
 
-        // Ambil tahun terbaru untuk default tampilan
-        $latestYear = $years->first();
+    // Ambil tahun terbaru atau yang dipilih
+    $selectedYear = $request->query('year', $years->first());
 
-        return view('landingpage.archives.index', compact('years', 'latestYear'));
-    }
+    // Ambil daftar abstrak dengan data yang lebih lengkap
+    $abstracts = AbstractModel::whereYear('created_at', $selectedYear)
+        ->where('status', 'accepted')
+        ->orderBy('title', 'asc')
+        ->get();
 
-    public function show($year)
-    {
-        $years = AbstractModel::where('status', 'accepted')
-            ->selectRaw('YEAR(created_at) as year')
-            ->distinct()
-            ->orderByDesc('year')
-            ->pluck('year');
-    
-        $abstracts = AbstractModel::whereYear('created_at', $year)
-            ->where('status', 'accepted')
-            ->get();
-    
-        if (request()->ajax()) {
-            return view('landingpage.archives.show', compact('year', 'abstracts'))->render();
-        }
-    
-        return view('landingpage.archives.index', compact('years', 'year', 'abstracts'));
-    }
-    
+    return view('landingpage.archives.index', compact('years', 'selectedYear', 'abstracts'));
+}
+
 }

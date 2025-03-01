@@ -372,6 +372,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.payment_guidelines.index') }}">
+                    <i class="fa-solid fa-money-check-dollar menu-icon"></i>
+                    <span class="menu-title">Payment Guidelines</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.faq.index') }}">
                     <i class="fa-solid fa-question menu-icon"></i>
                     <span class="menu-title">FAQ</span>

@@ -55,10 +55,13 @@ use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\Landing\ConferenceDetailController;
 use App\Http\Controllers\Landing\ThemeController;
+use App\Http\Controllers\Landing\PaymentGuidelineController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
+
+Route::get('/payment-guidelines', [PaymentGuidelineController::class, 'showLandingPage'])->name('payment_guidelines.landing');
 
 Route::get('/conference-program', [ConferenceProgramController::class, 'showLandingPage'])->name('conference.program');
 
@@ -72,8 +75,6 @@ Route::prefix('committee')->group(function () {
 
     Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
-
-
 
 Route::prefix('submission')->group(function () {
     Route::get('/abstract', [AbstractGuidelineController::class, 'showLandingPage'])
@@ -89,6 +90,7 @@ Route::prefix('submission')->group(function () {
 
 Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
 Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archives.show');
+Route::get('/abstracts/{id}/download', [AbstractController::class, 'downloadPdf'])->name('abstracts.download');
 
 
 Route::get('/previous-conference', function () {
@@ -98,6 +100,7 @@ Route::get('/previous-conference', function () {
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
 Route::get('/contact', [ContactController::class, 'showLandingpage'])->name('contact');
+Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
@@ -203,7 +206,8 @@ Route::name('landing.')
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);
         Route::resource('presentation-guidelines', PresentationGuidelineController::class);
         Route::resource('conference-detail', ConferenceDetailController::class);
-Route::resource('themes', ThemeController::class);
+        Route::resource('themes', ThemeController::class);
+        Route::resource('payment_guidelines', PaymentGuidelineController::class);
     });
 
 Route::get('/dashboard', function () {
