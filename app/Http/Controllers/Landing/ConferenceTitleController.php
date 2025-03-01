@@ -61,10 +61,16 @@ class ConferenceTitleController extends Controller
             'year.max' => 'Tahun tidak boleh lebih dari ' . date('Y') . '.',
         ]);
     
+        // Cek apakah sudah ada conference title dengan tahun yang sama
+        if (ConferenceTitle::where('year', $request->year)->exists()) {
+            return redirect()->back()->withErrors(['year' => 'Conference Title untuk tahun ini sudah ada!']);
+        }
+    
         ConferenceTitle::create($request->all());
     
         return redirect()->route('landing.conference-title.index')->with('success', 'Conference Title created successfully.');
     }
+    
 
     public function edit(ConferenceTitle $conferenceTitle)
     {
