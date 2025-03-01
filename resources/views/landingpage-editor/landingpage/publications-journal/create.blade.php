@@ -18,27 +18,58 @@
                             <option value="supported_by">Supported By</option>
                         </select>
                     </div>
+
                     <div class="mb-3">
-                        <label for="image">Image</label>
+                        <label for="image_path">Image</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="image_path" id="image_path" required>
+                                <input type="file" class="custom-file-input" name="image_path" id="image_path" required accept=".png, .jpg, .jpeg">
                                 <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
-
                             </div>
                         </div>
+                        <small class="text-danger d-none" id="fileError">Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.</small>
+                        <div class="mt-3">
+                            <img id="previewImage" src="" class="d-none" width="100">
+                        </div>
                     </div>
-            
+
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-secondary">Back</a>
                 </form>
             </div>
-            <script>
-                document.getElementById('image_path').addEventListener('change', function() {
-                    var fileName = this.files[0] ? this.files[0].name : 'Choose file';
-                    document.getElementById('fileLabel').innerText = fileName;
-                });
-            </script>
         </div>
     </div>
+
+    <script>
+        document.getElementById('image_path').addEventListener('change', function() {
+            var file = this.files[0];
+            var fileLabel = document.getElementById('fileLabel');
+            var fileError = document.getElementById('fileError');
+            var previewImage = document.getElementById('previewImage');
+
+            if (file) {
+                var fileName = file.name;
+                fileLabel.innerText = fileName;
+
+                // Validasi format file
+                var validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+                if (!validExtensions.includes(file.type)) {
+                    fileError.classList.remove('d-none');
+                    this.value = "";
+                    fileLabel.innerText = "Choose file";
+                    previewImage.classList.add('d-none');
+                } else {
+                    fileError.classList.add('d-none');
+
+                    // Preview gambar
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        previewImage.classList.remove('d-none');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
 @endsection

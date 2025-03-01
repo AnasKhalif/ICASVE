@@ -22,7 +22,9 @@ class PublicationsJournalController extends Controller
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+        ], [
+            'image_path.mimes' => 'Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.'
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('publications_journals', 'public');
@@ -39,7 +41,9 @@ class PublicationsJournalController extends Controller
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'image_path' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+        ], [
+            'image_path.mimes' => 'Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.'
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('publications_journals', 'public');
