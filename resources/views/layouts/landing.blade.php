@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link href="{{ asset('img/logo-icasve.png') }}" rel="icon" />
-    <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
+    <link href="{{ asset('img/Logo_ICASVE_rmbg.png') }}" rel="icon" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
