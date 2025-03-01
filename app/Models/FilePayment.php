@@ -16,7 +16,6 @@ class FilePayment extends Model
         'file_path',
         'amount',
         'status',
-        'currency'
     ];
 
     public function user()

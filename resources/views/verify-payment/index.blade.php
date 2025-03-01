@@ -49,13 +49,7 @@
                                             <i class="fa fa-file-pdf text-danger fa-lg"></i>
                                         </a>
                                     </td>
-                                    <td>
-                                        @if ($payment->currency == 'USD')
-                                            $ {{ $payment->amount }}
-                                        @else
-                                            Rp {{ number_format($payment->amount, 0, ',', '.') }}
-                                        @endif
-                                    </td>
+                                    <td>IDR {{ number_format($payment->amount, 0, ',', '.') }}</td>
                                     <td>
                                         <span
                                             class="badge {{ $payment->status == 'verified' ? 'bg-success' : 'bg-warning' }}">

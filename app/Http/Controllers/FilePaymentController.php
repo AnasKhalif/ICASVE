@@ -28,14 +28,12 @@ class FilePaymentController extends Controller
         $amount = $request->input('amount');
         $amount = str_replace('.', '', $amount);
         $amount = (int) $amount;
-        $currency = $request->input('currency', 'IDR');
 
         $isFirstUpload = FilePayment::where('user_id', Auth::user()->id)->doesntExist();
 
         $request->validate([
-            'file' => $isFirstUpload ? 'required|file|mimes:jpg,png,jpeg|max:2048' : 'file|mimes: jpg,png,jpeg|max:2048',
-            'amount' => $isFirstUpload ? 'required|numeric|min:0' : 'nullable|numeric|min:0',
-            'currency' => 'required|in:IDR,USD'
+            'file' => $isFirstUpload ? 'required|file|mimes:pdf,jpg,png|max:2048' : 'file|mimes:pdf,jpg,png|max:2048',
+            'amount' => $isFirstUpload ? 'required|numeric|min:0' : 'nullable|numeric|min:0'
         ], [
             'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
             'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',
@@ -46,7 +44,7 @@ class FilePaymentController extends Controller
 
         if (!$request->hasFile('file') && !$request->filled('amount')) {
             return redirect()->back()
-                ->withErrors(['file' => 'You must upload a file or enter a payment amount.'])
+                ->withErrors(['file' => 'Anda harus mengisi file atau jumlah pembayaran.'])
                 ->withInput();
         }
 
@@ -67,19 +65,14 @@ class FilePaymentController extends Controller
                 $updateData['amount'] = $amount;
             }
 
-            $updateData['currency'] = $currency;
-
             if (!empty($updateData)) {
                 $existingPayment->update($updateData);
-                $message = 'Payment data successfully updated.';
+                $message = 'Data pembayaran berhasil diperbarui.';
             } else {
-                $message = 'No changes were made.';
+                $message = 'Tidak ada perubahan yang dilakukan.';
             }
         } else {
-            $data = [
-                'user_id' => $user->id,
-                'currency' => $currency
-            ];
+            $data = ['user_id' => $user->id];
             if ($request->hasFile('file')) {
                 $data['file_path'] = $request->file('file')->store('payments', 'public');
             }
@@ -87,7 +80,7 @@ class FilePaymentController extends Controller
                 $data['amount'] = $amount;
             }
             FilePayment::create($data);
-            $message = 'Payment data successfully saved.';
+            $message = 'Data pembayaran berhasil disimpan.';
         }
 
         return redirect()->route('filepayments.create')

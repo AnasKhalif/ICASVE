@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Digital Receipt</title>
+    <title>Acceptance Letter</title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -91,8 +91,7 @@
             <p>No: <span class="bold">REG/{{ $filePayment->user->id }}</span></p>
             <p>Date: <span class="bold">{{ $filePayment->created_at }}</span></p>
             <p>Received from: <span class="bold">{{ $filePayment->user->name }}</span></p>
-            <p>Sum: <span class="bold">{{ $filePayment->currency }} {{ number_format($filePayment->amount, 2) }}</span>
-            </p>
+            <p>Sum: <span class="bold">{{ $filePayment->amount }}</span></p>
             <p>As a payment for: <span class="bold">
                     @if ($filePayment->user->abstracts->isNotEmpty())
                         {{ $filePayment->user->abstracts->pluck('title')->implode(', ') }}
