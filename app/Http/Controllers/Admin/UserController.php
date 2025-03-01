@@ -14,8 +14,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
 use App\Models\Year;
 use App\Models\ConferenceSetting;
-use App\Exports\ParticipantsExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -260,9 +258,5 @@ class UserController extends Controller
         $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 
         return $pdf->stream('abstract-acceptance.pdf');
-    }
-    public function exportExcel()
-    {
-        return Excel::download(new ParticipantsExport, 'participants.xlsx');
     }
 }

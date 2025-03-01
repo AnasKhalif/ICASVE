@@ -122,7 +122,7 @@
                                         <span>Requested:</span>
                                         <strong>{{ $abstract->presentation_type }}</strong>
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         <span
                                             class="badge {{ $abstract->status === 'revision' ? 'badge-warning' : 'badge-info' }}">
                                             {{ ucfirst($abstract->status) }}
@@ -141,7 +141,7 @@
                                     </td>
 
 
-                                    <td class="text-center">
+                                    <td>
                                         <a href="{{ route('abstracts.edit', $abstract->id) }}"
                                             class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>Edit</a>
 

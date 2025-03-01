@@ -84,20 +84,16 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        $conference = ConferenceSetting::first();
+        // $details = [
+        //     'name' => $validatedData['name'],
+        //     'institution' => $validatedData['institution'],
+        //     'job_title' => $validatedData['job_title'],
+        //     'email' => $validatedData['email'],
+        //     'phone_number' => $validatedData['phone_number'],
+        //     'registration_type' => $role->display_name,
+        // ];
 
-        $details = [
-            'name' => $validatedData['name'],
-            'institution' => $validatedData['institution'],
-            'job_title' => $validatedData['job_title'],
-            'email' => $validatedData['email'],
-            'phone_number' => $validatedData['phone_number'],
-            'registration_type' => $role->display_name,
-            'conference_title' => $conference->conference_title,
-            'password' => $validatedData['password'],
-        ];
-
-        Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
+        // Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
         $this->generateCertificate($user);
 
         return redirect(route('login'))->with('success', 'Registration successful. A confirmation email has been sent.');

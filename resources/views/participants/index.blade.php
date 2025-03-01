@@ -27,16 +27,10 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="card-title">Participants</h4>
-                    <div class="d-flex">
-                        <a href="{{ route('admin.participant.export') }}" target="_blank"
-                            class="btn btn-sm btn-primary me-2">
-                            <i class="fa fa-file-excel"></i> Excel
-                        </a>
 
-                        <a href="{{ route('admin.participant.create') }}" class="btn btn-sm btn-success">
-                            New Register Participants
-                        </a>
-                    </div>
+                    <a href="{{ route('admin.participant.create') }}" class="btn btn-sm btn-success">
+                        New Register Participants
+                    </a>
                 </div>
                 <form action="{{ route('admin.participant.index') }}" method="GET" class="d-flex mb-4">
                     <input type="text" name="search" id="searchInput" class="form-control form-control-sm me-2"
