@@ -4,31 +4,46 @@
     <div class="container">
         <h2 class="mb-4">About Section</h2>
         <a href="{{ route('landing.abouts.create') }}" class="btn btn-primary mb-3">Add About</a>
+        
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <div class="row">
-            @foreach ($abouts as $about)
-                <div class="col-md-6">
-                    <div class="card">
-                        @if ($about->image)
-                            <img src="{{ asset('storage/' . $about->image) }}" class="card-img-top" alt="{{ $about->title }}">
-                        @endif
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $about->title }}</h5>
-                            <p class="card-text">{{ Str::limit($about->content, 150) }}</p>
-                            <a href="{{ route('landing.abouts.edit', $about->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('landing.abouts.destroy', $about->id) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Are you sure?');">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($abouts as $index => $about)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $about->title }}</td>
+                            <td>{{ Str::limit($about->content, 100) }}</td>
+                            <td>
+                                @if ($about->image)
+                                    <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}" width="100">
+                                @else
+                                    No Image
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{ route('landing.abouts.edit', $about->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form action="{{ route('landing.abouts.destroy', $about->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?');">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        
     </div>
 @endsection
