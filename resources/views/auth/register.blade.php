@@ -8,11 +8,8 @@
     <main class="container-fluid vh-100 p-0">
         <div class="row m-0 h-100">
             <section class="col-lg-6 d-flex align-items-center p-5 vh-100 position-relative overflow-hidden"
-                style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
+                style="background: #0d6dfc;">
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
-                    <div class="d-flex align-items-center mb-4">
-                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid" style="max-width: 180px;">
-                    </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
                             {{ $conferenceTitle }}
@@ -26,7 +23,7 @@
             </section>
 
             <section class="col-lg-6 d-flex align-items-center justify-content-center p-4 vh-100"
-                style="background: #F1F8E9;">
+                style="background: #F1F1F1;">
                 <div class="login-container w-100 px-4 py-2">
                     <header class="text-center">
                         <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid mb-3 mt-3"
@@ -41,12 +38,13 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-user text-success"></i>
+                                                    <i class="fas fa-user text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="text" name="name" id="name"
-                                                class="form-control form-control-md border-left-0" placeholder="Full Name"
-                                                value="{{ old('name') }}" required />
+                                                class="form-control form-control-md border-left-0"
+                                                placeholder="E.g. Dr. Budi Utomo, M.Sc." value="{{ old('name') }}"
+                                                required />
                                         </div>
                                         @if ($errors->has('name'))
                                             <span class="text-danger"
@@ -58,7 +56,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-envelope text-success"></i>
+                                                    <i class="fas fa-envelope text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="email" name="email" id="email"
@@ -75,7 +73,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-lock text-success"></i>
+                                                    <i class="fas fa-lock text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="password" name="password" id="password"
@@ -92,7 +90,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-building text-success"></i>
+                                                    <i class="fas fa-building text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="text" name="institution" id="institution"
@@ -130,7 +128,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-phone text-success"></i>
+                                                    <i class="fas fa-phone text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="tel" name="phone_number" id="phone_number"
@@ -147,7 +145,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-globe text-success"></i>
+                                                    <i class="fas fa-globe text-primary"></i>
                                                 </span>
                                             </div>
                                             <select name="country" id="country"
@@ -165,7 +163,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-lock text-success"></i>
+                                                    <i class="fas fa-lock text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="password" name="password_confirmation"
@@ -183,7 +181,7 @@
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fas fa-briefcase text-success"></i>
+                                                    <i class="fas fa-briefcase text-primary"></i>
                                                 </span>
                                             </div>
                                             <input type="text" name="job_title" id="job_title"
@@ -215,13 +213,13 @@
                             </div>
 
                             <button type="submit" class="btn btn-block text-white mb-2 py-2"
-                                style="background: linear-gradient(45deg, #1B5E20, #2E7D32);
+                                style="background: #0d6dfc;;
                            border-radius: 15px; transition: all 0.3s ease;">
                                 <i class="fas fa-sign-in-alt mr-2"></i>Register
                             </button>
                             <footer class="text-center">
                                 <p>Already have an account? <a href="{{ route('login') }}"
-                                        style="color: #2E7D32;">Login</a>
+                                        style="color: #0d6dfc;">Login</a>
                                 </p>
                             </footer>
                         </form>

@@ -8,11 +8,8 @@
     <main class="container-fluid vh-100 p-0">
         <div class="row m-0 h-100">
             <section class="col-lg-6 d-flex align-items-center p-5 vh-100 position-relative overflow-hidden"
-                style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
+                style="background: #0d6dfc;">
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid" style="max-width: 180px;">
-                    </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
                             {{ $conferenceTitle }}
@@ -26,7 +23,7 @@
             </section>
 
             <section class="col-lg-6 d-flex align-items-center justify-content-center p-4 vh-100"
-                style="background: #F1F8E9;">
+                style="background: #F1F1F1;">
                 <div class="login-container w-100 p-3 "style="max-width: 450px;">
                     <header class="text-center">
                         <img src="{{ $logoPath }}" alt="Logo icasve" class="mb-3 img-fluid" style="max-width: 150px;">
@@ -38,12 +35,12 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-transparent border-right-0">
-                                        <i class="fas fa-envelope text-success"></i>
+                                        <i class="fas fa-envelope text-primary"></i>
                                     </span>
                                 </div>
                                 <input type="email" id="email" name="email"
                                     class="form-control form-control-md border-left-0"
-                                    placeholder="E.g. budiutomo@gmail.com" value="{{ old('email') }}" required />
+                                    placeholder="E.g. Dr. Budi Utomo, M.Sc." value="{{ old('email') }}" required />
                             </div>
                             @if ($errors->has('email'))
                                 <span class="text-danger" style="font-size: 12px;">{{ $errors->first('email') }}</span>
@@ -55,7 +52,7 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text bg-transparent border-right-0">
-                                        <i class="fas fa-lock text-success"></i>
+                                        <i class="fas fa-lock text-primary"></i>
                                     </span>
                                 </div>
                                 <input type="password" id="password" name="password"
@@ -67,12 +64,12 @@
                         </div>
 
                         <button type="submit" class="btn btn-sm btn-block text-white mb-3 mb-md-4 py-2 py-md-2"
-                            style="background: linear-gradient(45deg, #1B5E20, #2E7D32);
+                            style="background: #0d6dfc;
                            border-radius: 15px; transition: all 0.3s ease;">
                             <i class="fas fa-sign-in-alt mr-2"></i>Login
                         </button>
                         <footer class="text-center">
-                            <p>Don't have an account? <a href="{{ route('register') }}" style="color: #2E7D32;">Register</a>
+                            <p>Don't have an account? <a href="{{ route('register') }}" style="color: #0d6dfc;">Register</a>
                             </p>
                         </footer>
                     </form>
