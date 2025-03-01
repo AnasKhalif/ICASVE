@@ -197,6 +197,90 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <div class="carousel detailed-report-carousel position-static pt-2">
+                                <div class="carousel-inner">
+                                    @foreach ($countryParticipants as $index => $country)
+                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                            <div class="row">
+                                                <div class="col-md-12 col-xl-6 d-flex flex-column justify-content-center">
+                                                    <div class="ml-xl-4 mt-3">
+                                                        <p class="card-title">Country Reports</p>
+                                                        <h1 class="text-primary">{{ $topCountry->country }}</h1>
+                                                        <p class="mb-2 mb-xl-0">
+                                                            {{ $topCountry->country }} has the highest number of
+                                                            participants and presenters.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-xl-6">
+                                                    <div class="row">
+                                                        <div class="col-md-12 border-right">
+                                                            <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                                                <table class="table table-borderless report-table">
+                                                                    <tbody>
+                                                                        @php
+                                                                            $colors = [
+                                                                                'bg-primary',
+                                                                                'bg-warning',
+                                                                                'bg-danger',
+                                                                                'bg-info',
+                                                                                'bg-success',
+                                                                                'bg-secondary',
+                                                                            ];
+                                                                        @endphp
+                                                                        @foreach ($countryParticipants as $index => $country)
+                                                                            @php
+                                                                                $colorClass =
+                                                                                    $colors[$index % count($colors)];
+                                                                                $progress = $totalUsers
+                                                                                    ? min(
+                                                                                        100,
+                                                                                        ($country->count /
+                                                                                            $totalUsers) *
+                                                                                            100,
+                                                                                    )
+                                                                                    : 0;
+                                                                            @endphp
+                                                                            <tr>
+                                                                                <td class="text-muted">
+                                                                                    {{ $country->country }}</td>
+                                                                                <td>
+                                                                                    <h5 class="font-weight-bold mb-0">
+                                                                                        {{ $country->count }}</h5>
+                                                                                </td>
+                                                                                <td class="w-100 px-0">
+                                                                                    <div class="progress progress-md mx-4">
+                                                                                        <div class="progress-bar {{ $colorClass }}"
+                                                                                            role="progressbar"
+                                                                                            style="width: {{ $progress }}%"
+                                                                                            aria-valuenow="{{ $progress }}"
+                                                                                            aria-valuemin="0"
+                                                                                            aria-valuemax="100">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

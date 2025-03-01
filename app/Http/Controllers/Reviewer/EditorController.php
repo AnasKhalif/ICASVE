@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AbstractModel;
 use App\Models\User;
+use App\Mail\AbstractAccepted;
+use Illuminate\Support\Facades\Mail;
+use App\Models\FilePayment;
+use App\Mail\AbstractInvoice;
 
 class EditorController extends Controller
 {
@@ -133,6 +137,17 @@ class EditorController extends Controller
 
         $abstract->status = $request->status;
         $abstract->save();
+
+        if ($request->status === 'accepted') {
+            $user = $abstract->user;
+            Mail::to($user->email)->send(new AbstractAccepted($user, $abstract));
+
+            $hasPaid = FilePayment::where('user_id', $user->id)->exists();
+
+            if (!$hasPaid) {
+                Mail::to($user->email)->send(new AbstractInvoice($user, $abstract));
+            }
+        }
 
         return redirect()->route('reviewer.editor.index')->with('success', 'Status updated successfully');
     }

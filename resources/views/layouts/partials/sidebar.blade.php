@@ -35,6 +35,11 @@
                 <a class="nav-link" href="{{ route('admin.payment.index') }}">
                     <i class="fa fa-credit-card-alt menu-icon"></i>
                     <span class="menu-title">Payment</span>
+                    @php
+                        $noVerified = \App\Models\FilePayment::where('status', 'pending')->count();
+                    @endphp
+                    <span class="badge {{ $noVerified > 0 ? 'badge-danger' : 'badge-secondary' }}">{{ $noVerified }}
+                    </span>
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('admin.manual-receipt.create') ? 'active' : '' }}">
@@ -94,6 +99,7 @@
         </ul>
     </nav>
 @endrole
+
 @role(['chief-editor', 'editor'])
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
@@ -406,7 +412,7 @@
     </nav>
 @endrole
 
-@role(['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'])
+@role(['indonesia-presenter', 'foreign-presenter'])
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
@@ -419,6 +425,25 @@
                 <a class="nav-link" href="{{ route('abstracts.index') }}">
                     <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Abstract</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('filepayments.create') }}">
+                    <i class="fa fa-credit-card-alt menu-icon"></i>
+                    <span class="menu-title">Payment</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endrole
+
+@role(['indonesia-participants', 'foreign-participants'])
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <i class="fa fa-clone menu-icon"></i>
+                    <span class="menu-title">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -465,9 +490,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.reviewer-committee.index') }}">
+                <a class="nav-link" href="{{ route('landing.reviewer.index') }}">
                     <i class="fa-solid fa-book-open-reader menu-icon"></i>
-                    <span class="menu-title">Reviewer</span>
+                    <span class="menu-title">Reviewer Committee</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -478,19 +503,19 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.abstract-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Abstract Gudelines</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.fullpaper-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Fullpaper Gudelines</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('landing.presentation-guidelines.index') }}">
-                    <i class="fa-solid fa-sitemap menu-icon"></i>
+                    <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Presentation Guidelines</span>
                 </a>
             </li>
@@ -501,7 +526,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.conferance-program.index') }}">
+                <a class="nav-link" href="{{ route('landing.conference-program.index') }}">
                     <i class="fa fa-clipboard menu-icon"></i>
                     <span class="menu-title">Conference Program</span>
                 </a>

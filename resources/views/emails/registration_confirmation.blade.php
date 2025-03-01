@@ -9,53 +9,57 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #f4f4f4;
         }
 
         .email-container {
             max-width: 600px;
-            margin: 20px auto;
+            margin: 30px auto;
             background-color: #ffffff;
-            border: 1px solid #dddddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border: 1px solid #ddd;
         }
 
         .email-header {
             text-align: center;
-            border-bottom: 2px solid #dddddd;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #007bff;
         }
 
         .email-header h1 {
-            font-size: 24px;
+            font-size: 26px;
             margin: 0;
-            color: #333333;
+            color: #333;
+        }
+
+        .email-body {
+            padding: 20px 10px;
+            color: #555;
         }
 
         .email-body p {
             margin: 10px 0;
-            color: #555555;
         }
 
         .email-body strong {
-            color: #333333;
+            color: #222;
         }
 
         .email-footer {
             margin-top: 20px;
-            padding-top: 10px;
-            border-top: 2px solid #dddddd;
+            padding-top: 15px;
+            border-top: 2px solid #007bff;
             text-align: center;
-            color: #999999;
-            font-size: 12px;
+            font-size: 13px;
+            color: #666;
         }
 
         a {
             color: #007bff;
             text-decoration: none;
+            font-weight: bold;
         }
 
         a:hover {
@@ -64,8 +68,8 @@
 
         .highlight {
             background-color: #f8f9fa;
-            padding: 8px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 5px;
             font-size: 14px;
         }
     </style>
@@ -78,30 +82,26 @@
         </div>
         <div class="email-body">
             <p>Dear Sir/Madam,</p>
-            <p>Thank you for your registration for <strong>The 3rd International Conference on Applied Science for
-                    Vocational Education</strong>. Your registration details are listed as follows:</p>
+            <p>Thank you for your registration for <strong>{{ $details['conference_title'] }}</strong>. Below are your
+                registration details:</p>
             <p><strong>Name:</strong> {{ $details['name'] }}</p>
             <p><strong>Institution:</strong> {{ $details['institution'] }}</p>
             <p><strong>Job Title:</strong> {{ $details['job_title'] }}</p>
             <p><strong>Email Address:</strong> {{ $details['email'] }}</p>
+            <p><strong>Password:</strong> {{ $details['password'] }}</p>
             <p><strong>Phone Number:</strong> {{ $details['phone_number'] }}</p>
             <p><strong>Registration Type:</strong> {{ $details['registration_type'] }}</p>
+
+            <p class="highlight">
+                The registered email and password are required for submitting your presentation abstract.<br>
+                If you choose to give a presentation, you must submit an abstract for review. Please visit the following
+                page:<br>
+                <a href="{{ route('abstracts.index') }}">Submit Abstract</a>
             </p>
-            <p>
-                *) The registered email and registration access code are required for submitting your presentation
-                abstract.<br>
-                If you choose to give a presentation, you must submit an abstract to be reviewed by our reviewer. Please
-                visit the following page for abstract requirement and submission:<br>
-                <a
-                    href="https://icasve.konferensi.net/index.php/abstract">https://icasve.konferensi.net/index.php/abstract</a>
-            </p>
-            <p>All attendants are required to pay a registration fee. The payment instruction will be announced in the
-                near
-                future.</p>
+            <p>All attendants are required to pay a registration fee. Payment instructions will be announced soon.</p>
         </div>
         <div class="email-footer">
-            <p>Sincerely,<br>Committee members,<br>The 3rd International Conference on Applied Science for Vocational
-                Education</p>
+            <p>Sincerely,<br>Committee Members,<br><strong>{{ $details['conference_title'] }}</strong></p>
         </div>
     </div>
 </body>

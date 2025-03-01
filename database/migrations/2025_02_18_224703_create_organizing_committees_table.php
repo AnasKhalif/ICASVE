@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('institution')->nullable();
             $table->string('category');
+            $table->year('year');
             $table->timestamps();
         });
     }

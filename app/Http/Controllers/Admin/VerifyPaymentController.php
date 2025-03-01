@@ -11,6 +11,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
 use App\Models\Year;
 use App\Models\ConferenceSetting;
+use App\Mail\PaymentVerified;
+use Illuminate\Support\Facades\Mail;
 
 class VerifyPaymentController extends Controller
 {
@@ -33,6 +35,11 @@ class VerifyPaymentController extends Controller
         $filePayment = FilePayment::findOrFail($id);
         $newStatus = $filePayment->status === 'verified' ? 'pending' : 'verified';
         $filePayment->update(['status' => $newStatus]);
+
+        if ($newStatus === 'verified') {
+            $user = $filePayment->user;
+            Mail::to($user->email)->send(new PaymentVerified($user, $filePayment));
+        }
 
         return redirect()->route('admin.payment.index')->with('success', 'Payment status has been updated.');
     }

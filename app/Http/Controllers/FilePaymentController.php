@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
 use App\Models\ConferenceSetting;
+use Laratrust\Traits\HasRolesAndPermissions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FilePaymentController extends Controller
 {
+    use HasRolesAndPermissions;
+
     public function create()
     {
         $users = Auth::user();
@@ -92,17 +96,27 @@ class FilePaymentController extends Controller
 
     public function receipt($id)
     {
-        $conferenceSetting = ConferenceSetting::first();
-        $conferenceChairPerson = $conferenceSetting->conference_chairperson;
-        $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+        try {
+            $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+            if (
+                $filePayment->user_id === request()->user()->id
+            ) {
+                $conferenceSetting = ConferenceSetting::first();
+                $conferenceChairPerson = $conferenceSetting->conference_chairperson;
 
-        $letterHeaderUrl = Upload::getFilePath('letter_header');
-        $signatureUrl = Upload::getFilePath('signature');
+                $letterHeaderUrl = Upload::getFilePath('letter_header');
+                $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+                $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
+                $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
-        return $pdf->stream('payment-digital.pdf');
+                $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
+                return $pdf->stream('payment-digital.pdf');
+            } else {
+                return redirect()->route('filepayments.create')->with('error', 'You are not authorized to view this page.');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('filepayments.create')->with('error', 'Payment data not found.');
+        }
     }
 }

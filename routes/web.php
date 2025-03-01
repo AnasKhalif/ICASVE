@@ -59,11 +59,10 @@ Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('ga
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
-    Route::get('/reviewer', [SteeringLandingPageController::class, 'index'])->name('committee.reviewer');
+    Route::get('/reviewer', [ReviewerCommitteeController::class, 'showLandingPage'])
+        ->name('committee.reviewer');
 
-    Route::get('/organizing', function () {
-        return view('landingpage.committee.organizing');
-    })->name('committee.organizing');
+    Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
 
 Route::prefix('submission')->group(function () {
@@ -107,6 +106,7 @@ Route::get('/contact', function () {
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
+    Route::get('participant-excel', [UserController::class, 'exportExcel'])->name('participant.export');
     Route::get('abstracts-participant/{id}', 'UserController@showAbstract')->name('abstracts-participant.show');
     Route::get('abstracts-participant/{id}/download', 'UserController@downloadAbstractPdf')->name('abstracts-participant.downloadPdf');
     Route::get('abstracts-participant/{id}/acceptance-pdf', 'UserController@acceptancePdf')->name('abstracts-participant.acceptancePdf');
@@ -196,9 +196,9 @@ Route::name('landing.')
         Route::resource('registrationFee', 'RegistrationFeeController');
         Route::resource('faq', 'FaqController');
         Route::resource('publications-journal', 'PublicationsJournalController');
-        Route::resource('conferance-program', 'ConferenceProgramController');
+        Route::resource('conference-program', 'ConferenceProgramController');
         Route::resource('steering', SteeringCommitteeController::class);
-        Route::resource('reviewer-committee', ReviewerCommitteeController::class);
+        Route::resource('reviewer', ReviewerCommitteeController::class);
         Route::resource('organizing', OrganizingCommitteeController::class);
         Route::resource('contact', ContactController::class);
         Route::resource('gallery', 'GalleryController');
@@ -217,16 +217,17 @@ Route::name('landing.')
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('abstracts', AbstractController::class);
-    Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
-    Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
-    Route::get('/fullpaper-create', function () {
-        return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+    Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter'])->group(function () {
+        Route::resource('abstracts', AbstractController::class);
+        Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
+        Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
+        Route::get('/fullpaper-create', function () {
+            return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+        });
+        Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
+        Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
+        Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
     });
-    Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
-    Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
-    Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
-
 
     Route::get('payment', [FilePaymentController::class, 'create'])->name('filepayments.create');
     Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
