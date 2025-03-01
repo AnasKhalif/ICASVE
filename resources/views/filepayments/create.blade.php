@@ -75,15 +75,9 @@
                 @if ($existingPayment && $existingPayment->amount)
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
-                        File uploaded successfully and Payment amount:
-                        <span id="existingAmount">
-                            @if ($existingPayment->currency == 'USD')
-                                ${{ number_format($existingPayment->amount, 2, '.', ',') }}
-                            @else
-                                Rp {{ number_format($existingPayment->amount, 0, ',', '.') }}
-                            @endif
-                            has been {{ $existingPayment->status }}
-                        </span>
+                        File berhasil diunggah dan Jumlah pembayaran:
+                        <span id="existingAmount">Rp {{ number_format($existingPayment->amount, 0, ',', '.') }} has been
+                            {{ $existingPayment->status }}</span>
                     </div>
                 @endif
 
@@ -91,26 +85,12 @@
                     @csrf
                     @if (!$existingPayment || $existingPayment->status !== 'verified')
                         <div class="form-group mb-4">
-                            <label for="currency">Select Currency</label>
-                            <select class="form-control" id="currency" name="currency">
-                                <option value="IDR"
-                                    {{ old('currency', $existingPayment->currency ?? 'IDR') == 'IDR' ? 'selected' : '' }}>
-                                    Rupiah (IDR)</option>
-                                <option value="USD"
-                                    {{ old('currency', $existingPayment->currency ?? 'IDR') == 'USD' ? 'selected' : '' }}>
-                                    Dollar (USD)</option>
-                            </select>
-                            @error('currency')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group mb-4">
-                            <label for="amount">Payment Amount</label>
+                            <label for="amount">Jumlah Pembayaran (Rp)</label>
                             <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
-                                name="amount" value="{{ old('amount') }}" placeholder="Example: 100000"
+                                name="amount" value="{{ old('amount') }}" placeholder="Contoh: 100000"
                                 @if (!$existingPayment) required @endif>
                             <small class="form-text text-muted">
-                                Enter the amount without dots or commas
+                                Masukkan jumlah tanpa tanda titik atau koma
                             </small>
                             @error('amount')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -120,14 +100,13 @@
                         <div class="input-group mb-3">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
-                                    name="file" @if (!$existingPayment) required @endif id="file"
-                                    accept="image/*">
+                                    name="file" @if (!$existingPayment) required @endif id="file">
                                 <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
                             </div>
                         </div>
 
-                        <small class="form-text text-muted">
-                            Accepted formats: JPG, JPEG, PNG | Max: 2MB
+                        <small class="form-text text-muted mt-2">
+                            Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
                         </small>
                     @endif
 
@@ -139,8 +118,7 @@
                             </button>
                         @endif
                         @if ($existingPayment && $existingPayment->file_path)
-                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light"
-                                target="_blank">
+                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
                                 <i class="fas fa-file mr-1"></i>
                                 View File
                             </a>
@@ -177,7 +155,7 @@
                         amountInput.value = amountInput.value.replace(/\D/g, '');
                         if (isNaN(amountInput.value) || amountInput.value === '') {
                             e.preventDefault();
-                            alert('Please enter a valid amount.');
+                            alert('Jumlah pembayaran harus berupa angka yang valid.');
                         }
                     });
                 </script>

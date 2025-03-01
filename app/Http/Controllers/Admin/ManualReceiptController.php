@@ -31,7 +31,6 @@ class ManualReceiptController extends Controller
             'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
             'file' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'currency' => 'required|string|in:IDR,USD',
         ]);
         if (!$request->hasFile('file') && !$request->filled('amount')) {
             return redirect()->back()
@@ -62,7 +61,6 @@ class ManualReceiptController extends Controller
             $data = [
                 'user_id' => $userId,
                 'amount' => $request->filled('amount') ? $validated['amount'] : null,
-                'currency' => $validated['currency'],
                 'status' => 'verified',
             ];
             if ($request->hasFile('file')) {

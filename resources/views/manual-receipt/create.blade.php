@@ -38,14 +38,6 @@
                     </div>
 
                     <div class="form-group mb-4">
-                        <label for="currency">Select Currency</label>
-                        <select class="form-control" id="currency" name="currency">
-                            <option value="IDR">Rupiah (IDR)</option>
-                            <option value="USD">Dollar (USD)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group mb-4">
                         <label for="amount">Payment Amount (Rp)</label>
                         <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
                             name="amount" value="{{ old('amount') }}" placeholder="Example: 100000"
@@ -81,10 +73,6 @@
                 document.getElementById('file').addEventListener('change', function() {
                     var fileName = this.files[0] ? this.files[0].name : 'Choose file';
                     document.getElementById('fileLabel').innerText = fileName;
-                });
-                document.getElementById('currency').addEventListener('change', function() {
-                    let currencySymbol = this.value === 'USD' ? '$' : 'Rp';
-                    document.getElementById('currency-symbol').innerText = currencySymbol;
                 });
             </script>
         </div>
