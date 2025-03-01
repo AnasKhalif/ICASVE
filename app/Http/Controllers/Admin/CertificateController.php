@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Certificate;
 use App\Models\FilePayment;
+use App\Models\Year;
 
 class CertificateController extends Controller
 {
     public function index()
     {
-        $certificates = Certificate::with('user.filePayment')->paginate(10);
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+        $certificates = Certificate::with('user.filePayment')
+            ->whereYear('created_at', $activeYear->year)
+            ->paginate(10);
         return view('certificates.index', compact('certificates'));
     }
 

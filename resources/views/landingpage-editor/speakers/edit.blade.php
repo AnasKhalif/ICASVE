@@ -20,6 +20,11 @@
                             value="{{ old('institution', $speaker->institution) }}" required>
                     </div>
                     <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" name="country" id="country"
+                            value="{{ old('country', $speaker->country) }}" required>
+                    </div>
+                    <div class="form-group">
                         <label for="role">Role</label>
                         <select name="role" id="role" class="form-control" required>
                             <option value="keynote_speaker" {{ $speaker->role == 'keynote_speaker' ? 'selected' : '' }}>

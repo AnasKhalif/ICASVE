@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Traits\FlashAlert;
+use App\Models\Year;
 
 class ReviewerController extends Controller
 {
@@ -18,10 +19,18 @@ class ReviewerController extends Controller
      */
     public function index()
     {
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+
         $rolesToDisplay = ['chief-editor', 'editor', 'reviewer'];
         $users = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
             $query->whereIn('name', $rolesToDisplay);
-        })->with('roles')->paginate(10);
+        })
+            ->whereYear('created_at', $activeYear->year)
+            ->with('roles')->paginate(10);
         return view('reviewers.index', compact('users'));
     }
 

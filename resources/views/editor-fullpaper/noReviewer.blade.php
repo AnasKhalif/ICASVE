@@ -15,7 +15,6 @@
                                 <th class="text-center">Title</th>
                                 <th class="text-center">Symposium</th>
                                 <th class="text-center">Requested Presentation</th>
-                                <th class="text-center">Reviewer Comment</th>
                                 <th class="text-center">Assign Reviewer</th>
                                 <th class="text-center">Editor Decision</th>
                             </tr>
@@ -30,22 +29,11 @@
                                     <td>
                                         @foreach ($fullpaper->fullPaperReviews as $review)
                                             <div>
-                                                <span>Comment:</span>
-                                                <strong>{{ $review->comment ?? 'No comment' }}</strong><br><br>
+                                                <strong>{{ $review->reviewer->name }}</strong><br>
                                             </div>
                                         @endforeach
-                                    </td>
-                                    <td>
-                                        @if ($fullpaper->fullPaperReviews->isEmpty())
-                                            <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
-                                                class="btn btn-sm btn-primary">Assign Reviewer</a>
-                                        @else
-                                            @foreach ($fullpaper->fullPaperReviews as $review)
-                                                <div>
-                                                    <strong>{{ $review->reviewer->name }}</strong><br>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                        <a href="{{ route('reviewer.editor-fullpaper.showAssignReviewer', $fullpaper->id) }}"
+                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>

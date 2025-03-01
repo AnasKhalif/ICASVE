@@ -2,7 +2,7 @@
  <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
          <a class="navbar-brand brand-logo mr-5" href="index.html">
-             <img src="{{ asset('img/icasve_logo.jpg') }}" class="mr-2 w-10 h-15" alt="logo" />
+             <img src="{{ $logoPath }}" class="mr-2 w-10 h-15" alt="logo" />
          </a>
          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{ asset('img/icasve_logo.jpg') }}"
                  alt="logo" /></a>

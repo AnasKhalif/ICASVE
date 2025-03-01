@@ -15,20 +15,51 @@
                     <h5 class="font-weight-bold text-primary mb-4">Universitas Brawijaya</h5>
 
                     <div class="payment-options">
-                        <div class="payment-method mb-3">
-                            <p class="py-3 px-4 bg-light rounded border">
-                                <span class="font-weight-bold">VA Mandiri: 891187776</span>
-                            </p>
-                        </div>
+                        @if (!empty($conferenceSetting->bank_account))
+                            @php
+                                $bankAccounts = explode(',', $conferenceSetting->bank_account);
+                            @endphp
 
-                        <p class="text-center">OR</p>
+                            @foreach ($bankAccounts as $index => $bankAccount)
+                                <div class="payment-method mb-3">
+                                    <p class="py-3 px-4 bg-light rounded border">
+                                        <span class="font-weight-bold">{{ trim($bankAccount) }}</span>
+                                    </p>
+                                </div>
 
-                        <div class="payment-method">
-                            <p class="py-3 px-4 bg-light rounded border">
-                                <span class="font-weight-bold">VA BNI: 0516377760000</span>
-                            </p>
-                        </div>
+                                @if ($index !== count($bankAccounts) - 1)
+                                    <p class="text-center">OR</p>
+                                @endif
+                            @endforeach
+                        @else
+                            <p class="text-center text-danger">No payment methods available</p>
+                        @endif
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card shadow">
+            <div class="card-body">
+                <h4 class="card-title border-bottom pb-3">Payment Instruction</h4>
+                <div class="payment-details my-4">
+                    <p class="card-description font-italic mb-3">
+                        Please make your payment through the following details:
+                    </p>
+                    <ol class="pl-3">
+                        <li>Transfer the registration fee to the bank account listed above.</li>
+                        <li>Take a screenshot or download the payment receipt.</li>
+                        <li>Return to this payment page and select the currency that matches your transfer.</li>
+                        <li>After selecting the currency, enter the exact amount you transferred in the "Payment Amount"
+                            field.</li>
+                        <li>Upload the payment receipt using the form below.</li>
+                        <li>Click the "Save" button to submit your payment details.</li>
+                        <li>Wait for verification. You will be notified once it is confirmed.</li>
+                        <li>Once your payment is verified, you will be able to download your receipt as proof of payment.
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
@@ -44,9 +75,15 @@
                 @if ($existingPayment && $existingPayment->amount)
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle mr-2"></i>
-                        File berhasil diunggah dan Jumlah pembayaran:
-                        <span id="existingAmount">Rp {{ number_format($existingPayment->amount, 0, ',', '.') }} has been
-                            {{ $existingPayment->status }}</span>
+                        File uploaded successfully and Payment amount:
+                        <span id="existingAmount">
+                            @if ($existingPayment->currency == 'USD')
+                                ${{ number_format($existingPayment->amount, 2, '.', ',') }}
+                            @else
+                                Rp {{ number_format($existingPayment->amount, 0, ',', '.') }}
+                            @endif
+                            has been {{ $existingPayment->status }}
+                        </span>
                     </div>
                 @endif
 
@@ -54,12 +91,26 @@
                     @csrf
                     @if (!$existingPayment || $existingPayment->status !== 'verified')
                         <div class="form-group mb-4">
-                            <label for="amount">Jumlah Pembayaran (Rp)</label>
+                            <label for="currency">Select Currency</label>
+                            <select class="form-control" id="currency" name="currency">
+                                <option value="IDR"
+                                    {{ old('currency', $existingPayment->currency ?? 'IDR') == 'IDR' ? 'selected' : '' }}>
+                                    Rupiah (IDR)</option>
+                                <option value="USD"
+                                    {{ old('currency', $existingPayment->currency ?? 'IDR') == 'USD' ? 'selected' : '' }}>
+                                    Dollar (USD)</option>
+                            </select>
+                            @error('currency')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="amount">Payment Amount</label>
                             <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount"
-                                name="amount" value="{{ old('amount') }}" placeholder="Contoh: 100000"
+                                name="amount" value="{{ old('amount') }}" placeholder="Example: 100000"
                                 @if (!$existingPayment) required @endif>
                             <small class="form-text text-muted">
-                                Masukkan jumlah tanpa tanda titik atau koma
+                                Enter the amount without dots or commas
                             </small>
                             @error('amount')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -69,13 +120,14 @@
                         <div class="input-group mb-3">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('file') is-invalid @enderror"
-                                    name="file" @if (!$existingPayment) required @endif id="file">
+                                    name="file" @if (!$existingPayment) required @endif id="file"
+                                    accept="image/*">
                                 <label class="custom-file-label" for="file" id="fileLabel">Choose file</label>
                             </div>
                         </div>
 
-                        <small class="form-text text-muted mt-2">
-                            Format yang diterima: JPG, JPEG, PNG, PDF | Maksimal: 2MB
+                        <small class="form-text text-muted">
+                            Accepted formats: JPG, JPEG, PNG | Max: 2MB
                         </small>
                     @endif
 
@@ -87,15 +139,16 @@
                             </button>
                         @endif
                         @if ($existingPayment && $existingPayment->file_path)
-                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light" target="_blank">
+                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light"
+                                target="_blank">
                                 <i class="fas fa-file mr-1"></i>
                                 View File
                             </a>
                         @endif
                         @if ($existingPayment && $existingPayment->status === 'verified')
                             <a href="{{ route('filepayments.receipt', $existingPayment->id) }}" target="_blank"
-                                class="btn btn-primary">
-                                Open Digital PDF
+                                class="btn btn-outline-primary ml-2">
+                                Digital PDF
                             </a>
                         @endif
                     </div>
@@ -124,7 +177,7 @@
                         amountInput.value = amountInput.value.replace(/\D/g, '');
                         if (isNaN(amountInput.value) || amountInput.value === '') {
                             e.preventDefault();
-                            alert('Jumlah pembayaran harus berupa angka yang valid.');
+                            alert('Please enter a valid amount.');
                         }
                     });
                 </script>

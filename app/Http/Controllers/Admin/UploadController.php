@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class UploadController extends Controller
 {
     public function index()
     {
-        $uploads = Upload::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'No active year set.');
+        }
+        $uploads = Upload::whereYear('created_at', $activeYear->year)->get();
         return view('upload.index', compact('uploads'));
     }
 
@@ -22,11 +28,13 @@ class UploadController extends Controller
             'signature' => 'jpg',
             'certificate_presenter' => 'pdf',
             'certificate_participant' => 'pdf',
+            'logo' => 'png,jpg'
         ];
 
         $request->validate([
             'type' => 'required|in:' . implode(',', array_keys($mimeTypes)),
             'file' => 'required|mimes:' . $mimeTypes[$request->type] . '|max:2048',
+            'logo' => 'nullable|mimes:png,jpg|max:2024'
         ]);
 
         // Simpan file
@@ -35,7 +43,7 @@ class UploadController extends Controller
 
         Upload::updateOrCreate(
             ['type' => $request->type],
-            ['file_path' => $filePath]
+            ['file_path' => $filePath],
         );
 
         return redirect()->back()->with('success', 'File berhasil diupload!');
@@ -44,7 +52,15 @@ class UploadController extends Controller
 
     public function show($type)
     {
-        $upload = Upload::where('type', $type)->first();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return redirect()->back()->with('error', 'No active year set.');
+        }
+
+        $upload = Upload::where('type', $type)
+            ->whereYear('created_at', $activeYear->year)
+            ->first();
         if (!$upload) {
             return redirect()->back()->with('error', 'File tidak ditemukan!');
         }

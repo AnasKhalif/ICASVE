@@ -20,7 +20,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="abbreviation">Abbreviation</label>
+                        <label for="abbreviation">Symposium abbreviation :
+                            <span class="text-muted">Limited to three characters. Example: CHE</span>
+                        </label>
                         <input type="text" class="form-control @error('abbreviation') is-invalid @enderror"
                             id="abbreviation" name="abbreviation"
                             value="{{ old('abbreviation', $symposium->abbreviation) }}" placeholder="Abbreviation" required>

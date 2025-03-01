@@ -10,7 +10,7 @@
                 <form class="forms-sample" action="{{ route('admin.symposium.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">Symposium name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                             name="name" value="{{ old('name') }}" placeholder="Name" required>
                         @error('name')
@@ -19,7 +19,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="abbreviation">Institution</label>
+                        <label for="abbreviation">Symposium abbreviation :
+                            <span class="text-muted">Limited to three characters. Example: CHE</span>
+                        </label>
                         <input type="text" class="form-control @error('Abbreviation') is-invalid @enderror"
                             id="abbreviation" name="abbreviation" value="{{ old('abbreviation') }}"
                             placeholder="Abbreviation" required>

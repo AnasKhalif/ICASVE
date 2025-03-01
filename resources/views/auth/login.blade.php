@@ -9,35 +9,17 @@
         <div class="row m-0 h-100">
             <section class="col-lg-6 d-flex align-items-center p-5 vh-100 position-relative overflow-hidden"
                 style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
-                <div class="position-absolute w-100 h-100" style="top: 0; left: 0; z-index: 1;">
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width: 100%; height: 100%; opacity: 0.1;">
-                        <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:white;stop-opacity:0.2" />
-                                <stop offset="100%" style="stop-color:white;stop-opacity:0" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grad)">
-                            <animate attributeName="d" dur="20s" repeatCount="indefinite"
-                                values="M0,0 L100,0 L100,100 L0,100 Z;
-                                       M0,50 L50,0 L100,50 L50,100 Z;
-                                       M0,0 L100,0 L100,100 L0,100 Z" />
-                        </path>
-                    </svg>
-                </div>
-
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
                     <div class="d-flex align-items-center mb-2">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid"
-                            style="max-width: 180px;">
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid" style="max-width: 180px;">
                     </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
-                            The 3rd International Conference on Applied Science for Vocational Education
+                            {{ $conferenceTitle }}
                         </h1>
                         <p class="text-warning mt-3 d-flex align-items-center">
                             <i class="fas fa-info-circle mr-2"></i>
-                            *info selengkapnya di ICASVE
+                            {{ $conferenceAbbreviation }}
                         </p>
                     </div>
                 </div>
@@ -47,8 +29,7 @@
                 style="background: #F1F8E9;">
                 <div class="login-container w-100 p-3 "style="max-width: 450px;">
                     <header class="text-center">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="mb-3 img-fluid"
-                            style="max-width: 150px;">
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="mb-3 img-fluid" style="max-width: 150px;">
                     </header>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

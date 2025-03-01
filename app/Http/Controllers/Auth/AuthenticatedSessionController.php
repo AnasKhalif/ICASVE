@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\ConferenceSetting;
+use App\Models\Upload;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,7 +18,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $conferenceSetting = ConferenceSetting::first();
+        $conferenceTitle = optional($conferenceSetting)->conference_title ?? 'The 3rd International Conference on Applied Science for Vocational Education';
+        $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
+
+        $logo = Upload::where('type', 'logo')->latest()->first();
+        $logoPath = $logo ? asset('storage/' . $logo->file_path) : asset('img/Logo_ICASVE_rmbg.png');
+
+        return view('auth.login', compact('conferenceTitle', 'conferenceAbbreviation', 'logoPath'));
     }
 
     /**

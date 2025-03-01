@@ -20,23 +20,46 @@ use App\Http\Controllers\Admin\VerifyPaymentController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\ManualReceiptController;
 use App\Http\Controllers\Admin\EmailCsvController;
-use App\Http\Controllers\Landing\landingPageController;
+use App\Http\Controllers\Landing\LandingPageController;
 use App\Http\Controllers\Landing\SpeakerController;
 use App\Http\Controllers\Admin\DownloadController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Admin\ConferenceSettingController;
+use App\Http\Controllers\Admin\YearController;
+use App\Http\Controllers\Landing\RegistrationFeeController;
+use App\Http\Controllers\Landing\FaqController;
+use App\Http\Controllers\Landing\PublicationsJournalController;
+use App\Http\Controllers\Landing\ConferenceProgramController;
+use App\Http\Controllers\Landing\ContactController;
+use App\Http\Controllers\Landing\OrganizingCommitteeController;
+use App\Http\Controllers\Landing\ReviewerCommitteeController;
+use App\Http\Controllers\Landing\SteeringCommitteeController;
+use App\Http\Controllers\ConferenceProgramController as ConferenceProgram;
+use App\Http\Controllers\GalleryLandingPageController;
+use App\Http\Controllers\LandingPageController as LandingPage;
+use App\Http\Controllers\Landing\VenueController;
+use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\DeadlineDateController;
+use App\Http\Controllers\Landing\PosterController;
+use App\Http\Controllers\Landing\LogoController;
+use App\Http\Controllers\Landing\ConferenceTitleController;
+use App\Http\Controllers\Landing\AbstractGuidelineController;
+use App\Http\Controllers\Landing\FullpaperGuidelineController;
+use App\Http\Controllers\Landing\PresentationGuidelineController;
+use App\Http\Controllers\SteeringLandingPageController;
+use App\Http\Controllers\ReviewerLandingPageController;
+use App\Http\Controllers\Landing\ConferenceController;
+use App\Http\Controllers\FaqLandingController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view("landingpage.home");
-})->name('home');
+
+Route::get('/', [LandingPage::class, 'index'])->name('home');
+Route::get('/conference-program', [ConferenceProgram::class, 'index'])->name('conference.program');
+Route::get('/gallery', [GalleryLandingPageController::class, 'index'])->name('gallery');
 
 Route::prefix('committee')->group(function () {
-    Route::get('/steering', function () {
-        return view('landingpage.committee.steering');
-    })->name('committee.steering');
-
-    Route::get('/reviewer', function () {
-        return view('landingpage.committee.reviewer');
-    })->name('committee.reviewer');
+    Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
+    Route::get('/reviewer', [SteeringLandingPageController::class, 'index'])->name('committee.reviewer');
 
     Route::get('/organizing', function () {
         return view('landingpage.committee.organizing');
@@ -53,15 +76,10 @@ Route::prefix('submission')->group(function () {
     Route::get('/fullpaper', function () {
         return view('landingpage.submission.fullpaper');
     })->name('submission.fullpaper');
+    Route::get('/presentation', function () {
+        return view('landingpage.submission.presentation');
+    })->name('submission.presentation');
 });
-
-Route::get('/gallery', function () {
-    return view('landingpage.gallery.gallery');
-})->name('gallery');
-
-Route::get('/conference-program', function () {
-    return view('landingpage.conference.program');
-})->name('conference.program');
 
 Route::prefix('archive')->group(function () {
     Route::get('/2023', function () {
@@ -81,12 +99,18 @@ Route::get('/previous-conference', function () {
     return view('landingpage.prevconference.previous_conference');
 })->name('previous.conference');
 
+Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
+
 Route::get('/contact', function () {
     return view('landingpage.contact.contact');
 })->name('contact');
 
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('participant', 'UserController');
+    Route::get('participant-excel', [UserController::class, 'exportExcel'])->name('participant.export');
+    Route::get('abstracts-participant/{id}', 'UserController@showAbstract')->name('abstracts-participant.show');
+    Route::get('abstracts-participant/{id}/download', 'UserController@downloadAbstractPdf')->name('abstracts-participant.downloadPdf');
+    Route::get('abstracts-participant/{id}/acceptance-pdf', 'UserController@acceptancePdf')->name('abstracts-participant.acceptancePdf');
     Route::resource('reviewer', 'ReviewerController');
     Route::resource('symposium', 'SymposiumController');
     Route::resource('abstract', 'AbstractsController');
@@ -108,7 +132,12 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('download/payment-proof', [DownloadController::class, 'downloadPaymentProof'])->name('download.paymentProof');
     Route::get('upload', [UploadController::class, 'index'])->name('upload.index');
     Route::post('upload', [UploadController::class, 'store'])->name('upload.store');
-    Route::get('/upload/show/{type}', [UploadController::class, 'show'])->name('upload.show');
+    Route::get('upload/show/{type}', [UploadController::class, 'show'])->name('upload.show');
+    Route::get('settings', [ConferenceSettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [ConferenceSettingController::class, 'update'])->name('settings.update');
+    Route::get('years', [YearController::class, 'index'])->name('years.index');
+    Route::post('years', [YearController::class, 'store'])->name('years.store');
+    Route::post('years/{id}/set-active', [YearController::class, 'setActive'])->name('years.setActive');
 });
 
 Route::name('reviewer.')
@@ -117,11 +146,13 @@ Route::name('reviewer.')
     ->middleware(['auth', 'role:reviewer|chief-editor|editor'])
     ->group(function () {
         Route::get('summary', [SummaryReviewerController::class, 'index'])->name('summary');
-        Route::get('editor-allabstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('all-abstract', [EditorController::class, 'index'])->name('editor.index');
+        Route::get('/abstract-workload', [EditorController::class, 'workLoad'])->name('editor.workLoad');
 
         Route::get('/editor-abstract/no-reviewer', [EditorController::class, 'noReviewer'])->name('editor.noReviewer');
         Route::get('/editor-abstract/no-decision', [EditorController::class, 'noDecision'])->name('editor.noDecision');
         Route::get('/editor-abstract/with-decision', [EditorController::class, 'withDecision'])->name('editor.withDecision');
+        Route::get('/editor-abstract/revision', [EditorController::class, 'revision'])->name('editor.revision');
 
         Route::get('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'showAssignReviewer'])->name('editor.showAssignReviewer');
         Route::post('/editor-abstract/assign-reviewer/{abstractId}', [EditorController::class, 'assignReviewer'])->name('editor.assignReviewer');
@@ -129,13 +160,14 @@ Route::name('reviewer.')
         Route::get('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'showEditStatus'])->name('editor.showEditStatus');
         Route::post('/editor-abstract/edit-status/{abstractId}', [EditorController::class, 'updateStatus'])->name('editor.updateStatus');
 
-        Route::get('/review', [ReviewController::class, 'index'])->name('review.index');
-        Route::get('/review-abstract/review-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
+        Route::get('/review-abstract', [ReviewController::class, 'index'])->name('review-abstract.index');
+        Route::get('/review-abstract-completed', [ReviewController::class, 'reviewCompleted'])->name('review.review-completed');
 
         Route::get('/review-abstract/{abstractId}', [ReviewController::class, 'showReviewForm'])->name('review.showReviewForm');
         Route::post('/review-abstract/{abstractId}', [ReviewController::class, 'storeReview'])->name('review.storeReview');
 
-        Route::get('editor-all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('all-fullpaper', [EditorFullPaperController::class, 'index'])->name('editor-fullpaper.index');
+        Route::get('/fullpaper-workload', [EditorFullPaperController::class, 'workLoad'])->name('editor-fullpaper.workLoad');
 
         Route::get('/editor-fullpaper/no-reviewer', [EditorFullPaperController::class, 'noReviewer'])->name('editor-fullpaper.noReviewer');
         Route::get('/editor-fullpaper/no-decision', [EditorFullPaperController::class, 'noDecision'])->name('editor-fullpaper.noDecision');
@@ -149,7 +181,7 @@ Route::name('reviewer.')
         Route::post('/editor-fullpaper/edit-status/{fullpaperId}', [EditorFullPaperController::class, 'updateStatus'])->name('editor-fullpaper.updateStatus');
 
         Route::get('/review-fullpaper', [ReviewFullPaperController::class, 'index'])->name('review-fullpaper.index');
-        Route::get('/review-fullpaper/review-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
+        Route::get('/review-fullpaper-completed', [ReviewFullPaperController::class, 'reviewCompleted'])->name('review-fullpaper.review-completed');
 
         Route::get('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'showReviewForm'])->name('review-fullpaper.showReviewForm');
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
@@ -160,27 +192,47 @@ Route::name('landing.')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
     ->group(function () {
-        Route::get('landingpage', [landingPageController::class, 'index'])->name('landingpage.index');
-        Route::resource('speakers', 'SpeakerController');
+        Route::get('landingpage', [LandingPageController::class, 'index'])->name('landingpage.index');
+        Route::resource('speakers', SpeakerController::class);
+        Route::resource('registrationFee', 'RegistrationFeeController');
+        Route::resource('faq', 'FaqController');
+        Route::resource('publications-journal', 'PublicationsJournalController');
+        Route::resource('conferance-program', 'ConferenceProgramController');
+        Route::resource('steering', SteeringCommitteeController::class);
+        Route::resource('reviewer-committee', ReviewerCommitteeController::class);
+        Route::resource('organizing', OrganizingCommitteeController::class);
+        Route::resource('contact', ContactController::class);
+        Route::resource('gallery', 'GalleryController');
+        Route::resource('venue', 'VenueController');
+        Route::resource('abouts', AboutController::class);
+        Route::resource('poster', PosterController::class);
+        Route::resource('deadlines', DeadlineDateController::class);
+        Route::resource('logos', LogoController::class);
+        Route::resource('conference-title', ConferenceTitleController::class);
+        Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
+        Route::resource('abstract-guidelines', AbstractGuidelineController::class);
+        Route::resource('presentation-guidelines', PresentationGuidelineController::class);
+        Route::resource('conference', ConferenceController::class);
     });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('filepayments', [FilePaymentController::class, 'create'])->name('filepayments.create');
+    Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter'])->group(function () {
+        Route::resource('abstracts', AbstractController::class);
+        Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
+        Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
+        Route::get('/fullpaper-create', function () {
+            return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+        });
+        Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
+        Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
+        Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
+    });
+
+    Route::get('payment', [FilePaymentController::class, 'create'])->name('filepayments.create');
     Route::post('filepayments', [FilePaymentController::class, 'store'])->name('filepayments.store');
     Route::get('filepayments/{id}/receipt', [FilePaymentController::class, 'receipt'])->name('filepayments.receipt');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::resource('abstracts', AbstractController::class);
-    Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
-    Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
-    Route::get('create/{abstractId}', [FullPaperController::class, 'create'])->name('fullpapers.create');
-    Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
-    Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');
 });
 
 Route::middleware('auth')->group(function () {

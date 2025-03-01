@@ -15,7 +15,6 @@
                                 <th class="text-center">Title</th>
                                 <th class="text-center">Symposium</th>
                                 <th class="text-center">Requested Presentation</th>
-                                <th class="text-center">Reviewer Comment</th>
                                 <th class="text-center">Assign Reviewer</th>
                                 <th class="text-center">Editor Decision</th>
                             </tr>
@@ -29,21 +28,11 @@
                                     <td>{{ $abstract->presentation_type }}</td>
                                     <td class="text-center">
                                         @foreach ($abstract->abstractReviews as $review)
-                                            <div>
-                                                <span>Comment:</span><br>
-                                                <strong>{{ $review->comment ?? 'No comment' }}</strong>
-                                            </div>
+                                            <strong>{{ $review->reviewer->name }} <br></strong>
                                         @endforeach
-                                    </td>
-                                    <td class="text-center">
-                                        @if ($abstract->abstractReviews->isEmpty())
-                                            <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
-                                                class="btn btn-sm btn-primary">Assign Reviewer</a>
-                                        @else
-                                            @foreach ($abstract->abstractReviews as $review)
-                                                <strong>{{ $review->reviewer->name }} <br></strong>
-                                            @endforeach
-                                        @endif
+
+                                        <a href="{{ route('reviewer.editor.showAssignReviewer', $abstract->id) }}"
+                                            class="btn btn-sm btn-primary">Assign Reviewer</a>
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($abstract->status) }}</span><br><br>

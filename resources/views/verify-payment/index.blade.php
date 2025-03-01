@@ -34,19 +34,28 @@
                                     <td>
                                         {{ $payment->user->roles->first()->name }}
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @if ($payment->file_path)
                                             <a href="{{ asset('storage/' . $payment->file_path) }}" target="_blank"
-                                                class="d-flex justify-content-center"><i class="fa fa-file fa-lg"></i></a>
+                                                class="btn btn-light btn-sm" data-bs-toggle="tooltip"><i
+                                                    class="fa fa-file fa-lg"></i></a>
                                         @else
                                             No proof available
                                         @endif
                                     </td>
-                                    <td><a href="{{ route('admin.payment.digitalPdf', $payment->id) }}" target="_blank"
-                                            class="btn btn-primary">
-                                            Open Digital PDF
-                                        </a></td>
-                                    <td>IDR {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.payment.digitalPdf', $payment->id) }}" target="_blank"
+                                            class="btn btn-light btn-sm" data-bs-toggle="tooltip" title="Open Digital PDF">
+                                            <i class="fa fa-file-pdf text-danger fa-lg"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        @if ($payment->currency == 'USD')
+                                            $ {{ $payment->amount }}
+                                        @else
+                                            Rp {{ number_format($payment->amount, 0, ',', '.') }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <span
                                             class="badge {{ $payment->status == 'verified' ? 'bg-success' : 'bg-warning' }}">
@@ -59,7 +68,11 @@
                                             @method('PUT')
                                             <button type="submit"
                                                 class="btn btn-sm {{ $payment->status == 'verified' ? 'btn-warning' : 'btn-success' }}">
-                                                {{ $payment->status == 'verified' ? 'Revert to Pending' : 'Verify Payment' }}
+                                                @if ($payment->status == 'verified')
+                                                    <i class="fa fa-undo"></i> Revert to Pending
+                                                @else
+                                                    <i class="fa fa-check"></i> Verify Payment
+                                                @endif
                                             </button>
                                         </form>
                                     </td>

@@ -36,6 +36,10 @@
                                     <td>
                                         @foreach ($fullpaper->fullPaperReviews as $review)
                                             <div>
+                                                <span>Rekomendation:</span>
+                                                <strong>{{ $review->recommendation ?? 'No Recommendation' }}</strong><br><br>
+                                            </div>
+                                            <div>
                                                 <span>Comment:</span>
                                                 <strong>{{ $review->comment ?? 'No comment' }}</strong><br><br>
                                             </div>
@@ -43,7 +47,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br><br>
-                                        <a href="{{ route('reviewer.editor.showEditStatus', $fullpaper->id) }}"
+                                        <a href="{{ route('reviewer.editor-fullpaper.showEditStatus', $fullpaper->id) }}"
                                             class="btn btn-sm btn-warning">Edit Status</a>
                                     </td>
                                 </tr>

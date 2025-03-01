@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Acceptance Letter</title>
+    <title>Digital Receipt</title>
     <style>
         body {
             font-family: 'Times New Roman', Times, serif;
@@ -91,7 +91,8 @@
             <p>No: <span class="bold">REG/{{ $filePayment->user->id }}</span></p>
             <p>Date: <span class="bold">{{ $filePayment->created_at }}</span></p>
             <p>Received from: <span class="bold">{{ $filePayment->user->name }}</span></p>
-            <p>Sum: <span class="bold">{{ $filePayment->amount }}</span></p>
+            <p>Sum: <span class="bold">{{ $filePayment->currency }} {{ number_format($filePayment->amount, 2) }}</span>
+            </p>
             <p>As a payment for: <span class="bold">
                     @if ($filePayment->user->abstracts->isNotEmpty())
                         {{ $filePayment->user->abstracts->pluck('title')->implode(', ') }}
@@ -109,7 +110,7 @@
             @else
                 <p>No Signature Uploaded</p>
             @endif
-            <p><strong>Dr. A. Fadida Bahama, SE.Par., M.Sc., CHE.</strong></p>
+            <p><strong>{{ $conferenceChairPerson }}</strong></p>
             <p>Conference Chairperson</p>
         </div>
     </div>

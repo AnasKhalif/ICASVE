@@ -14,18 +14,26 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
+use Illuminate\Support\Facades\File;
+use Laratrust\Traits\HasRolesAndPermissions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AbstractController extends Controller
 {
+    use HasRolesAndPermissions;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'user.filePayment'])
+        $abstracts = AbstractModel::with(['symposium', 'fullPaper.fullPaperReviews.reviewer', 'user.filePayment', 'reviewers'])
             ->where('user_id', Auth::id())
             ->paginate(10);
-        return view('abstracts.index', compact('abstracts'));
+        $conferenceSetting = ConferenceSetting::first();
+        $openAbstractSubmission = $conferenceSetting->open_abstract_submission ?? false;
+        $openFullPaperUpload = $conferenceSetting->open_full_paper_upload ?? false;
+        return view('abstracts.index', compact('abstracts', 'openAbstractSubmission', 'openFullPaperUpload'));
     }
 
     /**
@@ -33,8 +41,29 @@ class AbstractController extends Controller
      */
     public function create()
     {
-        $symposiums = Symposium::all();
-        return view('abstracts.create', compact('symposiums'));
+        try {
+            if (
+                request()->user()->hasRole('indonesia-presenter')
+            ) {
+                dd(request()->user()->roles);
+                $conferenceSetting = ConferenceSetting::first();
+                if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
+                    return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
+                }
+                $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
+                $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
+
+                if ($currentAbstracts >= $maxAbstracts) {
+                    return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+                }
+                $symposiums = Symposium::all();
+                return view('abstracts.create', compact('symposiums'));
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to create abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+        }
     }
 
     /**
@@ -42,8 +71,28 @@ class AbstractController extends Controller
      */
     public function store(Request $request)
     {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+        }
+
+        $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
+        $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
+
+        if ($currentAbstracts >= $maxAbstracts) {
+            return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+        }
+
+        $maxWords = $conferenceSetting->max_words_in_abstract_body;
+
+        $abstractWordCount = str_word_count($request->abstract);
+
+        if ($abstractWordCount > $maxWords) {
+            return redirect()->back()->withInput()->withErrors(['abstract' => "Abstract must not exceed $maxWords words. Currently: $abstractWordCount words."]);
+        }
+
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|string|max:255',
             'authors' => 'required',
             'affiliations' => 'required',
             'corresponding_email' => 'required|email',
@@ -75,7 +124,7 @@ class AbstractController extends Controller
         $role = $user->roles->first()->name;
 
         $templateUrl = Upload::getFilePath('certificate_presenter');
-        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Certificate template not found');
@@ -137,7 +186,7 @@ class AbstractController extends Controller
             ->first();
 
         if ($certificate) {
-            return response()->file(public_path('storage/' . $certificate->certificate_path));
+            return response()->file(storage_path('app/public/' . $certificate->certificate_path));
         } else {
             return redirect()->route('abstracts.show', $id)->with('error', 'Certificate not generated yet.');
         }
@@ -149,9 +198,19 @@ class AbstractController extends Controller
      */
     public function show(AbstractModel $abstract)
     {
-        $formattedAuthors = $this->formatAuthors($abstract->authors);
-        $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
-        return view('abstracts.detail', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+        try {
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                $formattedAuthors = $this->formatAuthors($abstract->authors);
+                $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+                return view('abstracts.detail', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
+        }
     }
 
     /**
@@ -159,12 +218,21 @@ class AbstractController extends Controller
      */
     public function edit(AbstractModel $abstract)
     {
-        if ($abstract->status != 'open') {
-            return back()->with('error', 'Cannot edit abstract in review process');
+        try {
+            $symposiums = Symposium::all();
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                if (!in_array($abstract->status, ['open', 'revision'])) {
+                    return back()->with('error', 'Cannot edit abstract in review process');
+                }
+                return view('abstracts.edit', compact('abstract', 'symposiums'));
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to edit this abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
         }
-
-        $symposiums = Symposium::all();
-        return view('abstracts.edit', compact('abstract', 'symposiums'));
     }
 
     /**
@@ -172,25 +240,33 @@ class AbstractController extends Controller
      */
     public function update(Request $request, AbstractModel $abstract)
     {
-        if ($abstract->status != 'open') {
-            return back()->with('error', 'Cannot edit abstract in review process');
+        try {
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                if (!in_array($abstract->status, ['open', 'revision'])) {
+                    return back()->with('error', 'Cannot edit abstract in review process');
+                }
+
+                $request->validate([
+                    'title' => 'required',
+                    'authors' => 'required',
+                    'affiliations' => 'required',
+                    'corresponding_email' => 'required|email',
+                    'abstract' => 'required',
+                    'presentation_type' => 'required|in:Oral presentation,Poster presentation',
+                    'symposium_id' => 'required|exists:symposiums,id',
+                ]);
+
+                $abstract->update($request->only([
+                    'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id'
+                ]));
+
+                return redirect()->route('abstracts.index')->with('success', 'Abstract updated successfully');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
         }
-
-        $request->validate([
-            'title' => 'required',
-            'authors' => 'required',
-            'affiliations' => 'required',
-            'corresponding_email' => 'required|email',
-            'abstract' => 'required',
-            'presentation_type' => 'required|in:Oral presentation,Poster presentation',
-            'symposium_id' => 'required|exists:symposiums,id',
-        ]);
-
-        $abstract->update($request->only([
-            'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id'
-        ]));
-
-        return redirect()->route('abstracts.index')->with('success', 'Abstract updated successfully');
     }
 
     /**
@@ -198,30 +274,46 @@ class AbstractController extends Controller
      */
     public function destroy(AbstractModel $abstract)
     {
-        if ($abstract->status != 'open') {
-            return back()->with('error', 'Cannot delete abstract in review process');
-        }
+        try {
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                if ($abstract->status != 'open') {
+                    return back()->with('error', 'Cannot delete abstract in review process');
+                }
+                $user = $abstract->user;
+                $certificate = $user->certificates()->where('certificate_type', 'presenter')->first();
 
-        $certificate = $abstract->user->certificates()->first();
-        if ($certificate && $certificate->certificate_path) {
-            $certificatePath = $certificate->certificate_path;
-            if (Storage::disk('public')->exists($certificatePath)) {
-                Storage::disk('public')->delete($certificatePath);
+                if ($certificate) {
+                    $certificatePath = $certificate->certificate_path;
+                    if (Storage::disk('public')->exists($certificatePath)) {
+                        Storage::disk('public')->delete($certificatePath);
+                    }
+                    $certificate->delete();
+                }
+
+                if ($abstract->fullPaper) {
+                    $fullPaperPath = $abstract->fullPaper->file_path;
+
+                    if (Storage::disk('public')->exists($fullPaperPath)) {
+                        Storage::disk('public')->delete($fullPaperPath);
+                    } else {
+                        dd("File tidak ditemukan: " . $fullPaperPath);
+                    }
+
+                    $abstract->fullPaper->delete();
+                }
+                $abstract->delete();
+
+                return redirect()->route('abstracts.index')->with('success', 'Abstract deleted successfully');
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to delete this abstract');
             }
-            $certificate->delete(); // Hapus data sertifikat dari DB
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
         }
-
-        // // Pastikan file abstrak juga dihapus jika ada
-        // if ($abstract->fullPaper) {
-        //     $fullPaperPath = 'public/' . $abstract->fullPaper->file_path; // Periksa path file full paper
-        //     if (Storage::exists($fullPaperPath)) {
-        //         Storage::delete($fullPaperPath);
-        //     }
-        // }
-
-        $abstract->delete();
-        return redirect()->route('abstracts.index')->with('success', 'Abstract deleted successfully');
     }
+
 
 
     private function formatAuthors($authors)
@@ -238,27 +330,48 @@ class AbstractController extends Controller
 
     public function downloadPdf($id)
     {
-        $abstract = AbstractModel::with('symposium')->findOrFail($id);
-        $formattedAuthors = $this->formatAuthors($abstract->authors);
-        $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
+        try {
+            $abstract = AbstractModel::with('symposium')->findOrFail($id);
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                $formattedAuthors = $this->formatAuthors($abstract->authors);
+                $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
 
-        $pdf = PDF::loadView('abstracts.pdf', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
+                $pdf = PDF::loadView('abstracts.pdf', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
 
-        return $pdf->stream('abstract-detail.pdf');
+                return $pdf->stream('abstract-detail.pdf');
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Abstract PDF not found');
+        }
     }
 
     public function acceptancePdf($id)
     {
-        $abstract = AbstractModel::with(['user'])->findOrFail($id);
+        try {
+            $abstract = AbstractModel::with(['user'])->findOrFail($id);
+            if (
+                $abstract->user_id === request()->user()->id
+            ) {
+                $conferenceSetting = ConferenceSetting::first();
+                $conferenceChairPerson = $conferenceSetting->conference_chairperson;
+                $letterHeaderUrl = Upload::getFilePath('letter_header');
+                $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeaderUrl = Upload::getFilePath('letter_header');
-        $signatureUrl = Upload::getFilePath('signature');
+                $letterHeader = storage_path('app/public/' . str_replace(asset('storage/'), '', $letterHeaderUrl));
+                $signature = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+                $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 
-        $pdf = PDF::loadView('abstracts.acceptance', compact('abstract', 'letterHeader', 'signature'));
-
-        return $pdf->stream('abstract-acceptance.pdf');
+                return $pdf->stream('abstract-acceptance.pdf');
+            } else {
+                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('abstracts.index')->with('error', 'Acceptance not found');
+        }
     }
 }

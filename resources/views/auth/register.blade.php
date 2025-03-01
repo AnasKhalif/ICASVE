@@ -9,36 +9,17 @@
         <div class="row m-0 h-100">
             <section class="col-lg-6 d-flex align-items-center p-5 vh-100 position-relative overflow-hidden"
                 style="background: linear-gradient(45deg, #1B5E20, #2E7D32, #388E3C);">
-
-                <div class="position-absolute w-100 h-100" style="top: 0; left: 0; z-index: 1;">
-                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width: 100%; height: 100%; opacity: 0.1;">
-                        <defs>
-                            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:white;stop-opacity:0.2" />
-                                <stop offset="100%" style="stop-color:white;stop-opacity:0" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(#grad)">
-                            <animate attributeName="d" dur="20s" repeatCount="indefinite"
-                                values="M0,0 L100,0 L100,100 L0,100 Z;
-                                       M0,50 L50,0 L100,50 L50,100 Z;
-                                       M0,0 L100,0 L100,100 L0,100 Z" />
-                        </path>
-                    </svg>
-                </div>
-
                 <div class="banner-content text-white position-relative" style="z-index: 2;">
                     <div class="d-flex align-items-center mb-4">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid"
-                            style="max-width: 180px;">
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid" style="max-width: 180px;">
                     </div>
                     <div class="px-4">
                         <h1 class="mb-4 display-4 font-weight-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
-                            The 3rd International Conference on Applied Science for Vocational Education
+                            {{ $conferenceTitle }}
                         </h1>
                         <p class="text-warning mt-3 d-flex align-items-center">
                             <i class="fas fa-info-circle mr-2"></i>
-                            *info selengkapnya di
+                            {{ $conferenceAbbreviation }}
                         </p>
                     </div>
                 </div>
@@ -48,186 +29,234 @@
                 style="background: #F1F8E9;">
                 <div class="login-container w-100 px-4 py-2">
                     <header class="text-center">
-                        <img src="{{ asset('img/Logo_ICASVE_rmbg.png') }}" alt="Logo icasve" class="img-fluid mb-3 mt-3"
+                        <img src="{{ $logoPath }}" alt="Logo icasve" class="img-fluid mb-3 mt-3"
                             style="max-width: 180px;">
                     </header>
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="row">
-                            <div class="form-group mb-4">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-transparent border-right-0">
-                                            <i class="fas fa-user text-success"></i>
-                                        </span>
+                    @if ($openRegistration)
+                        <form method="POST" action="{{ route('register') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-4 ">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-user text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="name" id="name"
+                                                class="form-control form-control-md border-left-0" placeholder="Full Name"
+                                                value="{{ old('name') }}" required />
+                                        </div>
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('name') }}</span>
+                                        @endif
                                     </div>
-                                    <input type="text" name="name" id="name"
-                                        class="form-control form-control-md border-left-0" placeholder="Full Name"
-                                        value="{{ old('name') }}" required />
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-envelope text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="email" name="email" id="email"
+                                                class="form-control form-control-md border-left-0"
+                                                placeholder="Email Address" value="{{ old('email') }}" required />
+                                        </div>
+                                        @if ($errors->has('email'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('email') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-lock text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="password" name="password" id="password"
+                                                class="form-control form-control-md border-left-0" placeholder="Password"
+                                                required />
+                                        </div>
+                                        @if ($errors->has('password'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('password') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-building text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="institution" id="institution"
+                                                class="form-control form-control-md border-left-0" placeholder="Institution"
+                                                value="{{ old('institution') }}" required />
+                                        </div>
+                                        @if ($errors->has('institution'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('institution') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <select name="role_id" id="registration_type" class="form-control form-control-md"
+                                            required>
+                                            <option value="" disabled selected>Select Registration Type</option>
+                                            @foreach ($role as $r)
+                                                <option value="{{ $r->id }}"
+                                                    {{ old('role_id') == $r->id ? 'selected' : '' }}>
+                                                    {{ $r->display_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @if ($errors->has('role_id'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('role_id') }}</span>
+                                        @endif
+                                    </div>
+
                                 </div>
-                                @if ($errors->has('name'))
-                                    <span class="text-danger" style="font-size: 12px;">{{ $errors->first('name') }}</span>
-                                @endif
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-phone text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="tel" name="phone_number" id="phone_number"
+                                                class="form-control form-control-md border-left-0"
+                                                placeholder="Phone Number" value="{{ old('phone_number') }}" required />
+                                        </div>
+                                        @if ($errors->has('phone_number'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('phone_number') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-globe text-success"></i>
+                                                </span>
+                                            </div>
+                                            <select name="country" id="country"
+                                                class="form-control form-control-md border-left-0" required>
+                                                <option value="" disabled selected>Select Country</option>
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('country'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('country') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-lock text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="password" name="password_confirmation"
+                                                id="password_confirmation"
+                                                class="form-control form-control-md border-left-0"
+                                                placeholder="Confirm Password" required />
+                                        </div>
+                                        @if ($errors->has('password_confirmation'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('password_confirmation') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fas fa-briefcase text-success"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" name="job_title" id="job_title"
+                                                class="form-control form-control-md border-left-0" placeholder="Job Title"
+                                                value="{{ old('job_title') }}" required />
+                                        </div>
+                                        @if ($errors->has('job_title'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('job_title') }}</span>
+                                        @endif
+                                    </div>
+
+
+                                    <div class="form-group mb-4">
+                                        <select name="attendance" id="attendance" class="form-control form-control-md"
+                                            required>
+                                            <option value="" disabled selected>Select Attendance Plan</option>
+                                            <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>
+                                                Onsite</option>
+                                            <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>
+                                                Online</option>
+                                        </select>
+                                        @if ($errors->has('attendance'))
+                                            <span class="text-danger"
+                                                style="font-size: 12px;">{{ $errors->first('attendance') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
 
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-envelope text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="email" name="email" id="email"
-                                            class="form-control form-control-md border-left-0" placeholder="Email Address"
-                                            value="{{ old('email') }}" required />
-                                    </div>
-                                    @if ($errors->has('email'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('email') }}</span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-lock text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="password" name="password" id="password"
-                                            class="form-control form-control-md border-left-0" placeholder="Password"
-                                            required />
-                                    </div>
-                                    @if ($errors->has('password'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('password') }}</span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-building text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" name="institution" id="institution"
-                                            class="form-control form-control-md border-left-0" placeholder="Institution"
-                                            value="{{ old('institution') }}" required />
-                                    </div>
-                                    @if ($errors->has('institution'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('institution') }}</span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <select name="role_id" id="registration_type" class="form-control form-control-md"
-                                        required>
-                                        <option value="" disabled selected>Select Registration Type</option>
-                                        @foreach ($role as $r)
-                                            <option value="{{ $r->id }}"
-                                                {{ old('role_id') == $r->id ? 'selected' : '' }}>
-                                                {{ $r->display_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('role_id'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('role_id') }}</span>
-                                    @endif
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-phone text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="tel" name="phone_number" id="phone_number"
-                                            class="form-control form-control-md border-left-0" placeholder="Phone Number"
-                                            value="{{ old('phone_number') }}" required />
-                                    </div>
-                                    @if ($errors->has('phone_number'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('phone_number') }}</span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-lock text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="password" name="password_confirmation" id="password_confirmation"
-                                            class="form-control form-control-md border-left-0"
-                                            placeholder="Confirm Password" required />
-                                    </div>
-                                    @if ($errors->has('password_confirmation'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('password_confirmation') }}</span>
-                                    @endif
-                                </div>
-
-                                <div class="form-group mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fas fa-briefcase text-success"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" name="job_title" id="job_title"
-                                            class="form-control form-control-md border-left-0" placeholder="Job Title"
-                                            value="{{ old('job_title') }}" required />
-                                    </div>
-                                    @if ($errors->has('job_title'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('job_title') }}</span>
-                                    @endif
-                                </div>
-
-
-                                <div class="form-group mb-4">
-                                    <select name="attendance" id="attendance" class="form-control form-control-md"
-                                        required>
-                                        <option value="" disabled selected>Select Attendance Plan</option>
-                                        <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>
-                                            Onsite</option>
-                                        <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>
-                                            Online</option>
-                                    </select>
-                                    @if ($errors->has('attendance'))
-                                        <span class="text-danger"
-                                            style="font-size: 12px;">{{ $errors->first('attendance') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-block text-white mb-2 py-2"
-                            style="background: linear-gradient(45deg, #1B5E20, #2E7D32);
+                            <button type="submit" class="btn btn-block text-white mb-2 py-2"
+                                style="background: linear-gradient(45deg, #1B5E20, #2E7D32);
                            border-radius: 15px; transition: all 0.3s ease;">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Register
-                        </button>
-                        <footer class="text-center">
-                            <p>Already have an account? <a href="{{ route('login') }}" style="color: #2E7D32;">Login</a>
-                            </p>
-                        </footer>
-                    </form>
+                                <i class="fas fa-sign-in-alt mr-2"></i>Register
+                            </button>
+                            <footer class="text-center">
+                                <p>Already have an account? <a href="{{ route('login') }}"
+                                        style="color: #2E7D32;">Login</a>
+                                </p>
+                            </footer>
+                        </form>
+                    @else
+                        <div class="alert alert-danger text-center shadow-sm p-3 rounded">
+                            <h4 class="fw-bold mb-1">⚠ Registration Closed</h4>
+                            <p class="mb-0">We’re sorry, but registration is currently closed.</p>
+                        </div>
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                    @endif
                 </div>
             </section>
         </div>
     </main>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://restcountries.com/v3.1/all")
+                .then(response => response.json())
+                .then(data => {
+                    let countrySelect = document.getElementById("country");
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    data.forEach(country => {
+                        let option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        countrySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching country data:", error));
+        });
+    </script>
     <style>
         .input-group-text {
             border-radius: 15px 0 0 15px;

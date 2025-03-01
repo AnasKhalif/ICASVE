@@ -3,13 +3,25 @@
 @section('content')
     <div class="main-panel">
         <div class="content-wrapper">
+            @if ($user->abstracts->contains('status', 'accepted') && !$user->filePayment)
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Warning!</strong> Your abstract has been <b>accepted</b>, but you have not completed the
+                    payment.
+                    <a href="{{ route('filepayments.create') }}" class="alert-link">Click here to proceed with payment</a>.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-12 grid-margin">
                     <div class="row">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                            <h3 class="font-weight-bold">Welcome Aamir</h3>
-                            <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span
-                                    class="text-primary">3 unread alerts!</span></h6>
+                            <h3 class="font-weight-bold">Welcome {{ auth()->user()->name }}</h3>
+                            <h6 class="font-weight-normal mb-0">
+                                You are logged in as <span class="text-primary">
+                                    {{ ucfirst(auth()->user()->roles->first()->name ?? 'User') }}</span>
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -17,144 +29,121 @@
             <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card tale-bg">
-                        <div class="card-people mt-auto">
-                            <img src="images/dashboard/people.svg" alt="people">
-                            <div class="weather-info">
-                                <div class="d-flex">
-                                    <div>
-                                        <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
-                                    </div>
-                                    <div class="ml-2">
-                                        <h4 class="location font-weight-normal">Bangalore</h4>
-                                        <h6 class="font-weight-normal">India</h6>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="card-people">
+                            <img src="{{ asset('images/Lab.jpeg') }}" alt="people">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 grid-margin transparent">
                     <div class="row">
                         <div class="col-md-6 mb-4 stretch-card transparent">
-                            <div class="card card-tale">
+                            <div class="card text-white card-tale">
                                 <div class="card-body">
-                                    <p class="mb-4">Today’s Bookings</p>
-                                    <p class="fs-30 mb-2">4006</p>
-                                    <p>10.00% (30 days)</p>
+                                    <p class="mb-4">Payment Status</p>
+                                    <p class="fs-30 mb-2" style="font-size: 25px;">
+                                        @if ($user->filePayment)
+                                            {{ $user->filePayment->status }}
+                                        @else
+                                            Not Paid
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-6 mb-4 stretch-card transparent">
-                            <div class="card card-dark-blue">
+                            <div class="card text-white card-dark-blue">
                                 <div class="card-body">
-                                    <p class="mb-4">Total Bookings</p>
-                                    <p class="fs-30 mb-2">61344</p>
-                                    <p>22.00% (30 days)</p>
+                                    <p class="mb-4">Abstract Status</p>
+                                    @php
+                                        $abstract = $user->abstracts->first();
+                                    @endphp
+                                    <p class="fs-30 mb-2" style="font-size: 25px;">
+                                        {{ $abstract ? $abstract->status : 'Not Created' }}
+                                    </p>
+                                    <p>&nbsp;</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
-                            <div class="card card-light-blue">
+                            <div class="card text-black bg-warning bg-opacity-75">
                                 <div class="card-body">
-                                    <p class="mb-4">Number of Meetings</p>
-                                    <p class="fs-30 mb-2">34040</p>
-                                    <p>2.00% (30 days)</p>
+                                    <p class="mb-4">Full Paper Status</p>
+                                    @php
+                                        $fullPaper = optional($abstract)->fullPaper;
+                                    @endphp
+                                    <p class="fs-30 mb-2" style="font-size: 25px;">
+                                        {{ $fullPaper ? $fullPaper->status : 'Not Uploaded' }}
+                                    </p>
+                                    <p>&nbsp;</p>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="col-md-6 stretch-card transparent">
-                            <div class="card card-light-danger">
-                                <div class="card-body">
-                                    <p class="mb-4">Number of Clients</p>
-                                    <p class="fs-30 mb-2">47033</p>
-                                    <p>0.22% (30 days)</p>
+                            <div class="card text-black bg-warning" style="--bs-bg-opacity: .5;">
+                                <div class="card-body text-center">
+                                    <p class="mb-4">Full Paper</p>
+                                    @if ($fullPaper)
+                                        <a href="{{ asset('storage/' . $fullPaper->file_path) }}" target="_blank">
+                                            <i class="fa fa-download text-primary fa-3x"></i>
+                                        </a>
+                                    @else
+                                        <p class="text-muted">No Full Paper Uploaded</p>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-title mb-0">Top Products</p>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-borderless w-100">
-                                    <thead>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Search Engine Marketing</td>
-                                            <td class="font-weight-bold">$362</td>
-                                            <td>21 Sep 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Search Engine Optimization</td>
-                                            <td class="font-weight-bold">$116</td>
-                                            <td>13 Jun 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Display Advertising</td>
-                                            <td class="font-weight-bold">$551</td>
-                                            <td>28 Sep 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-warning">Pending</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Pay Per Click Advertising</td>
-                                            <td class="font-weight-bold">$523</td>
-                                            <td>30 Jun 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-warning">Pending</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>E-Mail Marketing</td>
-                                            <td class="font-weight-bold">$781</td>
-                                            <td>01 Nov 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-danger">Cancelled</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Referral Marketing</td>
-                                            <td class="font-weight-bold">$283</td>
-                                            <td>20 Mar 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-warning">Pending</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Social media marketing</td>
-                                            <td class="font-weight-bold">$897</td>
-                                            <td>26 Oct 2018</td>
-                                            <td class="font-weight-medium">
-                                                <div class="badge badge-success">Completed</div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+            @foreach ($user->abstracts as $abstract)
+                @php
+                    $participantCertificate = $user->certificates->firstWhere('certificate_type', 'participant');
+                    $presenterCertificate = $user->certificates->firstWhere('certificate_type', 'presenter');
+                @endphp
+
+                @if ($participantCertificate || $presenterCertificate)
+                    <div class="row mb-4">
+                        @if ($participantCertificate && $participantCertificate->status == 1)
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{{ route('abstracts.viewCertificate', ['id' => \Crypt::encrypt($abstract->id), 'type' => 'participant']) }}"
+                                                target="_blank">
+                                                <i class="fa fa-certificate fa-3x"></i><br>
+                                            </a>
+                                        </h5>
+                                        <p class="card-text fw-bold">Participant Certificate</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
+                        @if ($presenterCertificate && $presenterCertificate->status == 1)
+                            <div class="col-md-6">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a href="{{ route('abstracts.viewCertificate', ['id' => \Crypt::encrypt($abstract->id), 'type' => 'presenter']) }}"
+                                                target="_blank">
+                                                <i class="fa fa-file-alt fa-3x"></i><br>
+                                            </a>
+                                        </h5>
+                                        <p class="card-text fw-bold">Presenter Certificate</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
 
         </div>
     </div>

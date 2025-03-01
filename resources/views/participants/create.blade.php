@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            name="name" value="{{ old('name') }}" placeholder="Name" required>
+                            name="name" value="{{ old('name') }}" placeholder="E.g. Budi Utomo" required>
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="name">Email address</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                            name="email" value="{{ old('email') }}" placeholder="Email" required>
+                            name="email" value="{{ old('email') }}" placeholder="E.g. budiutomo@gmail.com" required>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -44,8 +44,8 @@
                     <div class="form-group">
                         <label for="institution">Institution</label>
                         <input type="text" class="form-control @error('institution') is-invalid @enderror"
-                            id="institution" name="institution" value="{{ old('institution') }}" placeholder="Institution"
-                            required>
+                            id="institution" name="institution" value="{{ old('institution') }}"
+                            placeholder="E.g. Faculty of Science, Brawijaya University" required>
                         @error('institution')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -53,7 +53,8 @@
                     <div class="form-group">
                         <label for="job_title">Job Title</label>
                         <input type="text" class="form-control @error('job_title') is-invalid @enderror" id="job_title"
-                            name="job_title" value="{{ old('job_title') }}" placeholder="Job Title" required>
+                            name="job_title" value="{{ old('job_title') }}" placeholder="E.g. Professor, PhD student, etc."
+                            required>
                         @error('job_title')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -68,17 +69,35 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="phone_number">Country</label>
+                        <select name="country" id="country" class="form-control form-control-md border-left-0" required>
+                            <option value="" disabled selected>Select Country</option>
+                        </select>
+                        @if ($errors->has('country'))
+                            <span class="text-danger" style="font-size: 12px;">{{ $errors->first('country') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
                         <label for="attendance">Attendance Type</label>
                         <select class="form-control @error('attendance') is-invalid @enderror" id="attendance"
                             name="attendance" required>
                             <option value="">-- Select Attendance Type --</option>
-                            <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite</option>
-                            <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>Online</option>
+
+                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'onsite')
+                                <option value="onsite" {{ old('attendance') == 'onsite' ? 'selected' : '' }}>Onsite
+                                </option>
+                            @endif
+
+                            @if ($conferenceSetting->attendance_format === 'hybrid' || $conferenceSetting->attendance_format === 'online')
+                                <option value="online" {{ old('attendance') == 'online' ? 'selected' : '' }}>Online
+                                </option>
+                            @endif
                         </select>
                         @error('attendance')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     <div class="form-group">
                         <label for="role_id">Role</label>
                         <select class="form-control @error('role_id') is-invalid @enderror" id="role_id" name="role_id"
@@ -100,4 +119,21 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://restcountries.com/v3.1/all")
+                .then(response => response.json())
+                .then(data => {
+                    let countrySelect = document.getElementById("country");
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    data.forEach(country => {
+                        let option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        countrySelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching country data:", error));
+        });
+    </script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Participants')
+@section('title', 'Reviewers')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
@@ -34,18 +34,19 @@
                                     <td>{{ $user->institution }}</td>
                                     <td>
                                         @foreach ($user->roles as $role)
-                                            <span class="badge badge-primary">{{ $role->display_name }}</span>
+                                            {{ $role->display_name }}
                                         @endforeach
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.reviewer.edit', $user->id) }}"
-                                            class="btn btn-sm btn-warning">Edit</a>
+                                            class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         <form action="{{ route('admin.reviewer.destroy', $user->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                                Delete</button>
                                         </form>
                                     </td>
                                 </tr>

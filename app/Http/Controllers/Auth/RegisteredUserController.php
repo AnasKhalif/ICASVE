@@ -19,6 +19,8 @@ use App\Models\Certificate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
+use Illuminate\Support\Facades\File;
 
 class RegisteredUserController extends Controller
 {
@@ -33,7 +35,13 @@ class RegisteredUserController extends Controller
             'indonesia-participants',
             'foreign-participants'
         ])->get();
-        return view('auth.register', compact('role'));
+        $conferenceSetting = ConferenceSetting::first();
+        $openRegistration = $conferenceSetting->open_registration ?? false;
+        $conferenceTitle = optional($conferenceSetting)->conference_title ?? 'The 3rd International Conference on Applied Science for Vocational Education';
+        $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
+        $logo = Upload::where('type', 'logo')->latest()->first();
+        $logoPath = $logo ? asset('storage/' . $logo->file_path) : asset('img/Logo_ICASVE_rmbg.png');
+        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting', 'logoPath'));
     }
 
     /**
@@ -43,6 +51,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_registration) {
+            return redirect()->route('register')->with('error', 'Registration Closed.');
+        }
+
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -50,6 +63,7 @@ class RegisteredUserController extends Controller
             'job_title' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'string', 'max:15', 'regex:/^[0-9\-\+\(\)\s]*$/'],
             'attendance' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role_id' => ['required', 'exists:roles,id'],
         ]);
@@ -61,6 +75,7 @@ class RegisteredUserController extends Controller
             'job_title' => $validatedData['job_title'],
             'phone_number' => $validatedData['phone_number'],
             'attendance' => $validatedData['attendance'],
+            'country' => $validatedData['country'],
             'password' => Hash::make($validatedData['password']),
         ]);
 
@@ -69,16 +84,20 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        // $details = [
-        //     'name' => $validatedData['name'],
-        //     'institution' => $validatedData['institution'],
-        //     'job_title' => $validatedData['job_title'],
-        //     'email' => $validatedData['email'],
-        //     'phone_number' => $validatedData['phone_number'],
-        //     'registration_type' => $role->display_name,
-        // ];
+        $conference = ConferenceSetting::first();
 
-        // Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
+        $details = [
+            'name' => $validatedData['name'],
+            'institution' => $validatedData['institution'],
+            'job_title' => $validatedData['job_title'],
+            'email' => $validatedData['email'],
+            'phone_number' => $validatedData['phone_number'],
+            'registration_type' => $role->display_name,
+            'conference_title' => $conference->conference_title,
+            'password' => $validatedData['password'],
+        ];
+
+        Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
         $this->generateCertificate($user);
 
         return redirect(route('login'))->with('success', 'Registration successful. A confirmation email has been sent.');
@@ -88,7 +107,7 @@ class RegisteredUserController extends Controller
     {
         // Tentukan template sertifikat untuk peserta
         $templateUrl = Upload::getFilePath('certificate_participant');
-        $templatePath = public_path(str_replace(asset(''), '', $templateUrl));
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
             throw new \Exception('Certificate template not found');

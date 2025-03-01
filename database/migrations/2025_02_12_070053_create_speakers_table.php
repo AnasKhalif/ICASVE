@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('institution');
             $table->string('image');
+            $table->string('country');
             $table->timestamps();
         });
     }

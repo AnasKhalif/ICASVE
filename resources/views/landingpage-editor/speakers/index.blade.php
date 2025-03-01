@@ -25,7 +25,7 @@
                         <tbody>
                             @foreach ($speakers as $speaker)
                                 <tr>
-                                    <td>{{ $speaker->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $speaker->name }}</td>
                                     <td>{{ $speaker->institution }}</td>
                                     <td> {{ str_replace('_', ' ', $speaker->role) }} </td>

@@ -8,26 +8,34 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Upload;
+use App\Models\ConferenceSetting;
+use Laratrust\Traits\HasRolesAndPermissions;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FilePaymentController extends Controller
 {
+    use HasRolesAndPermissions;
+
     public function create()
     {
         $users = Auth::user();
         $existingPayment = FilePayment::where('user_id', $users->id)->first();
-        return view('filepayments.create', compact('users', 'existingPayment'));
+        $conferenceSetting = ConferenceSetting::first();
+        return view('filepayments.create', compact('users', 'existingPayment', 'conferenceSetting'));
     }
     public function store(Request $request)
     {
         $amount = $request->input('amount');
         $amount = str_replace('.', '', $amount);
         $amount = (int) $amount;
+        $currency = $request->input('currency', 'IDR');
 
         $isFirstUpload = FilePayment::where('user_id', Auth::user()->id)->doesntExist();
 
         $request->validate([
-            'file' => $isFirstUpload ? 'required|file|mimes:pdf,jpg,png|max:2048' : 'file|mimes:pdf,jpg,png|max:2048',
-            'amount' => $isFirstUpload ? 'required|numeric|min:0' : 'nullable|numeric|min:0'
+            'file' => $isFirstUpload ? 'required|file|mimes:jpg,png,jpeg|max:2048' : 'file|mimes: jpg,png,jpeg|max:2048',
+            'amount' => $isFirstUpload ? 'required|numeric|min:0' : 'nullable|numeric|min:0',
+            'currency' => 'required|in:IDR,USD'
         ], [
             'file.max' => 'File terlalu besar. Maksimal ukuran file adalah 2MB.',
             'file.mimes' => 'Format file tidak sesuai. Format yang diterima: JPG, JPEG, PNG, PDF',
@@ -38,7 +46,7 @@ class FilePaymentController extends Controller
 
         if (!$request->hasFile('file') && !$request->filled('amount')) {
             return redirect()->back()
-                ->withErrors(['file' => 'Anda harus mengisi file atau jumlah pembayaran.'])
+                ->withErrors(['file' => 'You must upload a file or enter a payment amount.'])
                 ->withInput();
         }
 
@@ -59,14 +67,19 @@ class FilePaymentController extends Controller
                 $updateData['amount'] = $amount;
             }
 
+            $updateData['currency'] = $currency;
+
             if (!empty($updateData)) {
                 $existingPayment->update($updateData);
-                $message = 'Data pembayaran berhasil diperbarui.';
+                $message = 'Payment data successfully updated.';
             } else {
-                $message = 'Tidak ada perubahan yang dilakukan.';
+                $message = 'No changes were made.';
             }
         } else {
-            $data = ['user_id' => $user->id];
+            $data = [
+                'user_id' => $user->id,
+                'currency' => $currency
+            ];
             if ($request->hasFile('file')) {
                 $data['file_path'] = $request->file('file')->store('payments', 'public');
             }
@@ -74,7 +87,7 @@ class FilePaymentController extends Controller
                 $data['amount'] = $amount;
             }
             FilePayment::create($data);
-            $message = 'Data pembayaran berhasil disimpan.';
+            $message = 'Payment data successfully saved.';
         }
 
         return redirect()->route('filepayments.create')
@@ -83,15 +96,27 @@ class FilePaymentController extends Controller
 
     public function receipt($id)
     {
-        $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+        try {
+            $filePayment = FilePayment::with('user.abstracts')->findOrFail($id);
+            if (
+                $filePayment->user_id === request()->user()->id
+            ) {
+                $conferenceSetting = ConferenceSetting::first();
+                $conferenceChairPerson = $conferenceSetting->conference_chairperson;
 
-        $letterHeaderUrl = Upload::getFilePath('letter_header');
-        $signatureUrl = Upload::getFilePath('signature');
+                $letterHeaderUrl = Upload::getFilePath('letter_header');
+                $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+                $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
+                $signature = public_path(str_replace(asset(''), '', $signatureUrl));
 
-        $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature'));
-        return $pdf->stream('payment-digital.pdf');
+                $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
+                return $pdf->stream('payment-digital.pdf');
+            } else {
+                return redirect()->route('filepayments.create')->with('error', 'You are not authorized to view this page.');
+            }
+        } catch (ModelNotFoundException $e) {
+            return redirect()->route('filepayments.create')->with('error', 'Payment data not found.');
+        }
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Participants')
+@section('title', 'Symposiums')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
@@ -29,17 +29,18 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $symposium->name }} ({{ $symposium->abbreviation }})</td>
                                     <td class="text-center">
-                                        <span class="badge badge-info">{{ $symposium->abstracts_count }} Abstracts</span>
+                                        {{ $symposium->abstracts_count }} Abstracts
                                     </td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.symposium.edit', $symposium->id) }}"
-                                            class="btn btn-sm btn-warning">Edit</a>
+                                            class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         <form action="{{ route('admin.symposium.destroy', $symposium->id) }}" method="POST"
                                             style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">Delete</button>
+                                                onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                                Delete</button>
                                         </form>
                                     </td>
                                 </tr>
