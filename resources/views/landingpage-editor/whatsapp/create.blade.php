@@ -7,12 +7,22 @@
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <form action="{{ route('landing.whatsapp.store') }}" method="POST" enctype="multipart/form-data">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('landing.whatsapp.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="nomor" class="form-label">Number</label>
-                <input type="text" class="form-control" id="nomor" name="nomor" required>
-                <p>*Nomor Whatsapp harus diawali dengan angka 62</p>
+                <input type="text" class="form-control" id="nomor" name="nomor" 
+                    placeholder="Contoh: 6281234567890" required>
+                <p class="text-muted">*Nomor harus diawali dengan 62 dan terdiri dari minimal 10 digit.</p>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{ route('landing.whatsapp.index') }}" class="btn btn-secondary">Back</a>
