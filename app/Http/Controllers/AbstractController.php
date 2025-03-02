@@ -43,7 +43,8 @@ class AbstractController extends Controller
     {
         try {
             if (
-                request()->user()->hasRole('indonesia-presenter')
+                request()->user()->hasRole('indonesia-presenter') ||
+                request()->user()->hasRole('foreign-presenter')
             ) {
                 $conferenceSetting = ConferenceSetting::first();
                 if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
