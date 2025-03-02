@@ -56,8 +56,9 @@
                             </p>
                             <p class="mb-2">
                                 <i class="bi bi-telephone me-2"></i>
-                                <strong>Phone:</strong> {{ $latestContact->phone }}
+                                <strong>Phone:</strong> +62{{ ltrim($latestContact->phone, '0') }}
                             </p>
+                            
                         </address>
                     @else
                         <p class="text-muted">No contact information available.</p>

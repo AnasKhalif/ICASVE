@@ -21,28 +21,26 @@
                     all of the following items, and submissions may be returned to authors that do not adhere to these
                     guidelines.</p>
 
-                @if ($guidelines->isEmpty())
+                @if (!$latestGuideline)
                     <!-- Jika tidak ada guideline -->
                     <div class="alert alert-warning">
                         No abstract guidelines available.
                     </div>
                 @else
-                    @foreach ($guidelines as $guideline)
-                        <div class="card">
-                            <div class="card-body">
-                                {!! $guideline->content !!}
-                            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            {!! $latestGuideline->content !!}
                         </div>
-                        <!-- Tombol Download Paper Template di bawah guideline -->
-                        @if ($guidelines->isNotEmpty() && $guidelines->first()->pdf_file)
-                            <div class="text-start mt-3">
-                                <a href="{{ asset('storage/' . $guidelines->first()->pdf_file) }}" class="btn text-white"
-                                    style="background: linear-gradient(to right, navy, orange);" target="_blank">
-                                    Download Paper Template
-                                </a>
-                            </div>
-                        @endif
-                    @endforeach
+                    </div>
+                    <!-- Tombol Download Paper Template di bawah guideline -->
+                    @if ($latestGuideline->pdf_file)
+                        <div class="text-start mt-3">
+                            <a href="{{ asset('storage/' . $latestGuideline->pdf_file) }}" class="btn text-white"
+                                style="background: linear-gradient(to right, navy, orange);" target="_blank">
+                                Download Paper Template
+                            </a>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
