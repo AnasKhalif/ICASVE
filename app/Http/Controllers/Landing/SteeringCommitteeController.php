@@ -18,7 +18,7 @@ class SteeringCommitteeController extends Controller
             ? SteeringCommittee::all()
             : SteeringCommittee::where('year', $selectedYear)->get();
 
-        return view('landingpage-editor.steering.index', compact('committees', 'years', 'selectedYear'));
+        return view('landingpage-editor.committee.steering.index', compact('committees', 'years', 'selectedYear'));
     }
 
 
