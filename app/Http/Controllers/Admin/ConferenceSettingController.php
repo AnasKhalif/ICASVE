@@ -33,6 +33,7 @@ class ConferenceSettingController extends Controller
             'max_abstracts_per_participant' => 'required|integer|min:0',
             'max_words_in_abstract_body' => 'required|integer|min:0',
             'attendance_format' => 'required|in:onsite,online,hybrid',
+            'payment_instruction' => 'required',
         ]);
 
         $settings = ConferenceSetting::firstOrNew([]);
@@ -41,6 +42,7 @@ class ConferenceSettingController extends Controller
         $settings->open_registration = $request->has('open_registration') ? 1 : 0;
         $settings->open_full_paper_upload = $request->has('open_full_paper_upload') ? 1 : 0;
         $settings->open_abstract_submission = $request->has('open_abstract_submission') ? 1 : 0;
+        $settings->payment_instruction = $request->payment_instruction;
 
         $settings->save();
 

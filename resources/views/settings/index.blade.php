@@ -119,6 +119,17 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Payment Insruction</label>
+                                <textarea name="payment_instruction" class="form-control @error('payment_instruction') is-invalid @enderror"
+                                    rows="5">{{ old('payment_instruction', $settings->payment_instruction ?? '') }}</textarea>
+                                @error('payment_instruction')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="col-12 mt-3">
                             <button type="submit" class="btn btn-primary">Save Settings</button>
                         </div>
