@@ -376,12 +376,12 @@
                 @foreach ($venues as $venue)
                     <div class="row align-items-start">
                         <!-- Kolom Gambar: Tambahkan margin bawah untuk perangkat kecil -->
-                        <div class="col-md-6 mb-4 mb-md-0" data-aos="fade-up">
+                        <div class="col-md-6 mb-2 mb-md-0" data-aos="fade-up">
                             <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
                                 class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; max-height: 375px;" />
                         </div>
                         <!-- Kolom Teks: Tambahkan margin atas untuk perangkat kecil -->
-                        <div class="location col-md-6 mt-4 mt-md-0" data-aos="fade-up">
+                        <div class="location col-md-6 mt-2 mt-md-0" data-aos="fade-up">
                             <h3 class="title-location">{{ $venue->venue_name }}</h3>
                             <p class="text-muted">{{ $venue->address }}</p>
                             <p class="font-weight-bold">Date: {{ $venue->date }}</p>

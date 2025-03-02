@@ -58,6 +58,8 @@
                             <img id="previewImage" src="#" alt="Preview" class="img-thumbnail d-none" style="max-width: 150px;">
                         </div>
                     </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     
                     <script>
                         document.getElementById('image').addEventListener('change', function(event) {
