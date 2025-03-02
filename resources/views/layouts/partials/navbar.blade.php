@@ -18,8 +18,8 @@
                  </a>
                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                      <a class="dropdown-item">
-                         <i class="ti-settings text-primary"></i>
-                         Settings
+                         <i class="fa fa-user text-primary"></i>
+                         Profile
                      </a>
                      <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
                          @csrf

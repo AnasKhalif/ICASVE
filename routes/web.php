@@ -51,6 +51,7 @@ use App\Http\Controllers\ReviewerLandingPageController;
 use App\Http\Controllers\Landing\ConferenceController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\EmailTemplateController;
 
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
@@ -137,6 +138,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('years', [YearController::class, 'index'])->name('years.index');
     Route::post('years', [YearController::class, 'store'])->name('years.store');
     Route::post('years/{id}/set-active', [YearController::class, 'setActive'])->name('years.setActive');
+    Route::get('email-template/index', [EmailTemplateController::class, 'index'])->name('email-template.index');
+    Route::get('email-template/{type}/edit', [EmailTemplateController::class, 'edit'])->name('email-template.edit');
+    Route::post('email-template/{type}/update', [EmailTemplateController::class, 'update'])->name('email-template.update');
 });
 
 Route::name('reviewer.')

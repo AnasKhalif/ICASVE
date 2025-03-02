@@ -19,7 +19,6 @@
         }
 
         .header {
-            text-align: center;
             margin-bottom: 20px;
         }
 
@@ -31,14 +30,61 @@
         .details {
             margin-bottom: 20px;
         }
+
+        .signature {
+            margin-top: 50px;
+            text-align: left;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        .table-signature {
+            width: 100%;
+            margin-top: 50px;
+        }
+
+        .table-signature td {
+            vertical-align: top;
+        }
+
+        .signature img {
+            width: 150px;
+        }
+
+        .summary-table {
+            width: 50%;
+            float: right;
+            margin-top: 20px;
+        }
+
+        .summary-table td {
+            padding: 5px;
+        }
+
+        th {
+            background-color: #ebeced;
+            padding: 8px;
+            text-align: left;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="title">INVOICE</div>
-            <strong>{{ $conference->conference_title }}</strong>.
+            <table width="100%">
+                <tr>
+                    <td width="30%">
+                        <img src="{{ $logoPath }}" alt="Logo" class="logo">
+                    </td>
+                    <td width="70%" style="text-align: right;">
+                        <h2>INVOICE</h2>
+                        <strong>{{ $conference->conference_title }}</strong>
+                    </td>
+                </tr>
+            </table>
         </div>
 
         <div class="details">
@@ -51,7 +97,7 @@
             </p>
         </div>
 
-        <table class="table">
+        <table width="100%" cellspacing="0" cellpadding="5">
             <thead>
                 <tr>
                     <th>No</th>
@@ -64,12 +110,40 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td> <strong>{{ $abstract->title }}</strong></td>
+                    <td><strong>{{ $abstract->title }}</strong></td>
                     <td>1</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ number_format($amount, 0, ',', '.') }}</td>
+                    <td>{{ number_format($amount, 0, ',', '.') }}</td>
                 </tr>
             </tbody>
+        </table>
+
+        <table class="summary-table">
+            <tr>
+                <td><strong>Subtotal</strong></td>
+                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total</strong></td>
+                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td><strong>Amount Due</strong></td>
+                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+            </tr>
+        </table>
+
+        <table class="table-signature">
+            <tr>
+                <td width="50%">
+                    <div class="signature">
+                        <p><strong>Authorized By</strong></p>
+                        <img src="{{ $signaturePath }}" alt="Signature">
+                        <p>Conference Chairperson</p>
+                    </div>
+                </td>
+                <td width="50%"></td>
+            </tr>
         </table>
     </div>
 </body>

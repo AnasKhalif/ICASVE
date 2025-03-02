@@ -81,9 +81,10 @@
                 <strong>{{ $conference->conference_title }}</strong>.
             </p>
 
-            <p>Payment can be made via bank transfer to the following account </p>
+            <p>Payment can be made via bank transfer to the following account for a total of <strong>
+                    USD {{ number_format($amount, 2) }}</strong></p>
 
-            <p></p>
+            <p>{!! nl2br(e($customMessage)) !!}</p>
 
             <p>Please make the payment as soon as possible to secure your participation.</p>
 

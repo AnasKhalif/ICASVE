@@ -96,6 +96,12 @@
                     <span class="menu-title">Years</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('admin.email-template.index') }}">
+                <a class="nav-link" href="{{ route('admin.email-template.index') }}">
+                    <i class="fa fa-envelope menu-icon"></i>
+                    <span class="menu-title">Edit Email Template</span>
+                </a>
+            </li>
         </ul>
     </nav>
 @endrole
@@ -307,9 +313,7 @@
                     @php
                         $withDecisionCount = \App\Models\FullPaper::where('status', 'accepted')->count();
                     @endphp
-                    @if ($withDecisionCount > 0)
-                        <span class="badge badge-success">{{ $withDecisionCount }}</span>
-                    @endif
+                    <span class="badge badge-success">{{ $withDecisionCount > 0 ? $withDecisionCount : 0 }}</span>
                 </a>
             </li>
             <li class="nav-item {{ request()->routeIs('reviewer.editor-fullpaper.index') ? 'active' : '' }}">

@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\ConferenceSetting;
+use App\Models\EmailTemplate;
 
 class AbstractAccepted extends Mailable
 {
@@ -59,7 +60,10 @@ class AbstractAccepted extends Mailable
     }
     public function build()
     {
+        $emailTemplate = EmailTemplate::where('type', 'abstract_accepted')->first();
+        $customMessage = $emailTemplate ? $emailTemplate->content : 'Default message jika belum diatur admin.';
+
         return $this->subject('Your Abstract Has Been Accepted')
-            ->view('emails.abstract-accepted');
+            ->view('emails.abstract-accepted', compact('customMessage'));
     }
 }

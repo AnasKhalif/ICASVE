@@ -45,7 +45,6 @@ class AbstractController extends Controller
             if (
                 request()->user()->hasRole('indonesia-presenter')
             ) {
-                dd(request()->user()->roles);
                 $conferenceSetting = ConferenceSetting::first();
                 if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
                     return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
