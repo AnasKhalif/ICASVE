@@ -171,7 +171,7 @@
     <!-- Details Section -->
     <section id="details" class="details section">
         @if ($posters->count() > 0)
-        <div class="container">
+    <div class="container">
             @foreach ($posters as $poster)
                 <div class="row gy-4 align-items-center features-item">
                     <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
@@ -209,7 +209,7 @@
                                 @endif
                             </tbody>
                         </table>
-                        <a href="{{ $poster->link }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                        <a href="{{ asset('storage/' . $poster->image) }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
                     </div>
                 </div>
             @endforeach
@@ -239,26 +239,32 @@
                                 <tr>
                                     <td>{{ $fee->category_name }}</td>
                                     <td>
-                                      @if($fee->domestic_participants === 'TBA')
-                                          TBA
-                                      @elseif(is_numeric($fee->domestic_participants))
-                                          IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                      @endif                          
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
                                     </td>
                                     <td>
-                                      @if($fee->international_participants === 'TBA')
-                                          TBA
-                                      @elseif(is_numeric($fee->international_participants))
-                                          IDR {{ number_format($fee->international_participants, 0, ',', '.') }}
-                                      @endif
+                                        @if($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
                                     </td>
-                                    <td>@if ($fee->period_of_payment === 'TBA') TBA @else Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} @endif</td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} 
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                             @if ($presenter->isEmpty())
-                            <tr>
-                                <td colspan="4">No presenter found.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4">No presenter found.</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -276,25 +282,32 @@
                                 <tr>
                                     <td>{{ $fee->category_name }}</td>
                                     <td>
-                                      @if($fee->domestic_participants === 'TBA')
-                                          TBA
-                                      @elseif(is_numeric($fee->domestic_participants))
-                                          IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                      @endif                          
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
                                     </td>                                    
-                                    <td>@if ($fee->international_participants === 'TBA') TBA @else US$ {{ $fee->international_participants }} @endif</td>
-                                    <td>@if ($fee->period_of_payment === 'TBA')
-                                        TBA
-                                    @else
-                                       Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                    @endif
+                                    <td>
+                                        @if ($fee->international_participants === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
                             @if ($non_presenter->isEmpty())
-                            <tr>
-                                <td colspan="4">No non presenter found.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4">No non presenter found.</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -307,32 +320,37 @@
                                 <th>Period of Payment</th>
                             </tr>
                         </thead>
-                    
                         <tbody>
-                             @foreach ($additional_fee as $fee)
+                            @foreach ($additional_fee as $fee)
                                 <tr>
                                     <td>{{ $fee->category_name }}</td>
                                     <td>
-                                      @if($fee->domestic_participants === 'TBA')
-                                          TBA
-                                      @elseif(is_numeric($fee->domestic_participants))
-                                          IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                      @endif                          
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
                                     </td>
                                     <td>
-                                      @if($fee->international_participants === 'TBA')
-                                          TBA
-                                      @elseif(is_numeric($fee->international_participants))
-                                          IDR {{ number_format($fee->international_participants, 0, ',', '.') }}
-                                      @endif
+                                        @if($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
                                     </td>
-                                    <td>@if ($fee->period_of_payment === 'TBA') TBA @else Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} @endif</td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} 
+                                        @endif
+                                    </td>
                                 </tr>
-                             @endforeach
+                            @endforeach
                             @if ($additional_fee->isEmpty())
-                            <tr>
-                                <td colspan="4">No additional fee found.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="4">No additional fee found.</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -340,14 +358,14 @@
                 <p class="text-muted mt-3" data-aos="fade-up">
                     <small>
                         <b>Please note:</b><br />
-                        1. The registration fee serves only for conference fee, and it cannot be waived for
-                        authors.<br />
+                        1. The registration fee serves only for conference fee, and it cannot be waived for authors.<br />
                         2. Authors need to pay for publishing if accepted.<br />
                         3. Certificate fee: Participants can attend the event without certificate.
                     </small>
                 </p>
             </div>
-          @endif
+        @endif
+        
           @if ($venues->isNotEmpty())
           </div>
             <div class="row gy-4 align-items-center features-item">
