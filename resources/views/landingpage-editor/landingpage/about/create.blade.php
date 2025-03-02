@@ -15,15 +15,7 @@
                 <input type="file" name="image" class="form-control" accept="image/*"> 
                 <label class="form-label">Format : jpg, jpeg, png | Max Size : 2MB</label>
             </div> 
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-           @endif
+            
             <button type="submit" class="btn btn-success">Save</button>
         </form>
         
