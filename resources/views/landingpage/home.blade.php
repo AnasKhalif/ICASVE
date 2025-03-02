@@ -47,31 +47,30 @@
     <!-- /Hero Section -->
 
     <!-- About Section -->
-    @if ($about->isNotEmpty())
-    <section id="about" class="about section">
-        <div class="container">
-            @foreach ($about as $item)  
-                <div class="row align-items-center justify-content-between gy-5">
-                    <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
-                        <h3>About</h3>
-                        <h2>{{ $item->title }}</h2>
-                        <p>
-                            {{ $item->content }}
-                        </p>
-                    </div>
+ <!-- About Section -->
+@if ($about)
+<section id="about" class="about section">
+    <div class="container">
+        <div class="row align-items-center justify-content-between gy-5">
+            <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
+                <h3>About</h3>
+                <h2>{{ $about->title }}</h2>
+                <p>{{ $about->content }}</p>
+            </div>
 
-                    <div class="d-none d-xl-block col-xl-2"></div>
+            <div class="d-none d-xl-block col-xl-2"></div>
 
-                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
-                        data-aos-delay="100">
-                        <img src="{{ asset('storage/' . $about->first()->image) }}" class="w-100 w-md-75 animated rounded-3"
-                            alt="gedung-vokasi" />
-                    </div>
-                </div>
-            @endforeach
+            <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
+                data-aos-delay="100">
+                <img src="{{ asset('storage/' . $about->image) }}" class="w-100 w-md-75 animated rounded-3"
+                    alt="gedung-vokasi" />
+            </div>
         </div>
-    </section>
-    @endif
+    </div>
+</section>
+@endif
+<!-- /About Section -->
+
     <!-- /About Section -->
 
     <!-- Team Section -->

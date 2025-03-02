@@ -14,19 +14,24 @@
         @foreach ($posters as $poster)
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card shadow-sm border-0 rounded">
-                    <img src="{{ asset('storage/' . $poster->image) }}" class="card-img-top" alt="ICASVE {{ $poster->year }} Poster">
+                    <div class="ratio ratio-4x3"> <!-- Menjaga rasio gambar -->
+                        <img src="{{ asset('storage/' . $poster->image) }}" 
+                             class="card-img-top img-fluid"
+                             style="object-fit: cover; width: 100%; height: 100%;"
+                             alt="ICASVE {{ $poster->year }} Poster">
+                    </div>
                     <div class="card-body">
                         @foreach ($conferenceTitle as $title)
-                          @if( $title->year == $poster->year )
-                            <h5 class="card-title fw-bold">ICASVE {{ $title->year }}</h5>
-                            <p class="card-text text-muted">{{ $title->title }}</p>
-                            <form method="GET" action="{{ route('downloadAllPdf') }}">
-                                <input type="hidden" name="year" value="{{ $poster->year }}">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-download"></i> Download Abstract Book for ICASVE {{ $poster->year }}
-                                </button>
-                            </form>
-                            @endif 
+                            @if($title->year == $poster->year)
+                                <h5 class="card-title fw-bold">ICASVE {{ $title->year }}</h5>
+                                <p class="card-text text-muted">{{ $title->title }}</p>
+                                <form method="GET" action="{{ route('downloadAllPdf') }}">
+                                    <input type="hidden" name="year" value="{{ $poster->year }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-download"></i> Download Abstract Book for ICASVE {{ $poster->year }}
+                                    </button>
+                                </form>
+                            @endif
                         @endforeach
                     </div>
                 </div>

@@ -11,7 +11,11 @@
             <div class="mb-3">
                 <label class="form-label">Upload Gambar</label>
                 <input type="file" name="image" class="form-control" id="imageInput" required accept=".jpg, .jpeg, .png">
-                <small class="text-danger d-none" id="imageError">Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.</small>
+                <small class="form-text text-muted">
+                    Format yang diperbolehkan: PNG, JPEG, JPG. Ukuran maksimal 2MB.  
+                    **Disarankan ukuran min. 300x300 px (rasio 1:1).**
+                </small>
+                <small class="text-danger d-none" id="imageError">Format atau ukuran gambar tidak sesuai.</small>
             </div>
             <div class="mb-3">
                 <label class="form-label">Tahun</label>
@@ -38,12 +42,24 @@
                 const file = imageInput.files[0];
                 if (file) {
                     const fileType = file.type;
-                    if (!['image/jpeg', 'image/jpg', 'image/png'].includes(fileType)) {
+                    const fileSize = file.size / 1024 / 1024; // Convert to MB
+
+                    if (!['image/jpeg', 'image/jpg', 'image/png'].includes(fileType) || fileSize > 2) {
                         imageError.classList.remove('d-none');
                         submitBtn.disabled = true;
                     } else {
-                        imageError.classList.add('d-none');
-                        submitBtn.disabled = false;
+                        const img = new Image();
+                        img.src = URL.createObjectURL(file);
+                        img.onload = function () {
+                            if (this.width < 300 || this.height < 300) {
+                                imageError.innerText = "Ukuran gambar minimal 300x300 px.";
+                                imageError.classList.remove('d-none');
+                                submitBtn.disabled = true;
+                            } else {
+                                imageError.classList.add('d-none');
+                                submitBtn.disabled = false;
+                            }
+                        };
                     }
                 }
             });
