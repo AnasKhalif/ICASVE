@@ -12,6 +12,8 @@ use App\Models\ConferenceSetting;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Traits\FlashAlert;
+use App\Mail\PaymentNotification;
+use Illuminate\Support\Facades\Mail;
 
 class FilePaymentController extends Controller
 {
@@ -91,6 +93,13 @@ class FilePaymentController extends Controller
             FilePayment::create($data);
             $message = 'Payment data successfully saved.';
         }
+
+        $conferenceSetting = ConferenceSetting::first();
+        $adminEmails = explode(',', $conferenceSetting->administrator_email);
+        $treasurerEmails = explode(',', $conferenceSetting->treasurer_email);
+        $recipients = array_merge($adminEmails, $treasurerEmails);
+
+        Mail::to($recipients)->send(new PaymentNotification($existingPayment));
 
         return redirect()->route('filepayments.create')
             ->with('success', $message, $this->alertCreated());
