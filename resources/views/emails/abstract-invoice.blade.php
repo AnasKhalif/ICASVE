@@ -73,7 +73,7 @@
         <div class="email-body">
             <p>Dear {{ $user->name }},</p>
 
-            <p>Thank you for registering for the {{ $conference->$conference_abbreviation }}! We are delighted to have
+            <p>Thank you for registering for the {{ $conference->conference_abbreviation }}! We are delighted to have
                 you join us for this event.</p>
 
             <p>We are pleased to inform you that your abstract titled

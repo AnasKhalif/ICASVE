@@ -21,7 +21,7 @@ class AbstractInvoice extends Mailable
     public $user;
     public $abstract;
     public $conference;
-    public $logoPath;
+    public $logoBase64;
     public $signaturePath;
 
     /**
@@ -34,7 +34,11 @@ class AbstractInvoice extends Mailable
         $this->conference = ConferenceSetting::first();
 
         $logo = Upload::where('type', 'logo')->latest()->first();
-        $this->logoPath = $logo ? asset('storage/' . $logo->file_path) : asset('img/Logo_ICASVE_rmbg.png');
+        $this->logoBase64 = null;
+        if ($logo && file_exists(storage_path('app/public/' . $logo->file_path))) {
+            $logoPath = storage_path('app/public/' . $logo->file_path);
+            $this->logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        }
 
         $signatureUrl = Upload::getFilePath('signature');
         $this->signaturePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
@@ -73,14 +77,14 @@ class AbstractInvoice extends Mailable
     public function build()
     {
         $emailTemplate = EmailTemplate::where('type', 'abstract_invoice')->first();
-        $customMessage = $emailTemplate ? $emailTemplate->content : 'Default message jika belum diatur admin.';
+        $customMessage = $emailTemplate ? $emailTemplate->content : ' ';
         $amount = $emailTemplate ? $emailTemplate->amount : 0;
 
         $pdf = Pdf::loadView('invoice.invoice-pdf', [
             'user' => $this->user,
             'abstract' => $this->abstract,
             'conference' => $this->conference,
-            'logoPath' => $this->logoPath,
+            'logoBase64' => $this->logoBase64,
             'signaturePath' => $this->signaturePath,
             'amount' => $amount
         ]);

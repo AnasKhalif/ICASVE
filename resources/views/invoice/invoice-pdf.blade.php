@@ -77,7 +77,9 @@
             <table width="100%">
                 <tr>
                     <td width="30%">
-                        <img src="{{ $logoPath }}" alt="Logo" class="logo">
+                        @if ($logoBase64)
+                            <img src="{{ $logoBase64 }}" alt="Logo" class="logo">
+                        @endif
                     </td>
                     <td width="70%" style="text-align: right;">
                         <h2>INVOICE</h2>

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmailTemplate;
+use App\Traits\FlashAlert;
 
 class EmailTemplateController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         return view('email-template.index');

@@ -94,7 +94,7 @@
             <p class="highlight">
                 You can now proceed with your full paper submission and presentation preparation.<br>
                 To review the guidelines, please visit:<br>
-                <a href="{{ url('/full-paper-guidelines') }}">Full Paper Submission Guidelines</a>
+                <a href="{{ route('submission.fullpaper') }}">Full Paper Submission Guidelines</a>
             </p>
 
             <p>We look forward to your participation. Please contact us if you have any questions.</p>

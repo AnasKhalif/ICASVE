@@ -61,7 +61,7 @@ class AbstractAccepted extends Mailable
     public function build()
     {
         $emailTemplate = EmailTemplate::where('type', 'abstract_accepted')->first();
-        $customMessage = $emailTemplate ? $emailTemplate->content : 'Default message jika belum diatur admin.';
+        $customMessage = $emailTemplate ? $emailTemplate->content : ' ';
 
         return $this->subject('Your Abstract Has Been Accepted')
             ->view('emails.abstract-accepted', compact('customMessage'));

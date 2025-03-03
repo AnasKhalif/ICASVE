@@ -99,7 +99,12 @@ class FilePaymentController extends Controller
         $treasurerEmails = explode(',', $conferenceSetting->treasurer_email);
         $recipients = array_merge($adminEmails, $treasurerEmails);
 
-        Mail::to($recipients)->send(new PaymentNotification($existingPayment));
+        $payment = $existingPayment ?? FilePayment::where('user_id', $user->id)->latest()->first();
+
+        if ($payment) {
+            Mail::to($recipients)->send(new PaymentNotification($payment));
+        }
+
 
         return redirect()->route('filepayments.create')
             ->with('success', $message, $this->alertCreated());
