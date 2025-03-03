@@ -7,7 +7,7 @@
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Welcome {{ auth()->user()->name }}</h3>
                             <h6 class="font-weight-normal mb-0">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-flex align-items-stretch">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card tale-bg">
                         <div class="card-people">
@@ -26,11 +26,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 grid-margin transparent">
+                <div class="col-md-6 grid-margin transparent d-flex flex-column justify-content-between">
                     <div class="row">
                         <div class="col-md-6 mb-4 stretch-card transparent">
                             <div class="card text-white card-tale">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Total Participants</p>
                                     <p class="fs-30 mb-2">{{ $totalUsers }}</p>
                                 </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-md-6 mb-4 stretch-card transparent">
                             <div class="card text-white card-dark-blue">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Total Payments Verified</p>
                                     <p class="fs-30 mb-2">Rp {{ number_format($totalAmountPayment, 0, ',', '.') }}</p>
                                     <p>&nbsp;</p>
@@ -49,7 +49,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                             <div class="card text-black bg-warning bg-opacity-75">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Total Abstracts Accepted</p>
                                     <p class="fs-30 mb-2">{{ $totalAbstracts }}</p>
                                     <p>&nbsp;</p>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-6 stretch-card transparent">
                             <div class="card text-black bg-warning" style="--bs-bg-opacity: .5;">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Total Symposiums</p>
                                     <p class="fs-30 mb-2">{{ $totalSymposiums }}</p>
                                 </div>
@@ -66,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">

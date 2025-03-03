@@ -7,9 +7,12 @@ use App\Models\FullPaper;
 use App\Models\AbstractModel;
 use App\Models\Year;
 use App\Models\ConferenceSetting;
+use App\Traits\FlashAlert;
 
 class FullPaperController extends Controller
 {
+    use FlashAlert;
+
     public function create(Request $request)
     {
         $conferenceSetting = ConferenceSetting::first();
@@ -63,6 +66,6 @@ class FullPaperController extends Controller
             ]);
         }
 
-        return redirect()->route('abstracts.index')->with('success', 'Full paper has been uploaded successfully.');
+        return redirect()->route('abstracts.index')->with($this->alertCreated());
     }
 }

@@ -42,7 +42,7 @@ trait FlashAlert
     public function alertDanger()
     {
         return [
-            'type' => 'danger',
+            'type' => 'error',
             'message' => 'Something wrong!'
         ];
     }
@@ -50,8 +50,24 @@ trait FlashAlert
     public function permissionDenied()
     {
         return [
-            'type' => 'danger',
+            'type' => 'error',
             'message' => 'you don’t have permission to access!'
+        ];
+    }
+
+    public function alertAssign()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Data successfully assigned!'
+        ];
+    }
+
+    public function alertReview()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Review successfully submitted!'
         ];
     }
 }

@@ -18,10 +18,12 @@ use App\Models\ConferenceSetting;
 use Illuminate\Support\Facades\File;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\FlashAlert;
 
 class AbstractController extends Controller
 {
     use HasRolesAndPermissions;
+    use FlashAlert;
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +61,7 @@ class AbstractController extends Controller
                 $symposiums = Symposium::all();
                 return view('abstracts.create', compact('symposiums'));
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to create abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
             return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
@@ -115,7 +117,7 @@ class AbstractController extends Controller
 
         $this->generateCertificate($abstract);
 
-        return redirect()->route('abstracts.index')->with('success', 'Abstract submitted successfully');
+        return redirect()->route('abstracts.index')->with($this->alertCreated());
     }
 
     private function generateCertificate(AbstractModel $abstract)
@@ -206,10 +208,10 @@ class AbstractController extends Controller
                 $formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
                 return view('abstracts.detail', compact('abstract', 'formattedAuthors', 'formattedAffiliations'));
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
+            return redirect()->route('abstracts.index')->with($this->alertNotFound());
         }
     }
 
@@ -228,10 +230,10 @@ class AbstractController extends Controller
                 }
                 return view('abstracts.edit', compact('abstract', 'symposiums'));
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to edit this abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
+            return redirect()->route('abstracts.index')->with($this->alertNotFound());
         }
     }
 
@@ -262,10 +264,10 @@ class AbstractController extends Controller
                     'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id'
                 ]));
 
-                return redirect()->route('abstracts.index')->with('success', 'Abstract updated successfully');
+                return redirect()->route('abstracts.index')->with($this->alertUpdated());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
+            return redirect()->route('abstracts.index')->with($this->alrtNotFound());
         }
     }
 
@@ -305,12 +307,12 @@ class AbstractController extends Controller
                 }
                 $abstract->delete();
 
-                return redirect()->route('abstracts.index')->with('success', 'Abstract deleted successfully');
+                return redirect()->route('abstracts.index')->with($this->alertDeleted());
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to delete this abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract not found');
+            return redirect()->route('abstracts.index')->with($this->alertNotFound());
         }
     }
 
@@ -342,10 +344,10 @@ class AbstractController extends Controller
 
                 return $pdf->stream('abstract-detail.pdf');
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract PDF not found');
+            return redirect()->route('abstracts.index')->with($this->alertNotFound());
         }
     }
 
@@ -368,10 +370,10 @@ class AbstractController extends Controller
 
                 return $pdf->stream('abstract-acceptance.pdf');
             } else {
-                return redirect()->route('abstracts.index')->with('error', 'You are not authorized to view this abstract');
+                return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Acceptance not found');
+            return redirect()->route('abstracts.index')->with($this->alertNotFound());
         }
     }
 }

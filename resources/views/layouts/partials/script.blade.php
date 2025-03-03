@@ -19,3 +19,44 @@
 <script src="{{ asset('js/dashboard.js') }}"></script>
 <script src="{{ asset('js/Chart.roundedBarCharts.js') }}"></script>
 <!-- End custom js for this page-->
+@vite(['resources/js/app.js'])
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.Swal && "{{ session('type') }}" && "{{ session('message') }}") {
+            Swal.fire({
+                icon: "{{ session('type') }}",
+                title: "{{ session('type') }}" === "success" ? "Success!" :
+                    "{{ session('type') }}" === "error" ? "Error!" : "{{ session('type') }}" ===
+                    "warning" ? "Warning!" : "Info",
+                text: "{{ session('message') }}",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK"
+            });
+        }
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-delete").forEach(button => {
+            button.addEventListener("click", function(e) {
+                e.preventDefault();
+                let form = this.closest("form");
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This data will be permanently deleted!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>

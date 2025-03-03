@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\FlashAlert;
 
 class ProfileController extends Controller
 {
+    use FlashAlert;
     /**
      * Display the user's profile form.
      */
@@ -56,7 +58,7 @@ class ProfileController extends Controller
         $user->profile_photo_path = $path;
         $user->save();
 
-        return redirect()->route('profile.edit')->with('status', 'Profile photo updated successfully.');
+        return redirect()->route('profile.edit')->with($this->alertUpdated());
     }
 
     /**

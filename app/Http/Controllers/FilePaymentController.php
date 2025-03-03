@@ -11,10 +11,12 @@ use App\Models\Upload;
 use App\Models\ConferenceSetting;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\FlashAlert;
 
 class FilePaymentController extends Controller
 {
     use HasRolesAndPermissions;
+    use FlashAlert;
 
     public function create()
     {
@@ -91,7 +93,7 @@ class FilePaymentController extends Controller
         }
 
         return redirect()->route('filepayments.create')
-            ->with('success', $message);
+            ->with('success', $message, $this->alertCreated());
     }
 
     public function receipt($id)
@@ -113,10 +115,10 @@ class FilePaymentController extends Controller
                 $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
                 return $pdf->stream('payment-digital.pdf');
             } else {
-                return redirect()->route('filepayments.create')->with('error', 'You are not authorized to view this page.');
+                return redirect()->route('filepayments.create')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('filepayments.create')->with('error', 'Payment data not found.');
+            return redirect()->route('filepayments.create')->with($this->alertNotFound());
         }
     }
 }

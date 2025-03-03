@@ -10,9 +10,12 @@ use App\Mail\AbstractAccepted;
 use Illuminate\Support\Facades\Mail;
 use App\Models\FilePayment;
 use App\Mail\AbstractInvoice;
+use App\Traits\FlashAlert;
 
 class EditorController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $abstracts = AbstractModel::with('abstractReviews.reviewer')->paginate(10);
@@ -103,7 +106,7 @@ class EditorController extends Controller
         $abstract->status = 'under review';
         $abstract->save();
 
-        return redirect()->route('reviewer.editor.noReviewer')->with('success', 'Reviewer assigned successfully');
+        return redirect()->route('reviewer.editor.noReviewer')->with($this->alertAssign());
     }
 
 
@@ -149,7 +152,7 @@ class EditorController extends Controller
             }
         }
 
-        return redirect()->route('reviewer.editor.index')->with('success', 'Status updated successfully');
+        return redirect()->route('reviewer.editor.index')->with($this->alertUpdated());
     }
 
     public function workLoad()

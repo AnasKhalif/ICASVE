@@ -79,12 +79,19 @@
                                             <input type="password" name="password" id="password"
                                                 class="form-control form-control-md border-left-0" placeholder="Password"
                                                 required />
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn  btn-outline-secondary toggle-password"
+                                                    data-target="password">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                         @if ($errors->has('password'))
                                             <span class="text-danger"
                                                 style="font-size: 12px;">{{ $errors->first('password') }}</span>
                                         @endif
                                     </div>
+
 
                                     <div class="form-group mb-4">
                                         <div class="input-group">
@@ -170,6 +177,11 @@
                                                 id="password_confirmation"
                                                 class="form-control form-control-md border-left-0"
                                                 placeholder="Confirm Password" required />
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-outline-secondary toggle-password">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                         @if ($errors->has('password_confirmation'))
                                             <span class="text-danger"
@@ -238,6 +250,43 @@
             </section>
         </div>
     </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".toggle-password").forEach(button => {
+                button.addEventListener("click", function() {
+                    let input = document.getElementById(this.getAttribute("data-target"));
+                    let icon = this.querySelector("i");
+
+                    if (input.type === "password") {
+                        input.type = "text";
+                        icon.classList.remove("fa-eye");
+                        icon.classList.add("fa-eye-slash");
+                    } else {
+                        input.type = "password";
+                        icon.classList.remove("fa-eye-slash");
+                        icon.classList.add("fa-eye");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const togglePassword = document.querySelector(".toggle-password");
+            const passwordInput = document.getElementById("password_confirmation");
+
+            togglePassword.addEventListener("click", function() {
+                const type = passwordInput.type === "password" ? "text" : "password";
+                passwordInput.type = type;
+
+                // Ganti ikon mata
+                this.innerHTML = type === "password" ?
+                    '<i class="fas fa-eye"></i>' :
+                    '<i class="fas fa-eye-slash"></i>';
+            });
+        });
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch("https://restcountries.com/v3.1/all")

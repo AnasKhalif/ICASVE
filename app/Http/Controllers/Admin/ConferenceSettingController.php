@@ -6,15 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ConferenceSetting;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class ConferenceSettingController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return redirect()->back()->with('error', 'No active year set.');
+            return redirect()->back()->with($this->alertDanger());
         }
 
         $settings = ConferenceSetting::whereYear('created_at', $activeYear->year)->first();
@@ -46,6 +49,6 @@ class ConferenceSettingController extends Controller
 
         $settings->save();
 
-        return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully.');
+        return redirect()->route('admin.settings.index')->with($this->alertUpdated());
     }
 }

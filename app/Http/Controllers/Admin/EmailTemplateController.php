@@ -27,6 +27,6 @@ class EmailTemplateController extends Controller
             ['content' => $request->content, 'amount' => $request->amount]
         );
 
-        return redirect()->back()->with('success', 'Email template updated successfully.');
+        return redirect()->back()->with($this->alertUpdated());
     }
 }

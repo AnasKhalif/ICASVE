@@ -2051,3 +2051,13 @@ section,
 .whatsapp-float:hover .whatsapp-icon {
     transform: scale(1.1);
 }
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card {
+    height: 100%;
+}

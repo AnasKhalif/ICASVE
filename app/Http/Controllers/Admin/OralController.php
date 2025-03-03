@@ -8,15 +8,18 @@ use App\Models\AbstractModel;
 use App\Models\Symposium;
 use App\Models\FullPaper;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class OralController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $symposiums = Symposium::with(['abstracts' => function ($query) {
@@ -45,6 +48,6 @@ class OralController extends Controller
             'symposium_id' => $request->symposium_id,
         ]);
 
-        return redirect()->route('admin.oral.index')->with('success', 'Symposium updated successfully');
+        return redirect()->route('admin.oral.index')->with($this->alertUpdated());
     }
 }

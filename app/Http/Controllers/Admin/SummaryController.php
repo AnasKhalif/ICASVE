@@ -10,15 +10,18 @@ use App\Models\Symposium;
 use App\Models\FullPaper;
 use App\Models\Year;
 use App\Models\Role;
+use App\Traits\FlashAlert;
 
 class SummaryController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return redirect()->back()->with('error', 'No active year set.');
+            return redirect()->back()->with($this->alertDanger());
         }
 
         $rolesToDisplay = ['indonesia-presenter', 'foreign-presenter', 'indonesia-participants', 'foreign-participants'];
@@ -40,9 +43,9 @@ class SummaryController extends Controller
         $totalAmountPayment = 0;
         foreach ($payments as $payment) {
             if ($payment->currency === 'USD') {
-                $totalAmountPayment += $payment->total * $usdToIdrRate; // Konversi ke IDR
+                $totalAmountPayment += $payment->total * $usdToIdrRate;
             } else {
-                $totalAmountPayment += $payment->total; // IDR langsung ditambahkan
+                $totalAmountPayment += $payment->total;
             }
         }
 
