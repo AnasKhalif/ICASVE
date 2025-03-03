@@ -50,7 +50,7 @@
                             <input type="file" class="form-control" name="image" id="image" 
                                 required accept="image/png, image/jpeg, image/jpg">
                         </div>
-                        <small class="text-muted">Only PNG, JPEG, JPG. Max size: 2MB. Required dimensions: 300x300 px</small>
+                        <small class="text-muted">Only PNG, JPEG, JPG. Max size: 2MB. rekommended dimensions: 300x300 px</small>
                         @error('image')
                             <span class="text-danger d-block">{{ $message }}</span>
                         @enderror
@@ -82,24 +82,6 @@
                                     return;
                                 }
                     
-                                const reader = new FileReader();
-                                reader.onload = function(e) {
-                                    const img = new Image();
-                                    img.src = e.target.result;
-                                    img.onload = function() {
-                                        // Validasi dimensi gambar (harus 300x300 px)
-                                        if (img.width !== 300 || img.height !== 300) {
-                                            alert("Ukuran gambar harus 300x300 piksel!");
-                                            document.getElementById('image').value = "";
-                                            return;
-                                        }
-                    
-                                        // Tampilkan preview jika valid
-                                        const preview = document.getElementById('previewImage');
-                                        preview.src = e.target.result;
-                                        preview.classList.remove('d-none');
-                                    };
-                                };
                                 reader.readAsDataURL(file);
                             }
                         });
