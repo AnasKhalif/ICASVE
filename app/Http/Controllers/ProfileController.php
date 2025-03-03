@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 use App\Traits\FlashAlert;
+use App\Models\Certificate;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 class ProfileController extends Controller
 {
@@ -29,15 +31,32 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $originalName = $user->name;
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->update($request->validated());
+
+        if ($user->wasChanged('email')) {
+            $user->email_verified_at = null;
+            $user->save();
         }
 
-        $request->user()->save();
+        if ($originalName !== $user->name) {
+            $this->updateCertificate($user);
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with($this->alertUpdated());
+    }
+
+    private function updateCertificate($user)
+    {
+        $certificate = Certificate::where('user_id', $user->id)->first();
+
+        if ($certificate) {
+            Storage::disk('public')->delete($certificate->certificate_path);
+            $certificate->delete();
+        }
+        app(RegisteredUserController::class)->generateCertificate($user);
     }
 
     public function uploadPhoto(Request $request)
