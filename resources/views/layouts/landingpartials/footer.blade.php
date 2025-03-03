@@ -28,10 +28,15 @@
                     @endif
                 </div>
                 <div class="social-links d-flex mt-4">
-                    <a href="#" class="me-2"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    @php
+                       $instagram = \App\Models\Instagram::first();
+                     @endphp
+             
+                     @if ($instagram == null)
+                         <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+                     @else
+                        <a href="{{ $instagram->link }}" class="me-2"><i class="bi bi-instagram"></i></a>
+                     @endif
                 </div>
             </div>
 

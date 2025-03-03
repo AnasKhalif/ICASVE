@@ -60,6 +60,7 @@ use App\Http\Controllers\Landing\ThemeController;
 use App\Http\Controllers\Landing\ConferenceDetailController;
 use App\Http\Controllers\FaqLandingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Landing\InstagramController;
 use App\Http\Controllers\Landing\PaymentGuidelineController;
 use App\Http\Controllers\PreviousConferences;
 
@@ -218,6 +219,7 @@ Route::name('landing.')
         Route::resource('deadlines', DeadlineDateController::class);
         Route::resource('logos', LogoController::class);
         Route::resource('whatsapp', WhatsappController::class);
+        Route::resource('instagram', InstagramController::class);
         Route::resource('conference-title', ConferenceTitleController::class);
         Route::resource('fullpaper-guidelines', FullpaperGuidelineController::class);
         Route::resource('abstract-guidelines', AbstractGuidelineController::class);

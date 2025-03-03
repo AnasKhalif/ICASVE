@@ -68,15 +68,20 @@
                     
                     <h5 class="fw-bold mb-3">Follow Us</h5>
                     <div class="d-flex">
-                        <a href="#" class="btn btn-outline-primary btn-sm me-2">
-                            <i class="bi bi-facebook me-1"></i> Facebook
-                        </a>
-                        <a href="#" class="btn btn-outline-info btn-sm me-2">
-                            <i class="bi bi-twitter me-1"></i> Twitter
-                        </a>
-                        <a href="#" class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-instagram me-1"></i> Instagram
-                        </a>
+                        @php
+                           $instagram = \App\Models\Instagram::first();
+                         @endphp
+                 
+                         @if ($instagram == null)
+                          <a href="#" class="btn btn-outline-danger btn-sm">
+                             <i class="bi bi-instagram me-1"></i> Instagram
+                         </a>
+                         @else
+                            <a href="{{ $instagram->link }}" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-instagram me-1"></i> Instagram
+                            </a>
+                         @endif
+                        
                     </div>
                 </div>
             </div>

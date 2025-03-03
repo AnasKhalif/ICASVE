@@ -526,6 +526,13 @@
                     <span class="menu-title">Whatsapp</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.instagram.index') }}">
+                    <i class="fa-brands fa-instagram menu-icon"></i>
+                    <span class="menu-title">Instagram</span>
+                </a>
+            </li>
             
         </ul>
     </nav>
