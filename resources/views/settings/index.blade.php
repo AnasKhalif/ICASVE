@@ -20,6 +20,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Conference Title</label>
                                 <input type="text" name="conference_title" class="form-control"
+                                    placeholder="The 4rd International Conference on Applied Science for Vocational"
                                     value="{{ old('conference_title', $settings->conference_title ?? '') }}">
                             </div>
                         </div>
@@ -28,6 +29,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Conference Abbreviation</label>
                                 <input type="text" name="conference_abbreviation" class="form-control"
+                                    placeholder="ICASVE 2025"
                                     value="{{ old('conference_abbreviation', $settings->conference_abbreviation ?? '') }}">
                             </div>
                         </div>
@@ -36,6 +38,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Conference Chairperson</label>
                                 <input type="text" name="conference_chairperson" class="form-control"
+                                    placeholder="Dr. A. Faidlal Rahman, SE.Par., M.Sc., CHE."
                                     value="{{ old('conference_chairperson', $settings->conference_chairperson ?? '') }}">
                             </div>
                         </div>
@@ -44,6 +47,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Administrator Email</label>
                                 <input type="text" name="administrator_email" class="form-control"
+                                    placeholder="icasve@ub.ac.id,salnan@ub.ac.id,cahyawuri@ub.ac.id"
                                     value="{{ old('administrator_email', $settings->administrator_email ?? '') }}">
                             </div>
                         </div>
@@ -52,6 +56,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Treasurer Email</label>
                                 <input type="text" name="treasurer_email" class="form-control"
+                                    placeholder="icasve@ub.ac.id,salnan@ub.ac.id,cahyawuri@ub.ac.id"
                                     value="{{ old('treasurer_email', $settings->treasurer_email ?? '') }}">
                             </div>
                         </div>
@@ -60,6 +65,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Bank Account</label>
                                 <input type="text" name="bank_account" class="form-control"
+                                    placeholder="VA Mandiri ICASVE : 891187776, VA ICASVE BNI : 0516377760000"
                                     value="{{ old('bank_account', $settings->bank_account ?? '') }}">
                             </div>
                         </div>
@@ -68,7 +74,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Max Abstracts Per Participant</label>
                                 <input type="number" name="max_abstracts_per_participant" class="form-control"
-                                    min="0"
+                                    min="0" placeholder="1"
                                     value="{{ old('max_abstracts_per_participant', $settings->max_abstracts_per_participant ?? '') }}">
                             </div>
                         </div>
@@ -77,6 +83,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Max Words in Abstract Body</label>
                                 <input type="number" name="max_words_in_abstract_body" class="form-control" min="0"
+                                    placeholder="250"
                                     value="{{ old('max_words_in_abstract_body', $settings->max_words_in_abstract_body ?? '') }}">
                             </div>
                         </div>
@@ -123,7 +130,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Payment Insruction</label>
                                 <textarea name="payment_instruction" class="form-control @error('payment_instruction') is-invalid @enderror"
-                                    rows="5">{{ old('payment_instruction', $settings->payment_instruction ?? '') }}</textarea>
+                                    placeholder="Payment instruction" rows="5">{{ old('payment_instruction', $settings->payment_instruction ?? '') }}</textarea>
                                 @error('payment_instruction')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
