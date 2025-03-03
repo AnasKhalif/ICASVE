@@ -50,7 +50,7 @@ class AbstractController extends Controller
             ) {
                 $conferenceSetting = ConferenceSetting::first();
                 if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
-                    return redirect()->route('abstracts.index')->with('error', 'Registration Closed.');
+                    return redirect()->route('abstracts.index')->with($this->alertAbstractClosed());
                 }
                 $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
                 $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
@@ -64,7 +64,7 @@ class AbstractController extends Controller
                 return redirect()->route('abstracts.index')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+            return redirect()->route('abstracts.index')->with($this->alertAbstractClosed());
         }
     }
 
@@ -75,7 +75,7 @@ class AbstractController extends Controller
     {
         $conferenceSetting = ConferenceSetting::first();
         if (!$conferenceSetting || !$conferenceSetting->open_abstract_submission) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+            return redirect()->route('abstracts.index')->with($this->alertAbstractClosed());
         }
 
         $maxAbstracts = $conferenceSetting->max_abstracts_per_participant;
@@ -226,7 +226,7 @@ class AbstractController extends Controller
                 $abstract->user_id === request()->user()->id
             ) {
                 if (!in_array($abstract->status, ['open', 'revision'])) {
-                    return back()->with('error', 'Cannot edit abstract in review process');
+                    return back()->with($this->alertAbstractNotEdit());
                 }
                 return view('abstracts.edit', compact('abstract', 'symposiums'));
             } else {
@@ -247,7 +247,7 @@ class AbstractController extends Controller
                 $abstract->user_id === request()->user()->id
             ) {
                 if (!in_array($abstract->status, ['open', 'revision'])) {
-                    return back()->with('error', 'Cannot edit abstract in review process');
+                    return back()->with($this->alertAbstractNotEdit());
                 }
 
                 $request->validate([
@@ -281,7 +281,7 @@ class AbstractController extends Controller
                 $abstract->user_id === request()->user()->id
             ) {
                 if ($abstract->status != 'open') {
-                    return back()->with('error', 'Cannot delete abstract in review process');
+                    return back()->with($this->alertAbstractNotDelete());
                 }
                 $user = $abstract->user;
                 $certificate = $user->certificates()->where('certificate_type', 'presenter')->first();

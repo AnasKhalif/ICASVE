@@ -70,4 +70,43 @@ trait FlashAlert
             'message' => 'Review successfully submitted!'
         ];
     }
+
+    public function alertAbstractClosed()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Abstract Submission Closed!'
+        ];
+    }
+
+    public function alertFullpaperClosed()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Fullpaper Submission Closed!'
+        ];
+    }
+    public function alertAbstractNotEdit()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot edit abstract in review process!'
+        ];
+    }
+
+    public function alertAbstractNotDelete()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot delete abstract in review process!'
+        ];
+    }
+
+    public function alertFullpaperNotEdit()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot edit Fullpaper in review process!'
+        ];
+    }
 }

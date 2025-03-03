@@ -17,14 +17,14 @@ class FullPaperController extends Controller
     {
         $conferenceSetting = ConferenceSetting::first();
         if (!$conferenceSetting || !$conferenceSetting->open_full_paper_upload) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+            return redirect()->route('abstracts.index')->with($this->alertFullpaperClosed());
         }
 
         $abstractId = $request->input('abstract_id');
         $abstract = AbstractModel::findOrFail($abstractId);
 
         if ($abstract->fullPaper && !in_array($abstract->fullPaper->status, ['revision', 'open'])) {
-            return back()->with('error', 'You can only upload a full paper if it is in revision or open status.');
+            return back()->with($this->alertFullpaperNotEdit());
         }
 
         return view('fullpapers.create', compact('abstract'));
@@ -34,7 +34,7 @@ class FullPaperController extends Controller
     {
         $conferenceSetting = ConferenceSetting::first();
         if (!$conferenceSetting || !$conferenceSetting->open_full_paper_upload) {
-            return redirect()->route('abstracts.index')->with('error', 'Abstract Submission Closed.');
+            return redirect()->route('abstracts.index')->with($this->alertFullpaperClosed());
         }
 
         $request->validate([
@@ -47,7 +47,7 @@ class FullPaperController extends Controller
 
         if ($fullPaper) {
             if (!in_array($fullPaper->status, ['revision', 'open'])) {
-                return back()->with('error', 'You can only upload a full paper if it is in revision or open status.');
+                return back()->with($this->alertFullpaperNotEdit());
             }
 
             $previousStatus = $fullPaper->status;
