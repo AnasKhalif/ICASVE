@@ -8,25 +8,18 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\ConferenceSetting;
-use App\Models\EmailTemplate;
+use App\Models\FilePayment;
 
-class AbstractAccepted extends Mailable
+class PaymentNotification extends Mailable
 {
-
     use Queueable, SerializesModels;
-    public $user;
-    public $abstract;
-    public $conference;
-
+    public $filePayment;
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $abstract)
+    public function __construct(FilePayment $filePayment)
     {
-        $this->user = $user;
-        $this->abstract = $abstract;
-        $this->conference = ConferenceSetting::first();
+        $this->filePayment = $filePayment;
     }
 
     /**
@@ -35,7 +28,7 @@ class AbstractAccepted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Abstract Accepted',
+            subject: 'Payment Notification',
         );
     }
 
@@ -45,7 +38,7 @@ class AbstractAccepted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.abstract-accepted',
+            view: 'emails.payment-notification',
         );
     }
 
@@ -58,12 +51,10 @@ class AbstractAccepted extends Mailable
     {
         return [];
     }
+
     public function build()
     {
-        $emailTemplate = EmailTemplate::where('type', 'abstract_accepted')->first();
-        $customMessage = $emailTemplate ? $emailTemplate->content : ' ';
-
-        return $this->subject('Your Abstract Has Been Accepted')
-            ->view('emails.abstract-accepted', compact('customMessage'));
+        return $this->subject('Notifikasi Pembayaran Baru')
+            ->view('emails.payment-notification');
     }
 }

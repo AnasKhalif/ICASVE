@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AbstractModel;
 use App\Models\AbstractReview;
+use App\Traits\FlashAlert;
 
 class ReviewController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $reviewerId = auth()->id();
@@ -76,6 +79,6 @@ class ReviewController extends Controller
             ]);
         }
 
-        return redirect()->route('reviewer.review-abstract.index')->with('success', 'Review submitted successfully');
+        return redirect()->route('reviewer.review-abstract.index')->with($this->alertReview());
     }
 }

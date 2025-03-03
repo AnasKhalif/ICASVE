@@ -82,16 +82,19 @@
         </div>
         <div class="email-body">
             <p>Dear {{ $user->name }},</p>
-            <p>We are pleased to inform you that your submission has been accepted for the
+            <p>We are pleased to inform you that your submission has been <strong>accepted</strong> for the
                 {{ $conference->conference_title }} ({{ $conference->conference_abbreviation }}). In conclusion of the
                 rolling review process, {{ $conference->conference_abbreviation }} Program Committee is pleased to
-                invite you to share the research findings at the conference.
+                invite you to share the research findings at the conference by
+                <strong>{{ $abstract->presentation_type }}</strong>.
             </p>
+
+            <p>{!! nl2br(e($customMessage)) !!}</p>
 
             <p class="highlight">
                 You can now proceed with your full paper submission and presentation preparation.<br>
                 To review the guidelines, please visit:<br>
-                <a href="{{ url('/full-paper-guidelines') }}">Full Paper Submission Guidelines</a>
+                <a href="{{ route('submission.fullpaper') }}">Full Paper Submission Guidelines</a>
             </p>
 
             <p>We look forward to your participation. Please contact us if you have any questions.</p>

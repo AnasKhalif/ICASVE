@@ -22,7 +22,7 @@ class ReviewerController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $rolesToDisplay = ['chief-editor', 'editor', 'reviewer'];

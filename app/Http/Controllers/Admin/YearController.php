@@ -18,13 +18,13 @@ class YearController extends Controller
     {
         $request->validate(['year' => 'required|integer|unique:years,year']);
         Year::create(['year' => $request->year, 'is_active' => false]);
-        return redirect()->back()->with('success', 'Tahun berhasil ditambahkan.');
+        return redirect()->back()->with($this->alertCreated());
     }
 
     public function setActive($id)
     {
         Year::query()->update(['is_active' => false]);
         Year::where('id', $id)->update(['is_active' => true]);
-        return redirect()->back()->with('success', 'Tahun aktif diperbarui.');
+        return redirect()->back()->with($this->alertUpdated());
     }
 }

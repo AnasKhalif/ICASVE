@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FullPaper;
 use App\Models\User;
+use App\Traits\FlashAlert;
 
 class EditorFullPaperController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $fullpapers = FullPaper::with(['fullPaperReviews.reviewer', 'abstract.symposium'])->paginate(10);
@@ -98,7 +101,7 @@ class EditorFullPaperController extends Controller
         $fullpaper->status = 'under review';
         $fullpaper->save();
 
-        return redirect()->route('reviewer.editor-fullpaper.noReviewer')->with('success', 'Reviewer berhasil diperbarui.');
+        return redirect()->route('reviewer.editor-fullpaper.noReviewer')->with($this->alertAssign());
     }
 
 
@@ -119,7 +122,7 @@ class EditorFullPaperController extends Controller
         $fullpaper->status = $request->status;
         $fullpaper->save();
 
-        return redirect()->route('reviewer.editor-fullpaper.index')->with('success', 'Status updated successfully');
+        return redirect()->route('reviewer.editor-fullpaper.index')->with($this->alertUpdated());
     }
 
     public function workLoad()

@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\Upload;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class UploadController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
         $uploads = Upload::whereYear('created_at', $activeYear->year)->get();
         return view('upload.index', compact('uploads'));
@@ -46,7 +49,7 @@ class UploadController extends Controller
             ['file_path' => $filePath],
         );
 
-        return redirect()->back()->with('success', 'File berhasil diupload!');
+        return redirect()->back()->with($this->alertCreated());
     }
 
 
@@ -55,14 +58,14 @@ class UploadController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return redirect()->back()->with('error', 'No active year set.');
+            return redirect()->back()->with($this->alertDanger());
         }
 
         $upload = Upload::where('type', $type)
             ->whereYear('created_at', $activeYear->year)
             ->first();
         if (!$upload) {
-            return redirect()->back()->with('error', 'File tidak ditemukan!');
+            return redirect()->back()->with($this->alertNotFound());
         }
 
         return redirect(Storage::url($upload->file_path));

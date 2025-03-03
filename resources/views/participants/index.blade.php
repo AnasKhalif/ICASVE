@@ -77,11 +77,10 @@
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
                                         <form action="{{ route('admin.participant.destroy', $user->id) }}" method="POST"
-                                            style="display: inline-block;">
+                                            style="display: inline-block;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">
+                                            <button type="submit" class="btn btn-sm btn-danger btn-delete">
                                                 <i class="fa fa-trash"></i> Delete
                                             </button>
                                         </form>
@@ -136,10 +135,10 @@
                                             <a href="/admin/participant/${user.id}/edit" class="btn btn-sm btn-warning">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
-                                            <form action="/admin/participant/${user.id}" method="POST" style="display: inline-block;">
+                                            <form action="/admin/participant/${user.id}" method="POST" style="display: inline-block;" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                <button type="submit" class="btn btn-sm btn-danger btn-delete">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </form>
@@ -163,6 +162,24 @@
                         }
                     });
                 }, 300);
+            });
+            $(document).on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+                let form = $(this).closest('form');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
         });
     </script>

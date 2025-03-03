@@ -103,7 +103,7 @@ class RegisteredUserController extends Controller
         return redirect(route('login'))->with('success', 'Registration successful. A confirmation email has been sent.');
     }
 
-    private function generateCertificate(User $user)
+    public function generateCertificate(User $user)
     {
         // Tentukan template sertifikat untuk peserta
         $templateUrl = Upload::getFilePath('certificate_participant');

@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
+use App\Traits\FlashAlert;
+use App\Models\Certificate;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 class ProfileController extends Controller
 {
+    use FlashAlert;
     /**
      * Display the user's profile form.
      */
@@ -26,15 +31,53 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $originalName = $user->name;
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->update($request->validated());
+
+        if ($user->wasChanged('email')) {
+            $user->email_verified_at = null;
+            $user->save();
         }
 
-        $request->user()->save();
+        if ($originalName !== $user->name) {
+            $this->updateCertificate($user);
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with($this->alertUpdated());
+    }
+
+    private function updateCertificate($user)
+    {
+        $certificate = Certificate::where('user_id', $user->id)->first();
+
+        if ($certificate) {
+            Storage::disk('public')->delete($certificate->certificate_path);
+            $certificate->delete();
+        }
+        app(RegisteredUserController::class)->generateCertificate($user);
+    }
+
+    public function uploadPhoto(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $user = auth()->user();
+
+        // Hapus foto lama jika ada
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+        }
+
+        // Simpan foto baru
+        $path = $request->file('image')->store('profile_photos', 'public');
+        $user->profile_photo_path = $path;
+        $user->save();
+
+        return redirect()->route('profile.edit')->with($this->alertUpdated());
     }
 
     /**

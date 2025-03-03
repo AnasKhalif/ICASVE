@@ -11,10 +11,14 @@ use App\Models\Upload;
 use App\Models\ConferenceSetting;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\FlashAlert;
+use App\Mail\PaymentNotification;
+use Illuminate\Support\Facades\Mail;
 
 class FilePaymentController extends Controller
 {
     use HasRolesAndPermissions;
+    use FlashAlert;
 
     public function create()
     {
@@ -90,8 +94,20 @@ class FilePaymentController extends Controller
             $message = 'Payment data successfully saved.';
         }
 
+        $conferenceSetting = ConferenceSetting::first();
+        $adminEmails = explode(',', $conferenceSetting->administrator_email);
+        $treasurerEmails = explode(',', $conferenceSetting->treasurer_email);
+        $recipients = array_merge($adminEmails, $treasurerEmails);
+
+        $payment = $existingPayment ?? FilePayment::where('user_id', $user->id)->latest()->first();
+
+        if ($payment) {
+            Mail::to($recipients)->send(new PaymentNotification($payment));
+        }
+
+
         return redirect()->route('filepayments.create')
-            ->with('success', $message);
+            ->with('success', $message, $this->alertCreated());
     }
 
     public function receipt($id)
@@ -113,10 +129,10 @@ class FilePaymentController extends Controller
                 $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
                 return $pdf->stream('payment-digital.pdf');
             } else {
-                return redirect()->route('filepayments.create')->with('error', 'You are not authorized to view this page.');
+                return redirect()->route('filepayments.create')->with($this->permissionDenied());
             }
         } catch (ModelNotFoundException $e) {
-            return redirect()->route('filepayments.create')->with('error', 'Payment data not found.');
+            return redirect()->route('filepayments.create')->with($this->alertNotFound());
         }
     }
 }

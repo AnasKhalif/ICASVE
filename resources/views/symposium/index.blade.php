@@ -35,11 +35,12 @@
                                         <a href="{{ route('admin.symposium.edit', $symposium->id) }}"
                                             class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>
                                         <form action="{{ route('admin.symposium.destroy', $symposium->id) }}" method="POST"
-                                            style="display: inline-block;">
+                                            style="display: inline-block;" class="delete-form"
+                                            data-id="{{ $symposium->id }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                            <button type="button" class="btn btn-sm btn-danger btn-delete"><i
+                                                    class="fa fa-trash"></i>
                                                 Delete</button>
                                         </form>
                                     </td>

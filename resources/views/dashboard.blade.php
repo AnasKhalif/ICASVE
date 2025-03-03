@@ -34,11 +34,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 grid-margin transparent">
+                <div class="col-md-6 grid-margin transparent d-flex flex-column justify-content-between">
                     <div class="row">
                         <div class="col-md-6 mb-4 stretch-card transparent">
                             <div class="card text-white card-tale">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Payment Status</p>
                                     <p class="fs-30 mb-2" style="font-size: 25px;">
                                         @if ($user->filePayment)
@@ -53,7 +53,7 @@
 
                         <div class="col-md-6 mb-4 stretch-card transparent">
                             <div class="card text-white card-dark-blue">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Abstract Status</p>
                                     @php
                                         $abstract = $user->abstracts->first();
@@ -70,7 +70,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
                             <div class="card text-black bg-warning bg-opacity-75">
-                                <div class="card-body">
+                                <div class="card-body my-2">
                                     <p class="mb-4">Full Paper Status</p>
                                     @php
                                         $fullPaper = optional($abstract)->fullPaper;
