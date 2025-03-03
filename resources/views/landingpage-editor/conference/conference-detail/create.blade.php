@@ -12,6 +12,7 @@
                         <label for="title">Title</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" 
                             name="title" id="title" value="{{ old('title') }}" required>
+                        <small>Example: Rundown The 4rd ICASVE 2025</small>
                         @error('title')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -21,6 +22,7 @@
                         <label for="theme">Theme</label>
                         <input type="text" class="form-control @error('theme') is-invalid @enderror" 
                             name="theme" id="theme" value="{{ old('theme') }}" required>
+                        <small>Example: International Conference on Applied Science for Vocational Education</small>
                         @error('theme')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -30,6 +32,7 @@
                         <label for="university">University</label>
                         <input type="text" class="form-control @error('university') is-invalid @enderror" 
                             name="university" id="university" value="{{ old('university') }}" required>
+                        <small>Example: Hybrid Conference | Faculty of Vocational Studies, Universitas Brawijaya</small>
                         @error('university')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -39,6 +42,7 @@
                         <label for="hosted">Hosted By</label>
                         <input type="text" class="form-control @error('hosted') is-invalid @enderror" 
                             name="hosted" id="hosted" value="{{ old('hosted') }}" required>
+                        <small>Example: Co-hosted by State Polytechnic of Batam & State University of Malang</small>
                         @error('hosted')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

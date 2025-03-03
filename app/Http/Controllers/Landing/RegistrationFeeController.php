@@ -24,7 +24,7 @@ class RegistrationFeeController extends Controller
         'category_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/[a-zA-Z]/'],
         'domestic_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
         'international_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
-        'period_of_payment' => ['required', 'date'],
+        'period_of_payment' => ['nullable' ,'string'],
         'role_type' => ['required', Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
     ], [
         'category_name.required' => 'Category name is required.',
@@ -33,6 +33,11 @@ class RegistrationFeeController extends Controller
         'period_of_payment.required' => 'Period of payment is required.',
         'role_type.required' => 'Role type is required.',
     ]);
+
+    $validatedData['domestic_participants'] = $validatedData['domestic_participants'] ?? 'TBA';
+    $validatedData['international_participants'] = $validatedData['international_participants'] ?? 'TBA';
+    $validatedData['period_of_payment'] = $validatedData['period_of_payment'] ?? 'TBA';
+
 
     $validatedData['category_name'] = strip_tags($validatedData['category_name']);
     RegistrationFee::create($validatedData);
@@ -60,7 +65,6 @@ class RegistrationFeeController extends Controller
         $validatedData['domestic_participants'] = $validatedData['domestic_participants'] ?? 'TBA';
         $validatedData['international_participants'] = $validatedData['international_participants'] ?? 'TBA';
         $validatedData['period_of_payment'] = $validatedData['period_of_payment'] ?? 'TBA';
-        $validatedData['role_type'] = $validatedData['role_type'] ?? 'TBA';
 
         $registrationFee->update($validatedData);
         return redirect()->route('landing.registrationFee.index')->with('success', 'Registration Fee updated successfully.');

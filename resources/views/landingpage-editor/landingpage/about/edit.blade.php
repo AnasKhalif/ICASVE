@@ -24,6 +24,10 @@
             <div class="mb-3">
                 <label class="form-label">New Image (optional)</label>
                 <input type="file" name="image" class="form-control" accept="image/*">
+                <small class="form-text text-muted">
+                    Format: JPG, JPEG, PNG | Max Size: 2MB | **Minimal 600x400 px**
+                </small>
+                <small class="text-danger d-none" id="imageError">Format atau ukuran gambar tidak sesuai.</small>
             </div>
             @if ($errors->any())
             <div class="alert alert-danger">

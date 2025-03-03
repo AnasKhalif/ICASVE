@@ -12,6 +12,7 @@
                         <label for="year">Year</label>
                         <input type="text" class="form-control" id="year_display" value="{{ now()->year }}">
                         <input type="hidden" name="year" id="year" value="{{ now()->year }}">
+
                     </div>
 
                     <div class="form-group">
@@ -35,7 +36,7 @@
                     <div class="form-group">
                         <label for="end_time">Time End</label>
                         <input type="time" class="form-control @error('end_time') is-invalid @enderror" 
-                            name="end_time" id="end_time" value="{{ old('end_time') }}" required>
+                            name="end_time" id="end_time"  value="{{ old('end_time') }}" required>
                         @error('end_time')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -44,16 +45,16 @@
                     <div class="form-group">
                         <label for="program_name">Program</label>
                         <input type="text" class="form-control @error('program_name') is-invalid @enderror" 
-                            name="program_name" id="program_name" value="{{ old('program_name') }}" required>
+                            name="program_name" id="program_name" placeholder="Opening by MC" value="{{ old('program_name') }}" required>
                         @error('program_name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="pic">PIC(optional)</label>
+                        <label for="pic">PIC (optional)</label>
                         <input type="text" class="form-control @error('pic') is-invalid @enderror" 
-                            name="pic" id="pic" value="{{ old('pic') }}" >
+                            name="pic" id="pic" placeholder="MC UB & MC Batam" value="{{ old('pic') }}" >
                         @error('pic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

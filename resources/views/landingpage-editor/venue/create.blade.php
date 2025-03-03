@@ -60,6 +60,9 @@
                                 <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
                             </div>
                         </div>
+                        <small class="form-text text-muted">
+                            Format: JPG, JPEG, PNG | Max Size: 2MB
+                        </small>
                         @error('image_path')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -69,6 +72,16 @@
                     <div class="form-group">
                         <img id="imagePreview" src="#" alt="Preview" style="max-width: 300px; display: none; margin-top: 10px; border: 1px solid #ddd; padding: 5px;">
                     </div>
+
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                   @endif
 
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>

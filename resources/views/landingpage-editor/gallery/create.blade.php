@@ -15,12 +15,16 @@
                                 <label class="custom-file-label" for="images" id="fileLabel">Choose files</label>
                             </div>
                         </div>
+                        <small class="form-text text-muted">
+                            Format: JPG, JPEG, PNG | Max Size: 2MB
+                        </small>
+                        <small class="text-danger d-none" id="fileError">Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.</small>
                         <div id="preview" class="mt-3"></div>
                     </div>
                     
                     <div class="form-group">
                         <label for="year">Year</label>
-                        <input type="number" class="form-control @error('year') is-invalid @enderror" name="year"
+                        <input type="number" class="form-control @error('year') is-invalid @enderror"  name="year"
                             id="year" required>
                         @error('year')
                             <div class="text-danger">{{ $message }}</div>

@@ -26,6 +26,9 @@
                                 <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
                             </div>
                         </div>
+                        <small class="form-text text-muted">
+                            Format: JPG, JPEG, PNG | Max Size: 2MB 
+                        </small>
                         @error('image_path')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

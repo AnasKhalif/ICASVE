@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="filter-gallery mb-4">
-                <label for="yearFilter" id="titleFilter" class="mb-2">Year</label>
+                <label for="yearFilter" id="titleFilter"  class="mb-2">Year</label>
                 <select id="yearFilterOptions" class="form-select" onchange="filterGallery()">
                     <option value="all">All</option>
                     @foreach ($years as $year)

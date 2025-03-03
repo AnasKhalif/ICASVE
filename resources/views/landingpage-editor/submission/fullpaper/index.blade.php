@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Presentation Submission Guidelines')
+@section('title', 'Fullpaper Submission Guidelines')
 
 @section('content')
     <div class="container mt-4">

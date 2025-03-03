@@ -53,6 +53,7 @@
 {{-- CKEditor Script --}}
 <script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
 <script>
+     CKEDITOR.config.versionCheck = false;
     CKEDITOR.replace('guideline-editor', {
         height: 300
     });

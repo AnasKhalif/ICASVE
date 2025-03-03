@@ -27,6 +27,9 @@
                                 <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
                             </div>
                         </div>
+                        <small class="form-text text-muted">
+                            Format: JPG, JPEG, PNG | Max Size: 2MB 
+                        </small>
                         <small class="text-danger d-none" id="fileError">Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.</small>
                         <div class="mt-3">
                             <img id="previewImage" src="" class="d-none" width="100">

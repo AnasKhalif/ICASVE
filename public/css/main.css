@@ -1619,6 +1619,7 @@ section,
 
     #hosted-supported-section {
         padding-top: 0px;
+        padding-bottom: 10px;
     }
 
     .team {
@@ -2047,4 +2048,14 @@ section,
 
 .whatsapp-float:hover .whatsapp-icon {
     transform: scale(1.1);
+}
+
+.card {
+    height: 100%; 
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
 }

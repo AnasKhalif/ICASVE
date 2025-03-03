@@ -415,7 +415,7 @@
             <div class="row text-center" style="display: flex; align-items: center">
                 @foreach ($publications_journal as $item)
                     <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" class="img-fluid" />
+                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" style="max-width: 120px" class="img-fluid" />
                     </div>
                 @endforeach
                 @if ($publications_journal->isEmpty())

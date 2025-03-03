@@ -48,16 +48,16 @@
                     <div class="form-group">
                         <label for="program_name">Program</label>
                         <input type="text" class="form-control @error('program_name') is-invalid @enderror" 
-                            name="program_name" id="program_name" value="{{ old('program_name', $program->program_name) }}" required>
+                            name="program_name" id="program_name" value="{{ old('program_name', $program->program_name) }}" placeholder="Opening by MC" required>
                         @error('program_name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="pic">PIC</label>
+                        <label for="pic">PIC (optional)</label>
                         <input type="text" class="form-control @error('pic') is-invalid @enderror" 
-                            name="pic" id="pic" value="{{ old('pic', $program->pic) }}" required>
+                            name="pic" id="pic" value="{{ old('pic', $program->pic) }}" placeholder="MC UB & MC Batam" required>
                         @error('pic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

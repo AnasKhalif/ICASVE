@@ -16,13 +16,16 @@
             </div>
 
             <div class="mb-3">
-                <label>Guideline</label>
-                <textarea id="editor" name="content" class="form-control">{{ $presentationGuideline->content }}</textarea>
+                <label for="content" class="form-label fw-bold">Guideline</label>
+                <textarea name="content" id="editor" class="form-control">{{ $presentationGuideline->content }}</textarea>
             </div>
 
             <div class="mb-3">
                 <label>Upload PDF</label>
                 <input type="file" name="pdf_file" class="form-control">
+                <small class="form-text text-muted">
+                    Format: PDF| Max Size: 2MB 
+                </small>
                 @if ($presentationGuideline->pdf_file)
                     <p class="mt-2">File Saat Ini:
                         <a href="{{ asset('storage/' . $presentationGuideline->pdf_file) }}" target="_blank">
@@ -35,4 +38,11 @@
             <button type="submit" class="btn btn-success">Update</button>
         </form>
     </div>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.config.versionCheck = false;
+    CKEDITOR.replace('editor');
+</script>
 @endsection
+
+

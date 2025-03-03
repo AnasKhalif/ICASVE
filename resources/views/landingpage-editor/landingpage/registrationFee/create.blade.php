@@ -42,8 +42,8 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="period_of_payment" class="form-label">Period of Payment <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" required>
+                        <label for="period_of_payment" class="form-label">Period of Payment (optional)</label>
+                        <input type="date" class="form-control" name="period_of_payment" id="period_of_payment" >
                         @error('period_of_payment')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

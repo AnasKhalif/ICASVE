@@ -20,7 +20,11 @@
             <div class="mb-3">
                 <label for="pdf_file" class="form-label fw-bold">Upload Template Paper (PDF)</label>
                 <input type="file" name="pdf_file" class="form-control">
+                <small class="form-text text-muted">
+                    Format: PDF| Max Size: 2MB 
+                </small>
             </div>
+            
 
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('landing.abstract-guidelines.index') }}" class="btn btn-secondary">Kembali</a>
@@ -29,6 +33,7 @@
 
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script>
+        CKEDITOR.config.versionCheck = false;
         CKEDITOR.replace('editor');
     </script>
 @endsection

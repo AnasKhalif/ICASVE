@@ -21,6 +21,9 @@
             <div class="mb-3">
                 <label for="pdf_file" class="form-label fw-bold">Upload Template Paper (PDF)</label>
                 <input type="file" name="pdf_file" class="form-control">
+                <small class="form-text text-muted">
+                    Format: PDF | Max Size: 2MB 
+                </small>
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -31,6 +34,7 @@
     {{-- Tambahkan CKEditor --}}
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script>
+        CKEDITOR.config.versionCheck = false;
         CKEDITOR.replace('editor');
     </script>
 @endsection
