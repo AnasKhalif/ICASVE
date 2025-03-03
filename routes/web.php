@@ -63,6 +63,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Landing\InstagramController;
 use App\Http\Controllers\Landing\PaymentGuidelineController;
 use App\Http\Controllers\PreviousConferences;
+use App\Http\Controllers\Admin\EmailTemplateController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -83,7 +84,7 @@ Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
 
     Route::get('/reviewer', [ReviewerCommitteeController::class, 'showLandingPage'])
-    ->name('committee.reviewer');
+        ->name('committee.reviewer');
 
     Route::get('/organizing', [OrganizingCommitteeController::class, 'showLandingPage'])->name('committee.organizing');
 });
@@ -145,6 +146,9 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
     Route::get('years', [YearController::class, 'index'])->name('years.index');
     Route::post('years', [YearController::class, 'store'])->name('years.store');
     Route::post('years/{id}/set-active', [YearController::class, 'setActive'])->name('years.setActive');
+    Route::get('email-template/index', [EmailTemplateController::class, 'index'])->name('email-template.index');
+    Route::get('email-template/{type}/edit', [EmailTemplateController::class, 'edit'])->name('email-template.edit');
+    Route::post('email-template/{type}/update', [EmailTemplateController::class, 'update'])->name('email-template.update');
 });
 
 Route::name('reviewer.')
@@ -253,6 +257,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/upload-photo', [ProfileController::class, 'uploadPhoto'])->name('profile.uploadPhoto');
 });
 
 require __DIR__ . '/auth.php';

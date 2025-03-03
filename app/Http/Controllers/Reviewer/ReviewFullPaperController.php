@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FullPaper;
 use App\Models\FullPaperReview;
+use App\Traits\FlashAlert;
 
 class ReviewFullPaperController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $reviewerId = auth()->id();
@@ -65,6 +68,6 @@ class ReviewFullPaperController extends Controller
             ]);
         }
 
-        return redirect()->route('reviewer.review-fullpaper.index')->with('success', 'Review submitted successfully');
+        return redirect()->route('reviewer.review-fullpaper.index')->with($this->alertReview());
     }
 }

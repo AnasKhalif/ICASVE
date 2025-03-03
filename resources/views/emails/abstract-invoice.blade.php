@@ -73,7 +73,7 @@
         <div class="email-body">
             <p>Dear {{ $user->name }},</p>
 
-            <p>Thank you for registering for the {{ $conference->$conference_abbreviation }}! We are delighted to have
+            <p>Thank you for registering for the {{ $conference->conference_abbreviation }}! We are delighted to have
                 you join us for this event.</p>
 
             <p>We are pleased to inform you that your abstract titled
@@ -81,9 +81,10 @@
                 <strong>{{ $conference->conference_title }}</strong>.
             </p>
 
-            <p>Payment can be made via bank transfer to the following account </p>
+            <p>Payment can be made via bank transfer to the following account for a total of <strong>
+                    USD {{ number_format($amount, 2) }}</strong></p>
 
-            <p></p>
+            <p>{!! nl2br(e($customMessage)) !!}</p>
 
             <p>Please make the payment as soon as possible to secure your participation.</p>
 

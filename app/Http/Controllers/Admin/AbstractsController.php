@@ -11,9 +11,11 @@ use App\Models\FullPaper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\FilePayment;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class AbstractsController extends Controller
 {
+    use FlashAlert;
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +27,7 @@ class AbstractsController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $abstracts = AbstractModel::with(['symposium', 'fullPaper', 'filePayment'])
@@ -124,7 +126,7 @@ class AbstractsController extends Controller
             'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id'
         ]));
 
-        return redirect()->route('admin.abstract.index')->with('success', 'Abstract updated successfully');
+        return redirect()->route('admin.abstract.index')->with($this->alertUpdated());
     }
 
     /**
@@ -133,7 +135,7 @@ class AbstractsController extends Controller
     public function destroy(AbstractModel $abstract)
     {
         $abstract->delete();
-        return redirect()->route('admin.abstract.index')->with('success', 'Abstract deleted successfully');
+        return redirect()->route('admin.abstract.index')->with($this->alertDeleted());
     }
 
     public function showBySymposium()
@@ -141,7 +143,7 @@ class AbstractsController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $symposiums = Symposium::with('abstracts')
