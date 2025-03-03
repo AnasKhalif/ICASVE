@@ -11,8 +11,9 @@ use App\Models\DeadlineDate;
 use App\Models\About;
 use App\Models\Poster;
 use App\Models\Contact;
-use App\Models\Symposium;
 use App\Models\Faq;
+use App\Models\Theme;
+use App\Models\ConferenceTitle;
 
 class LandingPageController extends Controller
 {
@@ -30,10 +31,16 @@ class LandingPageController extends Controller
         $venues = Venue::all();
         $deadline_date = DeadlineDate::all();
         $contacts = Contact::all();
-        $posters = Poster::all();
-        $about = About::all();
-        $symposiums = Symposium::all();
+        $posters = Poster::where('year', now()->year)->get();
+        $themes = Theme::orderBy('year', 'desc')->get();
         $faqs = Faq::limit(3)->get();
+        
+        // Ambil hanya 1 Conference Title terbaru
+        $conference_title = ConferenceTitle::orderByDesc('year')->first();
+
+        // Ambil hanya satu About terbaru berdasarkan ID terbesar
+        $about = About::latest('id')->first();
+
         return view('landingpage.home', compact(
             'keynoteSpeakers',
             'invitedSpeakers',
@@ -49,8 +56,15 @@ class LandingPageController extends Controller
             'contacts',
             'posters',
             'about',
-            'symposiums',
-            'faqs'
+            'themes',
+            'faqs',
+            'conference_title'
         ));
+    }
+
+    public function showTheme($id)
+    {
+        $theme = Theme::findOrFail($id);
+        return view('landingpage.theme_detail.index', compact('theme'));
     }
 }

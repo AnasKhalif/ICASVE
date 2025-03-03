@@ -12,17 +12,19 @@ class PublicationsJournalController extends Controller
     public function index()
     {
         $publications_journals = PublicationsJournal::all();
-        return view('landingpage-editor.publications-journal.index', compact('publications_journals'));
+        return view('landingpage-editor.landingpage.publications-journal.index', compact('publications_journals'));
     }
     public function create()
     {
-        return view('landingpage-editor.publications-journal.create');
+        return view('landingpage-editor.landingpage.publications-journal.create');
     }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+        ], [
+            'image_path.mimes' => 'Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.'
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('publications_journals', 'public');
@@ -33,13 +35,15 @@ class PublicationsJournalController extends Controller
     }
     public function edit(PublicationsJournal $publications_journal)
     {
-        return view('landingpage-editor.publications-journal.edit', compact('publications_journal'));
+        return view('landingpage-editor.landingpage.publications-journal.edit', compact('publications_journal'));
     }
     public function update(Request $request, PublicationsJournal $publications_journal)
     {
         $validatedData = $request->validate([
             'image_type' => ['required', Rule::in(['publications_journal', 'hosted_by', 'co_hosted_by', 'supported_by'])],
-            'image_path' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
+            'image_path' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+        ], [
+            'image_path.mimes' => 'Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.'
         ]);
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('publications_journals', 'public');

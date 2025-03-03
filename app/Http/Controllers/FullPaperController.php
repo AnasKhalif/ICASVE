@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FullPaper;
 use App\Models\AbstractModel;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Year;
 use App\Models\ConferenceSetting;
 
@@ -49,7 +50,7 @@ class FullPaperController extends Controller
 
             $previousStatus = $fullPaper->status;
 
-            \Storage::disk('public')->delete($fullPaper->file_path);
+            Storage::disk('public')->delete($fullPaper->file_path);
 
             $fullPaper->update([
                 'file_path' => $request->file('file')->store('full_papers', 'public'),

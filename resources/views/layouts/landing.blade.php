@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link href="{{ asset('img/logo-icasve.png') }}" rel="icon" />
-    <link href="{{ asset('img/apple-touch-icon.png') }}" rel="apple-touch-icon" />
+    <link href="{{ asset('img/Logo_ICASVE_rmbg.png') }}" rel="icon" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
@@ -22,7 +21,7 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <title>
         @hasSection('title')
-            @yield('title') | ICasve 2025
+            @yield('title') | ICASVE {{ date('Y') }}
         @else
             ICasve
         @endif
@@ -33,9 +32,20 @@
     @include('layouts.landingpartials.header')
     <main class="w-full mb-5">
         @yield('content')
-        <a href="https://wa.me/6285156914705" class="whatsapp-float text-white" target="_blank">
-            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+        @php
+          $whatsapp = \App\Models\Whatsapp::first();
+        @endphp
+
+        @if ($whatsapp == null)
+            <a href="" class="whatsapp-float text-white" target="_blank">
+                <img src="{{asset('img/whatsapp-brands.svg')}}" width="30px" height="30px" alt="logo-wa" >
+            </a>
+        @else
+        <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white" target="_blank">
+            <img src="{{asset('img/whatsapp-brands.svg')}}" width="30px" height="30px" alt="logo-wa" >
         </a>
+        @endif
+        
     </main>
     @include('layouts.landingpartials.footer')
     @include('layouts.landingpartials.script')

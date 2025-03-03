@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ConferenceProgram extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'year',
+        'year', 
         'day_number',
         'start_time',
         'end_time',
