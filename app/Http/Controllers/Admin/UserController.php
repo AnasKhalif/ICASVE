@@ -327,8 +327,8 @@ class UserController extends Controller
         $letterHeaderUrl = Upload::getFilePath('letter_header');
         $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+        $letterHeader = storage_path('app/public/' . str_replace(asset('storage/'), '', $letterHeaderUrl));
+        $signature = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
 
         $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 

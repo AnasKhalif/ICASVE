@@ -80,7 +80,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="card-title">Abstracts</h4>
                     <div>
-                        @if ($openAbstractSubmission)
+                        @if ($openAbstractSubmission && !$abstracts->where('status', 'accepted')->count())
                             <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">Add Abstract</a>
                         @endif
 

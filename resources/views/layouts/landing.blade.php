@@ -33,19 +33,20 @@
     <main class="w-full mb-5">
         @yield('content')
         @php
-          $whatsapp = \App\Models\Whatsapp::first();
+            $whatsapp = \App\Models\Whatsapp::first();
         @endphp
 
         @if ($whatsapp == null)
             <a href="" class="whatsapp-float text-white" target="_blank">
-                <img src="{{asset('img/whatsapp-brands.svg')}}" width="30px" height="30px" alt="logo-wa" >
+                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
             </a>
         @else
-        <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white" target="_blank">
-            <img src="{{asset('img/whatsapp-brands.svg')}}" width="30px" height="30px" alt="logo-wa" >
-        </a>
+            <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white"
+                target="_blank">
+                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+            </a>
         @endif
-        
+
     </main>
     @include('layouts.landingpartials.footer')
     @include('layouts.landingpartials.script')

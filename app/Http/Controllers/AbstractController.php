@@ -56,7 +56,7 @@ class AbstractController extends Controller
                 $currentAbstracts = AbstractModel::where('user_id', Auth::id())->count();
 
                 if ($currentAbstracts >= $maxAbstracts) {
-                    return redirect()->route('abstracts.index')->with('error', "You have reached the maximum limit of $maxAbstracts abstracts.");
+                    return redirect()->route('abstracts.index')->with($this->alertAbstractLimit("You have reached the maximum limit of $maxAbstracts abstracts."));
                 }
                 $symposiums = Symposium::all();
                 return view('abstracts.create', compact('symposiums'));

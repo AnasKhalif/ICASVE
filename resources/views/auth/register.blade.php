@@ -270,23 +270,6 @@
             });
         });
     </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const togglePassword = document.querySelector(".toggle-password");
-            const passwordInput = document.getElementById("password_confirmation");
-
-            togglePassword.addEventListener("click", function() {
-                const type = passwordInput.type === "password" ? "text" : "password";
-                passwordInput.type = type;
-
-                // Ganti ikon mata
-                this.innerHTML = type === "password" ?
-                    '<i class="fas fa-eye"></i>' :
-                    '<i class="fas fa-eye-slash"></i>';
-            });
-        });
-    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             fetch("https://restcountries.com/v3.1/all")

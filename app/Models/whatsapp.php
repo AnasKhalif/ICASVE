@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class whatsapp extends Model
+class Whatsapp extends Model
 {
     protected $fillable = [
         'nomor',

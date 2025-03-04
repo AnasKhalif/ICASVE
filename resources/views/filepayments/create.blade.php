@@ -137,7 +137,7 @@
                             </button>
                         @endif
                         @if ($existingPayment && $existingPayment->file_path)
-                            <a href="{{ Storage::url($existingPayment->file_path) }}" class="btn btn-light"
+                            <a href="{{ asset('storage/' . $existingPayment->file_path) }}" class="btn btn-light"
                                 target="_blank">
                                 <i class="fas fa-file mr-1"></i>
                                 View File

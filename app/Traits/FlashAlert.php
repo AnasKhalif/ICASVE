@@ -109,4 +109,12 @@ trait FlashAlert
             'message' => 'Cannot edit Fullpaper in review process!'
         ];
     }
+
+    public function alertAbstractLimit($message)
+    {
+        return [
+            'type' => 'error',
+            'message' => $message,
+        ];
+    }
 }
