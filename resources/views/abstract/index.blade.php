@@ -44,7 +44,7 @@
                         <tbody id="abstractTable">
                             @forelse ($abstracts as $key => $abstract)
                                 <tr>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center">{{ $abstracts->firstItem() + $key }}</td>
                                     <td class="text-wrap">
                                         <strong>{{ $abstract->title }}</strong><br>
                                         <small>{{ $abstract->authors }}</small><br><br>
@@ -96,7 +96,25 @@
                 </div>
 
                 <div class="mt-3">
-                    {{ $abstracts->links() }}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {{ $abstracts->onFirstPage() ? 'disabled' : '' }}">
+                                <a class="page-link" href="{{ $abstracts->previousPageUrl() }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            @foreach ($abstracts->getUrlRange(1, $abstracts->lastPage()) as $page => $url)
+                                <li class="page-item {{ $page == $abstracts->currentPage() ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                            @endforeach
+                            <li class="page-item {{ $abstracts->hasMorePages() ? '' : 'disabled' }}">
+                                <a class="page-link" href="{{ $abstracts->nextPageUrl() }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@
                         <tbody id="participantTable">
                             @forelse ($users as $key => $user)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $users->firstItem() + $key }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->institution }}</td>
@@ -94,7 +94,25 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $users->links() }}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {{ $users->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $users->previousPageUrl() }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $users->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ $users->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

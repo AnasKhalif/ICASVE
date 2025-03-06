@@ -26,7 +26,7 @@
                         <tbody>
                             @forelse ($symposiums as $key => $symposium)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $symposiums->firstItem() + $key }}</td>
                                     <td>{{ $symposium->name }} ({{ $symposium->abbreviation }})</td>
                                     <td class="text-center">
                                         {{ $symposium->abstracts_count }} Abstracts
@@ -54,7 +54,25 @@
 
                     </table>
                 </div>
-                {{ $symposiums->links() }}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {{ $symposiums->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $symposiums->previousPageUrl() }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @foreach ($symposiums->getUrlRange(1, $symposiums->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $symposiums->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ $symposiums->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $symposiums->nextPageUrl() }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

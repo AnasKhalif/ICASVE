@@ -23,7 +23,7 @@
                         <tbody>
                             @foreach ($certificates as $key => $certificate)
                                 <tr>
-                                    <td class="text-center">{{ $key + 1 }}</td>
+                                    <td>{{ $certificates->firstItem() + $key }}</td>
                                     <td class="text-center">{{ $certificate->user->name }}</td>
                                     <td class="text-center">{{ $certificate->certificate_type }}</td>
                                     <td class="text-center">
@@ -67,7 +67,25 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $certificates->links() }}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {{ $certificates->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $certificates->previousPageUrl() }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @foreach ($certificates->getUrlRange(1, $certificates->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $certificates->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ $certificates->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $certificates->nextPageUrl() }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

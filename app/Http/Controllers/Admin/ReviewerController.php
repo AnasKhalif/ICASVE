@@ -30,7 +30,7 @@ class ReviewerController extends Controller
             $query->whereIn('name', $rolesToDisplay);
         })
             ->whereYear('created_at', $activeYear->year)
-            ->with('roles')->paginate(10);
+            ->with('roles')->paginate(8);
         return view('reviewers.index', compact('users'));
     }
 

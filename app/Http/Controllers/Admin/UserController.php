@@ -58,7 +58,7 @@ class UserController extends Controller
             ->whereYear('created_at', $activeYear->year)
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
-            })->with('roles')->paginate(10);
+            })->with('roles')->paginate(5);
 
         if ($request->ajax()) {
             return response()->json([
