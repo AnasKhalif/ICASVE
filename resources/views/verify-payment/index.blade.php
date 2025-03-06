@@ -25,7 +25,7 @@
                         <tbody>
                             @foreach ($payments as $payment)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $payments->firstItem() + $key }}</td>
                                     <td>
                                         <strong>{{ $payment->user->name }}</strong><br>
                                         {{ $payment->user->institution }}<br>
@@ -81,6 +81,25 @@
                         </tbody>
                     </table>
                 </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {{ $payments->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $payments->previousPageUrl() }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @foreach ($payments->getUrlRange(1, $payments->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $payments->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ $payments->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $payments->nextPageUrl() }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

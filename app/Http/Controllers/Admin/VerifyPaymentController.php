@@ -29,7 +29,7 @@ class VerifyPaymentController extends Controller
 
         $payments = FilePayment::with('user.roles')
             ->whereYear('created_at', $activeYear->year)
-            ->get();
+            ->paginate(8);
         return view('verify-payment.index', compact('payments'));
     }
 

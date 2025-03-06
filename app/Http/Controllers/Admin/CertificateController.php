@@ -23,7 +23,7 @@ class CertificateController extends Controller
         }
         $certificates = Certificate::with('user.filePayment')
             ->whereYear('created_at', $activeYear->year)
-            ->paginate(10);
+            ->paginate(8);
         return view('certificates.index', compact('certificates'));
     }
 

@@ -25,7 +25,7 @@ class SymposiumController extends Controller
 
         $symposiums = Symposium::withCount('abstracts')
             ->whereYear('created_at', $activeYear->year)
-            ->paginate(10);
+            ->paginate(8);
         return view('symposium.index', compact('symposiums'));
     }
 
