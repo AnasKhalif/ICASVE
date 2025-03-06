@@ -537,6 +537,13 @@
                     <span class="menu-title">Instagram</span>
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('landing.newsletters.index') }}">
+                    <i class="fa-solid fa-envelope-open-text menu-icon"></i>
+                    <span class="menu-title">Newsletter</span>
+                </a>
+            </li>
             
         </ul>
     </nav>

@@ -64,6 +64,7 @@ use App\Http\Controllers\Landing\InstagramController;
 use App\Http\Controllers\Landing\PaymentGuidelineController;
 use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
+use App\Http\Controllers\Landing\NewsletterController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -231,7 +232,13 @@ Route::name('landing.')
         Route::resource('conference-detail', ConferenceDetailController::class);
         Route::resource('themes', ThemeController::class);
         Route::resource('payment_guidelines', PaymentGuidelineController::class);
+        Route::get('newsletters/export', [NewsletterController::class, 'export'])
+            ->name('newsletters.export');
+        Route::resource('newsletters', NewsletterController::class);
+     
     });
+
+
 
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

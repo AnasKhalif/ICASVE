@@ -66,15 +66,20 @@
             <div class="col-lg-4 col-md-12 footer-newsletter">
                 <h4>Our Newsletter</h4>
                 <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-                <form action="forms/newsletter.php" method="post" class="php-email-form">
+                <form action="{{ route('landing.newsletters.store') }}" method="POST" class="php-email-form">
+                    @csrf
                     <div class="newsletter-form d-flex">
-                        <input type="email" name="email" class="form-control me-2" placeholder="Your Email" />
+                        <input type="email" name="email" class="text-white outline-none me-2" placeholder="Your Email" required />
                         <input type="submit" value="Subscribe" class="btn btn-primary" />
                     </div>
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+                    @if(session('success'))
+                        <div class="sent-message">{{ session('success') }}</div>
+                    @endif
+                    @if ($errors->has('email'))
+                        <div class="error-message">{{ $errors->first('email') }}</div>
+                    @endif
                 </form>
+                
             </div>
         </div>
     </div>
