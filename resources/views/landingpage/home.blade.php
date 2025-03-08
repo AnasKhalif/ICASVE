@@ -1,5 +1,17 @@
 @extends('layouts.landing')
 @section('title', 'Home')
+@php
+    $contact = \App\Models\Contact::latest()->first();
+    $emailTo = $contact ? $contact->email : 'contact@example.com';
+    $whatsappNumber = null;
+
+    if ($contact) {
+        $whatsappNumber = $contact->phone;
+        if (substr($whatsappNumber, 0, 1) === '0') {
+            $whatsappNumber = '+62' . substr($whatsappNumber, 1);
+        }
+    }
+@endphp
 @section('content')
     <section id="hero" class="hero section dark-background">
         <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
@@ -22,7 +34,8 @@
             <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
                 <h1>ICASVE {{ date('Y') }}</h1>
                 <p>International Conference on Applied Science and Engineering</p>
-                <div class="d-flex">
+                <div class="d-flex justify-start align">
+                    <a href="{{ route('login') }}" class="btn-get-started">Login</a>
                     <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
             </div>
@@ -415,7 +428,7 @@
             <div class="row text-center" style="display: flex; align-items: center">
                 @foreach ($publications_journal as $item)
                     <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" style="max-width: 120px" class="img-fluid" />
+                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" style="max-width: 150px" class="img-fluid" />
                     </div>
                 @endforeach
                 @if ($publications_journal->isEmpty())
@@ -486,7 +499,7 @@
                     <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
                         <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
                         <p>
-                            Temukan jawaban dari pertanyaan yang sering diajukan mengenai konferensi ini.
+                            Here are some of the most commonly asked questions:
                         </p>
                     </div>
 
@@ -553,29 +566,29 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                    <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200" data-email="{{ $emailTo }}">
                         <div class="row gy-4">
                             <div class="col-md-6">
                                 <input type="text" name="name" class="form-control" placeholder="Your Name" required />
                             </div>
-                
+                    
                             <div class="col-md-6">
                                 <input type="email" name="email" class="form-control" placeholder="Your Email" required />
                             </div>
-                
+                    
                             <div class="col-md-12">
                                 <input type="text" name="subject" class="form-control" placeholder="Subject" required />
                             </div>
-                
+                    
                             <div class="col-md-12">
                                 <textarea name="message" class="form-control" rows="6" placeholder="Message" required></textarea>
                             </div>
-                
+                    
                             <div class="col-md-12 text-center">
                                 <div class="loading">Loading</div>
                                 <div class="error-message"></div>
                                 <div class="sent-message">Your message has been sent. Thank you!</div>
-                
+                    
                                 <button type="submit">Send Message</button>
                             </div>
                         </div>
@@ -586,37 +599,33 @@
         </div>
     </section>
     @endif
-    @php
-    $contact = \App\Models\Contact::latest()->first();
-    $whatsappNumber = null;
-
-    if ($contact) {
-        $whatsappNumber = $contact->phone;
-        if (substr($whatsappNumber, 0, 1) === '0') {
-            $whatsappNumber = '+62' . substr($whatsappNumber, 1);
-        }
-    }
-@endphp
 
 
-<script>
-    const whatsappNumber = "{{ $whatsappNumber }}";
-
-    document.getElementById('whatsappForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const name = document.querySelector("input[name='name']").value;
-        const email = document.querySelector("input[name='email']").value;
-        const subject = document.querySelector("input[name='subject']").value;
-        const message = document.querySelector("textarea[name='message']").value;
-
-        const text = `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\nMessage: ${message}`;
-
-        const url = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(text)}`;
-
-        window.open(url, '_blank');
-    });
-</script>
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            const emailTo = this.getAttribute("data-email");
+    
+            const name = document.querySelector("input[name='name']").value.trim();
+            const email = document.querySelector("input[name='email']").value.trim();
+            const subject = document.querySelector("input[name='subject']").value.trim();
+            const message = document.querySelector("textarea[name='message']").value.trim();
+    
+            if (!name || !email || !subject || !message) {
+                alert("Please fill out all fields before sending.");
+                return;
+            }
+    
+            const mailtoSubject = `Contact Us - ${name}`;
+            const mailtoBody = `Dear Support Team,\n\nMy Name: ${name}\nMy Email: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`;
+    
+            // Kirim ke email menggunakan `mailto:`
+            const mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+            window.location.href = mailtoLink;
+        });
+    </script>
+    
 
 
     <style>

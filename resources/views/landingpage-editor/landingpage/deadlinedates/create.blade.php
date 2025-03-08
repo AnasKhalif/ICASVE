@@ -3,7 +3,6 @@
 @section('content')
     <div class="container">
         <h2>Add New Deadline</h2>
-        <a href="{{ route('landing.deadlines.index') }}" class="btn btn-secondary mb-3">Back</a>
 
         <form action="{{ route('landing.deadlines.store') }}" method="POST">
             @csrf
@@ -15,7 +14,11 @@
                 <label class="form-label">Date</label>
                 <input type="date" name="date" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="d-flex gap-2 justify-start">
+                <a href="{{ route('landing.deadlines.index') }}" class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+
         </form>
     </div>
 @endsection

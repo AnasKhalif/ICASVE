@@ -37,14 +37,6 @@
                 @enderror
             </div>
 
-            <div class="mb-3">
-                <label for="link" class="form-label">Registration Link (Optional)</label> 
-                <input type="url" name="link" id="link" class="form-control" placeholder="https://example.com">
-                @error('link')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-
             <div class="d-flex justify-content-between">
                 <a href="{{ route('landing.poster.index') }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success">Submit</button>
