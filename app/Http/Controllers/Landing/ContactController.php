@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Year;
 
 class ContactController extends Controller
 {
@@ -13,12 +14,19 @@ class ContactController extends Controller
     {
         $latestYear = Contact::max('created_at');
         $contacts = Contact::whereYear('created_at', date('Y', strtotime($latestYear)))->get();
-    
+
         return view('landingpage.contact.contact', compact('contacts'));
     }
     public function index()
     {
-        $contacts = Contact::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $contacts = Contact::whereYear('date', $activeYear->year)->orderBy('date')->get();
+
         return view('landingpage-editor.landingpage.contact.index', compact('contacts'));
     }
     public function create()
@@ -58,25 +66,24 @@ class ContactController extends Controller
     }
 
     public function sendEmail(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'message' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string',
+        ]);
 
-    $details = [
-        'name' => $request->name,
-        'email' => $request->email,
-        'message' => $request->message,
-    ];
+        $details = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ];
 
-    Mail::send('emails.contact', $details, function ($message) use ($details) {
-        $message->to('admin@example.com') // Ganti dengan email tujuan
+        Mail::send('emails.contact', $details, function ($message) use ($details) {
+            $message->to('admin@example.com') // Ganti dengan email tujuan
                 ->subject('New Contact Message from ' . $details['name']);
-    });
+        });
 
-    return redirect()->back()->with('success', 'Your message has been sent successfully!');
-}
-
+        return redirect()->back()->with('success', 'Your message has been sent successfully!');
+    }
 }

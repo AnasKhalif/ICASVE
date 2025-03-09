@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Venue;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class VenueController extends Controller
 {
     public function index()
     {
-        $venues = Venue::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $venues = Venue::whereYear('created_at', $activeYear->year)->get();
         return view('landingpage-editor.venue.index', compact('venues'));
     }
 

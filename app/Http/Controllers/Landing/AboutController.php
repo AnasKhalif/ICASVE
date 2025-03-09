@@ -5,13 +5,20 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
+use App\Models\Year;
 use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller
 {
     public function index()
     {
-        $abouts = About::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $abouts = About::whereYear('created_at', $activeYear->year)->get();
         return view('landingpage-editor.landingpage.about.index', compact('abouts'));
     }
 
@@ -38,7 +45,7 @@ class AboutController extends Controller
             'image.max' => 'Ukuran gambar maksimal 2MB.',
             'image.dimensions' => 'Ukuran gambar minimal 600x400 px.',
         ]);
-        
+
 
         $path = $request->file('image') ? $request->file('image')->store('abouts', 'public') : null;
 
@@ -74,7 +81,7 @@ class AboutController extends Controller
             'image.max' => 'Ukuran gambar maksimal 2MB.',
             'image.dimensions' => 'Ukuran gambar minimal 600x400 px.',
         ]);
-        
+
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($about->image);
