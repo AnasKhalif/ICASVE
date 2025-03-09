@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Speaker;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class SpeakerController extends Controller
 {
     public function index()
     {
-        $speakers = Speaker::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $speakers = Speaker::whereYear('created_at', $activeYear->year)->get();
         return view('landingpage-editor.landingpage.speakers.index', compact('speakers'));
     }
 

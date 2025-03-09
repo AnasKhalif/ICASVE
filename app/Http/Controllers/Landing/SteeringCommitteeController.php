@@ -42,32 +42,31 @@ class SteeringCommitteeController extends Controller
     }
 
     public function edit($id)
-{
-    $steering = SteeringCommittee::findOrFail($id);
-    return view('landingpage-editor.committee.steering.edit', compact('steering'));
-}
+    {
+        $steering = SteeringCommittee::findOrFail($id);
+        return view('landingpage-editor.committee.steering.edit', compact('steering'));
+    }
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'institution' => 'required|string|max:255',
-        'country' => 'required|string|max:255',
-        'year' => 'required|integer|min:2000|max:' . date('Y'),
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'institution' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'year' => 'required|integer|min:2000|max:' . date('Y'),
+        ]);
 
-    $steering = SteeringCommittee::findOrFail($id);
-    $steering->update($request->all());
+        $steering = SteeringCommittee::findOrFail($id);
+        $steering->update($request->all());
 
-    return redirect()->route('landing.steering.index')->with('success', 'Steering Committee updated successfully.');
-}
+        return redirect()->route('landing.steering.index')->with('success', 'Steering Committee updated successfully.');
+    }
 
-public function destroy($id)
-{
-    $steering = SteeringCommittee::findOrFail($id);
-    $steering->delete();
+    public function destroy($id)
+    {
+        $steering = SteeringCommittee::findOrFail($id);
+        $steering->delete();
 
-    return redirect()->route('landing.steering.index')->with('success', 'Steering Committee deleted successfully.');
-}
-
+        return redirect()->route('landing.steering.index')->with('success', 'Steering Committee deleted successfully.');
+    }
 }

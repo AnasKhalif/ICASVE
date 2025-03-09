@@ -11,9 +11,19 @@ class PosterController extends Controller
 {
     public function index()
     {
-        $posters = Poster::latest()->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $posters = Poster::where('year', $activeYear->year)
+            ->latest()
+            ->get();
+
         return view('landingpage-editor.landingpage.poster.index', compact('posters'));
     }
+
 
     public function create()
     {
