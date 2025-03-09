@@ -34,7 +34,7 @@
             <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
                 <h1>ICASVE {{ date('Y') }}</h1>
                 <p>International Conference on Applied Science and Engineering</p>
-                <div class="d-flex justify-start align">
+                <div class="d-flex justify-start align gap-3">
                     <a href="{{ route('login') }}" class="btn-get-started">Login</a>
                     <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
@@ -232,91 +232,114 @@
        
         <div class="row gy-4 align-items-center features-item">
             @if ($presenter->isNotEmpty())
-            <div class="container">
-                <div class="container section-title" data-aos="fade-up">
-                    <h2>Registration</h2>
-                    <div><span>Registration</span> <span class="description-title"> Fee</span></div>
-                </div>
-                <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Presenter</th>
-                                <th>Domestic Participants</th>
-                                <th>International Participants</th>
-                                <th>Period of Payment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($presenter as $fee)
+                <div class="container">
+                    <div class="container section-title" data-aos="fade-up">
+                        <h2>Registration</h2>
+                        <div><span>Registration</span> <span class="description-title"> Fee</span></div>
+                    </div>
+                    <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
                                 <tr>
-                                    <td>{{ $fee->category_name }}</td>
-                                    <td>
-                                        @if($fee->domestic_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->domestic_participants))
-                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                        @endif                          
-                                    </td>
-                                    <td>
-                                        @if($fee->international_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->international_participants))
-                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($fee->period_of_payment === 'TBA') 
-                                            TBA 
-                                        @else 
-                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} 
-                                        @endif
-                                    </td>
+                                    <th>Presenter</th>
+                                    <th>Domestic Participants</th>
+                                    <th>International Participants</th>
+                                    <th>Period of Payment</th>
                                 </tr>
-                            @endforeach
-                            @if ($presenter->isEmpty())
-                                <tr>
-                                    <td colspan="4">No presenter found.</td>
-                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($presenter as $fee)
+                    @php
+                        $payment_date = $fee->period_of_payment !== 'TBA' ? \Carbon\Carbon::parse($fee->period_of_payment) : null;
+                    @endphp
+                    <tr>
+                        <td>
+                            @if ($payment_date && $payment_date->isPast()) 
+                                <s>{{ $fee->category_name }}</s>
+                            @else
+                                {{ $fee->category_name }}
                             @endif
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Non-Presenter</th>
-                                <th>Domestic Participants</th>
-                                <th>International Participants</th>
-                                <th>Period of Payment</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($non_presenter as $fee)
-                                <tr>
-                                    <td>{{ $fee->category_name }}</td>
-                                    <td>
-                                        @if($fee->domestic_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->domestic_participants))
-                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                        @endif                          
-                                    </td>                                    
-                                    <td>
-                                        @if ($fee->international_participants === 'TBA') 
-                                            TBA 
-                                        @else 
-                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($fee->period_of_payment === 'TBA') 
-                                            TBA 
-                                        @else 
-                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                        </td>
+                        <td>
+                            @if ($payment_date && $payment_date->isPast()) 
+                                <s>
+                            @endif
+                            @if($fee->domestic_participants === 'TBA')
+                                TBA
+                            @elseif(is_numeric($fee->domestic_participants))
+                                IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                            @endif
+                            @if ($payment_date && $payment_date->isPast()) 
+                                </s>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($payment_date && $payment_date->isPast()) 
+                                <s>
+                            @endif
+                            @if($fee->international_participants === 'TBA')
+                                TBA
+                            @elseif(is_numeric($fee->international_participants))
+                                US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                            @endif
+                            @if ($payment_date && $payment_date->isPast()) 
+                                </s>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($fee->period_of_payment === 'TBA') 
+                                TBA 
+                            @else 
+                                {!! $payment_date && $payment_date->isPast() 
+                                    ? '<s>Until '. $payment_date->format('F jS, Y') .'</s>' 
+                                    : 'Until '. $payment_date->format('F jS, Y') !!}
+                            @endif
+                        </td>
+                    </tr>
+                   @endforeach
+                        @if ($presenter->isEmpty())
+                              <tr>
+                                  <td colspan="4">No presenter found.</td>
+                              </tr>
+                          @endif
+                              </tbody>
+                          </table>
+                          <table class="table table-bordered">
+                              <thead class="thead-light">
+                                  <tr>
+                                      <th>Non-Presenter</th>
+                                      <th>Domestic Participants</th>
+                                      <th>International Participants</th>
+                                      <th>Period of Payment</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @foreach ($non_presenter as $fee)
+                                      <tr>
+                                          <td>{{ $fee->category_name }}</td>
+                                          <td>
+                                              @if($fee->domestic_participants === 'TBA')
+                                                  TBA
+                                              @elseif(is_numeric($fee->domestic_participants))
+                                                  IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                              @endif                          
+                                          </td>                                    
+                                          <td>
+                                              @if ($fee->international_participants === 'TBA') 
+                                                  TBA 
+                                              @else 
+                                                  US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                              @endif
+                                          </td>
+                                          <td>
+                                              @if ($fee->period_of_payment === 'TBA') 
+                                                  TBA 
+                                              @else 
+                                                  Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
+                                              @endif
+                                          </td>
+                                      </tr>
+                                  @endforeach
                             @if ($non_presenter->isEmpty())
                                 <tr>
                                     <td colspan="4">No non presenter found.</td>
