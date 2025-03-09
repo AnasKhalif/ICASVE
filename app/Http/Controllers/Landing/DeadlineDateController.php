@@ -5,12 +5,19 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DeadlineDate;
+use App\Models\Year;
 
 class DeadlineDateController extends Controller
 {
     public function index()
     {
-        $deadlines = DeadlineDate::orderBy('date')->get();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $deadlines = DeadlineDate::whereYear('date', $activeYear->year)->orderBy('date')->get();
         return view('landingpage-editor.landingpage.deadlinedates.index', compact('deadlines'));
     }
 

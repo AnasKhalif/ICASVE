@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PublicationsJournal;
 use Illuminate\Validation\Rule;
+use App\Models\Year;
 
 class PublicationsJournalController extends Controller
 {
     public function index()
     {
-        $publications_journals = PublicationsJournal::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $publications_journals = PublicationsJournal::whereYear('created_at', $activeYear->year)->get();
         return view('landingpage-editor.landingpage.publications-journal.index', compact('publications_journals'));
     }
     public function create()

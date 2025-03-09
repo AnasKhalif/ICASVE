@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class YearController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $years = Year::all();

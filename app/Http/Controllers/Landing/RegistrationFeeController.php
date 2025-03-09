@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RegistrationFee;
 use Illuminate\Validation\Rule;
+use App\Models\Year;
 
 class RegistrationFeeController extends Controller
 {
     public function index()
     {
-        $registrationFees = RegistrationFee::all();
+        $activeYear = Year::where('is_active', true)->first();
+
+        if (!$activeYear) {
+            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        }
+
+        $registrationFees = RegistrationFee::whereYear('created_at', $activeYear->year)->get();
         return view('landingpage-editor.landingpage.registrationFee.index', compact('registrationFees'));
     }
     public function create()
@@ -19,31 +26,31 @@ class RegistrationFeeController extends Controller
         return view('landingpage-editor.landingpage.registrationFee.create');
     }
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'category_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/[a-zA-Z]/'],
-        'domestic_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
-        'international_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
-        'period_of_payment' => ['nullable' ,'string'],
-        'role_type' => ['required', Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
-    ], [
-        'category_name.required' => 'Category name is required.',
-        'category_name.min' => 'Category name must be at least 3 characters.',
-        'category_name.regex' => 'Category name must contain at least one letter.',
-        'period_of_payment.required' => 'Period of payment is required.',
-        'role_type.required' => 'Role type is required.',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'category_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/[a-zA-Z]/'],
+            'domestic_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
+            'international_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
+            'period_of_payment' => ['nullable', 'string'],
+            'role_type' => ['required', Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
+        ], [
+            'category_name.required' => 'Category name is required.',
+            'category_name.min' => 'Category name must be at least 3 characters.',
+            'category_name.regex' => 'Category name must contain at least one letter.',
+            'period_of_payment.required' => 'Period of payment is required.',
+            'role_type.required' => 'Role type is required.',
+        ]);
 
-    $validatedData['domestic_participants'] = $validatedData['domestic_participants'] ?? 'TBA';
-    $validatedData['international_participants'] = $validatedData['international_participants'] ?? 'TBA';
-    $validatedData['period_of_payment'] = $validatedData['period_of_payment'] ?? 'TBA';
+        $validatedData['domestic_participants'] = $validatedData['domestic_participants'] ?? 'TBA';
+        $validatedData['international_participants'] = $validatedData['international_participants'] ?? 'TBA';
+        $validatedData['period_of_payment'] = $validatedData['period_of_payment'] ?? 'TBA';
 
 
-    $validatedData['category_name'] = strip_tags($validatedData['category_name']);
-    RegistrationFee::create($validatedData);
+        $validatedData['category_name'] = strip_tags($validatedData['category_name']);
+        RegistrationFee::create($validatedData);
 
-    return redirect()->route('landing.registrationFee.index')->with('success', 'Registration Fee created successfully.');
-}
+        return redirect()->route('landing.registrationFee.index')->with('success', 'Registration Fee created successfully.');
+    }
 
     public function edit($id)
     {

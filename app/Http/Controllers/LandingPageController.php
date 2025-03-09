@@ -14,32 +14,32 @@ use App\Models\Contact;
 use App\Models\Faq;
 use App\Models\Theme;
 use App\Models\ConferenceTitle;
+use App\Models\Year;
 
 class LandingPageController extends Controller
 {
     public function index()
     {
-        $keynoteSpeakers = Speaker::where('role', 'keynote_speaker')->get();
-        $invitedSpeakers = Speaker::where('role', 'invited_speaker')->get();
-        $presenter = RegistrationFee::where('role_type', 'presenter')->get();
-        $non_presenter = RegistrationFee::where('role_type', 'non_presenter')->get();
-        $additional_fee = RegistrationFee::where('role_type', 'additional_fee')->get();
-        $publications_journal = PublicationsJournal::where('image_type', 'publications_journal')->get();
-        $hosted_by = PublicationsJournal::where('image_type', 'hosted_by')->get();
-        $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->get();
-        $supported_by = PublicationsJournal::where('image_type', 'supported_by')->get();
-        $venues = Venue::all();
-        $deadline_date = DeadlineDate::all();
-        $contacts = Contact::all();
-        $posters = Poster::where('year', now()->year)->get();
-        $themes = Theme::orderBy('year', 'desc')->get();
-        $faqs = Faq::limit(3)->get();
-        
-        // Ambil hanya 1 Conference Title terbaru
-        $conference_title = ConferenceTitle::orderByDesc('year')->first();
+        $activeYear = Year::where('is_active', true)->first();
+        $keynoteSpeakers = Speaker::where('role', 'keynote_speaker')->whereYear('created_at', $activeYear->year)->get();
+        $invitedSpeakers = Speaker::where('role', 'invited_speaker')->whereYear('created_at', $activeYear->year)->get();
+        $presenter = RegistrationFee::where('role_type', 'presenter')->whereYear('created_at', $activeYear->year)->get();
+        $non_presenter = RegistrationFee::where('role_type', 'non_presenter')->whereYear('created_at', $activeYear->year)->get();
+        $additional_fee = RegistrationFee::where('role_type', 'additional_fee')->whereYear('created_at', $activeYear->year)->get();
+        $publications_journal = PublicationsJournal::where('image_type', 'publications_journal')->whereYear('created_at', $activeYear->year)->get();
+        $hosted_by = PublicationsJournal::where('image_type', 'hosted_by')->whereYear('created_at', $activeYear->year)->get();
+        $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->whereYear('created_at', $activeYear->year)->get();
+        $supported_by = PublicationsJournal::where('image_type', 'supported_by')->whereYear('created_at', $activeYear->year)->get();
+        $venues = Venue::whereYear('created_at', $activeYear->year)->get();
+        $deadline_date = DeadlineDate::whereYear('created_at', $activeYear->year)->get();
+        $contacts = Contact::whereYear('created_at', $activeYear->year)->get();
+        $posters = Poster::where('year', $activeYear->year)->get();
+        $themes = Theme::where('year', $activeYear->year)->orderBy('year', 'desc')->get();
+        $faqs = Faq::whereYear('created_at', $activeYear->year)->limit(3)->get();
 
-        // Ambil hanya satu About terbaru berdasarkan ID terbesar
-        $about = About::latest('id')->first();
+        $conference_title = ConferenceTitle::where('year', $activeYear->year)->orderByDesc('year')->first();
+
+        $about = About::whereYear('created_at', $activeYear->year)->latest('id')->first();
 
         return view('landingpage.home', compact(
             'keynoteSpeakers',

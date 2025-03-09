@@ -10,33 +10,33 @@ use App\Models\OrganizingCommittee;
 class OrganizingCommitteeController extends Controller
 {
     public function showLandingPage()
-{
-     $latestYear = OrganizingCommittee::max('year');
+    {
+        $latestYear = OrganizingCommittee::max('year');
 
-     $committees = OrganizingCommittee::where('year', $latestYear)
-         ->orderBy('category')
-         ->get();
- 
-     return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
-}
+        $committees = OrganizingCommittee::where('year', $latestYear)
+            ->orderBy('category')
+            ->get();
 
-public function index(Request $request)
-{
-    $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
+    }
 
-    // Tambahkan opsi "All Years"
-    $years->prepend('All Years');
+    public function index(Request $request)
+    {
+        $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
 
-    // Ambil tahun yang dipilih dari query parameter, default ke "All Years"
-    $selectedYear = $request->query('year', 'All Years');
+        // Tambahkan opsi "All Years"
+        $years->prepend('All Years');
 
-    // Ambil data berdasarkan tahun yang dipilih, atau semua data jika "All Years" dipilih
-    $committees = $selectedYear === 'All Years'
-        ? OrganizingCommittee::orderBy('year', 'desc')->orderBy('category')->get()
-        : OrganizingCommittee::where('year', $selectedYear)->orderBy('category')->get();
+        // Ambil tahun yang dipilih dari query parameter, default ke "All Years"
+        $selectedYear = $request->query('year', 'All Years');
 
-    return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'selectedYear'));
-}
+        // Ambil data berdasarkan tahun yang dipilih, atau semua data jika "All Years" dipilih
+        $committees = $selectedYear === 'All Years'
+            ? OrganizingCommittee::orderBy('year', 'desc')->orderBy('category')->get()
+            : OrganizingCommittee::where('year', $selectedYear)->orderBy('category')->get();
+
+        return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'selectedYear'));
+    }
 
 
     public function create()
@@ -86,5 +86,4 @@ public function index(Request $request)
         return redirect()->route('landing.reviewer.index')
             ->with('success', 'Reviewer Committee deleted successfully.');
     }
-
 }
