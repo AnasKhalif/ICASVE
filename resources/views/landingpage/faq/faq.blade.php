@@ -1,7 +1,7 @@
 @extends('layouts.landing')
 @section('title', 'FAQ')
 @section('content')
-    <section id="faq" class="faq container section light-background">
+    <section id="faq" class="faq container section">
         <div class="container-fluid">
             <div class="row gy-4">
                 <div class="col-lg-7 d-flex flex-column justify-content-center order-2 order-lg-1 w-100">
@@ -21,6 +21,9 @@
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div>
                         @endforeach
+                        @if ($faqs->isEmpty())
+                            <p class="text-muted mt-3" data-aos="fade-up">No faq found.</p>
+                        @endif
                     </div>
                 </div>
 

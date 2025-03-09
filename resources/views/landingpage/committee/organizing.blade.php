@@ -1,56 +1,52 @@
 @extends('layouts.landing')
-@section('title', 'Home')
+
+@section('title', 'Organizing Committee')
+
 @section('content')
     <section id="reviewer" class="steering-committee section">
         <div class="container" data-aos="fade-up">
-            <h2 class="title-committee">Organizing Committtee</h2>
-            <div class="line bg-success mx-auto rounded-pill" style="height: 2px; " />
+            <h2 class="title-committee">Organizing Committee ({{ $latestYear }})</h2>
+            <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="committee-container">
                 <div class="container mt-5">
                     <div class="row">
+                        @php
+                            $categories = $committees->groupBy('category'); // Kelompokkan berdasarkan kategori
+                        @endphp
+
                         <div class="col-md-6">
                             <ul class="list-unstyled">
-                                <li><strong>Chairperson</strong>
-                                    <br>Dr. Patricia Audrey R., SH., M.Kn.
-                                </li>
-                                <li><strong>Vice Chairperson</strong>
-                                    <br>Dr.techn. Ir. Yusfan Adeputera Yusran, ST.,
-                                    MT.Ars., IPM., ASEAN Eng.
-                                </li>
-                                <li>
-                                    <strong>Secretary</strong><br>
-                                    Dr. Indah Dwi Qurbani, S.H., M.H.<br>
-                                    Felicia Nora Evelyn S.TP.<br>
-                                    Matsniyatul Khoiriyah S.S.
-                                </li>
-                                <li>
-                                    <strong>Treasurer</strong><br>
-                                    Henny Rosalinda, S.IP., M.A., Ph.D.<br>
-                                    Rr. Ayu Rahardani Winoresita, S.M., M.M.
-                                </li>
+                                @foreach ($categories->slice(0, ceil($categories->count() / 2)) as $category => $members)
+                                    <li><strong>{{ $category }}</strong><br>
+                                        @foreach ($members as $member)
+                                            {{ $member->name }}<br>
+                                        @endforeach
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
+
                         <div class="col-md-6">
                             <ul class="list-unstyled">
-                                <li><strong>Scientific Publication</strong><br>Indah Yanti, S.Si., M.Si.<br>Alfons Zakaria,
-                                    S.H., LLM.</li>
-                                <li><strong>Event</strong><br>Dr.Agr.Sc. Dimas Firmanda Al Riza, ST., M.Sc.</li>
-                                <li><strong>Hospitality</strong><br>Poespitasari Hazanah Ndaru, S.Pt., MP.</li>
-                                <li>
-                                    <strong>IT, Design & Technical Support</strong><br>
-                                    Gema Adha Hermanenda, S.Kom.<br>
-                                    Yessi Margareta, S.Ds.<br>
-                                    Fuad Hartono
-                                </li>
+                                @foreach ($categories->slice(ceil($categories->count() / 2)) as $category => $members)
+                                    <li><strong>{{ $category }}</strong><br>
+                                        @foreach ($members as $member)
+                                            {{ $member->name }}<br>
+                                        @endforeach
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+
+        @if ($committees->isEmpty())
+            <p class="text-center text-muted">No organizing committee members found.</p>
+        @endif
     </section>
 @endsection

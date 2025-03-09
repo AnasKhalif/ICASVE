@@ -22,7 +22,7 @@ class ReviewerController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $rolesToDisplay = ['chief-editor', 'editor', 'reviewer'];
@@ -30,7 +30,7 @@ class ReviewerController extends Controller
             $query->whereIn('name', $rolesToDisplay);
         })
             ->whereYear('created_at', $activeYear->year)
-            ->with('roles')->paginate(10);
+            ->with('roles')->paginate(8);
         return view('reviewers.index', compact('users'));
     }
 

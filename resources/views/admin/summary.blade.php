@@ -7,7 +7,7 @@
         <div class="content-wrapper">
             <div class="row">
                 <div class="col-md-12 grid-margin">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Welcome {{ auth()->user()->name }}</h3>
                             <h6 class="font-weight-normal mb-0">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row d-flex align-items-stretch">
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card tale-bg">
                         <div class="card-people">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 grid-margin transparent">
+                <div class="col-md-6 grid-margin transparent d-flex flex-column justify-content-between">
                     <div class="row">
                         <div class="col-md-6 mb-4 stretch-card transparent">
                             <div class="card text-white card-tale">
@@ -66,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-md-6 grid-margin stretch-card">

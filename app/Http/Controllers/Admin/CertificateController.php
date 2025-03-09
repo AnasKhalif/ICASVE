@@ -8,19 +8,22 @@ use App\Models\User;
 use App\Models\Certificate;
 use App\Models\FilePayment;
 use App\Models\Year;
+use App\Traits\FlashAlert;
 
 class CertificateController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
         $certificates = Certificate::with('user.filePayment')
             ->whereYear('created_at', $activeYear->year)
-            ->paginate(10);
+            ->paginate(8);
         return view('certificates.index', compact('certificates'));
     }
 
@@ -30,6 +33,6 @@ class CertificateController extends Controller
         $certificate->status = $request->status;
         $certificate->save();
 
-        return redirect()->route('admin.certificates.index')->with('success', 'Status certificate updated.');
+        return redirect()->route('admin.certificates.index')->with($this->alertUpdated());
     }
 }

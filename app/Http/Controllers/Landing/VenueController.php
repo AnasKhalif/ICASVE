@@ -23,12 +23,12 @@ class VenueController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
-            'venue_name' => ['required', 'string', 'max:255'],
-            'address' => ['required', 'string', 'max:255'],
-            'date' => ['required', 'string', 'max:255'],
-            'link_map' => ['required', 'string', 'max:255'],
-            'map' => ['required', 'string'],
+            'image_path' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+            'venue_name' => ['required', 'string', 'max:255', 'min:3'],
+            'address' => ['required', 'string', 'max:255', 'min:10'],
+            'date' => ['required', 'date'],
+            'link_map' => ['required', 'url'],
+            'map' => ['required', 'string', 'min:10'],
         ]);
 
         if ($request->hasFile('image_path')) {
@@ -51,12 +51,12 @@ class VenueController extends Controller
     {
         $venue = Venue::findOrFail($id);
         $validatedData = $request->validate([
-            'image_path' => ['file', 'image', 'max:2048', 'mimes:jpeg,png,jpg,svg'],
-            'venue_name' => ['string', 'max:255'],
-            'address' => ['string', 'max:255'],
-            'date' => ['string', 'max:255'],
-            'link_map' => ['string', 'max:255'],
-            'map' => ['string'],
+            'image_path' => ['file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
+            'venue_name' => ['string', 'max:255', 'min:3'],
+            'address' => ['string', 'max:255', 'min:10'],
+            'date' => ['date'],
+            'link_map' => ['url'],
+            'map' => ['string', 'min:10'],
         ]);
 
         if ($request->hasFile('image_path')) {

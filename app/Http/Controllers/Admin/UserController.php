@@ -16,6 +16,10 @@ use App\Models\Year;
 use App\Models\ConferenceSetting;
 use App\Exports\ParticipantsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use setasign\Fpdi\Fpdi;
+use App\Models\Certificate;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -31,7 +35,7 @@ class UserController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $totalUsers = User::whereHas('roles', function ($query) use ($rolesToDisplay) {
@@ -54,7 +58,7 @@ class UserController extends Controller
             ->whereYear('created_at', $activeYear->year)
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%");
-            })->with('roles')->paginate(10);
+            })->with('roles')->paginate(5);
 
         if ($request->ajax()) {
             return response()->json([
@@ -114,8 +118,60 @@ class UserController extends Controller
         $role = Role::find($validatedData['role_id']);
 
         $user->roles()->attach($role);
+        $this->generateCertificate($user);
 
         return redirect()->route('admin.participant.index')->with($this->alertCreated());
+    }
+
+    private function generateCertificate(User $user)
+    {
+        // Tentukan template sertifikat untuk peserta
+        $templateUrl = Upload::getFilePath('certificate_participant');
+        $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
+
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Certificate template not found');
+        }
+
+        // Inisialisasi FPDI
+        $pdf = new Fpdi();
+        $pdf->setSourceFile($templatePath);
+        $template = $pdf->importPage(1);
+        $size = $pdf->getTemplateSize($template);
+        $pdf->addPage($size['orientation'], [$size['width'], $size['height']]);
+        $pdf->useTemplate($template);
+
+        // Menambahkan teks ke dalam template sertifikat
+        $pdf->SetFont('Times', 'B', 45); // Gunakan font Times New Roman atau Helvetica
+
+        // Menentukan posisi untuk nama penerima dan menambahkan garis bawah
+        $nameWidth = $pdf->GetStringWidth($user->name);
+        $nameX = ($size['width'] - $nameWidth) / 2;  // Memusatkan nama
+        $pdf->SetXY($nameX, 150);  // Koordinat untuk nama penerima
+        $pdf->Write(0, $user->name);
+
+        // Menambahkan garis bawah pada nama
+        $pdf->Line($nameX, 155, $nameX + $nameWidth, 155);  // Garis bawah untuk nama
+
+        // Menambahkan teks untuk institusi
+        $participantText = "Participant";  // Teks yang ingin ditampilkan
+        $participantWidth = $pdf->GetStringWidth($participantText);
+        $participantX = ($size['width'] - $participantWidth) / 2;  // Memusatkan teks
+        $pdf->SetXY($participantX, 200);  // Koordinat untuk teks
+        $pdf->Write(0, $participantText);
+
+        // Menyimpan PDF ke storage
+        Storage::disk('public')->makeDirectory('certificates');
+        $certificateName = Str::random(20) . '.pdf';  // Hash nama file
+        $certificatePath = 'certificates/' . $certificateName;
+        $pdf->Output(storage_path('app/public/' . $certificatePath), 'F');
+
+        // Menyimpan path sertifikat ke database
+        Certificate::create([
+            'user_id' => $user->id,
+            'certificate_type' => 'participant',
+            'certificate_path' => $certificatePath,
+        ]);
     }
 
     /**
@@ -231,11 +287,27 @@ class UserController extends Controller
         try {
             $user = User::findOrFail($id);
 
-            $roles = $user->roles;
+            foreach ($user->abstracts as $abstract) {
+                if ($abstract->fullPaper) {
+                    $fullPaperPath = $abstract->fullPaper->file_path;
+                    if (Storage::disk('public')->exists($fullPaperPath)) {
+                        Storage::disk('public')->delete($fullPaperPath);
+                    }
+                    $abstract->fullPaper->delete();
+                }
 
-            foreach ($roles as $role) {
-                $user->roles()->detach($role);
+                $abstract->delete();
             }
+
+            foreach ($user->certificates as $certificate) {
+                $certificatePath = $certificate->certificate_path;
+                if (Storage::disk('public')->exists($certificatePath)) {
+                    Storage::disk('public')->delete($certificatePath);
+                }
+                $certificate->delete();
+            }
+
+            $user->roles()->detach();
 
             $user->delete();
 
@@ -244,6 +316,7 @@ class UserController extends Controller
             return redirect()->route('admin.participant.index')->with($this->alertNotFound());
         }
     }
+
 
     public function acceptancePdf($id)
     {
@@ -254,8 +327,8 @@ class UserController extends Controller
         $letterHeaderUrl = Upload::getFilePath('letter_header');
         $signatureUrl = Upload::getFilePath('signature');
 
-        $letterHeader = public_path(str_replace(asset(''), '', $letterHeaderUrl));
-        $signature = public_path(str_replace(asset(''), '', $signatureUrl));
+        $letterHeader = storage_path('app/public/' . str_replace(asset('storage/'), '', $letterHeaderUrl));
+        $signature = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
 
         $pdf = PDF::loadView('participants.acceptance', compact('abstract', 'letterHeader', 'signature', 'conferenceChairPerson'));
 

@@ -80,7 +80,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="card-title">Abstracts</h4>
                     <div>
-                        @if ($openAbstractSubmission)
+                        @if ($openAbstractSubmission && !$abstracts->where('status', 'accepted')->count())
                             <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">Add Abstract</a>
                         @endif
 
@@ -147,11 +147,11 @@
 
 
                                         <form action="{{ route('abstracts.destroy', $abstract->id) }}" method="POST"
-                                            style="display: inline-block;">
+                                            style="display: inline-block;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>
+                                            <button type="submit" class="btn btn-sm btn-danger btn-delete"><i
+                                                    class="fa fa-trash"></i>
                                                 Delete</button>
                                         </form>
                                     </td>

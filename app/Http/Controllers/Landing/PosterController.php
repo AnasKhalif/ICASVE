@@ -12,12 +12,12 @@ class PosterController extends Controller
     public function index()
     {
         $posters = Poster::latest()->get();
-        return view('landingpage-editor.poster.index', compact('posters'));
+        return view('landingpage-editor.landingpage.poster.index', compact('posters'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.poster.create');
+        return view('landingpage-editor.landingpage.poster.create');
     }
 
     public function store(Request $request)
@@ -33,10 +33,15 @@ class PosterController extends Controller
         Poster::create([
             'image' => $imagePath,
             'year' => $request->year,
-            'link' => $request->link,
+            'link' => $request->link ?? null, // Menghindari NULL yang tidak eksplisit
         ]);
 
-        return redirect()->route('landing.poster.index')->with('success', 'Poster added successfully.');
+        return redirect()->route('landing.poster.index')->with('success', 'Poster berhasil ditambahkan.');
+    }
+
+    public function edit(Poster $poster)
+    {
+        return view('landingpage-editor.landingpage.poster.edit', compact('poster'));
     }
 
     public function update(Request $request, Poster $poster)
@@ -48,29 +53,30 @@ class PosterController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            Storage::delete('public/' . $poster->image);
+            // Hapus gambar lama jika ada
+            if ($poster->image && Storage::exists('public/' . $poster->image)) {
+                Storage::delete('public/' . $poster->image);
+            }
+
+            // Simpan gambar baru
             $poster->image = $request->file('image')->store('posters', 'public');
         }
 
         $poster->year = $request->year;
-        $poster->link = $request->link;
+        $poster->link = $request->link ?? null;
         $poster->save();
 
-        return redirect()->route('landing.poster.index')->with('success', 'Poster updated successfully.');
+        return redirect()->route('landing.poster.index')->with('success', 'Poster berhasil diperbarui.');
     }
-
-
-    public function edit(Poster $poster)
-    {
-        return view('landingpage-editor.poster.edit', compact('poster'));
-    }
-
 
     public function destroy(Poster $poster)
     {
-        Storage::delete('public/' . $poster->image);
+        if ($poster->image && Storage::exists('public/' . $poster->image)) {
+            Storage::delete('public/' . $poster->image);
+        }
+
         $poster->delete();
 
-        return redirect()->route('landing.poster.index')->with('success', 'Poster deleted successfully.');
+        return redirect()->route('landing.poster.index')->with('success', 'Poster berhasil dihapus.');
     }
 }

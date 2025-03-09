@@ -20,11 +20,12 @@ return new class extends Migration
             $table->text('treasurer_email');
             $table->text('bank_account');
             $table->integer('max_abstracts_per_participant')->default(0);
-            $table->integer('max_words_in_abstract_body')->default(350);
+            $table->integer('max_words_in_abstract_body')->default(0);
             $table->enum('attendance_format', ['onsite', 'online', 'hybrid'])->default('hybrid');
             $table->boolean('open_registration')->default(false);
             $table->boolean('open_full_paper_upload')->default(false);
             $table->boolean('open_abstract_submission')->default(false);
+            $table->text('payment_instruction');
             $table->timestamps();
         });
     }

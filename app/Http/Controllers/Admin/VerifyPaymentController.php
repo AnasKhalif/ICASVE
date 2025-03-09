@@ -13,20 +13,23 @@ use App\Models\Year;
 use App\Models\ConferenceSetting;
 use App\Mail\PaymentVerified;
 use Illuminate\Support\Facades\Mail;
+use App\Traits\FlashAlert;
 
 class VerifyPaymentController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $payments = FilePayment::with('user.roles')
             ->whereYear('created_at', $activeYear->year)
-            ->get();
+            ->paginate(8);
         return view('verify-payment.index', compact('payments'));
     }
 
@@ -41,7 +44,7 @@ class VerifyPaymentController extends Controller
             Mail::to($user->email)->send(new PaymentVerified($user, $filePayment));
         }
 
-        return redirect()->route('admin.payment.index')->with('success', 'Payment status has been updated.');
+        return redirect()->route('admin.payment.index')->with($this->alertUpdated());
     }
 
     public function digitalPdf($id)

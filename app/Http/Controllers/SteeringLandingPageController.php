@@ -8,9 +8,15 @@ use App\Models\SteeringCommittee;
 
 class SteeringLandingPageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $steeringCommittee = SteeringCommittee::all();
-        return view('landingpage.committee.steering', compact('steeringCommittee'));
+        $years = SteeringCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        
+        $selectedYear = $request->year ?? $years->first();
+    
+        $steeringCommittee = SteeringCommittee::where('year', $selectedYear)->get();
+    
+        return view('landingpage.committee.steering', compact('steeringCommittee', 'years', 'selectedYear'));
     }
+
 }

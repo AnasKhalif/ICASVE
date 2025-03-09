@@ -1,21 +1,47 @@
 @extends('layouts.landing')
 @section('title', 'Home')
+@php
+    $contact = \App\Models\Contact::latest()->first();
+    $emailTo = $contact ? $contact->email : 'contact@example.com';
+    $whatsappNumber = null;
+
+    if ($contact) {
+        $whatsappNumber = $contact->phone;
+        if (substr($whatsappNumber, 0, 1) === '0') {
+            $whatsappNumber = '+62' . substr($whatsappNumber, 1);
+        }
+    }
+@endphp
 @section('content')
     <section id="hero" class="hero section dark-background">
         <img src="{{ asset('/images/hero-bg-2.jpg') }}" alt="" class="hero-bg" />
 
-        <div class="container d-flex align-items-center" style="min-height: 60vh;">
-            <div class="row gy-4 justify-content-between">
-                <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
-                    <h1>International Conference on Applied Science for Vocational Education - <span> ICASVE 2025</span>
-                    </h1>
-                    <p>Implemetation of Applied Science for Prosperity and Sustainability</p>
-                    <div class="d-flex">
-                        <a href="{{ route('register') }}" class="btn-get-started">Register</a>
-                    </div>
+        @if($conference_title)
+    <div class="container d-flex align-items-center" style="min-height: 60vh;">
+        <div class="row gy-4 justify-content-between">
+            <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
+                <h1>{{ $conference_title->title }} - <span>ICASVE {{ $conference_title->year }}</span></h1>
+                <p>{{ $conference_title->description }}</p>
+                <div class="d-flex">
+                    <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
             </div>
         </div>
+    </div>
+@else
+    <div class="container d-flex align-items-center" style="min-height: 60vh;">
+        <div class="row gy-4 justify-content-between">
+            <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
+                <h1>ICASVE {{ date('Y') }}</h1>
+                <p>International Conference on Applied Science and Engineering</p>
+                <div class="d-flex justify-start align">
+                    <a href="{{ route('login') }}" class="btn-get-started">Login</a>
+                    <a href="{{ route('register') }}" class="btn-get-started">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 
         <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             viewBox="0 24 150 28 " preserveAspectRatio="none">
@@ -28,41 +54,40 @@
             <g class="wave2">
                 <use xlink:href="#wave-path" x="50" y="0"></use>
             </g>
-            <g class="wave3">
-                <use xlink:href="#wave-path" x="50" y="9"></use>
-            </g>
+            
         </svg>
     </section>
     <!-- /Hero Section -->
 
     <!-- About Section -->
-    <section id="about" class="about section">
-        <div class="container">
-            @foreach ($about as $item)
-                <div class="row align-items-center justify-content-between gy-5">
-                    <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
-                        <h3>About</h3>
-                        <h2>{{ $item->title }}</h2>
-                        <p>
-                            {{ $item->content }}
-                        </p>
-                        <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
-                    </div>
+ <!-- About Section -->
+@if ($about)
+<section id="about" class="about section">
+    <div class="container">
+        <div class="row align-items-center justify-content-between gy-5">
+            <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
+                <h3>About</h3>
+                <h2>{{ $about->title }}</h2>
+                <p>{{ $about->content }}</p>
+            </div>
 
-                    <div class="d-none d-xl-block col-xl-2"></div>
+            <div class="d-none d-xl-block col-xl-2"></div>
 
-                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
-                        data-aos-delay="100">
-                        <img src="{{ asset('storage/' . $about->first()->image) }}" class="w-100 w-md-75 animated rounded-3"
-                            alt="gedung-vokasi" />
-                    </div>
-                </div>
-            @endforeach
+            <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
+                data-aos-delay="100">
+                <img src="{{ asset('storage/' . $about->image) }}" class="w-100 w-md-75 animated rounded-3"
+                    alt="gedung-vokasi" />
+            </div>
         </div>
-    </section>
+    </div>
+</section>
+@endif
+<!-- /About Section -->
+
     <!-- /About Section -->
 
     <!-- Team Section -->
+    @if ($keynoteSpeakers->isNotEmpty())
     <section id="team" class="team section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
@@ -73,6 +98,9 @@
 
         <div class="container">
             <div class="row gy-5">
+                @if ($keynoteSpeakers->isEmpty())
+                    <p>No keynote speakers found.</p>
+                @endif
                 @foreach ($keynoteSpeakers as $speaker)
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="member">
@@ -92,6 +120,8 @@
             </div>
         </div>
     </section>
+    @endif
+    @if ($invitedSpeakers->isNotEmpty())
     <section id="team-invited" class="team section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
@@ -102,6 +132,9 @@
 
         <div class="container">
             <div class="row gy-5">
+                @if ($invitedSpeakers->isEmpty())
+                    <p>No invited speakers found.</p>
+                @endif
                 @foreach ($invitedSpeakers as $speaker)
                     <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                         <div class="member">
@@ -121,26 +154,37 @@
             </div>
         </div>
     </section>
+    @endif
     <!-- /Team Section -->
 
+    @if ($themes->isNotEmpty())
     <div id="hero-topics" class="py-5 content-topics">
         <div class="container">
             <div class="contents-topics text-white text-left text-md-start">
                 <h2 class="fw-bold text-white mb-3" data-aos="fade-up">CALL FOR PAPER</h2>
                 <p data-aos="fade-up">The topics include, but are not limited to:</p>
                 <ul class="list-topics" data-aos="fade-up" data-aos-delay="200">
-                    @foreach ($symposiums as $symposium)
-                        <li>{{ $symposium->name }}</li>
+                    @if ($themes->isEmpty())
+                        <p>No topics found.</p>
+                    @endif
+                    @foreach ($themes as $theme)
+                        <li>
+                            <a href="{{ route('themes.show', $theme->id) }}" class="text-white text-decoration-underline">
+                                {{ $theme->title }} ({{ $theme->year }})
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             </div>
         </div>
     </div>
-
+    @endif
+    
 
     <!-- Details Section -->
     <section id="details" class="details section">
-        <div class="container">
+        @if ($posters->count() > 0)
+    <div class="container">
             @foreach ($posters as $poster)
                 <div class="row gy-4 align-items-center features-item">
                     <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
@@ -171,107 +215,172 @@
                                         <td>{{ \Carbon\Carbon::parse($date->date)->format('F j, Y') }}</td>
                                     </tr>
                                 @endforeach
+                                @if ($deadline_date->isEmpty())
+                                <tr>
+                                    <td colspan="2">No deadline date found.</td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
-                        <a href="{{ $poster->link }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
+                        <a href="{{ asset('storage/' . $poster->image) }}" class="leaflet-button" data-aos="fade-up">Get Our Leaflet</a>
                     </div>
                 </div>
             @endforeach
+        @endif
             <!-- Features Item -->
 
-            <div class="row gy-4 align-items-center features-item">
-                <div class="container">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>Registration</h2>
-                        <div><span>Registration</span> <span class="description-title"> Fee</span></div>
-                    </div>
-                    <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($presenter as $fee)
-                                    <tr>
-                                        <td>{{ $fee->category_name }}</td>
-                                        <td>IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }} </td>
-                                        <td>US$ {{ $fee->international_participants }}</td>
-                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Non-Presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($non_presenter as $fee)
-                                    <tr>
-                                        <td>{{ $fee->category_name }}</td>
-                                        <td>IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}</td>
-                                        <td>US$ {{ $fee->international_participants }}</td>
-                                        <td>Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <table class="table table-bordered" data-aos="fade-up">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Additional Fee</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($additional_fee as $fee)
-                                    <tr>
-                                        <td>{{ $fee->category_name }}</td>
-                                        <td>{{ $fee->domestic_participants }}</td>
-                                        <td>{{ $fee->international_participants }}</td>
-                                        <td>
-                                            @if (!empty($fee->period_of_payment) && $fee->period_of_payment !== 'TBA')
-                                                Until
-                                                {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
-                                            @else
-                                                {{ $fee->period_of_payment }}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <p class="text-muted mt-3" data-aos="fade-up">
-                        <small>
-                            <b>Please note:</b><br />
-                            1. The registration fee serves only for conference fee, and it cannot be waived for
-                            authors.<br />
-                            2. Authors need to pay for publishing if accepted.<br />
-                            3. Certificate fee: Participants can attend the event without certificate.
-                        </small>
-                    </p>
+       
+        <div class="row gy-4 align-items-center features-item">
+            @if ($presenter->isNotEmpty())
+            <div class="container">
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Registration</h2>
+                    <div><span>Registration</span> <span class="description-title"> Fee</span></div>
                 </div>
+                <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Presenter</th>
+                                <th>Domestic Participants</th>
+                                <th>International Participants</th>
+                                <th>Period of Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($presenter as $fee)
+                                <tr>
+                                    <td>{{ $fee->category_name }}</td>
+                                    <td>
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
+                                    </td>
+                                    <td>
+                                        @if($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} 
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @if ($presenter->isEmpty())
+                                <tr>
+                                    <td colspan="4">No presenter found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Non-Presenter</th>
+                                <th>Domestic Participants</th>
+                                <th>International Participants</th>
+                                <th>Period of Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($non_presenter as $fee)
+                                <tr>
+                                    <td>{{ $fee->category_name }}</td>
+                                    <td>
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
+                                    </td>                                    
+                                    <td>
+                                        @if ($fee->international_participants === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @if ($non_presenter->isEmpty())
+                                <tr>
+                                    <td colspan="4">No non presenter found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" data-aos="fade-up">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Additional Fee</th>
+                                <th>Domestic Participants</th>
+                                <th>International Participants</th>
+                                <th>Period of Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($additional_fee as $fee)
+                                <tr>
+                                    <td>{{ $fee->category_name }}</td>
+                                    <td>
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif                          
+                                    </td>
+                                    <td>
+                                        @if($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            Until {{ \Carbon\Carbon::parse($fee->period_of_payment)->format('F jS, Y') }} 
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @if ($additional_fee->isEmpty())
+                                <tr>
+                                    <td colspan="4">No additional fee found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-muted mt-3" data-aos="fade-up">
+                    <small>
+                        <b>Please note:</b><br />
+                        1. The registration fee serves only for conference fee, and it cannot be waived for authors.<br />
+                        2. Authors need to pay for publishing if accepted.<br />
+                        3. Certificate fee: Participants can attend the event without certificate.
+                    </small>
+                </p>
             </div>
-            <!-- Features Item -->
-
+        @endif
+        
+          @if ($venues->isNotEmpty())
+          </div>
             <div class="row gy-4 align-items-center features-item">
                 <div class="container section-title" data-aos="fade-up">
                     <h2>Venue</h2>
@@ -279,31 +388,37 @@
                 </div>
                 @foreach ($venues as $venue)
                     <div class="row align-items-start">
-                        <div class="col-md-6" data-aos="fade-up">
+                        <!-- Kolom Gambar: Tambahkan margin bawah untuk perangkat kecil -->
+                        <div class="col-md-6 mb-2 mb-md-0" data-aos="fade-up">
                             <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
-                                class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; height: auto" />
+                                class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; max-height: 375px;" />
                         </div>
-                        <div class="location col-md-6" data-aos="fade-up">
+                        <!-- Kolom Teks: Tambahkan margin atas untuk perangkat kecil -->
+                        <div class="location col-md-6 mt-2 mt-md-0" data-aos="fade-up">
                             <h3 class="title-location">{{ $venue->venue_name }}</h3>
                             <p class="text-muted">{{ $venue->address }}</p>
                             <p class="font-weight-bold">Date: {{ $venue->date }}</p>
-                            <a href="{{ $venue->map_link }}" target="_blank" class="btn btn-primary btn-map">See on
-                                Map</a>
+                            <a href="{{ $venue->link_map }}" target="_blank" class="btn btn-primary btn-map">See on Map</a>
                         </div>
                     </div>
-
-                    <div class="mt-4" data-aos="fade-up">
-                        <iframe src="{{ $venue->map }}" width="100%" height="400" style="border: 0"
-                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+            
+                    <!-- Map Section -->
+                    <div class="mt-4 full-screen-map" data-aos="fade-up">
+                        <div class="mt-4 full-screen-map" data-aos="fade-up">
+                            {!! $venue->map !!}
+                        </div>
                     </div>
                 @endforeach
+                @if ($venues->isEmpty())
+                    <p class="text-muted mt-3" data-aos="fade-up">No venue found.</p>
+                @endif
             </div>
-            <!-- Features Item -->
+            @endif
         </div>
     </section>
     <!-- /Details Section -->
 
+    @if ($publications_journal->isNotEmpty())
     <section id="publications-section" class="py-5 bg-light section">
         <div class="container d-flex flex-column justify-content-center">
             <div class="publications-journal container section-title" data-aos="fade-up">
@@ -313,18 +428,23 @@
             <div class="row text-center" style="display: flex; align-items: center">
                 @foreach ($publications_journal as $item)
                     <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" class="img-fluid" />
+                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" style="max-width: 150px" class="img-fluid" />
                     </div>
                 @endforeach
+                @if ($publications_journal->isEmpty())
+                    <p>No publications journal found.</p>
+                @endif
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Hosted and Supported Section -->
     <section id="hosted-supported-section" class="section">
         <div class="container">
             <div class="row">
                 <!-- Left Section (30%) -->
+                @if ($hosted_by->isNotEmpty() || $co_hosted_by->isNotEmpty())
                 <div class="col-md-4 text-white p-4" style="background-color: #fbfbfb;">
                     <div class="mb-4 text-center">
                         <h4 data-aos="fade-up mb-4">Hosted By</h4>
@@ -332,17 +452,24 @@
                             <img src="{{ asset('storage/' . $item->image_path) }}" alt="Hosted Logo"
                                 class="img-fluid mb-3 w-50 mx-auto" data-aos="fade-up">
                         @endforeach
+                        @if ($hosted_by->isEmpty())
+                            <p class="text-center text-black">No hosted by found.</p>
+                        @endif
                     </div>
                     <div class="text-center">
                         <h4 data-aos="fade-up mb-4">Co-Hosted By</h4>
                         @foreach ($co_hosted_by as $item)
-                            <img src="{{ asset('storage/' . $item->image_path) }}" class="w-50 mx-auto mb-2"
+                            <img src="{{ asset('storage/' . $item->image_path) }}" class="w-50 mx-auto mb-3"
                                 alt="Co-Hosted Logo 1" class="img-fluid mb-2" data-aos="fade-up">
                         @endforeach
-
+                        @if ($co_hosted_by->isEmpty())
+                            <p class="text-center text-black">No co-hosted by found.</p>
+                        @endif
                     </div>
                 </div>
+                @endif
                 <!-- Right Section (70%) -->
+                @if ($supported_by->isNotEmpty())
                 <div class="col-md-8 p-4">
                     <h4 class="text-center mb-4" data-aos="fade-up">Supported By</h4>
                     <div class="row text-center">
@@ -352,14 +479,19 @@
                                     alt="Sponsor Logo 1" class="img-fluid" data-aos="fade-up">
                             </div>
                         @endforeach
+                        @if ($supported_by->isEmpty())
+                            <p>No supported by found.</p>
+                        @endif
                     </div>
                 </div>
+                @endif
             </div>
         </div>
         </div>
     </section>
 
     <!-- Faq Section -->
+    @if ($faqs->isNotEmpty())
     <section id="faq" class="faq section light-background">
         <div class="container-fluid">
             <div class="row gy-4">
@@ -367,7 +499,7 @@
                     <div class="content px-xl-5" data-aos="fade-up" data-aos-delay="100">
                         <h3><span>Frequently Asked </span><strong>Questions</strong></h3>
                         <p>
-                            Temukan jawaban dari pertanyaan yang sering diajukan mengenai konferensi ini.
+                            Here are some of the most commonly asked questions:
                         </p>
                     </div>
 
@@ -382,19 +514,19 @@
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div>
                         @endforeach
+                        @if ($faqs->isEmpty())
+                            <p class="text-muted mt-3" data-aos="fade-up">No faq found.</p>
+                        @endif
                     </div>
                 </div>
-
-                {{-- <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
-                        data-aos-delay="100" />
-                </div> --}}
             </div>
         </div>
     </section>
+    @endif
     <!-- /Faq Section -->
 
     <!-- Contact Section -->
+    @if ($contacts->isNotEmpty())
     <section id="contact" class="contact section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
@@ -434,39 +566,73 @@
                 </div>
 
                 <div class="col-lg-8">
-                    <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
-                        data-aos-delay="200">
+                    <form id="whatsappForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200" data-email="{{ $emailTo }}">
                         <div class="row gy-4">
                             <div class="col-md-6">
-                                <input type="text" name="name" class="form-control" placeholder="Your Name"
-                                    required="" />
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required />
                             </div>
-
+                    
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" placeholder="Your Email"
-                                    required="" />
+                                <input type="email" name="email" class="form-control" placeholder="Your Email" required />
                             </div>
-
+                    
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="subject" placeholder="Subject"
-                                    required="" />
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" required />
                             </div>
-
+                    
                             <div class="col-md-12">
-                                <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                                <textarea name="message" class="form-control" rows="6" placeholder="Message" required></textarea>
                             </div>
-
+                    
                             <div class="col-md-12 text-center">
                                 <div class="loading">Loading</div>
                                 <div class="error-message"></div>
                                 <div class="sent-message">Your message has been sent. Thank you!</div>
-
+                    
                                 <button type="submit">Send Message</button>
                             </div>
                         </div>
                     </form>
                 </div>
+                
             </div>
         </div>
     </section>
+    @endif
+
+
+    <script>
+        document.getElementById('whatsappForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            const emailTo = this.getAttribute("data-email");
+    
+            const name = document.querySelector("input[name='name']").value.trim();
+            const email = document.querySelector("input[name='email']").value.trim();
+            const subject = document.querySelector("input[name='subject']").value.trim();
+            const message = document.querySelector("textarea[name='message']").value.trim();
+    
+            if (!name || !email || !subject || !message) {
+                alert("Please fill out all fields before sending.");
+                return;
+            }
+    
+            const mailtoSubject = `Contact Us - ${name}`;
+            const mailtoBody = `Dear Support Team,\n\nMy Name: ${name}\nMy Email: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`;
+    
+            // Kirim ke email menggunakan `mailto:`
+            const mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
+            window.location.href = mailtoLink;
+        });
+    </script>
+    
+
+
+    <style>
+        .full-screen-map iframe{
+            width: 100% !important;
+            height: 300px !important;
+            border: none;
+        }
+    </style>
 @endsection

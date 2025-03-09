@@ -1,0 +1,48 @@
+@extends('layouts.app')
+@section('title', 'Edit Abstract Guideline')
+
+@section('content')
+    <div class="container">
+        <h2>Edit Abstract Guideline</h2>
+        <form action="{{ route('landing.abstract-guidelines.update', $abstractGuideline->id) }}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+                <label for="year" class="form-label">Tahun</label>
+                <input type="number" name="year" class="form-control" value="{{ $abstractGuideline->year }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Guideline</label>
+                <textarea name="content" id="editor" class="form-control">{{ $abstractGuideline->content }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="pdf_file" class="form-label">Upload PDF (Opsional)</label>
+                <input type="file" name="pdf_file" class="form-control">
+                <small class="form-text text-muted">
+                    Format: PDF| Max Size: 2MB 
+                </small>
+            </div>
+
+            @if ($abstractGuideline->pdf_file)
+                <div class="mb-3">
+                    <label>File PDF Saat Ini:</label><br>
+                    <a href="{{ asset('storage/' . $abstractGuideline->pdf_file) }}" target="_blank">Download</a>
+                    
+                </div>
+            @endif
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    {{-- Tambahkan CKEditor --}}
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.config.versionCheck = false;
+        CKEDITOR.replace('editor');
+    </script>
+@endsection

@@ -35,7 +35,7 @@ class ManualReceiptController extends Controller
         ]);
         if (!$request->hasFile('file') && !$request->filled('amount')) {
             return redirect()->back()
-                ->withErrors(['file' => 'Anda harus mengisi file atau jumlah pembayaran.'])
+                ->withErrors(['file' => 'You must provide either a file or a payment amount.'])
                 ->withInput();
         }
         $userId = $validated['user_id'];
@@ -54,9 +54,9 @@ class ManualReceiptController extends Controller
             }
             if (!empty($updateData)) {
                 $existingPayment->update($updateData);
-                $message = 'Data pembayaran berhasil diperbarui dan diverifikasi.';
+                $message = 'Payment data has been successfully updated and verified.';
             } else {
-                $message = 'Tidak ada perubahan yang dilakukan.';
+                $message = 'No changes were made.';
             }
         } else {
             $data = [
@@ -69,7 +69,7 @@ class ManualReceiptController extends Controller
                 $data['file_path'] = $request->file('file')->store('payments', 'public');
             }
             FilePayment::create($data);
-            $message = 'Data pembayaran berhasil disimpan dan diverifikasi.';
+            $message = 'Payment data has been successfully saved and verified.';
         }
         return redirect()->route('admin.manual-receipt.create')->with('success', $message);
     }

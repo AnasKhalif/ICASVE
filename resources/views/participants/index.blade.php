@@ -58,7 +58,7 @@
                         <tbody id="participantTable">
                             @forelse ($users as $key => $user)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $users->firstItem() + $key }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->institution }}</td>
@@ -77,11 +77,10 @@
                                             <i class="fa fa-edit"></i> Edit
                                         </a>
                                         <form action="{{ route('admin.participant.destroy', $user->id) }}" method="POST"
-                                            style="display: inline-block;">
+                                            style="display: inline-block;" class="delete-form">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger"
-                                                onclick="return confirm('Are you sure?')">
+                                            <button type="submit" class="btn btn-sm btn-danger btn-delete">
                                                 <i class="fa fa-trash"></i> Delete
                                             </button>
                                         </form>
@@ -95,7 +94,25 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $users->links() }}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {{ $users->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $users->previousPageUrl() }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $users->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+                        <li class="page-item {{ $users->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $users->nextPageUrl() }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -136,10 +153,10 @@
                                             <a href="/admin/participant/${user.id}/edit" class="btn btn-sm btn-warning">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
-                                            <form action="/admin/participant/${user.id}" method="POST" style="display: inline-block;">
+                                            <form action="/admin/participant/${user.id}" method="POST" style="display: inline-block;" class="delete-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                <button type="submit" class="btn btn-sm btn-danger btn-delete">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </form>
@@ -163,6 +180,24 @@
                         }
                     });
                 }, 300);
+            });
+            $(document).on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+                let form = $(this).closest('form');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This action cannot be undone!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
             });
         });
     </script>

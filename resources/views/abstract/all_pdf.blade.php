@@ -19,6 +19,7 @@
             text-transform: uppercase;
         }
 
+
         .abstract {
             position: relative;
             min-height: 100vh;
@@ -27,6 +28,11 @@
             justify-content: space-between;
         }
 
+        .abstract:nth-of-type(n+2) {
+            page-break-before: always;
+        }
+
+        
         #abstract_title {
             font-size: 16pt;
             font-weight: bold;

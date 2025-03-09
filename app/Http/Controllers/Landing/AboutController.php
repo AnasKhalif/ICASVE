@@ -12,21 +12,33 @@ class AboutController extends Controller
     public function index()
     {
         $abouts = About::all();
-        return view('landingpage-editor.about.index', compact('abouts'));
+        return view('landingpage-editor.landingpage.about.index', compact('abouts'));
     }
 
     public function create()
     {
-        return view('landingpage-editor.about.create');
+        return view('landingpage-editor.landingpage.about.create');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'title' => 'required|string|max:255|min:5',
+            'content' => 'required|string|min:10',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048|dimensions:min_width=600,min_height=400',
+        ], [
+            'title.required' => 'Judul harus diisi.',
+            'title.min' => 'Judul minimal 5 karakter.',
+            'title.max' => 'Judul maksimal 255 karakter.',
+            'content.required' => 'Konten harus diisi.',
+            'content.min' => 'Konten minimal 10 karakter.',
+            'image.required' => 'Gambar harus diunggah.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format yang diperbolehkan: PNG, JPEG, JPG.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.dimensions' => 'Ukuran gambar minimal 600x400 px.',
         ]);
+        
 
         $path = $request->file('image') ? $request->file('image')->store('abouts', 'public') : null;
 
@@ -41,16 +53,28 @@ class AboutController extends Controller
 
     public function edit(About $about)
     {
-        return view('landingpage-editor.about.edit', compact('about'));
+        return view('landingpage-editor.landingpage.about.edit', compact('about'));
     }
 
     public function update(Request $request, About $about)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'title' => 'required|string|max:255|min:5',
+            'content' => 'required|string|min:10',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048|dimensions:min_width=600,min_height=400',
+        ], [
+            'title.required' => 'Judul harus diisi.',
+            'title.min' => 'Judul minimal 5 karakter.',
+            'title.max' => 'Judul maksimal 255 karakter.',
+            'content.required' => 'Konten harus diisi.',
+            'content.min' => 'Konten minimal 10 karakter.',
+            'image.required' => 'Gambar harus diunggah.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format yang diperbolehkan: PNG, JPEG, JPG.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.dimensions' => 'Ukuran gambar minimal 600x400 px.',
         ]);
+        
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($about->image);

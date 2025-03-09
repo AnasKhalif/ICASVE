@@ -20,12 +20,12 @@ class SymposiumController extends Controller
         $activeYear = Year::where('is_active', true)->first();
 
         if (!$activeYear) {
-            return back()->with('error', 'No active year set.');
+            return back()->with($this->alertDanger());
         }
 
         $symposiums = Symposium::withCount('abstracts')
             ->whereYear('created_at', $activeYear->year)
-            ->paginate(10);
+            ->paginate(8);
         return view('symposium.index', compact('symposiums'));
     }
 

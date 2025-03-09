@@ -1619,6 +1619,7 @@ section,
 
     #hosted-supported-section {
         padding-top: 0px;
+        padding-bottom: 10px;
     }
 
     .team {
@@ -1641,16 +1642,13 @@ section,
         margin: 5px 10px;
         width: 50px;
     }
-    .title-location {
-        margin-top: 20px;
-    }
 
     .hero {
         border: #ffffff;
     }
 
     .publications-journal {
-        margin-bottom: -45px;
+        margin-bottom: -20px;
     }
 
     #team-invited {
@@ -2050,4 +2048,10 @@ section,
 
 .whatsapp-float:hover .whatsapp-icon {
     transform: scale(1.1);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

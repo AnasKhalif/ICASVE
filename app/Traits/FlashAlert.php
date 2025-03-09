@@ -42,7 +42,7 @@ trait FlashAlert
     public function alertDanger()
     {
         return [
-            'type' => 'danger',
+            'type' => 'error',
             'message' => 'Something wrong!'
         ];
     }
@@ -50,8 +50,71 @@ trait FlashAlert
     public function permissionDenied()
     {
         return [
-            'type' => 'danger',
+            'type' => 'error',
             'message' => 'you don’t have permission to access!'
+        ];
+    }
+
+    public function alertAssign()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Data successfully assigned!'
+        ];
+    }
+
+    public function alertReview()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Review successfully submitted!'
+        ];
+    }
+
+    public function alertAbstractClosed()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Abstract Submission Closed!'
+        ];
+    }
+
+    public function alertFullpaperClosed()
+    {
+        return [
+            'type' => 'success',
+            'message' => 'Fullpaper Submission Closed!'
+        ];
+    }
+    public function alertAbstractNotEdit()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot edit abstract in review process!'
+        ];
+    }
+
+    public function alertAbstractNotDelete()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot delete abstract in review process!'
+        ];
+    }
+
+    public function alertFullpaperNotEdit()
+    {
+        return [
+            'type' => 'warning',
+            'message' => 'Cannot edit Fullpaper in review process!'
+        ];
+    }
+
+    public function alertAbstractLimit($message)
+    {
+        return [
+            'type' => 'error',
+            'message' => $message,
         ];
     }
 }

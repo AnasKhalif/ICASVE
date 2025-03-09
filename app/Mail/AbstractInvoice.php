@@ -12,6 +12,7 @@ use App\Models\ConferenceSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Upload;
+use App\Models\EmailTemplate;
 
 class AbstractInvoice extends Mailable
 {
@@ -20,6 +21,8 @@ class AbstractInvoice extends Mailable
     public $user;
     public $abstract;
     public $conference;
+    public $logoBase64;
+    public $signaturePath;
 
     /**
      * Create a new message instance.
@@ -29,6 +32,16 @@ class AbstractInvoice extends Mailable
         $this->user = $user;
         $this->abstract = $abstract;
         $this->conference = ConferenceSetting::first();
+
+        $logo = Upload::where('type', 'logo')->latest()->first();
+        $this->logoBase64 = null;
+        if ($logo && file_exists(storage_path('app/public/' . $logo->file_path))) {
+            $logoPath = storage_path('app/public/' . $logo->file_path);
+            $this->logoBase64 = 'data:image/png;base64,' . base64_encode(file_get_contents($logoPath));
+        }
+
+        $signatureUrl = Upload::getFilePath('signature');
+        $this->signaturePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $signatureUrl));
     }
 
     /**
@@ -37,7 +50,7 @@ class AbstractInvoice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Abstract Invoice',
+            subject: 'Payment Invoice for Your Accepted Abstract',
         );
     }
 
@@ -63,14 +76,21 @@ class AbstractInvoice extends Mailable
 
     public function build()
     {
+        $emailTemplate = EmailTemplate::where('type', 'abstract_invoice')->first();
+        $customMessage = $emailTemplate ? $emailTemplate->content : ' ';
+        $amount = $emailTemplate ? $emailTemplate->amount : 0;
+
         $pdf = Pdf::loadView('invoice.invoice-pdf', [
             'user' => $this->user,
             'abstract' => $this->abstract,
             'conference' => $this->conference,
+            'logoBase64' => $this->logoBase64,
+            'signaturePath' => $this->signaturePath,
+            'amount' => $amount
         ]);
 
         return $this->subject('Payment Invoice for Your Accepted Abstract')
-            ->view('emails.abstract-invoice')
+            ->view('emails.abstract-invoice', compact('customMessage', 'amount'))
             ->attachData($pdf->output(), 'Invoice_' . $this->user->id . '.pdf', [
                 'mime' => 'application/pdf',
             ]);
