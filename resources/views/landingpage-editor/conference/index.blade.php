@@ -6,7 +6,7 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card shadow-lg border-0">
             <div class="card-header bg-primary text-white text-center py-2">
-                <h5 class="mb-0">Edit Conference Program</h3>
+                <h5 class="mb-0">Conference Program</h3>
             </div>
             <div class="card-body">
                 <div class="row g-3 justify-content-center">

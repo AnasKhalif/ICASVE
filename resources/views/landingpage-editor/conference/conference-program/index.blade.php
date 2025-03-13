@@ -9,9 +9,9 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="card-title mb-0">Conference Program</h4>
+                            <h4 class="card-title mb-0">Conference Table</h4>
                             <a href="{{ route('landing.conference-program.create') }}" class="btn btn-success btn-sm">
-                                <i class="fas fa-plus"></i> New Program
+                                <i class="fas fa-plus"></i> New Table
                             </a>
                         </div>
 

@@ -1,14 +1,17 @@
 @extends('layouts.app')
-@section('title', 'Conference Management')
+@section('title', 'Conference TITLE')
 @section('content')
     <div class="container mt-4">
-        <h2 class="text-center fw-bold">CONFERENCE MANAGEMENT</h2>
+        <h2 class="text-center fw-bold">CONFERENCE TITLE</h2>
         <hr class="border border-success">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary mb-3">Add New Conference</a>
+        <div class="d-flex justify-content-between mb-3">
+            <h4 class="fw-bold">List of Conference Title</h4>
+            <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary">Add Conference Title</a>
+        </div>
         <table class="table table-bordered">
             <thead class="table-success">
                 <tr>

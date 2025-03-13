@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poster;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class PosterController extends Controller
 {

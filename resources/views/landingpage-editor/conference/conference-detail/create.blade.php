@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'New Conference Detail')
+@section('title', 'Add Conference Title')
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">New Conference Detail</h4>
+                <h4 class="card-title">Add Conference Title</h4>
                 <form action="{{ route('landing.conference-detail.store') }}" method="POST">
                     @csrf
 
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="hosted">Hosted By</label>
+                        <label for="hosted">Hosted By or Co-Hosted By</label>
                         <input type="text" class="form-control @error('hosted') is-invalid @enderror" 
                             name="hosted" id="hosted" value="{{ old('hosted') }}" required>
                         <small>Example: Co-hosted by State Polytechnic of Batam & State University of Malang</small>

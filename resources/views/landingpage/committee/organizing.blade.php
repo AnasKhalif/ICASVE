@@ -5,7 +5,7 @@
 @section('content')
     <section id="reviewer" class="steering-committee section">
         <div class="container" data-aos="fade-up">
-            <h2 class="title-committee">Organizing Committee ({{ $latestYear }})</h2>
+            <h2 class="title-committee">Organizing Committee </h2>
             <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
@@ -14,7 +14,7 @@
                 <div class="container mt-5">
                     <div class="row">
                         @php
-                            $categories = $committees->groupBy('category'); // Kelompokkan berdasarkan kategori
+                            $categories = $committees->groupBy('category'); 
                         @endphp
 
                         <div class="col-md-6">

@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'New Conference Program')
+@section('title', 'New Conference Table')
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">New Conference Program</h4>
+                <h4 class="card-title">New Conference Table</h4>
                 <form action="{{ route('landing.conference-program.store') }}" method="POST">
                     @csrf
 
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <label for="program_name">Program</label>
                         <input type="text" class="form-control @error('program_name') is-invalid @enderror" 
-                            name="program_name" id="program_name" placeholder="Opening by MC" value="{{ old('program_name') }}" required>
+                            name="program_name" id="program_name" placeholder="Example: Opening by MC" value="{{ old('program_name') }}" required>
                         @error('program_name')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label for="pic">PIC (optional)</label>
                         <input type="text" class="form-control @error('pic') is-invalid @enderror" 
-                            name="pic" id="pic" placeholder="MC UB & MC Batam" value="{{ old('pic') }}" >
+                            name="pic" id="pic" placeholder="Example: MC UB & MC Batam" value="{{ old('pic') }}" >
                         @error('pic')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

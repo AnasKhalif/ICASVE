@@ -5,7 +5,7 @@
 @section('content')
     <section id="reviewer" class="steering-committee section">
         <div class="container" data-aos="fade-up">
-            <h2 class="title-committee">Reviewer Committee ({{ $latestYear }})</h2>
+            <h2 class="title-committee">Reviewer Committee</h2>
             <div class="line bg-success mx-auto rounded-pill" style="height: 2px;"></div>
         </div>
 
@@ -13,7 +13,7 @@
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="committee-container">
                 @php
-                    $committeeArray = $reviewers->toArray(); // Pastikan variabelnya sesuai dari controller
+                    $committeeArray = $reviewers->toArray(); 
                     $totalItems = count($committeeArray);
                     $half = ceil($totalItems / 2);
                     $firstColumn = array_slice($committeeArray, 0, $half);

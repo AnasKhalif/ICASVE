@@ -24,9 +24,13 @@
                 @foreach ($galleries as $gallery)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        @foreach ($gallery->images as $image)
-                        <td><img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image" style="max-width: 250px;"></td>
-                        @endforeach
+                       
+                        <td>
+                            @foreach ($gallery->images as $image)
+                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image" style="max-width: 250px; margin-right: 10px;">
+                            @endforeach
+                        </td>
+                        
                         <td>{{$gallery->year}}</td>
                         <td>
                             <a href="{{ route('landing.gallery.edit', $gallery->id) }}"
