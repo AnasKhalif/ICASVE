@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
+    <link href="{{ asset('img/Logo_ICASVE_rmbg.png') }}" rel="icon" />
     @include('layouts.partials.link')
     @vite('resources/css/app.css')
     <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

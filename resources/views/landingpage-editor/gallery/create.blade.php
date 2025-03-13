@@ -11,7 +11,7 @@
                         <label for="images">Images</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="images[]" id="images" multiple required>
+                                <input type="file" class="custom-file-input" name="images[]" id="images" accept="image/*" multiple required>
                                 <label class="custom-file-label" for="images" id="fileLabel">Choose files</label>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                     
                     <div class="form-group">
                         <label for="year">Year</label>
-                        <input type="number" class="form-control @error('year') is-invalid @enderror"  name="year"
+                        <input type="number" class="form-control @error('year') is-invalid @enderror"  name="year" 
                             id="year" required>
                         @error('year')
                             <div class="text-danger">{{ $message }}</div>

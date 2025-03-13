@@ -463,82 +463,82 @@
 @role('landing-editor')
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('landing.logos.index') }}">
+            <li class="nav-item {{ request()->routeIs('landing.logos.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('landing.logos.index') }} ">
                     <i class="fa-brands fa-slack menu-icon"></i>
                     <span class="menu-title">Logo</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.landingpage.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.landingpage.index') }}">
                     <i class="fa-solid fa-house-chimney menu-icon"></i>
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
     
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.themes.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.themes.index') }}">
                     <i class="fa-solid fa-list-check menu-icon"></i>
                     <span class="menu-title">Call for Paper</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.committee.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.committee.index') }}">
                     <i class="fa-solid fa-users menu-icon"></i>
                     <span class="menu-title"> Committe</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.submission.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.submission.index') }}">
                    <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Submission Guidelines</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.conferencelanding.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.conferencelanding.index') }}">
                     <i class="fa-solid fa-calendar-alt menu-icon"></i>
                     <span class="menu-title">Conference Program</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.gallery.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.gallery.index') }}">
                     <i class="fa-solid fa-images menu-icon"></i>
                     <span class="menu-title">Gallery</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.payment_guidelines.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.payment_guidelines.index') }}">
                     <i class="fa-solid fa-money-check-dollar menu-icon"></i>
                     <span class="menu-title">Payment Guidelines</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.faq.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.faq.index') }}">
                     <i class="fa-solid fa-question menu-icon"></i>
                     <span class="menu-title">FAQ</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.whatsapp.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.whatsapp.index') }}">
                     <i class="fa-solid fa-envelope menu-icon"></i>
                     <span class="menu-title">Whatsapp</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.instagram.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.instagram.index') }}">
                     <i class="fa-brands fa-instagram menu-icon"></i>
                     <span class="menu-title">Instagram</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item {{ request()->routeIs('landing.newsletters.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.newsletters.index') }}">
                     <i class="fa-solid fa-envelope-open-text menu-icon"></i>
                     <span class="menu-title">Newsletter</span>
