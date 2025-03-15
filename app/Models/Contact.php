@@ -9,5 +9,13 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['phone', 'email', 'address'];
+    protected $fillable = [
+        'phone1', 'phone1_name', 
+        'phone2', 'phone2_name',
+        'email', 'address', 'year'
+    ];
+
+    protected $casts = [
+        'year' => 'integer',
+    ];
 }

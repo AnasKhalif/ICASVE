@@ -83,7 +83,20 @@
                     </div>
                    @endif
 
-                    <button type="submit" class="btn btn-success">Submit</button>
+                   <div class="form-group mb-3">
+                    <label for="year">Year</label>
+                    <input type="number" class="form-control" name="year" id="year" 
+                           value="{{ old('year', date('Y')) }}" required min="2000" max="2100">
+                    @error('year')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                
+
+                   <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success" id="submitBtn">Save</button>
+                    <a href="{{ route('landing.venue.index') }}" class="btn btn-danger">Cancel</a>
+                </div>
                 </form>
             </div>
         </div>

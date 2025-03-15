@@ -9,6 +9,27 @@
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
+        <!-- Form Filter Tahun -->
+        <form action="{{ route('landing.abouts.index') }}" method="GET" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="filterYear" class="form-label">Filter by Year</label>
+                    <select name="year" id="filterYear" class="form-select">
+                        <option value="">All Years</option>
+                        @foreach ($years as $year)
+                            <option value="{{ $year->year }}" {{ request('year') == $year->year ? 'selected' : '' }}>
+                                {{ $year->year }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Tabel Data -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
@@ -17,6 +38,7 @@
                         <th>Title</th>
                         <th>Content</th>
                         <th>Image</th>
+                        <th>Year</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,6 +55,7 @@
                                     No Image
                                 @endif
                             </td>
+                            <td>{{ $about->year }}</td>
                             <td>
                                 <a href="{{ route('landing.abouts.edit', $about->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('landing.abouts.destroy', $about->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?');">

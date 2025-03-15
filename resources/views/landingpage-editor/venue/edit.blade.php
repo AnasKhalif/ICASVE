@@ -80,7 +80,21 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <div class="form-group mb-3">
+                        <label for="year">Year</label>
+                        <input type="number" class="form-control" name="year" id="year" required
+                            value="{{ old('year', $venue->year) }}" min="2024" max="{{ date('Y') }}"
+                            placeholder="Masukkan tahun (min: 2024, max: {{ date('Y') }})">
+                        @error('year')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    
+
+                    <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success" id="submitBtn">Save</button>
+                    <a href="{{ route('landing.venue.index') }}" class="btn btn-danger">Cancel</a>
+                </div>
                 </form>
             </div>
         </div>

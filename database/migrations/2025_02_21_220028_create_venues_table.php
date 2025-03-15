@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('date');
             $table->string('link_map');
             $table->longText('map');
+            $table->year('year');
             $table->timestamps();
         });
     }

@@ -36,15 +36,16 @@ class VenueController extends Controller
             'date' => ['required', 'date'],
             'link_map' => ['required', 'url'],
             'map' => ['required', 'string', 'min:10'],
+            'year' => ['required', 'integer', 'min:2024', 'max:' . date('Y')],
         ]);
-
+    
         if ($request->hasFile('image_path')) {
             $imagePath = $request->file('image_path')->store('venues', 'public');
             $validatedData['image_path'] = $imagePath;
         }
-
+    
         Venue::create($validatedData);
-
+    
         return redirect()->route('landing.venue.index')->with('success', 'Venue created successfully.');
     }
 
@@ -64,8 +65,9 @@ class VenueController extends Controller
             'date' => ['date'],
             'link_map' => ['url'],
             'map' => ['string', 'min:10'],
+            'year' => ['required', 'integer', 'min:2024', 'max:' . date('Y')],
         ]);
-
+    
         if ($request->hasFile('image_path')) {
             if ($venue->image_path) {
                 Storage::disk('public')->delete($venue->image_path);
@@ -73,9 +75,9 @@ class VenueController extends Controller
             $imagePath = $request->file('image_path')->store('venues', 'public');
             $validatedData['image_path'] = $imagePath;
         }
-
+    
         $venue->update($validatedData);
-
+    
         return redirect()->route('landing.venue.index')->with('success', 'Venue updated successfully.');
     }
 

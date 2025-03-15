@@ -302,7 +302,6 @@
                                 @endif
                             </tbody>
                         </table>
-                        
                         <table class="table table-bordered">
                             <thead class="thead-light">
                                 <tr>
@@ -493,19 +492,22 @@
                 <h2>Publications</h2>
                 <div><span>Publications</span> <span class="description-title"> Journal</span></div>
             </div>
-            <div class="row text-center" style="display: flex; align-items: center">
+            <div class="row d-flex flex-wrap justify-content-center align-items-stretch text-center">
                 @foreach ($publications_journal as $item)
-                    <div class="col-md-2 col-6 mb-3" data-aos="fade-up">
-                        <img src="{{ asset('storage/' . $item->image_path) }}" alt="Logo 1" style="max-width: 150px" class="img-fluid" />
+                    <div class="col-md-2 col-6 mb-3 d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('storage/' . $item->image_path) }}" 
+                             alt="Publication Logo"
+                             class="img-fluid publication-img"/>
                     </div>
                 @endforeach
-                @if ($publications_journal->isEmpty())
-                    <p>No publications journal found.</p>
-                @endif
             </div>
+            @if ($publications_journal->isEmpty())
+                <p class="text-center">No publications journal found.</p>
+            @endif
         </div>
     </section>
-    @endif
+@endif
+
 
     <!-- Hosted and Supported Section -->
     <section id="hosted-supported-section" class="section">
@@ -543,8 +545,8 @@
                     <div class="row text-center">
                         @foreach ($supported_by as $item)
                             <div class="col-md-3 col-6 mb-3">
-                                <img src="{{ asset('storage/' . $item->image_path) }}" class="logo-support"
-                                    alt="Sponsor Logo 1" class="img-fluid" data-aos="fade-up">
+                                <img src="{{ asset('storage/' . $item->image_path) }}" class="logo-support img-fluid max-w-lg"
+                                    alt="Sponsor Logo 1" data-aos="fade-up">
                             </div>
                         @endforeach
                         @if ($supported_by->isEmpty())
@@ -619,7 +621,10 @@
                             <i class="bi bi-telephone flex-shrink-0"></i>
                             <div>
                                 <h3>Call Us</h3>
-                                <p>{{ $contact->phone }}</p>
+                                <p>{{ $contact->phone1 }} ({{ $contact->phone1_name }})</p>
+                                @if($contact->phone2)
+                                <p>{{ $contact->phone2 }} ({{ $contact->phone2_name }})</p>
+                            @endif
                             </div>
                         </div>
 

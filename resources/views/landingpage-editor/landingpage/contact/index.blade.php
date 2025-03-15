@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Contact List')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">CONTACT LIST</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Contacts</h2>
+        <hr class="border border-secondary">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -14,7 +14,7 @@
             <thead class="table-success">
                 <tr>
                     <th>No</th>
-                    <th>Phone</th>
+                    <th>Year</th>
                     <th>Email</th>
                     <th>Address</th>
                     <th>Action</th>
@@ -24,7 +24,7 @@
                 @foreach ($contacts as $index => $contact)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $contact->phone }}</td>
+                        <td>{{ $contact->year }}</td>
                         <td>{{ $contact->email }}</td>
                         <td>{{ $contact->address }}</td>
                         <td>

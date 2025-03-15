@@ -20,7 +20,10 @@
                     @if ($contact)
                         <address>
                             <p class="mb-1"><strong>Address: <br></strong> {{ $contact->address }}</p>
-                            <p class="mb-1"><strong>Phone:  <br></strong> {{ $phone }}</p>
+                            <p class="mb-1"><strong>Address: <br></strong> {{ $contact->phone1 }} ({{ $contact->phone1_name }})</p>
+                            @if($contact->phone2)
+                                <p class="mb-1"><strong>Phone 2: <br></strong> {{ $contact->phone2 }} ({{ $contact->phone2_name }})</p>
+                            @endif
                             <p class="mb-1"><strong>Email:  <br></strong> {{ $contact->email }}</p>
                         </address>
                     @else

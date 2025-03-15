@@ -544,6 +544,12 @@
                     <span class="menu-title">Newsletter</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('landing.setting.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('landing.setting.index') }}">
+                    <i class="fa-solid fa-gears menu-icon"></i>
+                    <span class="menu-title">Setting</span>
+                </a>
+            </li>
             
         </ul>
     </nav>

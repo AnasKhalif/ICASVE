@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Landing\GalleryController;
+use App\Http\Controllers\Landing\SettingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -66,7 +67,12 @@ use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
 
-Route::get('/', [LandingPage::class, 'index'])->name('home');
+
+Route::get('/', function () {
+    return redirect()->route('home');
+});
+
+Route::get('/home/{year?}', [LandingPage::class, 'index'])->name('home');
 
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 
@@ -199,7 +205,7 @@ Route::name('reviewer.')
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
     });
 
-Route::name('landing.')
+    Route::name('landing.')
     ->prefix('landing')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
@@ -235,10 +241,11 @@ Route::name('landing.')
         Route::get('newsletters/export', [NewsletterController::class, 'export'])
             ->name('newsletters.export');
         Route::resource('newsletters', NewsletterController::class);
-     
+        
+        // Route untuk halaman Setting Tahun Aktif
+        Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+        Route::post('setting', [SettingController::class, 'update'])->name('setting.update');
     });
-
-
 
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -8,9 +8,7 @@
                     <h4 class="card-title">Venue</h4>
                     <a href="{{ route('landing.venue.create') }}" class="btn btn-sm btn-success">New Venue</a>
                 </div>
-                <p class="card-description">
-                    List of Venue
-                </p>
+                <p class="card-description">List of Venue</p>
                 <div class="table-responsive pt-3">
                     <table class="table table-bordered">
                         <thead>
@@ -18,7 +16,8 @@
                                 <th>No</th>
                                 <th>Venue Name</th>
                                 <th>Address</th>
-                                <th>Actions</th>
+                                <th>Year</th> {{-- Tambahkan kolom Tahun --}}
+                                <th class="text-center">Actions</th> {{-- Buat judul tombol di tengah --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -27,7 +26,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $venue->venue_name }}</td>
                                     <td>{{ $venue->address }}</td>
-                                    <td>
+                                    <td>{{ $venue->year }}</td> {{-- Tampilkan Tahun --}}
+                                    <td class="text-center"> {{-- Tombol aksi berada di tengah --}}
                                         <a href="{{ route('landing.venue.edit', $venue->id) }}"
                                             class="btn btn-sm btn-warning">Edit</a>
                                         <form action="{{ route('landing.venue.destroy', $venue->id) }}" method="POST"

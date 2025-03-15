@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publications_journals', function (Blueprint $table) {
+        Schema::create('landing_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('image_type');
-            $table->string('image_path');
-            $table->year('year');
+            $table->year('year')->unique();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publications_journals');
+        Schema::dropIfExists('landing_settings');
     }
 };

@@ -6,20 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Speaker;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Year;
 
 class SpeakerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $activeYear = Year::where('is_active', true)->first();
-
-        if (!$activeYear) {
-            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
-        }
-
-        $speakers = Speaker::whereYear('created_at', $activeYear->year)->get();
-        return view('landingpage-editor.landingpage.speakers.index', compact('speakers'));
+        $years = Speaker::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        $selectedYear = $request->input('year');
+        $speakers = Speaker::when($selectedYear, function ($query, $selectedYear) {
+            return $query->where('year', $selectedYear);
+        })->get();
+        return view('landingpage-editor.landingpage.speakers.index', compact('speakers', 'years', 'selectedYear'));
     }
 
     public function create()
@@ -34,7 +31,8 @@ class SpeakerController extends Controller
             'role' => ['required', 'string', 'min:3', 'max:255'],
             'institution' => ['required', 'string', 'min:3', 'max:255'],
             'image' => ['required', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
-            'country' => ['required', 'string', 'min:3', 'max:255']
+            'country' => ['required', 'string', 'min:3', 'max:255'],
+            'year' => ['required', 'integer', 'min:1900', 'max:' . (date('Y') + 5)],
         ], [
             'name.required' => 'Nama speaker wajib diisi.',
             'name.min' => 'Nama speaker minimal 3 karakter.',
@@ -52,6 +50,10 @@ class SpeakerController extends Controller
             'country.required' => 'Negara wajib diisi.',
             'country.min' => 'Negara minimal 3 karakter.',
             'country.max' => 'Negara tidak boleh lebih dari 255 karakter.',
+            'year.required' => 'Tahun wajib diisi.',
+            'year.integer' => 'Tahun harus berupa angka.',
+            'year.min' => 'Tahun tidak valid.',
+            'year.max' => 'Tahun tidak valid.',
         ]);
 
         if ($request->hasFile('image')) {
@@ -79,7 +81,8 @@ class SpeakerController extends Controller
             'role' => ['required', 'string', 'min:3', 'max:255'],
             'institution' => ['required', 'string', 'min:3', 'max:255'],
             'image' => ['nullable', 'file', 'image', 'max:2048', 'mimes:jpeg,png,jpg'],
-            'country' => ['required', 'string', 'min:3', 'max:255']
+            'country' => ['required', 'string', 'min:3', 'max:255'],
+            'year' => ['required', 'integer', 'min:1900', 'max:' . (date('Y') + 5)],
         ], [
             'name.required' => 'Nama speaker wajib diisi.',
             'name.min' => 'Nama speaker minimal 3 karakter.',
@@ -96,6 +99,10 @@ class SpeakerController extends Controller
             'country.required' => 'Negara wajib diisi.',
             'country.min' => 'Negara minimal 3 karakter.',
             'country.max' => 'Negara tidak boleh lebih dari 255 karakter.',
+            'year.required' => 'Tahun wajib diisi.',
+            'year.integer' => 'Tahun harus berupa angka.',
+            'year.min' => 'Tahun tidak valid.',
+            'year.max' => 'Tahun tidak valid.',
         ]);
 
         if ($request->hasFile('image')) {

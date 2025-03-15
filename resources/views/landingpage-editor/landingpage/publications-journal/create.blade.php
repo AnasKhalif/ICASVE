@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('title', 'New Publications Journal')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">ADD Publications Journal</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">ADD Publications Journal</h2>
+        <hr class="border border-secondary">
         <div class="row justify-content-center">
-            <div class="col-md-6">
                 <form action="{{ route('landing.publications-journal.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -20,59 +19,57 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="image_path">Image</label>
+                        <label for="image_path">Images</label>
                         <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="image_path" id="image_path" required accept=".png, .jpg, .jpeg">
-                                <label class="custom-file-label" for="image_path" id="fileLabel">Choose file</label>
-                            </div>
+                            <input type="file" class="form-control" name="image_path[]" id="image_path" required multiple accept=".png, .jpg, .jpeg">
                         </div>
                         <small class="form-text text-muted">
-                            Format: JPG, JPEG, PNG | Max Size: 2MB 
+                            Format: JPG, JPEG, PNG | Max Size per file: 2MB | Rekomendasi 300 x 300
                         </small>
                         <small class="text-danger d-none" id="fileError">Format file tidak didukung. Harap unggah gambar dengan format PNG, JPEG, atau JPG.</small>
-                        <div class="mt-3">
-                            <img id="previewImage" src="" class="d-none" width="100">
-                        </div>
+                        <div class="mt-3" id="previewContainer"></div>
+                    </div>
+                    
+
+                    {{-- Tambahkan Input Tahun --}}
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" class="form-control" name="year" id="year" required 
+                               value="{{ old('year', date('Y')) }}" min="2024" max="{{ date('Y') }}">
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <a href="{{ route('landing.publications-journal.index') }}" class="btn btn-danger">Back</a>
                 </form>
-            </div>
         </div>
     </div>
 
     <script>
         document.getElementById('image_path').addEventListener('change', function() {
-            var file = this.files[0];
-            var fileLabel = document.getElementById('fileLabel');
+            var files = this.files;
             var fileError = document.getElementById('fileError');
-            var previewImage = document.getElementById('previewImage');
-
-            if (file) {
-                var fileName = file.name;
-                fileLabel.innerText = fileName;
-
-                // Validasi format file
-                var validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+            var previewContainer = document.getElementById('previewContainer');
+            previewContainer.innerHTML = ""; // Bersihkan preview lama
+    
+            var validExtensions = ['image/jpeg', 'image/png', 'image/jpg'];
+            fileError.classList.add('d-none');
+    
+            Array.from(files).forEach(file => {
                 if (!validExtensions.includes(file.type)) {
                     fileError.classList.remove('d-none');
-                    this.value = "";
-                    fileLabel.innerText = "Choose file";
-                    previewImage.classList.add('d-none');
-                } else {
-                    fileError.classList.add('d-none');
-
-                    // Preview gambar
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewImage.src = e.target.result;
-                        previewImage.classList.remove('d-none');
-                    };
-                    reader.readAsDataURL(file);
+                    return;
                 }
-            }
+    
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('img-thumbnail', 'm-1');
+                    img.width = 100;
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
         });
     </script>
 @endsection

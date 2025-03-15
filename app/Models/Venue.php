@@ -9,5 +9,5 @@ class Venue extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image_path', 'venue_name', 'address', 'date', 'link_map', 'map'];
+    protected $fillable = ['image_path', 'venue_name', 'address', 'date', 'link_map', 'map', 'year'];
 }

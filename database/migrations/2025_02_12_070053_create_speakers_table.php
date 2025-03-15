@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('institution');
             $table->string('image');
             $table->string('country');
+            $table->year('year');
             $table->timestamps();
         });
     }

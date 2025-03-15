@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('domestic_participants');
             $table->string('international_participants');
             $table->string('period_of_payment');
+            $table->year('year');
             $table->timestamps();
         });
     }
