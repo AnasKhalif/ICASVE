@@ -2,9 +2,9 @@
 @section('title', 'Tambah Fullpaper Guideline')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Tambah Fullpaper Guideline</h2>
-        <hr class="border border-success mb-4">
+    <div class="container card p-4">
+        <h2 class="fs-5">Tambah Fullpaper Guideline</h2>
+        <hr class="border border-secondary mb-4">
 
         <form action="{{ route('landing.fullpaper-guidelines.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -22,12 +22,14 @@
                 <label for="pdf_file" class="form-label fw-bold">Upload Template Paper (PDF)</label>
                 <input type="file" name="pdf_file" class="form-control">
                 <small class="form-text text-muted">
-                    Format: PDF| Max Size: 2MB 
+                    Format: PDF | Max Size: 2MB 
                 </small>
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('landing.fullpaper-guidelines.index') }}" class="btn btn-secondary">Kembali</a>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Add</button>
+                <a href="{{ route('landing.fullpaper-guidelines.index') }}" class="btn btn-danger">Back</a>
+            </div>
         </form>
     </div>
 

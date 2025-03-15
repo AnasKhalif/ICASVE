@@ -5,19 +5,26 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AbstractGuideline;
+use App\Models\Year;
 use Illuminate\Support\Facades\Storage;
 
 class AbstractGuidelineController extends Controller
 {
     public function showLandingPage()
-    {
-        $latestGuideline = AbstractGuideline::orderBy('year', 'desc')->first(); 
-        return view('landingpage.submission.abstract', compact('latestGuideline'));
-    }
+{
+    $activeYear = Year::where('is_active', true)->value('year');
+    $years = Year::orderBy('year', 'desc')->pluck('year');
+    $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
+
+    $latestGuideline = AbstractGuideline::where('year', $selectedYear)->first();
+
+    return view('landingpage.submission.abstract', compact('latestGuideline', 'years', 'selectedYear'));
+}
+
     
     public function index()
     {
-        $guidelines = AbstractGuideline::orderBy('year', 'desc')->get();
+        $guidelines = AbstractGuideline::All();
         return view('landingpage-editor.submission.abstract.index', compact('guidelines'));
     }
 

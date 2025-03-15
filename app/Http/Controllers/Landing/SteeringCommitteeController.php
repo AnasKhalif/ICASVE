@@ -42,10 +42,11 @@ class SteeringCommitteeController extends Controller
     }
 
     public function edit($id)
-    {
-        $steering = SteeringCommittee::findOrFail($id);
-        return view('landingpage-editor.committee.steering.edit', compact('steering'));
-    }
+{
+    $committee = SteeringCommittee::findOrFail($id);
+    return view('landingpage-editor.committee.steering.edit', compact('committee'));
+}
+
 
     public function update(Request $request, $id)
     {

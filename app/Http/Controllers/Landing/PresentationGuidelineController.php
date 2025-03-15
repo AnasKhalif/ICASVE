@@ -5,15 +5,21 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PresentationGuideline;
+use App\Models\Year;
 use Illuminate\Support\Facades\Storage;
 
 class PresentationGuidelineController extends Controller
 {
-    public function showLandingPage()
-    {
-        $guidelines = PresentationGuideline::orderBy('year', 'desc')->get();
-        return view('landingpage.submission.presentation', compact('guidelines'));
-    }
+    public function showLandingPage(Request $request)
+{
+    $activeYear = Year::where('is_active', true)->value('year');
+    $years = Year::orderBy('year', 'desc')->pluck('year');
+    $selectedYear = $request->query('year', $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y')));
+
+    $guideline = PresentationGuideline::where('year', $selectedYear)->first();
+
+    return view('landingpage.submission.presentation', compact('guideline', 'years', 'selectedYear'));
+}
 
     public function index()
     {

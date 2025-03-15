@@ -23,28 +23,28 @@
                     all of the following items, and submissions may be returned to authors that do not adhere to these
                     guidelines.</p>
 
-                @if ($guidelines->isEmpty())
+                    @if (!$guideline)
                     <div class="alert alert-warning">
                         No fullpaper guidelines available.
                     </div>
                 @else
-                    @foreach ($guidelines as $guideline)
-                        <div class="card">
-                            <div class="card-body">
-                                {!! $guideline->content !!}
-                            </div>
+                    <div class="card">
+                        <div class="card-body">
+                            {!! $guideline->content !!}
                         </div>
-                        <!-- Tombol Download Paper Template di bawah guideline -->
-                        @if ($guideline->pdf_file)
-                            <div class="text-start mt-3">
-                                <a href="{{ asset('storage/' . $guideline->pdf_file) }}" class="btn text-white"
-                                    style="background: linear-gradient(to right, navy, orange);" target="_blank">
-                                    Download Paper Template
-                                </a>
-                            </div>
-                        @endif
-                    @endforeach
+                    </div>
+                
+                    <!-- Tombol Download Paper Template -->
+                    @if ($guideline->pdf_file)
+                        <div class="text-start mt-3">
+                            <a href="{{ asset('storage/' . $guideline->pdf_file) }}" class="btn text-white"
+                                style="background: linear-gradient(to right, navy, orange);" target="_blank">
+                                Download Paper Template
+                            </a>
+                        </div>
+                    @endif
                 @endif
+                
             </div>
         </div>
     </div>

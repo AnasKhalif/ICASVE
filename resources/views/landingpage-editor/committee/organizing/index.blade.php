@@ -3,78 +3,91 @@
 @section('title', 'Organizing Committee')
 
 @section('content')
-    <div class="container my-4">
-        <div class="section-title text-center">
-            <h2>Organizing Committee</h2>
-            <p class="text-muted">Filter and manage the committee by year.</p>
-        </div>
+<div class="container card p-4">
+    <h2 class="fs-5">Organizing Committee</h2>
+    <hr class="border border-secondary">
 
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="w-25">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex gap-3">
+            <!-- Filter Tahun -->
+            <div>
                 <label for="yearFilter" class="form-label fw-bold">Select Year:</label>
-                <select id="yearFilter" class="form-select" onchange="filterYear()">
+                <select id="yearFilter" class="form-select" onchange="filterCommittee()">
+                    <option value="all" {{ $selectedYear == 'all' ? 'selected' : '' }}>All Years</option>
                     @foreach ($years as $year)
-                        <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>
-                            {{ $year }}
-                        </option>
+                        <option value="{{ $year }}" {{ $year == $selectedYear ? 'selected' : '' }}>{{ $year }}</option>
                     @endforeach
                 </select>
             </div>
-            <a href="{{ route('landing.organizing.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Add Committee
-            </a>
+
+            <!-- Filter Kategori -->
+            <div>
+                <label for="categoryFilter" class="form-label fw-bold">Select Category:</label>
+                <select id="categoryFilter" class="form-select" onchange="filterCommittee()">
+                    <option value="all" {{ $selectedCategory == 'all' ? 'selected' : '' }}>All Categories</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category }}" {{ $category == $selectedCategory ? 'selected' : '' }}>{{ $category }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered shadow-sm">
-                <thead class="table-dark text-center">
-                    <tr>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Year</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($committees as $index => $committee)
-                        <tr class="text-center">
-                            <td>{{ $index + 1 }}</td>
-                            <td class="text-start">{{ $committee->name }}</td>
-                            <td>{{ $committee->category }}</td>
-                            <td>{{ $committee->year }}</td>
-                            <td>
-                                <a href="{{ route('landing.organizing.edit', $committee->id) }}" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <form action="{{ route('landing.organizing.destroy', $committee->id) }}" method="POST"
-                                    class="d-inline" onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">No committee members available.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        <a href="{{ route('landing.organizing.create') }}" class="btn btn-primary">Add Committee</a>
     </div>
 
-    <script>
-        function filterYear() {
-            const selectedYear = document.getElementById('yearFilter').value;
-            window.location.href = `{{ route('landing.organizing.index') }}?year=${encodeURIComponent(selectedYear)}`;
-        }
-    </script>
+    <table class="table table-bordered">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Institution</th>
+                <th>Country</th>
+                <th>Category</th>
+                <th>Year</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($committees as $index => $committee)
+                <tr class="text-center">
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $committee->name }}</td>
+                    <td>{{ $committee->institution }}</td>
+                    <td>{{ $committee->country }}</td>
+                    <td>{{ $committee->category }}</td>
+                    <td>{{ $committee->year }}</td>
+                    <td>
+                        <a href="{{ route('landing.organizing.edit', $committee) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('landing.organizing.destroy', $committee) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?');">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">No organizing available</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function filterCommittee() {
+        const selectedYear = document.getElementById('yearFilter').value;
+        const selectedCategory = document.getElementById('categoryFilter').value;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('year', selectedYear);
+        url.searchParams.set('category', selectedCategory);
+
+        window.location.href = url.toString();
+    }
+</script>
+
 @endsection
