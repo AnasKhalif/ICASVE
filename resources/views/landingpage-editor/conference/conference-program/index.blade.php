@@ -36,8 +36,9 @@
                                     <tr>
                                         <th style="width: 5%;">No</th>
                                         <th style="width: 15%;">Time</th>
-                                        <th style="width: 40%;">Program</th>
-                                        <th style="width: 20%;">PIC</th>
+                                        <th style="width: 35%;">Program</th>
+                                        <th style="width: 15%;">PIC</th>
+                                        <th style="width: 10%;">Year</th>
                                         <th style="width: 20%;">Actions</th>
                                     </tr>
                                 </thead>
@@ -48,6 +49,7 @@
                                             <td>{{ $program->start_time }} - {{ $program->end_time }}</td>
                                             <td class="text-start">{{ $program->program_name }}</td>
                                             <td>{{ $program->pic }}</td>
+                                            <td>{{ $program->year }}</td>
                                             <td>
                                                 <a href="{{ route('landing.conference-program.edit', $program->id) }}"
                                                     class="btn btn-warning btn-sm">

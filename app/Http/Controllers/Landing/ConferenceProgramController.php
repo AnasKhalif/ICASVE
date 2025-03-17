@@ -6,16 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\ConferenceDetail;
 use App\Models\ConferenceProgram;
 use Illuminate\Http\Request;
+use App\Models\LandingSetting;
 
 class ConferenceProgramController extends Controller
 {
     public function showLandingPage(Request $request)
     {
-        $conferences = ConferenceDetail::all();
-        $programs = ConferenceProgram::orderBy('day_number')->orderBy('start_time')->get();
+
+        $activeYear = LandingSetting::where('is_active', true)->value('year');
+        $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
+        $selectedYear = $request->year ?? $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
+
+        $conferences = ConferenceDetail::where('year', $selectedYear)->get();
+        $programs = ConferenceProgram::where('year', $selectedYear)
+            ->orderBy('day_number')
+            ->orderBy('start_time')
+            ->get();
         $programsByDay = $programs->groupBy('day_number');
     
-        return view('landingpage.conference.program', compact('conferences', 'programsByDay'));
+        return view('landingpage.conference.program', compact('conferences', 'programsByDay', 'years', 'selectedYear'));
     }
 
     public function index(Request $request)

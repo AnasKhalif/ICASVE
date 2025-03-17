@@ -27,6 +27,7 @@ class ConferenceDetailController extends Controller
             'university' => 'required|string|max:255',
             'hosted' => 'required|string|max:255',
             'date' => 'required|date', // Ubah ke date
+            'year' => 'required|integer',
         ]);
 
         ConferenceDetail::create($validate);
@@ -47,6 +48,7 @@ class ConferenceDetailController extends Controller
             'university' => 'required|string|max:255',
             'hosted' => 'required|string|max:255',
             'date' => 'required|date', // Ubah ke date
+            'year' => 'required|integer',
         ]);
 
         $conferenceDetail->update($validate);

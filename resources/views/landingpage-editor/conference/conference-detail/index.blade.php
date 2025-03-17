@@ -19,6 +19,7 @@
                     <th>Title</th>
                     <th>Theme</th>
                     <th>Date</th>
+                    <th>Year</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -29,6 +30,7 @@
                         <td>{{ $conference->title }}</td>
                         <td>{{ $conference->theme }}</td>
                         <td>{{ $conference->date }}</td>
+                        <td>{{ $conference->year }}</td>
                         <td>
                             <a href="{{ route('landing.conference-detail.edit', $conference->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>

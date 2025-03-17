@@ -28,7 +28,7 @@ class LandingPageController extends Controller
         $about = About::where('year', $activeYear->year)->latest('id')->first();
 
         $keynoteSpeakers = Speaker::where('role', 'keynote_speaker')
-            ->where('year', $activeYear->year) // Gunakan 'year' daripada 'created_at'
+            ->where('year', $activeYear->year) 
             ->get();
 
         $invitedSpeakers = Speaker::where('role', 'invited_speaker')

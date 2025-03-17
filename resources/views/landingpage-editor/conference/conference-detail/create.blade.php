@@ -57,6 +57,15 @@
                         @enderror
                     </div>
 
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" class="form-control @error('year') is-invalid @enderror" 
+                            name="year" id="year" value="{{ old('year') }}" required>
+                        @error('year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="d-flex gap-2 justify-start">
                         <a href="{{ route('landing.conference-detail.index') }}" class="btn btn-secondary">Back</a>
                         <button type="submit" class="btn btn-success">Submit</button>

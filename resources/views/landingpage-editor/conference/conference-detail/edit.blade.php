@@ -32,6 +32,11 @@
                 <input type="text" class="form-control" name="date" value="{{ $conferenceDetail->date }}" required>
                 <small>Example: 4th International Conference on Applied Science for Vocational Education (ICASVE) 2025, Batam, Indonesia</small>
             </div>
+            <div>
+                <label class="form-label">Year</label>
+                <input type="text" class="form-control" name="year" value="{{ $conferenceDetail->year }}" required>
+                <small>Example: 2025</small>
+            </div>
             <button type="submit" class="btn btn-success">Save</button>
         </form>
     </div>
