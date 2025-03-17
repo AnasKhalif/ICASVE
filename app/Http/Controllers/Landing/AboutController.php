@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\Speaker;
-use App\Models\Year;
+use App\Models\LandingSetting;
 use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller

@@ -1,11 +1,17 @@
 <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
-            @if (isset($logo) && $logo->image)
-                <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
-            @else
-                <img src="{{ asset('images/logo-icasve-white.png') }}" width="200" height="100%" alt="Logo" />
-            @endif
+            @php
+               $year = \App\Models\LandingSetting::where('is_active', true)->value('year');
+               $activeYear = $year ? \App\Models\LandingSetting::where('year', $year)->first() : null;
+               $logo = \App\Models\Logo::where('year', $activeYear ? $activeYear->year : date('Y'))->first();
+         @endphp
+         
+         @if($logo)
+             <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
+         @else
+             <p>No logo found for this year.</p>
+         @endif
         </a>
 
         <nav id="navmenu" class="navmenu">

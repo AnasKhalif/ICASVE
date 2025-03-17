@@ -20,11 +20,14 @@
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <title>
+        {{-- @php
+            $years = \App\Models\::where('is_active', 1)->first();
+        @endphp
         @hasSection('title')
-            @yield('title') | ICASVE {{ date('Y') }}
+            @yield('title') | ICASVE {{ $years->year }}
         @else
             ICasve
-        @endif
+        @endif --}}
     </title>
 </head>
 

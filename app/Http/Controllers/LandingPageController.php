@@ -14,13 +14,13 @@ use App\Models\Contact;
 use App\Models\Faq;
 use App\Models\Theme;
 use App\Models\ConferenceTitle;
-use App\Models\Year;
+use App\Models\LandingSetting;
 
 class LandingPageController extends Controller
 {
     public function index($year = null)
     {
-        $activeYear = $year ? Year::where('year', $year)->first() : Year::where('is_active', true)->first();
+        $activeYear = $year ? LandingSetting::where('year', $year)->first() : LandingSetting::where('is_active', true)->first();
 
         if (!$activeYear) {
             abort(404, 'Year not found');

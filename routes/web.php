@@ -68,6 +68,8 @@ use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
 
 
+
+
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -241,10 +243,13 @@ Route::name('reviewer.')
         Route::get('newsletters/export', [NewsletterController::class, 'export'])
             ->name('newsletters.export');
         Route::resource('newsletters', NewsletterController::class);
+
         
         // Route untuk halaman Setting Tahun Aktif
         Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
         Route::post('setting', [SettingController::class, 'update'])->name('setting.update');
+        Route::post('setting', [SettingController::class, 'store'])->name('setting.store');
+        Route::post('setting/{id}/set-active', [SettingController::class, 'setActive'])->name('setting.setActive');
     });
 
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {

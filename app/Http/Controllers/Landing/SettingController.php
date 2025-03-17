@@ -4,30 +4,30 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Year;
+use App\Models\LandingSetting;
+use App\Traits\FlashAlert;
 
 class SettingController extends Controller
 {
+    use FlashAlert;
+
     public function index()
     {
-        $years = Year::orderBy('year', 'desc')->get();
-        $activeYear = Year::where('is_active', true)->first();
-
-        return view('landingpage-editor.setting.index', compact('years', 'activeYear'));
+        $years = LandingSetting::all();
+        return view('landingpage-editor.setting.index', compact('years'));
     }
 
-    public function update(Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
-            'year' => 'required|exists:years,year',
-        ]);
+        $request->validate(['year' => 'required|integer|unique:landing_settings,year']);
+        LandingSetting::create(['year' => $request->year, 'is_active' => false]);
+        return redirect()->back()->with($this->alertCreated());
+    }
 
-        // Reset semua tahun menjadi tidak aktif
-        Year::query()->update(['is_active' => false]);
-
-        // Set tahun yang dipilih menjadi aktif
-        Year::where('year', $request->year)->update(['is_active' => true]);
-
-        return redirect()->route('landing.setting.index')->with('success', 'Tahun aktif berhasil diperbarui!');
+    public function setActive($id)
+    {
+        LandingSetting::query()->update(['is_active' => false]);
+        LandingSetting::where('id', $id)->update(['is_active' => true]);
+        return redirect()->back()->with($this->alertUpdated());
     }
 }
