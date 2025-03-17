@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
-use App\Models\Speaker;
-use App\Models\LandingSetting;
 use Illuminate\Support\Facades\Storage;
 
 class AboutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $speakers = Speaker::all(); // Ambil semua data Speaker tanpa filter
-        return view('landingpage-editor.landingpage.speakers.index', compact('speakers'));
+        $query = About::orderByDesc('year');
+        if ($request->has('year') && !empty($request->year)) {
+            $query->where('year', $request->year);
+        }
+        $abouts = $query->get();
+        $years = About::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+      
+        return view('landingpage-editor.landingpage.about.index', compact('abouts', 'years'));
     }
     
     public function create()

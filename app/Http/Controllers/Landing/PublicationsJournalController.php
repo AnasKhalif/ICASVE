@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PublicationsJournal;
 use Illuminate\Validation\Rule;
-use App\Models\Year;
 use Carbon\Carbon;
 
 class PublicationsJournalController extends Controller
@@ -88,16 +87,24 @@ class PublicationsJournalController extends Controller
             'year.max' => 'Tahun tidak boleh lebih dari tahun sekarang.',
         ]);
     
+        // Mengecek apakah ada file baru
         if ($request->hasFile('image_path')) {
-            foreach ($request->file('image_path') as $file) {
-                $imagePath = $file->store('publications_journals', 'public');
-                PublicationsJournal::create([
-                    'image_type' => $request->image_type,
-                    'image_path' => $imagePath,
-                    'year' => $request->year,
-                ]);
+            // Hapus gambar lama jika ada
+            if (file_exists(public_path('storage/' . $publications_journal->image_path))) {
+                unlink(public_path('storage/' . $publications_journal->image_path));
             }
+    
+            // Menyimpan gambar baru
+            $imagePath = $request->file('image_path')->store('publications_journals', 'public');
+            
+            // Perbarui entri dengan gambar baru
+            $publications_journal->update([
+                'image_type' => $request->image_type,
+                'image_path' => $imagePath,
+                'year' => $request->year,
+            ]);
         } else {
+            // Jika tidak ada file baru, cukup perbarui data lain
             $publications_journal->update([
                 'image_type' => $request->image_type,
                 'year' => $request->year,
@@ -106,6 +113,7 @@ class PublicationsJournalController extends Controller
     
         return redirect()->route('landing.publications-journal.index')->with('success', 'Publication updated successfully.');
     }
+    
     
 
     public function destroy(PublicationsJournal $publications_journal)

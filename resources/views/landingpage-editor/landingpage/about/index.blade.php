@@ -15,12 +15,9 @@
                 <div class="col-md-4">
                     <label for="filterYear" class="form-label">Filter by Year</label>
                     <select name="year" id="filterYear" class="form-select">
-                        <option value="">All Years</option>
                         @foreach ($years as $year)
-                            <option value="{{ $year->year }}" {{ request('year') == $year->year ? 'selected' : '' }}>
-                                {{ $year->year }}
-                            </option>
-                        @endforeach
+                        <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endforeach
                     </select>
                 </div>
                 <div class="col-md-2 d-flex align-items-end">

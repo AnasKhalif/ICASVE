@@ -33,6 +33,7 @@
                     <th>Name</th>
                     <th>Institution</th>
                     <th>Role</th>
+                    <th>Year</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -50,6 +51,7 @@
                         <td>{{ $speaker->name }}</td>
                         <td>{{ $speaker->institution }}</td>
                         <td>{{ str_replace('_', ' ', ucfirst($speaker->role)) }}</td>
+                        <td>{{ $speaker->year }}</td>
                         <td>
                             <a href="{{ route('landing.speakers.edit', $speaker->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('landing.speakers.destroy', $speaker->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?');">

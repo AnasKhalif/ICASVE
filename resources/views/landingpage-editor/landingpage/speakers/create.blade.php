@@ -26,7 +26,7 @@
                 <div class="mb-3">
                     <label for="name" class="fw-bold">Name</label>
                     <input type="text" class="form-control text-muted" name="name" id="name" required minlength="3"
-                           placeholder="John Doe">
+                           placeholder="Example: John Doe">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -36,7 +36,7 @@
                 <div class="mb-3">
                     <label for="institution" class="fw-bold">Institution</label>
                     <input type="text" class="form-control text-muted" name="institution" id="institution" required minlength="3"
-                           placeholder="University of Brawijaya">
+                           placeholder="Example: University of Brawijaya">
                     @error('institution')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -46,7 +46,7 @@
                 <div class="mb-3">
                     <label for="country" class="fw-bold">Country</label>
                     <input type="text" class="form-control text-muted" name="country" id="country" required minlength="3"
-                           placeholder="Indonesia">
+                           placeholder="Example: Indonesia">
                     @error('country')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
