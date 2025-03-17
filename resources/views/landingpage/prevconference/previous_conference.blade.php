@@ -22,17 +22,28 @@
                     </div>
                     <div class="card-body">
                         @foreach ($conferenceTitle as $title)
-                            @if($title->year == $poster->year)
-                                <h5 class="card-title fw-bold">ICASVE {{ $title->year }}</h5>
-                                <p class="card-text text-muted">{{ $title->title }}</p>
+                          @if($title->year == $poster->year)
+                            <h5 class="card-title fw-bold">ICASVE {{ $title->year }}</h5>
+                              <p class="card-text text-muted">{{ $title->title }}</p>
+                               <div>
+                                   <p class="fw-semibold">Keynote Speaker : </p>
+                                   <div> 
+                                       <?php $iteration = 1; ?> <!-- Inisialisasi penghitung untuk tahun baru -->
+                                       @foreach ($speakers as $speaker)
+                                           @if($speaker->year == $poster->year && $speaker->role == "keynote_speaker")
+                                               <p>{{ $iteration++ }}. {{ $speaker->name }}</p>
+                                           @endif
+                                       @endforeach
+                                   </div>
+                               </div>
                                 <form method="GET" action="{{ route('downloadAllPdf') }}">
                                     <input type="hidden" name="year" value="{{ $poster->year }}">
                                     <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="bi bi-download"></i> Download Abstract Book for ICASVE {{ $poster->year }}
                                     </button>
                                 </form>
-                            @endif
-                        @endforeach
+                         @endif
+                      @endforeach
                     </div>
                 </div>
             </div>
