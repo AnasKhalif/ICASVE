@@ -22,7 +22,8 @@
             <div class="d-flex flex-column justify-content-center" data-aos="fade-in">
                 <h1>{{ $conference_title->title }} - <span>ICASVE {{ $conference_title->year }}</span></h1>
                 <p>{{ $conference_title->description }}</p>
-                <div class="d-flex">
+                <div class="d-flex justify-start gap-3">
+                    <a href="{{ route('login') }}" class="btn-get-started">Login</a>
                     <a href="{{ route('register') }}" class="btn-get-started">Register</a>
                 </div>
             </div>

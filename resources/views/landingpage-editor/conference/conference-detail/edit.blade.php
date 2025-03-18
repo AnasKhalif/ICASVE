@@ -72,7 +72,6 @@
                         <button type="submit" class="btn btn-success">Save</button>
                         <a href="{{ route('landing.conference-detail.index') }}" class="btn btn-danger">Back</a>
                     </div>
-
                 </form>
             </div>
         </div>

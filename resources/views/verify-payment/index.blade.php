@@ -23,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($payments as $payment)
+                            @foreach ($payments as $key => $payment)
                                 <tr>
                                     <td>{{ $payments->firstItem() + $key }}</td>
                                     <td>

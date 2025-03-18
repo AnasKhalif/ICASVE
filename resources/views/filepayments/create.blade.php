@@ -48,14 +48,20 @@
                     <p class="card-description font-italic mb-3">
                         Please make your payment through the following details:
                     </p>
-                    @php
-                        $instructions = explode("\n", $conferenceSetting->payment_instruction);
-                    @endphp
 
                     <ol class="mb-2">
-                        @foreach ($instructions as $instruction)
+                       @if (!empty($instructions->instruction))
+                       @php
+                         $instructions = explode("\n", $conferenceSetting->payment_instruction);
+                        @endphp
+                        @foreach ($instructions as $instruction) 
                             <li>{{ $instruction }}</li>
                         @endforeach
+                       @else
+                        <p>No payment instructions available</p>
+                       @endif
+                       
+                    
                     </ol>
 
                 </div>
