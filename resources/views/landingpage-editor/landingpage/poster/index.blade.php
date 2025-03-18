@@ -3,8 +3,8 @@
 @section('title', 'Poster')
 
 @section('content')
-    <div class="container">
-        <h2 class="mb-4">Daftar Poster</h2>
+    <div class="container card p-4">
+        <h2 class="fs-5">Daftar Poster</h2>
         <hr class="border border-secondary">
         <a href="{{ route('landing.poster.create') }}" class="btn btn-primary mb-3">Tambah Poster</a>
 

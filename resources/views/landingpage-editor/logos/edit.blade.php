@@ -3,9 +3,9 @@
 @section('title', 'Edit Logo')
 
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2>Edit Logo</h2>
-
+        <hr class="border border-secondary">
         <form action="{{ route('landing.logos.update', $logo->id) }}" method="POST" enctype="multipart/form-data" id="logoForm">
             @csrf @method('PUT')
             <div class="mb-3">

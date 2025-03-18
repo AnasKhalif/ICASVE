@@ -3,8 +3,8 @@
 
 @section('content')
     <div class="container card p-4">
-        <h2 class="mb-4">Conference Titles</h2>
-
+        <h2 class="fs-5">Edit Conference Title</h2>
+    <hr class="border border-secondary">
         <form action="{{ route('landing.conference-title.index') }}" method="GET" class="mb-3">
             <div class="d-flex gap-2">
                 <select name="year" class="form-select w-auto">
@@ -19,7 +19,7 @@
         </form>
 
         <!-- Tombol tambah judul -->
-        <a href="{{ route('landing.conference-title.create') }}" class="btn btn-success mb-3">
+        <a href="{{ route('landing.conference-title.create') }}" class="w-fit btn btn-success mb-3">
             <i class="bi bi-plus-circle"></i> Add Conference Title
         </a>
 

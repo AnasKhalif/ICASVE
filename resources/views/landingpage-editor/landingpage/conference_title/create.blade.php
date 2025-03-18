@@ -1,10 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Add Conference Title')
 @section('content')
-    <div class="container">
-        <h2 class="mb-4">Add Conference Title</h2>
-        <div class="card shadow-sm border-0">
-            <div class="card-body">
+    <div class="container card p-4">
+            <h2 class="fs-5">Add Conference Title</h2>
+            <hr class="border border-secondary">
                 <form action="{{ route('landing.conference-title.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
@@ -28,9 +27,10 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <div class="d-flex gap-2 align-middle justify-items-center">
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <a href="{{ route('landing.conference-title.index') }}" class="btn btn-danger">Back</a>
+                    </div>
                 </form>
-            </div>
-        </div>
     </div>
 @endsection

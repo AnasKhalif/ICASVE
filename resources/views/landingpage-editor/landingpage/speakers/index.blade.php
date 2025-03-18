@@ -2,8 +2,8 @@
 @section('title', 'Speaker')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="fw-bold text-uppercase">Speakers</h2>
+    <div class="container card p-4">
+        <h2 class="fs-5">Speakers</h2>
         <hr class="border border-secondary">
 
         @if (session('success'))
@@ -63,7 +63,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center text-muted">
+                        <td colspan="7" class="text-center text-muted">
                             @if ($selectedYear)
                                 No speakers available for {{ $selectedYear }}
                             @else

@@ -3,9 +3,10 @@
 @section('title', 'Logo Icasve')
 
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2>Daftar Logo</h2>
-        <a href="{{ route('landing.logos.create') }}" class="btn btn-primary mb-3">Tambah Logo</a>
+        <hr class="border border-secondary">
+        <a href="{{ route('landing.logos.create') }}" class="w-fit btn btn-primary mb-3">Tambah Logo</a>
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>

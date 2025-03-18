@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Deadline Dates')
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2>Deadline Dates</h2>
         <hr class="border border-secondary">
 
