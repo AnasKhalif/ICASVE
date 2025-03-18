@@ -6,6 +6,7 @@ use App\Models\AbstractModel;
 use App\Models\Poster;
 use App\Models\ConferenceTitle;
 use App\Models\Speaker;
+use App\Models\ConferenceDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +17,7 @@ class PreviousConferences extends Controller
     {
 
         $speakers = Speaker::all();
+        $conferenceDetails  = ConferenceDetail::all();
         $posters = Poster::all();
         $conferenceTitle = ConferenceTitle::all(); 
         $theme = ConferenceTitle::query()->where('year', now()->year)->first();
@@ -24,7 +26,7 @@ class PreviousConferences extends Controller
         $abstracts = AbstractModel::whereYear('created_at', $selectedYear)->get();
         Log::info('Abstracts: ', $abstracts->toArray());
     
-        return view('landingpage.prevconference.previous_conference', compact('posters', 'conferenceTitle', 'abstracts', 'selectedYear', 'theme', 'speakers'));
+        return view('landingpage.prevconference.previous_conference', compact('posters', 'conferenceTitle', 'abstracts', 'selectedYear', 'theme', 'speakers', 'conferenceDetails'));
     }
 
     public function downloadAllPdf(Request $request)

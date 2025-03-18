@@ -29,7 +29,7 @@
             </div>
             <div class="mb-4">
                 <label class="form-label">Date</label>
-                <input type="text" class="form-control" name="date" value="{{ $conferenceDetail->date }}" required>
+                <input type="date" class="form-control" name="date" value="{{ $conferenceDetail->date }}" required>
                 <small>Example: 4th International Conference on Applied Science for Vocational Education (ICASVE) 2025, Batam, Indonesia</small>
             </div>
             <div>

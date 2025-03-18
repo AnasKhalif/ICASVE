@@ -36,6 +36,13 @@
                                        @endforeach
                                    </div>
                                </div>
+                               <div class="mb-2">
+                                @foreach ($conferenceDetails as $detail)
+                                   @if($detail->year == $poster->year)
+                                     <p class="card-text text-muted">Date: {{ date('d F Y', strtotime($detail->date)) }}</p>
+                                  @endif
+                               @endforeach
+                               </div>
                                 <form method="GET" action="{{ route('downloadAllPdf') }}">
                                     <input type="hidden" name="year" value="{{ $poster->year }}">
                                     <button type="submit" class="btn btn-primary btn-sm">
