@@ -2,9 +2,9 @@
 @extends('layouts.app')
 @section('title', 'Gallery')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold text-uppercase">Gallery</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Gallery</h2>
+        <hr class="border border-secondary">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif

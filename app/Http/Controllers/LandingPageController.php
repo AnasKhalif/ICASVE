@@ -43,7 +43,7 @@ class LandingPageController extends Controller
         $hosted_by = PublicationsJournal::where('image_type', 'hosted_by')->where('year', $activeYear->year)->get();
         $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->where('year', $activeYear->year)->get();
         $supported_by = PublicationsJournal::where('image_type', 'supported_by')->where('year', $activeYear->year)->get();
-        $venues = Venue::whereYear('created_at', $activeYear->year)->get();
+        $venues = Venue::where('year', $activeYear->year)->get();
       
         $contacts = Contact::where('year', $activeYear->year)->get();
 
