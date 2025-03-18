@@ -32,14 +32,16 @@
                 </div>
                 <div class="social-links d-flex mt-4">
                     @php
-                       $instagram = \App\Models\Instagram::first();
-                     @endphp
-             
-                     @if ($instagram == null)
-                         <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
-                     @else
-                        <a href="{{ $instagram->link }}" class="me-2"><i class="bi bi-instagram"></i></a>
-                     @endif
+                    $activeYear = \App\Models\LandingSetting::where('is_active', true)->value('year');
+                    $instagram = \App\Models\Instagram::where('year', $activeYear)->first();
+                @endphp
+                
+                @if ($instagram)
+                    <a href="{{ $instagram->link }}" class="me-2" target="_blank"><i class="bi bi-instagram"></i></a>
+                @else
+                    <a href="" class="me-2"><i class="bi bi-instagram"></i></a>
+                @endif
+                
                 </div>
             </div>
 

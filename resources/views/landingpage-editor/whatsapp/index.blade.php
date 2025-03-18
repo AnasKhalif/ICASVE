@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Whatsapp')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Whatsapp</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5 fw-bold">Whatsapp</h2>
+        <hr class="border border-secondary">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -19,11 +19,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($whatsapp as $index => $number)
+                @forelse ($whatsapp as $index => $number)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $number->nomor }}</td>
-                        
+                        <td>{{ $number->nomor }}</td>    
                         <td>
                             <a href="{{ route('landing.whatsapp.edit', $number->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
@@ -35,7 +34,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="3" class="text-center">No data available</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

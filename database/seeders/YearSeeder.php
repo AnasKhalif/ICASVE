@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Year;
+use App\Models\LandingSetting;
 
 class YearSeeder extends Seeder
 {
@@ -26,5 +27,7 @@ class YearSeeder extends Seeder
             'year' => now()->year,
             'is_active' => true,
         ]);
+
+
     }
 }

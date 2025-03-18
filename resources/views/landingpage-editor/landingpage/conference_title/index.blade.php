@@ -2,10 +2,9 @@
 @section('title', 'Conference Titles')
 
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2 class="mb-4">Conference Titles</h2>
 
-        <!-- Filter berdasarkan tahun -->
         <form action="{{ route('landing.conference-title.index') }}" method="GET" class="mb-3">
             <div class="d-flex gap-2">
                 <select name="year" class="form-select w-auto">

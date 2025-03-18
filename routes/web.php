@@ -67,14 +67,7 @@ use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
 
-
-
-
-Route::get('/', function () {
-    return redirect()->route('home');
-});
-
-Route::get('/home/{year?}', [LandingPage::class, 'index'])->name('home');
+Route::get('/', [LandingPage::class, 'index'])->name('home');
 
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 

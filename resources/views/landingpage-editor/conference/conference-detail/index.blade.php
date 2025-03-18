@@ -1,15 +1,14 @@
 @extends('layouts.app')
 @section('title', 'Conference TITLE')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">CONFERENCE TITLE</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Conference Title</h2>
+        <hr class="border border-secondary">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <div class="d-flex justify-content-between mb-3">
-            <h4 class="fw-bold">List of Conference Title</h4>
+        <div class="d-flex justify-content-end mb-3">
             <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary">Add Conference Title</a>
         </div>
         <table class="table table-bordered">
@@ -24,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($conferences as $index => $conference)
+                @forelse ($conferences as $index => $conference)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $conference->title }}</td>
@@ -42,7 +41,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No data available</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

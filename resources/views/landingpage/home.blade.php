@@ -230,223 +230,96 @@
             <!-- Features Item -->
         <div class="row gy-4 align-items-center features-item">
             @if ($presenter->isNotEmpty())
-                <div class="container">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>Registration</h2>
-                        <div><span>Registration</span> <span class="description-title"> Fee</span></div>
-                    </div>
-                    <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($presenter as $fee)
-                                    @php
-                                        $payment_date = $fee->period_of_payment !== 'TBA' ? \Carbon\Carbon::parse($fee->period_of_payment) : null;
-                                    @endphp
-                                    <tr>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>{{ $fee->category_name }}</s>
-                                            @else
-                                                {{ $fee->category_name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->domestic_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->domestic_participants))
-                                                IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->international_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->international_participants))
-                                                US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($fee->period_of_payment === 'TBA') 
-                                                TBA 
-                                            @else 
-                                                {!! $payment_date && $payment_date->isPast() 
-                                                    ? '<s>Until '. $payment_date->format('F jS, Y') .'</s>' 
-                                                    : 'Until '. $payment_date->format('F jS, Y') !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @if ($presenter->isEmpty())
-                                    <tr>
-                                        <td colspan="4">No presenter found.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Non-Presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($non_presenter as $fee)
-                                    @php
-                                        $payment_date = $fee->period_of_payment !== 'TBA' ? \Carbon\Carbon::parse($fee->period_of_payment) : null;
-                                    @endphp
-                                    <tr>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>{{ $fee->category_name }}</s>
-                                            @else
-                                                {{ $fee->category_name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->domestic_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->domestic_participants))
-                                                IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->international_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->international_participants))
-                                                US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($fee->period_of_payment === 'TBA')
-                                                TBA 
-                                            @else 
-                                                {!! $payment_date && $payment_date->isPast() 
-                                                    ? '<s>Until '. $payment_date->format('F jS, Y') .'</s>' 
-                                                    : 'Until '. $payment_date->format('F jS, Y') !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @if ($non_presenter->isEmpty())
-                                    <tr>
-                                        <td colspan="4">No non presenter found.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                        
-                        <table class="table table-bordered" data-aos="fade-up">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Additional Fee</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($additional_fee as $fee)
-                                    @php
-                                        $payment_date = $fee->period_of_payment !== 'TBA' ? \Carbon\Carbon::parse($fee->period_of_payment) : null;
-                                    @endphp
-                                    <tr>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>{{ $fee->category_name }}</s>
-                                            @else
-                                                {{ $fee->category_name }}
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->domestic_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->domestic_participants))
-                                                IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                <s>
-                                            @endif
-                                            @if($fee->international_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->international_participants))
-                                                US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                            @endif
-                                            @if ($payment_date && $payment_date->isPast()) 
-                                                </s>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($fee->period_of_payment === 'TBA')
-                                                TBA 
-                                            @else 
-                                                {!! $payment_date && $payment_date->isPast() 
-                                                    ? '<s>Until '. $payment_date->format('F jS, Y') .'</s>' 
-                                                    : 'Until '. $payment_date->format('F jS, Y') !!}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @if ($additional_fee->isEmpty())
-                                    <tr>
-                                        <td colspan="4">No additional fee found.</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="text-muted mt-3" data-aos="fade-up">
-                        <small>
-                            <b>Please note:</b><br />
-                            1. The registration fee serves only for conference fee, and it cannot be waived for authors.<br />
-                            2. Authors need to pay for publishing if accepted.<br />
-                            3. Certificate fee: Participants can attend the event without certificate.
-                        </small>
-                    </p>
+            <div class="container">
+                <div class="container section-title" data-aos="fade-up">
+                    <h2>Registration</h2>
+                    <div><span>Registration</span> <span class="description-title"> Fee</span></div>
                 </div>
-            @endif
-            
+                <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Presenter</th>
+                                <th>Domestic Participants</th>
+                                <th>International Participants</th>
+                                <th>Period of Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($presenter as $fee)
+                                @php
+                                    $payment_date = $fee->period_of_payment !== 'TBA' ? \Carbon\Carbon::parse($fee->period_of_payment) : null;
+                                @endphp
+                                <tr>
+                                    <td>
+                                        @if ($payment_date && $payment_date->isPast()) 
+                                            <s>{{ $fee->category_name }}</s>
+                                        @else
+                                            {{ $fee->category_name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($payment_date && $payment_date->isPast()) 
+                                            <s>
+                                        @endif
+                                        @if($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
+                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                        @endif
+                                        @if ($payment_date && $payment_date->isPast()) 
+                                            </s>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($payment_date && $payment_date->isPast()) 
+                                            <s>
+                                        @endif
+                                        @if($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
+                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                        @endif
+                                        @if ($payment_date && $payment_date->isPast()) 
+                                            </s>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($fee->period_of_payment === 'TBA') 
+                                            TBA 
+                                        @else 
+                                            {!! $payment_date && $payment_date->isPast() 
+                                                ? '<s>Until '. $payment_date->format('F jS, Y') .'</s>' 
+                                                : 'Until '. $payment_date->format('F jS, Y') !!}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            @if ($presenter->isEmpty())
+                                <tr>
+                                    <td colspan="4">No presenter found.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+        
+        
+                </div>
+                <p class="text-muted mt-3" data-aos="fade-up">
+                    <small>
+                        <b>Please note:</b><br />
+                        1. The registration fee serves only for conference fee, and it cannot be waived for authors.<br />
+                        2. Authors need to pay for publishing if accepted.<br />
+                        3. Certificate fee: Participants can attend the event without certificate.
+                    </small>
+                </p>
+                     <div class="mt-4">
+                        <a href="{{ route('payment_guidelines.landing') }}" class="btn btn-primary btn-sm py-2 px-4">
+                            Lihat tatacara pembayaran
+                        </a>
+                    </div>
+            </div>
+        @endif
         
           @if ($venues->isNotEmpty())
           </div>

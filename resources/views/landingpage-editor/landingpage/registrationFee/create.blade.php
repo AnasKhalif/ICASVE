@@ -2,7 +2,7 @@
 @section('title', 'New Registration Fee')
 @section('content')
     <div class="container card p-4">
-        <h2 class="fw-bold">Add Registration Fee</h2>
+        <h2 class="fs-5">Add Registration Fee</h2>
         <hr class="border border-secondary">
         <div class="row">
                 <form action="{{ route('landing.registrationFee.store') }}" method="POST">

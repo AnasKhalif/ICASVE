@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Instagram')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Instagram</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Instagram</h2>
+        <hr class="border border-secondary">
         
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($instagramLinks as $index => $link)
+                @forelse ($instagramLinks as $index => $link)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $link->link }}</td> 
@@ -36,7 +36,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="3" class="text-center">No data</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

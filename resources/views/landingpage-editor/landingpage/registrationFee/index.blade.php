@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Registration Fee')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="fw-bold text-uppercase">Registration Fee</h2>
+    <div class="container card p-4">
+        <h2 class="fs-5">Registration Fee</h2>
         <hr class="border border-secondary">
 
         @if (session('success'))
