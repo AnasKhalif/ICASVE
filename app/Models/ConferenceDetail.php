@@ -12,6 +12,6 @@ class ConferenceDetail extends Model
     protected $table = 'conference_details';
 
     protected $fillable = [
-        'title', 'theme', 'university', 'hosted', 'date'
+        'title', 'theme', 'university', 'hosted', 'date', 'year'
     ];
 }

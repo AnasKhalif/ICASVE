@@ -9,9 +9,9 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="card-title mb-0">Conference Program</h4>
+                            <h4 class="card-title mb-0">Conference Table</h4>
                             <a href="{{ route('landing.conference-program.create') }}" class="btn btn-success btn-sm">
-                                <i class="fas fa-plus"></i> New Program
+                                <i class="fas fa-plus"></i> New Table
                             </a>
                         </div>
 
@@ -36,8 +36,9 @@
                                     <tr>
                                         <th style="width: 5%;">No</th>
                                         <th style="width: 15%;">Time</th>
-                                        <th style="width: 40%;">Program</th>
-                                        <th style="width: 20%;">PIC</th>
+                                        <th style="width: 35%;">Program</th>
+                                        <th style="width: 15%;">PIC</th>
+                                        <th style="width: 10%;">Year</th>
                                         <th style="width: 20%;">Actions</th>
                                     </tr>
                                 </thead>
@@ -48,6 +49,7 @@
                                             <td>{{ $program->start_time }} - {{ $program->end_time }}</td>
                                             <td class="text-start">{{ $program->program_name }}</td>
                                             <td>{{ $program->pic }}</td>
+                                            <td>{{ $program->year }}</td>
                                             <td>
                                                 <a href="{{ route('landing.conference-program.edit', $program->id) }}"
                                                     class="btn btn-warning btn-sm">

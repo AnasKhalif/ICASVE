@@ -20,7 +20,10 @@
                     @if ($contact)
                         <address>
                             <p class="mb-1"><strong>Address: <br></strong> {{ $contact->address }}</p>
-                            <p class="mb-1"><strong>Phone:  <br></strong> {{ $phone }}</p>
+                            <p class="mb-1"><strong>Phone 1: <br></strong> {{ $contact->phone1 }} ({{ $contact->phone1_name }})</p>
+                            @if($contact->phone2)
+                                <p class="mb-1"><strong>Phone 2: <br></strong> {{ $contact->phone2 }} ({{ $contact->phone2_name }})</p>
+                            @endif
                             <p class="mb-1"><strong>Email:  <br></strong> {{ $contact->email }}</p>
                         </address>
                     @else
@@ -29,14 +32,16 @@
                 </div>
                 <div class="social-links d-flex mt-4">
                     @php
-                       $instagram = \App\Models\Instagram::first();
-                     @endphp
-             
-                     @if ($instagram == null)
-                         <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
-                     @else
-                        <a href="{{ $instagram->link }}" class="me-2"><i class="bi bi-instagram"></i></a>
-                     @endif
+                    $activeYear = \App\Models\LandingSetting::where('is_active', true)->value('year');
+                    $instagram = \App\Models\Instagram::where('year', $activeYear)->first();
+                @endphp
+                
+                @if ($instagram)
+                    <a href="{{ $instagram->link }}" class="me-2" target="_blank"><i class="bi bi-instagram"></i></a>
+                @else
+                    <a href="" class="me-2"><i class="bi bi-instagram"></i></a>
+                @endif
+                
                 </div>
             </div>
 

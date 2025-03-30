@@ -11,54 +11,74 @@ use App\Models\Year;
 class ContactController extends Controller
 {
     public function showLandingpage()
-    {
-        $latestYear = Contact::max('created_at');
-        $contacts = Contact::whereYear('created_at', date('Y', strtotime($latestYear)))->get();
+{
+    $activeYear = Year::where('is_active', true)->first();
 
-        return view('landingpage.contact.contact', compact('contacts'));
+    if (!$activeYear) {
+        return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
     }
+
+    $contacts = Contact::where('year', $activeYear->year)->get();
+
+    return view('landingpage.contact.contact', compact('contacts'));
+}
+
+    
+
     public function index()
     {
-        $activeYear = Year::where('is_active', true)->first();
-
-        if (!$activeYear) {
-            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
-        }
-
-        $contacts = Contact::whereYear('date', $activeYear->year)->orderBy('date')->get();
-
+        $contacts = Contact::all();
         return view('landingpage-editor.landingpage.contact.index', compact('contacts'));
     }
+
     public function create()
     {
         return view('landingpage-editor.landingpage.contact.create');
     }
+
     public function store(Request $request)
-    {
-        $request->validate([
-            'phone' => 'required|string|max:100',
-            'email' => 'nullable|email|max:255',
-            'address' => 'required|string',
-        ]);
-        Contact::create($request->all());
-        return redirect()->route('landing.contact.index')->with('success', 'Contact added successfully!');
-    }
+{
+    $request->validate([
+        'phone1'       => 'required|string|max:20',
+        'phone1_name'  => 'nullable|string|max:255',
+        'phone2'       => 'nullable|string|max:20',
+        'phone2_name'  => 'nullable|string|max:255',
+        'email'        => 'nullable|email|max:255',
+        'address'      => 'required|string',
+        'year'         => 'required|integer|min:2000|max:' . date('Y'),
+    ]);
+
+    Contact::create($request->all());
+
+    return redirect()->route('landing.contact.index')->with('success', 'Contact added successfully!');
+}
+
+
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
         return view('landingpage-editor.landingpage.contact.edit', compact('contact'));
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
-            'phone' => 'required|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'address' => 'required|string',
+            'phone1'       => 'required|string|max:20',
+            'phone1_name'  => 'nullable|string|max:255',
+            'phone2'       => 'nullable|string|max:20',
+            'phone2_name'  => 'nullable|string|max:255',
+            'email'        => 'nullable|email|max:255',
+            'address'      => 'required|string',
+            'year'         => 'required|integer|min:2000|max:' . date('Y'),
         ]);
+    
         $contact = Contact::findOrFail($id);
         $contact->update($request->all());
+    
         return redirect()->route('landing.contact.index')->with('success', 'Contact updated successfully!');
     }
+    
+
     public function destroy($id)
     {
         Contact::findOrFail($id)->delete();
@@ -68,14 +88,14 @@ class ContactController extends Controller
     public function sendEmail(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
             'message' => 'required|string',
         ]);
 
         $details = [
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'    => $request->name,
+            'email'   => $request->email,
             'message' => $request->message,
         ];
 

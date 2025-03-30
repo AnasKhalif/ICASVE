@@ -5,16 +5,22 @@ namespace App\Http\Controllers\Landing;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FullpaperGuideline;
+use App\Models\LandingSetting;
 use Illuminate\Support\Facades\Storage;
 
 class FullpaperGuidelineController extends Controller
 {
     public function showLandingPage()
-{
-    $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();
-    return view('landingpage.submission.fullpaper', compact('guidelines'));
-}
-
+    {
+        $activeYear = LandingSetting::where('is_active', true)->value('year');
+        $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
+        $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
+        $guideline = FullpaperGuideline::where('year', $selectedYear)->first();
+    
+        return view('landingpage.submission.fullpaper', compact('guideline', 'years', 'selectedYear'));
+    }
+    
+    
     public function index()
     {
         $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();

@@ -2,9 +2,9 @@
 @extends('layouts.app')
 @section('title', 'Gallery')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold text-uppercase">Gallery</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Gallery</h2>
+        <hr class="border border-secondary">
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -24,9 +24,13 @@
                 @foreach ($galleries as $gallery)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        @foreach ($gallery->images as $image)
-                        <td><img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image" style="max-width: 250px;"></td>
-                        @endforeach
+                       
+                        <td>
+                            @foreach ($gallery->images as $image)
+                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="Gallery Image" style="max-width: 250px; margin-right: 10px;">
+                            @endforeach
+                        </td>
+                        
                         <td>{{$gallery->year}}</td>
                         <td>
                             <a href="{{ route('landing.gallery.edit', $gallery->id) }}"

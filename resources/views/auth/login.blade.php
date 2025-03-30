@@ -40,7 +40,7 @@
                                 </div>
                                 <input type="email" id="email" name="email"
                                     class="form-control form-control-md border-left-0"
-                                    placeholder="E.g. Dr. Budi Utomo, M.Sc." value="{{ old('email') }}" required />
+                                    placeholder="example@gmail.com" value="{{ old('email') }}" required />
                             </div>
                             @if ($errors->has('email'))
                                 <span class="text-danger" style="font-size: 12px;">{{ $errors->first('email') }}</span>

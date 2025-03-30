@@ -51,11 +51,16 @@
                     @php
                         $instructions = explode("\n", $conferenceSetting->payment_instruction);
                     @endphp
+                    @if (count($instructions) > 0 && $instructions[0] !== '')
+                        <ol class="mb-2">
+                            @foreach ($instructions as $instruction)
+                                <li>{{ $instruction }}</li>
+                            @endforeach
+                        </ol>
+                    @else
+                        <p>No payment instructions available.</p>
+                    @endif
 
-                    <ol class="mb-2">
-                        @foreach ($instructions as $instruction)
-                            <li>{{ $instruction }}</li>
-                        @endforeach
                     </ol>
 
                 </div>

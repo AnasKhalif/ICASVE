@@ -11,6 +11,7 @@ class Instagram extends Model
     use HasFactory;
 
     protected $fillable = [
-        'link'
+        'link',
+        'year'
     ];
 }

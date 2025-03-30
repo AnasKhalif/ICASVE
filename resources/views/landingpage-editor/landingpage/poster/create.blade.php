@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Add Poster')
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2 class="fw-bold">Tambah Poster</h2>
 
         @if ($errors->any())
@@ -37,10 +37,10 @@
                 @enderror
             </div>
 
-            <div class="d-flex justify-content-between">
-                <a href="{{ route('landing.poster.index') }}" class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success" id="submitBtn">Add</button>
+                <a href="{{ route('landing.poster.index') }}" class="btn btn-danger">Cancel</a>
+            </div> 
         </form>
     </div>
 

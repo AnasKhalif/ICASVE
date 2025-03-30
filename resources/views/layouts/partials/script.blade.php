@@ -3,7 +3,7 @@
 <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
 <script src="{{ asset('js/template.js') }}"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
-@vite(['resources/js/app.js'])
+<script type="module" src="{{ asset('build/' . ltrim($manifest['resources/js/app.js']['file'], '/')) }}"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

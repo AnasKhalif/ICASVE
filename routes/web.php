@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Landing\GalleryController;
+use App\Http\Controllers\Landing\SettingController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
@@ -65,6 +66,7 @@ use App\Http\Controllers\Landing\PaymentGuidelineController;
 use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
+use App\Http\Controllers\Landing\PrevconferenceController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -235,10 +237,15 @@ Route::name('landing.')
         Route::get('newsletters/export', [NewsletterController::class, 'export'])
             ->name('newsletters.export');
         Route::resource('newsletters', NewsletterController::class);
-     
+        Route::resource('prevconference', PrevconferenceController::class);
+
+
+        // Route untuk halaman Setting Tahun Aktif
+        Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+        Route::post('setting', [SettingController::class, 'update'])->name('setting.update');
+        Route::post('setting', [SettingController::class, 'store'])->name('setting.store');
+        Route::post('setting/{id}/set-active', [SettingController::class, 'setActive'])->name('setting.setActive');
     });
-
-
 
 Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

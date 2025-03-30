@@ -11,5 +11,6 @@ class PublicationsJournal extends Model
     protected $fillable = [
         'image_type',
         'image_path',
+        'year'
     ];
 }

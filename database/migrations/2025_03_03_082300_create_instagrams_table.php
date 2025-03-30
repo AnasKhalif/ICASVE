@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('instagrams', function (Blueprint $table) {
             $table->id();
             $table->string('link');
+            $table->year('year');
             $table->timestamps();
         });
     }

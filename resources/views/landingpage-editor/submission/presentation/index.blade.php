@@ -1,9 +1,10 @@
 @extends('layouts.app')
+
 @section('title', 'Presentation Submission Guidelines')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Presentation Submission Guidelines</h2>
+    <div class="container card p-4">
+        <h2 class="fs-5">Presentation Submission Guidelines</h2>
         <hr class="border border-success mb-4">
 
         @if (session('success'))
@@ -21,8 +22,8 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-bordered table-hover text-center align-middle">
-                <thead class="table-success">
+            <table class="table table-bordered text-center align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th class="text-center">Tahun</th>
                         <th class="text-center">Guideline</th>
@@ -31,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($guidelines as $guideline)
+                    @forelse ($guidelines as $guideline)
                         <tr>
                             <td class="fw-bold">{{ $guideline->year }}</td>
                             <td>{!! Str::limit(strip_tags($guideline->content), 50) !!}</td>
@@ -60,7 +61,11 @@
                                 </form>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

@@ -10,43 +10,59 @@ use App\Models\Year;
 
 class RegistrationFeeController extends Controller
 {
-    public function index()
-    {
-        $activeYear = Year::where('is_active', true)->first();
+    public function index(Request $request)
+{
+    $years = Year::orderByDesc('year')->get(); // Ambil semua tahun yang tersedia
+    $query = RegistrationFee::query();
 
-        if (!$activeYear) {
-            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
-        }
+    if ($request->has('year') && $request->year != '') {
+        $query->where('year', $request->year);
+    }
 
-        $registrationFees = RegistrationFee::whereYear('created_at', $activeYear->year)->get();
-        return view('landingpage-editor.landingpage.registrationFee.index', compact('registrationFees'));
-    }
-    public function create()
-    {
-        return view('landingpage-editor.landingpage.registrationFee.create');
-    }
+    $registrationFees = $query->orderByDesc('year')->get();
+
+    return view('landingpage-editor.landingpage.registrationFee.index', compact('registrationFees', 'years'));
+}
+    
+
+public function create()
+{
+    $latestYear = now()->year; // Ambil tahun sekarang
+    return view('landingpage-editor.landingpage.registrationFee.create', compact('latestYear'));
+}
+
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'category_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/[a-zA-Z]/'],
-            'domestic_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
-            'international_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
+            'domestic_participants' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== 'TBA' && !is_numeric($value)) {
+                    $fail($attribute . ' must be a number or TBA.');
+                }
+            }],
+            'international_participants' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== 'TBA' && !is_numeric($value)) {
+                    $fail($attribute . ' must be a number or TBA.');
+                }
+            }],
             'period_of_payment' => ['nullable', 'string'],
             'role_type' => ['required', Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
+            'year' => ['required', 'integer', Rule::exists('years', 'year')], // Pastikan tahun ada di database
         ], [
             'category_name.required' => 'Category name is required.',
             'category_name.min' => 'Category name must be at least 3 characters.',
             'category_name.regex' => 'Category name must contain at least one letter.',
-            'period_of_payment.required' => 'Period of payment is required.',
             'role_type.required' => 'Role type is required.',
+            'year.required' => 'Year is required.',
+            'year.exists' => 'Selected year is not valid.',
         ]);
 
+        $validatedData['category_name'] = strip_tags($validatedData['category_name']);
         $validatedData['domestic_participants'] = $validatedData['domestic_participants'] ?? 'TBA';
         $validatedData['international_participants'] = $validatedData['international_participants'] ?? 'TBA';
         $validatedData['period_of_payment'] = $validatedData['period_of_payment'] ?? 'TBA';
 
-
-        $validatedData['category_name'] = strip_tags($validatedData['category_name']);
         RegistrationFee::create($validatedData);
 
         return redirect()->route('landing.registrationFee.index')->with('success', 'Registration Fee created successfully.');
@@ -55,17 +71,36 @@ class RegistrationFeeController extends Controller
     public function edit($id)
     {
         $registrationFee = RegistrationFee::findOrFail($id);
-        return view('landingpage-editor.landingpage.registrationFee.edit', compact('registrationFee'));
+        $years = Year::orderByDesc('year')->get(); // Ambil semua tahun
+        return view('landingpage-editor.landingpage.registrationFee.edit', compact('registrationFee', 'years'));
     }
+
     public function update(Request $request, $id)
     {
         $registrationFee = RegistrationFee::findOrFail($id);
+
         $validatedData = $request->validate([
-            'category_name' => ['required', 'string', 'max:255'],
-            'domestic_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
-            'international_participants' => ['nullable', 'string', 'regex:/^\d+$/'],
+            'category_name' => ['required', 'string', 'min:3', 'max:255', 'regex:/[a-zA-Z]/'],
+            'domestic_participants' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== 'TBA' && !is_numeric($value)) {
+                    $fail($attribute . ' must be a number or TBA.');
+                }
+            }],
+            'international_participants' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                if ($value !== 'TBA' && !is_numeric($value)) {
+                    $fail($attribute . ' must be a number or TBA.');
+                }
+            }],
             'period_of_payment' => ['nullable', 'string'],
-            'role_type' => [Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
+            'role_type' => ['required', Rule::in(['presenter', 'non_presenter', 'additional_fee'])],
+            'year' => ['required', 'integer', Rule::exists('years', 'year')], // Validasi tahun
+        ], [
+            'category_name.required' => 'Category name is required.',
+            'category_name.min' => 'Category name must be at least 3 characters.',
+            'category_name.regex' => 'Category name must contain at least one letter.',
+            'role_type.required' => 'Role type is required.',
+            'year.required' => 'Year is required.',
+            'year.exists' => 'Selected year is not valid.',
         ]);
 
         $validatedData['category_name'] = strip_tags($validatedData['category_name']);
@@ -76,6 +111,7 @@ class RegistrationFeeController extends Controller
         $registrationFee->update($validatedData);
         return redirect()->route('landing.registrationFee.index')->with('success', 'Registration Fee updated successfully.');
     }
+
     public function destroy($id)
     {
         $registrationFee = RegistrationFee::findOrFail($id);

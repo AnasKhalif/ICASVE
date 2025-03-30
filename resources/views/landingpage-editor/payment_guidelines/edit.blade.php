@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Edit Payment Guideline</h1>
-    
-    <a href="{{ route('landing.payment_guidelines.index') }}" class="btn btn-secondary mb-3">Kembali</a>
+<div class="container card p-4">
+    <h2 class="fs-5">Edit Payment Guidelines</h2>
+    <hr class="border border-secondaary mb-4">
 
     <form action="{{ route('landing.payment_guidelines.update', $paymentGuideline->id) }}" method="POST">
         @csrf
@@ -29,7 +28,10 @@
             </textarea>
         </div>
 
-        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{{ route('landing.payment_guidelines.index') }}" class="btn btn-danger">Kembali</a>
+        </div>
     </form>
 </div>
 

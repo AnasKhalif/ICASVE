@@ -3,14 +3,10 @@
 @section('title', 'Call for Paper')
 
 @section('content')
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card shadow-sm">
-                    <div class="card-body">
+    <div class="container card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h4 class="card-title mb-0">Call for Paper</h4>
-                            <a href="{{ route('landing.themes.create') }}" class="btn btn-success btn-sm">
+                            <a href="{{ route('landing.themes.create') }}" class="btn btn-success btn-md rounded-sm">
                                 <i class="fas fa-plus"></i> Add New Theme
                             </a>
                         </div>
@@ -45,10 +41,9 @@
                                     @forelse ($themes as $theme)
                                         <tr class="text-center">
                                             <td>{{ $loop->iteration }}</td>
-                                            <td class="text-start fw-bold">{{ $theme->title }}</td>
-                                            <td class="text-start">
-                                                {!! \Illuminate\Support\Str::limit($theme->description, 100, '...') !!}
-                                            </td>
+                                            <td class="text-start">{{ $theme->title }}</td>
+                                            <td>{{ \Illuminate\Support\Str::limit(html_entity_decode(strip_tags($theme->description)), 100, '...') }}</td>
+
                                             <td>{{ $theme->year }}</td>
                                             <td>
                                                 <a href="{{ route('landing.themes.edit', $theme->id) }}" class="btn btn-warning btn-sm">
@@ -76,9 +71,5 @@
                         <div class="mt-3">
                             {{ $themes->links() }}
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

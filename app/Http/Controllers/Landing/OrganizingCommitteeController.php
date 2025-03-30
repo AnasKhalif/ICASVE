@@ -4,46 +4,59 @@ namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ReviewerCommittee;
 use App\Models\OrganizingCommittee;
+use App\Models\LandingSetting;
 
 class OrganizingCommitteeController extends Controller
 {
+    // Menampilkan halaman landing page dengan data berdasarkan tahun aktif
     public function showLandingPage()
     {
-        $latestYear = OrganizingCommittee::max('year');
+        $activeYear = LandingSetting::where('is_active', true)->value('year');
+        $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
+        $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
 
-        $committees = OrganizingCommittee::where('year', $latestYear)
+        $committees = OrganizingCommittee::where('year', $selectedYear)
             ->orderBy('category')
             ->get();
 
-        return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
+        return view('landingpage.committee.organizing', compact('committees', 'years', 'selectedYear'));
     }
 
     public function index(Request $request)
-    {
-        $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+{
+    $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+    $categories = OrganizingCommittee::select('category')->distinct()->orderBy('category')->pluck('category');
 
-        // Tambahkan opsi "All Years"
-        $years->prepend('All Years');
+    // Ambil filter dari request (default 'all' jika tidak ada)
+    $selectedYear = $request->query('year', 'all');
+    $selectedCategory = $request->query('category', 'all');
 
-        // Ambil tahun yang dipilih dari query parameter, default ke "All Years"
-        $selectedYear = $request->query('year', 'All Years');
+    // Query berdasarkan filter
+    $query = OrganizingCommittee::query();
 
-        // Ambil data berdasarkan tahun yang dipilih, atau semua data jika "All Years" dipilih
-        $committees = $selectedYear === 'All Years'
-            ? OrganizingCommittee::orderBy('year', 'desc')->orderBy('category')->get()
-            : OrganizingCommittee::where('year', $selectedYear)->orderBy('category')->get();
-
-        return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'selectedYear'));
+    if ($selectedYear !== 'all') {
+        $query->where('year', $selectedYear);
     }
 
+    if ($selectedCategory !== 'all') {
+        $query->where('category', $selectedCategory);
+    }
 
+    $committees = $query->orderBy('year', 'desc')->orderBy('category')->get();
+
+    // Pastikan variabel ini dikirim ke view
+    return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'categories', 'selectedYear', 'selectedCategory'));
+}
+
+
+    // Menampilkan form untuk menambahkan Organizing Committee
     public function create()
     {
         return view('landingpage-editor.committee.organizing.create');
     }
 
+    // Menyimpan Organizing Committee baru ke database
     public function store(Request $request)
     {
         $request->validate([
@@ -57,33 +70,36 @@ class OrganizingCommitteeController extends Controller
         return redirect()->route('landing.organizing.index')->with('success', 'Committee member added!');
     }
 
+    // Menampilkan form edit Organizing Committee berdasarkan ID
     public function edit($id)
     {
         $committee = OrganizingCommittee::findOrFail($id);
         return view('landingpage-editor.committee.organizing.edit', compact('committee'));
     }
 
+    // Memperbarui data Organizing Committee
     public function update(Request $request, $id)
     {
-        $reviewerCommittee = ReviewerCommittee::findOrFail($id);
+        $committee = OrganizingCommittee::findOrFail($id); // ✅ Perbaikan
         $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'year' => 'required|integer|min:2000|max:' . date('Y'),
         ]);
 
-        $reviewerCommittee->update($request->all());
+        $committee->update($request->all());
 
-        return redirect()->route('landing.reviewer.index')
-            ->with('success', 'Reviewer Committee updated successfully.');
+        return redirect()->route('landing.organizing.index')
+            ->with('success', 'Organizing Committee updated successfully.');
     }
 
+    // Menghapus Organizing Committee berdasarkan ID
     public function destroy($id)
     {
-        $reviewerCommittee = ReviewerCommittee::findOrFail($id);
-        $reviewerCommittee->delete();
+        $committee = OrganizingCommittee::findOrFail($id); // ✅ Perbaikan
+        $committee->delete();
 
-        return redirect()->route('landing.reviewer.index')
-            ->with('success', 'Reviewer Committee deleted successfully.');
+        return redirect()->route('landing.organizing.index')
+            ->with('success', 'Organizing Committee deleted successfully.');
     }
 }

@@ -1,10 +1,11 @@
 @extends('layouts.app')
+
 @section('title', 'Tambah Presentation Guideline')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Tambah Presentation Guideline</h2>
-        <hr class="border border-success mb-4">
+    <div class="container card p-4">
+        <h2 class="fs-5">Tambah Presentation Guideline</h2>
+        <hr class="border border-secondary mb-4">
 
         <form action="{{ route('landing.presentation-guidelines.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -26,8 +27,10 @@
                 </small>
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('landing.presentation-guidelines.index') }}" class="btn btn-secondary">Kembali</a>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Add</button>
+                <a href="{{ route('landing.presentation-guidelines.index') }}" class="btn btn-danger">Back</a>
+            </div>
         </form>
     </div>
 

@@ -3,9 +3,9 @@
 @section('title', 'Tambah Logo')
 
 @section('content')
-    <div class="container">
+    <div class="container card p-4">
         <h2>Tambah Logo</h2>
-
+        <hr class="border border-secondary">
         <form action="{{ route('landing.logos.store') }}" method="POST" enctype="multipart/form-data" id="logoForm">
             @csrf
             <div class="mb-3">
@@ -19,7 +19,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Tahun</label>
-                <input type="number" name="year" class="form-control" required id="yearInput">
+                <input type="number" name="year" class="form-control" required id="yearInput" min="1900" max="{{ date('Y') }}" value="{{ old('year', date('Y')) }}">
             </div>
             <div class="d-flex gap-2">
                 <button type="submit" class="btn btn-primary" id="submitBtn">Simpan</button>

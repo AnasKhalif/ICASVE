@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\AbstractModel;
 use App\Models\Poster;
 use App\Models\ConferenceTitle;
+use App\Models\Speaker;
+use App\Models\ConferenceDetail;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Models\Venue;
+use App\Models\Prevconference;
 
 class PreviousConferences extends Controller
 {
     public function index()
     {
+        $venues = Venue::all();
+        $speakers = Speaker::all();
+        $conferenceDetails  = ConferenceDetail::all();
         $posters = Poster::all();
-        $conferenceTitle = ConferenceTitle::all(); 
+        $conferenceTitle = ConferenceTitle::orderBy('year', 'desc')->get();
         $theme = ConferenceTitle::query()->where('year', now()->year)->first();
         $selectedYear = request()->get('year', now()->year);
-        Log::info('Selected Year: ' . $selectedYear);
         $abstracts = AbstractModel::whereYear('created_at', $selectedYear)->get();
-        Log::info('Abstracts: ', $abstracts->toArray());
-    
-        return view('landingpage.prevconference.previous_conference', compact('posters', 'conferenceTitle', 'abstracts', 'selectedYear', 'theme'));
+        $prevconferences = Prevconference::orderBy('date', 'desc')->get();
+
+        return view('landingpage.prevconference.previous_conference', compact('posters', 'conferenceTitle', 'abstracts', 'selectedYear', 'theme', 'speakers', 'conferenceDetails', 'venues', 'prevconferences'));
     }
 
     public function downloadAllPdf(Request $request)
@@ -34,7 +39,7 @@ class PreviousConferences extends Controller
         }
 
         $pdf = PDF::loadView('abstract.all_pdf', compact('abstracts', 'selectedYear'));
-        
+
         return $pdf->stream('all-abstracts-' . $selectedYear . '.pdf');
     }
 
@@ -49,5 +54,3 @@ class PreviousConferences extends Controller
         return nl2br($formattedAffiliations);
     }
 }
-
-

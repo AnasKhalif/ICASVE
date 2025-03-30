@@ -1,14 +1,16 @@
 @extends('layouts.app')
-@section('title', 'Conference Management')
+@section('title', 'Conference TITLE')
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">CONFERENCE MANAGEMENT</h2>
-        <hr class="border border-success">
+    <div class="container card p-4">
+        <h2 class="fs-5">Conference Title</h2>
+        <hr class="border border-secondary">
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-        <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary mb-3">Add New Conference</a>
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('landing.conference-detail.create') }}" class="btn btn-primary">Add Conference Title</a>
+        </div>
         <table class="table table-bordered">
             <thead class="table-success">
                 <tr>
@@ -16,16 +18,18 @@
                     <th>Title</th>
                     <th>Theme</th>
                     <th>Date</th>
+                    <th>Year</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($conferences as $index => $conference)
+                @forelse ($conferences as $index => $conference)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $conference->title }}</td>
                         <td>{{ $conference->theme }}</td>
                         <td>{{ $conference->date }}</td>
+                        <td>{{ $conference->year }}</td>
                         <td>
                             <a href="{{ route('landing.conference-detail.edit', $conference->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a>
@@ -37,7 +41,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center">No data available</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

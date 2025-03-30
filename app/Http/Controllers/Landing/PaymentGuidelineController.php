@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use App\Models\LandingSetting;
 use App\Models\PaymentGuideline;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,18 @@ class PaymentGuidelineController extends Controller
 {
 
     public function showLandingPage(){
-        $guidelines = PaymentGuideline::orderBy('year', 'desc')->get();
-        return view('landingpage.payment_guidelines.index', compact('guidelines'));
+    $activeYear = LandingSetting::where('is_active', true)->first();
+
+    if (!$activeYear) {
+        return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+    }
+
+    // Ambil semua guideline berdasarkan tahun aktif
+    $guidelines = PaymentGuideline::where('year', $activeYear->year)
+        ->orderBy('year', 'desc')
+        ->get();
+
+    return view('landingpage.payment_guidelines.index', compact('guidelines', 'activeYear'));
     }
 
     public function index(Request $request)

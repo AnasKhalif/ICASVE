@@ -56,9 +56,20 @@
                             </p>
                             <p class="mb-2">
                                 <i class="bi bi-telephone me-2"></i>
-                                <strong>Phone:</strong> +62{{ ltrim($latestContact->phone, '0') }}
+                                <strong>Phone 1:</strong> +62{{ ltrim($latestContact->phone1, '0') }} 
+                                @if($latestContact->phone1_name)
+                                    ({{ $latestContact->phone1_name }})
+                                @endif
                             </p>
-                            
+                            @if ($latestContact->phone2)
+                                <p class="mb-2">
+                                    <i class="bi bi-telephone me-2"></i>
+                                    <strong>Phone 2:</strong> +62{{ ltrim($latestContact->phone2, '0') }}
+                                    @if($latestContact->phone2_name)
+                                        ({{ $latestContact->phone2_name }})
+                                    @endif
+                                </p>
+                            @endif
                         </address>
                     @else
                         <p class="text-muted">No contact information available.</p>
@@ -70,18 +81,17 @@
                     <div class="d-flex">
                         @php
                            $instagram = \App\Models\Instagram::first();
-                         @endphp
-                 
-                         @if ($instagram == null)
-                          <a href="#" class="btn btn-outline-danger btn-sm">
-                             <i class="bi bi-instagram me-1"></i> Instagram
-                         </a>
-                         @else
+                        @endphp
+
+                        @if ($instagram == null)
+                            <a href="#" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-instagram me-1"></i> Instagram
+                            </a>
+                        @else
                             <a href="{{ $instagram->link }}" class="btn btn-outline-danger btn-sm">
                                 <i class="bi bi-instagram me-1"></i> Instagram
                             </a>
-                         @endif
-                        
+                        @endif
                     </div>
                 </div>
             </div>
@@ -94,6 +104,7 @@
         let name = document.getElementById("name").value.trim();
         let email = document.getElementById("email").value.trim();
         let message = document.getElementById("message").value.trim();
+        let emailTo = "{{ $emailTo }}"; // Ambil email dari backend
 
         if (!name || !email || !message) {
             alert("Please fill out all fields before sending.");
@@ -107,10 +118,11 @@
                    `Message:\n${message}\n\n` +
                    `Best regards,\n${name}`;
 
-        let mailtoLink = `mailto:{{ $emailTo }}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        
+        let mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
         window.location.href = mailtoLink;
     }
 </script>
+
 
 @endsection

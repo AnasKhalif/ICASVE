@@ -3,9 +3,9 @@
 @section('title', 'Steering Committee')
 
 @section('content')
-<div class="container my-4">
-    <h2 class="text-center fw-bold">STEERING COMMITTEE</h2>
-    <hr class="border border-success">
+<div class="container card p-4">
+    <h2 class="fs-5">Steering Committee</h2>
+    <hr class="border border-secondary">
 
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -25,7 +25,7 @@
         <a href="{{ route('landing.steering.create') }}" class="btn btn-primary">Add Committee</a>
     </div>
 
-    <table class="table table-hover table-bordered shadow-sm">
+    <table class="table table-bordered">
         <thead class="table-dark text-center">
             <tr>
                 <th>No</th>
@@ -37,7 +37,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($committees as $index => $committee)
+            @forelse($committees as $index => $committee)
                 <tr class="text-center">
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $committee->name }}</td>
@@ -52,7 +52,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">No steering available</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

@@ -20,11 +20,14 @@
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
     <title>
+        {{-- @php
+            $years = \App\Models\::where('is_active', 1)->first();
+        @endphp
         @hasSection('title')
-            @yield('title') | ICASVE {{ date('Y') }}
+            @yield('title') | ICASVE {{ $years->year }}
         @else
             ICasve
-        @endif
+        @endif --}}
     </title>
 </head>
 
@@ -33,19 +36,21 @@
     <main class="w-full mb-5">
         @yield('content')
         @php
-            $whatsapp = \App\Models\Whatsapp::first();
-        @endphp
-
-        @if ($whatsapp == null)
-            <a href="" class="whatsapp-float text-white" target="_blank">
-                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
-            </a>
-        @else
-            <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white"
-                target="_blank">
-                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
-            </a>
-        @endif
+        $activeYear = \App\Models\LandingSetting::where('is_active', true)->value('year');
+        $whatsapp = \App\Models\Whatsapp::where('year', $activeYear)->first();
+    @endphp
+    
+    @if ($whatsapp)
+        <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white"
+            target="_blank">
+            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+        </a>
+    @else
+        <a href="" class="whatsapp-float text-white" target="_blank">
+            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+        </a>
+    @endif
+    
 
     </main>
     @include('layouts.landingpartials.footer')

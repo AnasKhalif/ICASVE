@@ -1718,6 +1718,10 @@ section,
         flex-direction: column;
         align-items: center;
     }
+
+    .logo-support {
+        max-width: 110px;
+    }
 }
 
 /*--------------------------------------------------------------
@@ -1999,7 +2003,7 @@ section,
 }
 
 .logo-support {
-    max-width: 100px;
+    max-width: 150px;
 }
 
 .content-topics {

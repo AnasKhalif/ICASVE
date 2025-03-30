@@ -9,5 +9,5 @@ class DeadlineDate extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'date'];
+    protected $fillable = ['name', 'date', 'year'];
 }

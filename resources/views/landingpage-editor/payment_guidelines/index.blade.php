@@ -3,9 +3,9 @@
 @section('title', 'Payment Guidelines')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="text-center fw-bold">Payment Guidelines</h2>
-        <hr class="border border-success mb-4">
+    <div class="container card p-4">
+        <h2 class="fs-5">Payment Guidelines</h2>
+        <hr class="border border-secondary mb-4">
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">

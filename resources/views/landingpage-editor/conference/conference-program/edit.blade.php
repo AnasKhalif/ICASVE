@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Edit Conference Program')
+@section('title', 'Edit Conference Table')
 @section('content')
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Edit Conference Program</h4>
+                <h4 class="card-title">Edit Conference Table</h4>
                 <form action="{{ route('landing.conference-program.update', $program->id) }}" method="POST">
                     @csrf
                     @method('PUT')

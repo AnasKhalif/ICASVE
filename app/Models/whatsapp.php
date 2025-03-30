@@ -8,5 +8,6 @@ class Whatsapp extends Model
 {
     protected $fillable = [
         'nomor',
+        'year',
     ];
 }

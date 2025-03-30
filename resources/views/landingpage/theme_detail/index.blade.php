@@ -11,8 +11,6 @@
             <a href="{{ route('home') }}" class="btn btn-outline-primary mt-3 px-3 py-2 rounded">
                 <i class="fas fa-arrow-left me-2"></i> Back to Home
             </a>
-            
-            
         </div>
     </div>
 </div>

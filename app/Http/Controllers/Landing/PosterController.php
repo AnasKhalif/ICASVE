@@ -6,21 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Poster;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Year;
 
 class PosterController extends Controller
 {
     public function index()
     {
-        $activeYear = Year::where('is_active', true)->first();
-
-        if (!$activeYear) {
-            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
-        }
-
-        $posters = Poster::where('year', $activeYear->year)
-            ->latest()
-            ->get();
-
+        $posters = Poster::latest()->get(); 
         return view('landingpage-editor.landingpage.poster.index', compact('posters'));
     }
 

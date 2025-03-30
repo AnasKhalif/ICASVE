@@ -9,18 +9,23 @@ use App\Models\Year;
 
 class DeadlineDateController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $activeYear = Year::where('is_active', true)->first();
-
-        if (!$activeYear) {
-            return back()->with('error', 'Tidak ada tahun aktif yang ditemukan.');
+        // Ambil daftar tahun unik dari kolom 'year' di deadline_dates
+        $years = DeadlineDate::select('year')->distinct()->orderByDesc('year')->pluck('year');
+    
+        $query = DeadlineDate::query();
+    
+        // Filter berdasarkan tahun yang dipilih
+        if ($request->filled('year')) {
+            $query->where('year', $request->year);
         }
-
-        $deadlines = DeadlineDate::whereYear('date', $activeYear->year)->orderBy('date')->get();
-        return view('landingpage-editor.landingpage.deadlinedates.index', compact('deadlines'));
+    
+        $deadlines = $query->orderBy('date')->get();
+    
+        return view('landingpage-editor.landingpage.deadlinedates.index', compact('deadlines', 'years'));
     }
-
+    
     public function create()
     {
         return view('landingpage-editor.landingpage.deadlinedates.create');
@@ -31,6 +36,7 @@ class DeadlineDateController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
+            'year' => 'required|integer|min:2024|max:' . date('Y'),
         ]);
 
         DeadlineDate::create($request->all());
@@ -48,6 +54,7 @@ class DeadlineDateController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'date' => 'required|date',
+            'year' => 'required|integer|min:2024|max:' . date('Y'),
         ]);
 
         $deadline->update($request->all());
