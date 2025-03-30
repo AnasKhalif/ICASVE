@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Conference Titles')
+@section('title', 'Titles')
 
 @section('content')
     <div class="container card p-4">
-        <h2 class="fs-5">Edit Conference Title</h2>
-    <hr class="border border-secondary">
+        <h2 class="fs-5">Title</h2>
+        <hr class="border border-secondary">
         <form action="{{ route('landing.conference-title.index') }}" method="GET" class="mb-3">
             <div class="d-flex gap-2">
                 <select name="year" class="form-select w-auto">
@@ -20,7 +20,7 @@
 
         <!-- Tombol tambah judul -->
         <a href="{{ route('landing.conference-title.create') }}" class="w-fit btn btn-success mb-3">
-            <i class="bi bi-plus-circle"></i> Add Conference Title
+            <i class="bi bi-plus-circle"></i> Add Title
         </a>
 
         <!-- Daftar conference titles -->
@@ -58,7 +58,7 @@
                 @endforeach
             </div>
         @else
-            <div class="alert alert-warning">No conference titles found.</div>
+            <div class="alert alert-warning">No titles found.</div>
         @endif
     </div>
 @endsection

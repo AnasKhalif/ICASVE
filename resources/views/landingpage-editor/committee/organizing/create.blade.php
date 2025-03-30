@@ -17,14 +17,7 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Category</label>
-                        <select name="category" class="form-control" required>
-                            <option value="" selected disabled>Select Category</option>
-                            <option value="Chairperson">Chairperson</option>
-                            <option value="Vice Chairperson">Vice Chairperson</option>
-                            <option value="Secretary">Secretary</option>
-                            <option value="Treasurer">Treasurer</option>
-                            <option value="Member">Member</option>
-                        </select>
+                        <input type="text" name="category" class="form-control" placeholder="Enter category" required>
                     </div>
 
                     <div class="mb-3">

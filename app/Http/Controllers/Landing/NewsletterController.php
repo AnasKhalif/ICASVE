@@ -14,9 +14,9 @@ class NewsletterController extends Controller
 {
 
     public function show(Newsletter $newsletter)
-{
-    return view('landingpage-editor.newsletters.show', compact('newsletter'));
-}
+    {
+        return view('landingpage-editor.newsletters.show', compact('newsletter'));
+    }
 
     public function index()
     {
@@ -30,19 +30,19 @@ class NewsletterController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email|unique:newsletters,email',
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email|unique:newsletters,email',
+        ]);
 
-    Newsletter::create(['email' => $request->email]);
+        Newsletter::create(['email' => $request->email]);
 
-    if (!Auth::check()) {
-        return redirect('/')->with('success', 'You have subscribed successfully.');
+        if (!Auth::check()) {
+            return redirect('home')->with('success', 'You have subscribed successfully.');
+        }
+
+        return redirect()->route('home')->with('success', 'Subscriber added successfully.');
     }
-
-    return redirect()->route('landing.newsletters.index')->with('success', 'Subscriber added successfully.');
-}
 
 
 

@@ -66,6 +66,7 @@ use App\Http\Controllers\Landing\PaymentGuidelineController;
 use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
+use App\Http\Controllers\Landing\PrevconferenceController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -200,7 +201,7 @@ Route::name('reviewer.')
         Route::post('/review-fullpaper/{fullpaperId}', [ReviewFullPaperController::class, 'storeReview'])->name('review-fullpaper.storeReview');
     });
 
-    Route::name('landing.')
+Route::name('landing.')
     ->prefix('landing')
     ->namespace('App\Http\Controllers\Landing')
     ->middleware(['auth', 'role:landing-editor'])
@@ -236,8 +237,9 @@ Route::name('reviewer.')
         Route::get('newsletters/export', [NewsletterController::class, 'export'])
             ->name('newsletters.export');
         Route::resource('newsletters', NewsletterController::class);
+        Route::resource('prevconference', PrevconferenceController::class);
 
-        
+
         // Route untuk halaman Setting Tahun Aktif
         Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
         Route::post('setting', [SettingController::class, 'update'])->name('setting.update');

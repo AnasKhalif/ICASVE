@@ -476,7 +476,7 @@
                     <span class="menu-title">Landing Page</span>
                 </a>
             </li>
-    
+
             <li class="nav-item {{ request()->routeIs('landing.themes.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.themes.index') }}">
                     <i class="fa-solid fa-list-check menu-icon"></i>
@@ -492,7 +492,7 @@
 
             <li class="nav-item {{ request()->routeIs('landing.submission.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('landing.submission.index') }}">
-                   <i class="fa-brands fa-readme menu-icon"></i>
+                    <i class="fa-brands fa-readme menu-icon"></i>
                     <span class="menu-title">Submission Guidelines</span>
                 </a>
             </li>
@@ -501,6 +501,20 @@
                 <a class="nav-link" href="{{ route('landing.conferencelanding.index') }}">
                     <i class="fa-solid fa-calendar-alt menu-icon"></i>
                     <span class="menu-title">Conference Program</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->routeIs('landing.prevconference.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('landing.prevconference.index') }}">
+                    <i class="fa-solid fa-calendar-check menu-icon"></i>
+                    <span class="menu-title">Previous Conference</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->routeIs('landing.prevconference.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('landing.prevconference.index') }}">
+                    <i class="fa-solid fa-calendar-alt menu-icon"></i>
+                    <span class="menu-title">Previous Conference</span>
                 </a>
             </li>
 
@@ -550,7 +564,7 @@
                     <span class="menu-title">Setting</span>
                 </a>
             </li>
-            
+
         </ul>
     </nav>
 @endrole

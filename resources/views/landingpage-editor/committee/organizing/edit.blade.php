@@ -14,27 +14,19 @@
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Name</label>
-                    <input type="text" name="name" class="form-control" 
-                           value="{{ $committee->name }}" required>
+                    <input type="text" name="name" class="form-control" value="{{ $committee->name }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Category</label>
-                    <select name="category" class="form-control" required>
-                        <option value="" disabled>Select Category</option>
-                        <option value="Chairperson" {{ $committee->category == 'Chairperson' ? 'selected' : '' }}>Chairperson</option>
-                        <option value="Vice Chairperson" {{ $committee->category == 'Vice Chairperson' ? 'selected' : '' }}>Vice Chairperson</option>
-                        <option value="Secretary" {{ $committee->category == 'Secretary' ? 'selected' : '' }}>Secretary</option>
-                        <option value="Treasurer" {{ $committee->category == 'Treasurer' ? 'selected' : '' }}>Treasurer</option>
-                        <option value="Member" {{ $committee->category == 'Member' ? 'selected' : '' }}>Member</option>
-                    </select>
+                    <input type="text" name="category" class="form-control" placeholder="Enter category"
+                        value="{{ $committee->category }}" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Year</label>
-                    <input type="number" name="year" class="form-control" 
-                           min="2000" max="{{ date('Y') }}" 
-                           value="{{ $committee->year }}" required>
+                    <input type="number" name="year" class="form-control" min="2000" max="{{ date('Y') }}"
+                        value="{{ $committee->year }}" required>
                 </div>
 
                 <div class="d-flex gap-2">
