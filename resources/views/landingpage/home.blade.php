@@ -403,7 +403,9 @@
                                         @if ($payment_date && $payment_date->isPast())
                                             <s>
                                         @endif
-                                        @if (is_numeric($fee->domestic_participants))
+                                        @if ($fee->domestic_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->domestic_participants))
                                             IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
                                         @endif
                                         @if ($payment_date && $payment_date->isPast())
@@ -414,7 +416,9 @@
                                         @if ($payment_date && $payment_date->isPast())
                                             <s>
                                         @endif
-                                        @if (is_numeric($fee->international_participants))
+                                        @if ($fee->international_participants === 'TBA')
+                                            TBA
+                                        @elseif(is_numeric($fee->international_participants))
                                             US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
                                         @endif
                                         @if ($payment_date && $payment_date->isPast())
@@ -434,7 +438,7 @@
                             @endforeach
                             @if ($additional_fee->isEmpty())
                                 <tr>
-                                    <td colspan="4">No AdditionalFee found.</td>
+                                    <td colspan="4">No Additional Fee found.</td>
                                 </tr>
                             @endif
                         </table>
@@ -450,7 +454,7 @@
                     </p>
                     <div class="mt-4">
                         <a href="{{ route('payment_guidelines.landing') }}" class="btn btn-primary btn-sm py-2 px-4">
-                            Lihat tatacara pembayaran
+                            See payment procedures
                         </a>
                     </div>
                 </div>

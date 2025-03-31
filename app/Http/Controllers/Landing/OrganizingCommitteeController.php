@@ -9,45 +9,42 @@ use App\Models\LandingSetting;
 
 class OrganizingCommitteeController extends Controller
 {
-    // Menampilkan halaman landing page dengan data berdasarkan tahun aktif
     public function showLandingPage()
     {
-        $activeYear = LandingSetting::where('is_active', true)->value('year');
-        $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
-        $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
+        $latestYear = OrganizingCommittee::max('year');
 
-        $committees = OrganizingCommittee::where('year', $selectedYear)
-            ->orderBy('category')
+        $committees = OrganizingCommittee::where('year', $latestYear)
+            ->orderBy('id')
             ->get();
 
-        return view('landingpage.committee.organizing', compact('committees', 'years', 'selectedYear'));
+        return view('landingpage.committee.organizing', compact('committees', 'latestYear'));
     }
 
     public function index(Request $request)
-{
-    $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
-    $categories = OrganizingCommittee::select('category')->distinct()->orderBy('category')->pluck('category');
+    {
+        $years = OrganizingCommittee::select('year')->distinct()->orderBy('year', 'desc')->pluck('year');
+        $categories = OrganizingCommittee::select('category')->distinct()->orderBy('category')->pluck('category');
 
-    // Ambil filter dari request (default 'all' jika tidak ada)
-    $selectedYear = $request->query('year', 'all');
-    $selectedCategory = $request->query('category', 'all');
+        // Ambil filter dari request (default 'all' jika tidak ada)
+        $selectedYear = $request->query('year', 'all');
+        $selectedCategory = $request->query('category', 'all');
 
-    // Query berdasarkan filter
-    $query = OrganizingCommittee::query();
+        // Query berdasarkan filter
+        $query = OrganizingCommittee::query();
 
-    if ($selectedYear !== 'all') {
-        $query->where('year', $selectedYear);
+        if ($selectedYear !== 'all') {
+            $query->where('year', $selectedYear);
+        }
+
+        if ($selectedCategory !== 'all') {
+            $query->where('category', $selectedCategory);
+        }
+
+        $committees = $query->orderBy('year', 'desc')->orderBy('category')->get();
+
+        // Pastikan variabel ini dikirim ke view
+        return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'categories', 'selectedYear', 'selectedCategory'));
     }
-
-    if ($selectedCategory !== 'all') {
-        $query->where('category', $selectedCategory);
-    }
-
-    $committees = $query->orderBy('year', 'desc')->orderBy('category')->get();
-
-    // Pastikan variabel ini dikirim ke view
-    return view('landingpage-editor.committee.organizing.index', compact('committees', 'years', 'categories', 'selectedYear', 'selectedCategory'));
-}
 
 
     // Menampilkan form untuk menambahkan Organizing Committee
