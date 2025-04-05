@@ -69,7 +69,9 @@
                     <div class="teks-about col-12 col-xl-5 content" data-aos="fade-up">
                         <h3>About</h3>
                         <h2>{{ $about->title }}</h2>
-                        <p>{{ $about->content }}</p>
+                        <div class="text-justify" style="text-align: justify">
+                            {!! $about->content !!}
+                        </div>
                     </div>
 
                     <div class="d-none d-xl-block col-xl-2"></div>
