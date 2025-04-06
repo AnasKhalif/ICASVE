@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
-    <link href="{{ asset('img/Logo_ICASVE_rmbg.png') }}" rel="icon" />
+    <link href="{{ asset($logoPath) }}" rel="icon" />
     @include('layouts.partials.link')
     @php
         $isProduction = app()->environment('production');

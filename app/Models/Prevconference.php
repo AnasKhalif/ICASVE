@@ -13,6 +13,7 @@ class Prevconference extends Model
         'keynote',
         'date',
         'location',
-        'pdf'
+        'pdf',
+        'year'
     ];
 }

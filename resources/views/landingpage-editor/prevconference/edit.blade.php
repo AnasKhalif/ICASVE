@@ -29,7 +29,7 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group"> <label for="date">Date</label> <input type="date"
+                    <div class="form-group"> <label for="date">Date</label> <input type="text"
                             class="form-control @error('date') is-invalid @enderror" name="date" id="date"
                             value="{{ old('date', $prevconference->date) }}" required> @error('date')
                             <div class="text-danger">{{ $message }}</div>
@@ -54,17 +54,30 @@
                                 src="{{ asset('storage/' . $prevconference->image) }}" alt="Image" width="200">
                         </div>
                     @endif
-                    <div class="form-group"> <label for="pdf">PDF (Optional)</label> <input type="file"
-                            class="form-control @error('pdf') is-invalid @enderror" name="pdf" id="pdf"
-                            accept="application/pdf"> @error('pdf')
+                    <div class="form-group">
+                        <label for="pdf">Link PDF (Optional)</label>
+                        <input type="text" class="form-control @error('pdf') is-invalid @enderror" name="pdf"
+                            id="pdf" value="{{ old('pdf', $prevconference->pdf) }}" accept="application/pdf">
+                        @error('pdf')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                     @if ($prevconference->pdf)
-                        <div class="form-group"> <label>Current PDF</label><br> <a
-                                href="{{ asset('storage/' . $prevconference->pdf) }}" target="_blank">Download PDF</a>
+                        <div class="form-group">
+                            <label>Current Link PDF</label><br>
+                            <a href="{{ $prevconference->pdf }}" target="_blank">Download PDF</a>
                         </div>
                     @endif
+
+                    <div class="form-group">
+                        <label for="year">Year</label>
+                        <input type="number" class="form-control @error('year') is-invalid @enderror" name="year"
+                            id="year" value="{{ old('year', $prevconference->year) }}" required>
+                        @error('year')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="d-flex gap-2 justify-start"> <button type="submit" class="btn btn-success">Update
                             Conference</button> <a href="{{ route('landing.prevconference.index') }}"
                             class="btn btn-danger">Back</a> </div>

@@ -21,7 +21,8 @@
                                     <select name="year" class="form-select w-fit" onchange="this.form.submit()">
                                         <option value="">Select Year</option>
                                         @foreach ($years as $year)
-                                            <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>
+                                            <option value="{{ $year }}"
+                                                {{ request('year') == $year ? 'selected' : '' }}>
                                                 {{ $year }}
                                             </option>
                                         @endforeach
@@ -37,7 +38,8 @@
                                         <th style="width: 5%;">No</th>
                                         <th style="width: 15%;">Time</th>
                                         <th style="width: 35%;">Program</th>
-                                        <th style="width: 15%;">PIC</th>
+                                        <th style="width: 5%;">Day</th>
+                                        <th style="width: 10%;">Date</th>
                                         <th style="width: 10%;">Year</th>
                                         <th style="width: 20%;">Actions</th>
                                     </tr>
@@ -48,15 +50,18 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $program->start_time }} - {{ $program->end_time }}</td>
                                             <td class="text-start">{{ $program->program_name }}</td>
-                                            <td>{{ $program->pic }}</td>
+                                            <td>{{ $program->day_number }}</td>
+                                            <td>{{ $program->date }}</td>
                                             <td>{{ $program->year }}</td>
                                             <td>
                                                 <a href="{{ route('landing.conference-program.edit', $program->id) }}"
                                                     class="btn btn-warning btn-sm">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </a>
-                                                <form action="{{ route('landing.conference-program.destroy', $program->id) }}" method="POST"
-                                                    class="d-inline" onsubmit="return confirm('Are you sure?');">
+                                                <form
+                                                    action="{{ route('landing.conference-program.destroy', $program->id) }}"
+                                                    method="POST" class="d-inline"
+                                                    onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">
@@ -67,7 +72,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center text-muted">No conference programs available.</td>
+                                            <td colspan="5" class="text-center text-muted">No conference programs
+                                                available.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -26,7 +26,9 @@
         @if ($programsByDay->isNotEmpty())
             @foreach ($programsByDay as $day => $programs)
                 <div class="mt-5">
-                    <h2 class="fw-bold text-center">Day {{ $day }}</h2>
+                    <h2 class="fw-bold text-center">
+                        Day {{ $day }} ({{ \Carbon\Carbon::parse($dates[$day])->format('d, F Y') }})
+                    </h2>
                     <div class="table-responsive">
                         <table class="table table-hover rounded-2 overflow-hidden shadow-sm">
                             <thead>

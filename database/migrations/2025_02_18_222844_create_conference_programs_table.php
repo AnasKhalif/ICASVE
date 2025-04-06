@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->integer('year'); // Menambahkan kolom tahun
             $table->integer('day_number');
+            $table->string('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->string('program_name');

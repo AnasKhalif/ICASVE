@@ -53,7 +53,7 @@
                                     <form method="GET" action="{{ route('downloadAllPdf') }}">
                                         <input type="hidden" name="year" value="{{ $poster->year }}">
                                         <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="bi bi-download"></i> Download Abstract Book for ICASVE
+                                            <i class="bi bi-download"></i> Archive
                                             {{ $poster->year }}
                                         </button>
                                     </form>
@@ -64,7 +64,7 @@
                 </div>
             @endforeach
 
-            @foreach ($prevconferences->sortByDesc('date') as $prevconference)
+            @foreach ($prevconferences as $prevconference)
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card shadow-sm border-0 rounded">
                         <div>
@@ -80,17 +80,15 @@
                                 <div class="mb-2">{!! $prevconference->keynote !!}</div>
                             </div>
                             <div class="mb-2">
-                                <p class="card-text text-muted">Date: {{ date('d F Y', strtotime($prevconference->date)) }}
-                                </p>
+                                <p class="card-text text-muted">Date: {{ $prevconference->date }}</p>
                             </div>
                             <div class="mb-2">
                                 <p class="card-text text-muted">Location: {{ $prevconference->location }}</p>
                             </div>
                             <form>
                                 <input type="hidden" name="year">
-                                <a type="submit" href="{{ asset('storage/' . $prevconference->pdf) }}"
-                                    class="btn btn-primary btn-sm">
-                                    <i class="bi bi-download"></i> Download Abstract Book for {{ $prevconference->title }}
+                                <a type="submit" href="{{ $prevconference->pdf }}" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-download"></i> Archive
                                 </a>
                             </form>
                         </div>

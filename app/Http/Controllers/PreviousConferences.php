@@ -24,7 +24,7 @@ class PreviousConferences extends Controller
         $theme = ConferenceTitle::query()->where('year', now()->year)->first();
         $selectedYear = request()->get('year', now()->year);
         $abstracts = AbstractModel::whereYear('created_at', $selectedYear)->get();
-        $prevconferences = Prevconference::orderBy('date', 'desc')->get();
+        $prevconferences = Prevconference::orderBy('year', 'desc')->get();
 
         return view('landingpage.prevconference.previous_conference', compact('posters', 'conferenceTitle', 'abstracts', 'selectedYear', 'theme', 'speakers', 'conferenceDetails', 'venues', 'prevconferences'));
     }

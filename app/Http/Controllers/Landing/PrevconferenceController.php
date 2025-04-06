@@ -27,9 +27,10 @@ class PrevconferenceController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
             'keynote' => ['required', 'string'],
-            'date' => ['required', 'date'],
+            'date' => ['required', 'string'],
             'location' => ['required', 'string', 'max:255'],
-            'pdf' => ['nullable', 'file', 'mimes:pdf'],
+            'pdf' => ['nullable', 'string', 'max:255'],
+            'year' => ['required', 'integer'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -61,9 +62,10 @@ class PrevconferenceController extends Controller
             'title' => ['string', 'max:255'],
             'description' => ['string', 'max:255'],
             'keynote' => ['string'],
-            'date' => ['date'],
+            'date' => ['string'],
             'location' => ['string', 'max:255'],
-            'pdf' => ['nullable', 'file', 'mimes:pdf'],
+            'pdf' => ['nullable', 'string', 'max:255'],
+            'year' => ['required', 'integer'],
         ]);
 
         if ($request->hasFile('image')) {

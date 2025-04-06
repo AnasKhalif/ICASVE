@@ -22,9 +22,10 @@ class ConferenceProgramController extends Controller
             ->orderBy('day_number')
             ->orderBy('start_time')
             ->get();
-        $programsByDay = $programs->groupBy('day_number');
-    
-        return view('landingpage.conference.program', compact('conferences', 'programsByDay', 'years', 'selectedYear'));
+        $dates = $programs->groupBy('day_number')->map(function ($items) {
+            return $items->first()->date;
+        })->toArray();
+        return view('landingpage.conference.program', compact('conferences', 'programsByDay', 'years', 'selectedYear', 'dates'));
     }
 
     public function index(Request $request)
@@ -52,6 +53,7 @@ class ConferenceProgramController extends Controller
         $validatedData = $request->validate([
             'year' => ['required', 'integer'],
             'day_number' => ['required', 'integer'],
+            'date' => ['required', 'date'],
             'start_time' => ['required'],
             'end_time' => ['required'],
             'program_name' => ['required', 'string', 'max:255'],
@@ -77,6 +79,7 @@ class ConferenceProgramController extends Controller
         $validatedData = $request->validate([
             'year' => ['required', 'integer'],
             'day_number' => ['required', 'integer'],
+            'date' => ['required', 'date'],
             'start_time' => ['required'],
             'end_time' => ['required'],
             'program_name' => ['required', 'string', 'max:255'],

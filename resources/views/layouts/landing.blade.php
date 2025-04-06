@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <link href="{{ asset('img/Logo_ICASVE_rmbg.png') }}" rel="icon" />
+    <link href="{{ asset($logoPath) }}" rel="icon" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
@@ -36,21 +36,21 @@
     <main class="w-full mb-5">
         @yield('content')
         @php
-        $activeYear = \App\Models\LandingSetting::where('is_active', true)->value('year');
-        $whatsapp = \App\Models\Whatsapp::where('year', $activeYear)->first();
-    @endphp
-    
-    @if ($whatsapp)
-        <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white"
-            target="_blank">
-            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
-        </a>
-    @else
-        <a href="" class="whatsapp-float text-white" target="_blank">
-            <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
-        </a>
-    @endif
-    
+            $activeYear = \App\Models\LandingSetting::where('is_active', true)->value('year');
+            $whatsapp = \App\Models\Whatsapp::where('year', $activeYear)->first();
+        @endphp
+
+        @if ($whatsapp)
+            <a href="https://api.whatsapp.com/send?phone={{ $whatsapp->nomor }}" class="whatsapp-float text-white"
+                target="_blank">
+                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+            </a>
+        @else
+            <a href="" class="whatsapp-float text-white" target="_blank">
+                <img src="{{ asset('img/whatsapp-brands.svg') }}" width="30px" height="30px" alt="logo-wa">
+            </a>
+        @endif
+
 
     </main>
     @include('layouts.landingpartials.footer')

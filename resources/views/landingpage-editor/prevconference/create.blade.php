@@ -23,7 +23,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group"> <label for="date">Date</label> <input type="date"
+                <div class="form-group"> <label for="date">Date</label> <input type="text"
                         class="form-control @error('date') is-invalid @enderror" name="date" id="date"
                         value="{{ old('date') }}" required> @error('date')
                         <div class="text-danger">{{ $message }}</div>
@@ -43,9 +43,20 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="form-group"> <label for="pdf">PDF (Optional)</label> <input type="file"
-                        class="form-control @error('pdf') is-invalid @enderror" name="pdf" id="pdf"
-                        accept="application/pdf"> @error('pdf')
+                <div class="form-group">
+                    <label for="pdf">Link PDF (Optional)</label>
+                    <input type="text" class="form-control @error('pdf') is-invalid @enderror" name="pdf"
+                        id="pdf" accept="application/pdf">
+                    @error('pdf')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" class="form-control @error('year') is-invalid @enderror" name="year"
+                        id="year" value="{{ old('year') }}" required>
+                    @error('year')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>

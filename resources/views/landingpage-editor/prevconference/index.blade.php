@@ -27,19 +27,22 @@
                                 <td>{{ $prevconference->description }}</td>
                                 <td>
                                     @if ($prevconference->pdf)
-                                        <a href="{{ asset('storage/' . $prevconference->pdf) }}"
-                                            target="_blank">Download PDF</a>
+                                        <a href="{{ $prevconference->pdf }}" target="_blank">Download PDF</a>
                                     @else
                                         No PDF
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($prevconference->date)->format('Y') }}</td>
-                                <td> <a href="{{ route('landing.prevconference.edit', $prevconference->id) }}"
+                                <td>{{ $prevconference->date }}</td>
+                                <td>
+                                    <a href="{{ route('landing.prevconference.edit', $prevconference->id) }}"
                                         class="btn btn-sm btn-warning">Edit</a>
                                     <form action="{{ route('landing.prevconference.destroy', $prevconference->id) }}"
-                                        method="POST" style="display: inline-block;"> @csrf @method('DELETE') <button
-                                            type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Are you sure?')">Delete</button> </form>
+                                        method="POST" style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

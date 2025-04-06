@@ -28,7 +28,7 @@ class LandingPageController extends Controller
         $about = About::where('year', $activeYear->year)->latest('id')->first();
 
         $keynoteSpeakers = Speaker::where('role', 'keynote_speaker')
-            ->where('year', $activeYear->year) 
+            ->where('year', $activeYear->year)
             ->get();
 
         $invitedSpeakers = Speaker::where('role', 'invited_speaker')
@@ -36,15 +36,15 @@ class LandingPageController extends Controller
             ->get();
         $posters = Poster::where('year', $activeYear->year)->get();
         $deadline_date = DeadlineDate::where('year', $activeYear->year)->get();
-        $presenter = RegistrationFee::where('role_type', 'presenter')->where('year', $activeYear->year)->get();
-        $non_presenter = RegistrationFee::where('role_type', 'non_presenter')->where('year', $activeYear->year)->get();
-        $additional_fee = RegistrationFee::where('role_type', 'additional_fee')->where('year', $activeYear->year)->get();
+        $presenter = RegistrationFee::where('role_type', 'presenter')->where('year', $activeYear->year)->orderBy('period_of_payment', 'asc')->get();
+        $non_presenter = RegistrationFee::where('role_type', 'non_presenter')->where('year', $activeYear->year)->orderBy('period_of_payment', 'asc')->get();
+        $additional_fee = RegistrationFee::where('role_type', 'additional_fee')->where('year', $activeYear->year)->orderBy('period_of_payment', 'asc')->get();
         $publications_journal = PublicationsJournal::where('image_type', 'publications_journal')->where('year', $activeYear->year)->get();
         $hosted_by = PublicationsJournal::where('image_type', 'hosted_by')->where('year', $activeYear->year)->get();
         $co_hosted_by = PublicationsJournal::where('image_type', 'co_hosted_by')->where('year', $activeYear->year)->get();
         $supported_by = PublicationsJournal::where('image_type', 'supported_by')->where('year', $activeYear->year)->get();
         $venues = Venue::where('year', $activeYear->year)->get();
-      
+
         $contacts = Contact::where('year', $activeYear->year)->get();
 
         $themes = Theme::where('year', $activeYear->year)->orderBy('year', 'desc')->get();
