@@ -16,11 +16,11 @@ class FullpaperGuidelineController extends Controller
         $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
         $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
         $guideline = FullpaperGuideline::where('year', $selectedYear)->first();
-    
+
         return view('landingpage.submission.fullpaper', compact('guideline', 'years', 'selectedYear'));
     }
-    
-    
+
+
     public function index()
     {
         $guidelines = FullpaperGuideline::orderBy('year', 'desc')->get();
@@ -37,7 +37,7 @@ class FullpaperGuidelineController extends Controller
         $request->validate([
             'year' => 'required|integer',
             'content' => 'required',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:2048'
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
         $pdfPath = $request->file('pdf_file') ? $request->file('pdf_file')->store('landingpage-editor', 'public') : null;
@@ -61,7 +61,7 @@ class FullpaperGuidelineController extends Controller
         $request->validate([
             'year' => 'required|integer',
             'content' => 'required',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:2048'
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
         // Hapus file lama jika ada file baru

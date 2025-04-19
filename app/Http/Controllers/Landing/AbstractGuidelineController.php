@@ -11,17 +11,17 @@ use Illuminate\Support\Facades\Storage;
 class AbstractGuidelineController extends Controller
 {
     public function showLandingPage()
-{
-    $activeYear = LandingSetting::where('is_active', true)->value('year');
-    $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
-    $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
+    {
+        $activeYear = LandingSetting::where('is_active', true)->value('year');
+        $years = LandingSetting::orderBy('year', 'desc')->pluck('year');
+        $selectedYear = $activeYear ?? ($years->isNotEmpty() ? $years->first() : date('Y'));
 
-    $latestGuideline = AbstractGuideline::where('year', $selectedYear)->first();
+        $latestGuideline = AbstractGuideline::where('year', $selectedYear)->first();
 
-    return view('landingpage.submission.abstract', compact('latestGuideline', 'years', 'selectedYear'));
-}
+        return view('landingpage.submission.abstract', compact('latestGuideline', 'years', 'selectedYear'));
+    }
 
-    
+
     public function index()
     {
         $guidelines = AbstractGuideline::All();
@@ -38,7 +38,7 @@ class AbstractGuidelineController extends Controller
         $request->validate([
             'year' => 'required|integer',
             'content' => 'required',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:2048'
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
         $pdfPath = $request->file('pdf_file') ? $request->file('pdf_file')->store('landingpage-editor', 'public') : null;
@@ -62,7 +62,7 @@ class AbstractGuidelineController extends Controller
         $request->validate([
             'year' => 'required|integer',
             'content' => 'required',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:2048'
+            'pdf_file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx|max:2048',
         ]);
 
         if ($request->hasFile('pdf_file')) {

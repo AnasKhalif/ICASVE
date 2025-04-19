@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\File;
 use Laratrust\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Traits\FlashAlert;
+use App\Models\Year;
 
 class AbstractController extends Controller
 {
@@ -58,7 +59,8 @@ class AbstractController extends Controller
                 if ($currentAbstracts >= $maxAbstracts) {
                     return redirect()->route('abstracts.index')->with($this->alertAbstractLimit("You have reached the maximum limit of $maxAbstracts abstracts."));
                 }
-                $symposiums = Symposium::all();
+                $activeYear = Year::where('is_active', true)->first();
+                $symposiums = Symposium::whereYear('created_at', $activeYear->year)->get();
                 return view('abstracts.create', compact('symposiums'));
             } else {
                 return redirect()->route('abstracts.index')->with($this->permissionDenied());
@@ -221,7 +223,8 @@ class AbstractController extends Controller
     public function edit(AbstractModel $abstract)
     {
         try {
-            $symposiums = Symposium::all();
+            $activeYear = Year::where('is_active', true)->first();
+            $symposiums = Symposium::whereYear('created_at', $activeYear->year)->get();
             if (
                 $abstract->user_id === request()->user()->id
             ) {

@@ -26,7 +26,7 @@ class ConferenceDetailController extends Controller
             'theme' => 'required|string|max:255',
             'university' => 'required|string|max:255',
             'hosted' => 'required|string|max:255',
-            'date' => 'required|date', // Ubah ke date
+            'date' => 'required|string', // Ubah ke date
             'year' => 'required|integer',
         ]);
 
@@ -47,7 +47,7 @@ class ConferenceDetailController extends Controller
             'theme' => 'required|string|max:255',
             'university' => 'required|string|max:255',
             'hosted' => 'required|string|max:255',
-            'date' => 'required|date', // Ubah ke date
+            'date' => 'required|string', // Ubah ke date
             'year' => 'required|integer',
         ]);
 

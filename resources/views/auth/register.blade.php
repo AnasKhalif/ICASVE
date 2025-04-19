@@ -272,19 +272,19 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            fetch("https://restcountries.com/v3.1/all")
+            fetch("https://restcountries.com/v2/all")
                 .then(response => response.json())
                 .then(data => {
-                    let countrySelect = document.getElementById("country");
-                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                    const select = document.getElementById("country");
+                    data.sort((a, b) => a.name.localeCompare(b.name));
                     data.forEach(country => {
-                        let option = document.createElement("option");
-                        option.value = country.name.common;
-                        option.textContent = country.name.common;
-                        countrySelect.appendChild(option);
+                        const option = document.createElement("option");
+                        option.value = country.name;
+                        option.textContent = country.name;
+                        select.appendChild(option);
                     });
                 })
-                .catch(error => console.error("Error fetching country data:", error));
+                .catch(error => console.error("Gagal mengambil data negara:", error));
         });
     </script>
     <style>
