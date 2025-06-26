@@ -63,6 +63,23 @@
                         </select>
                     </div>
 
+
+                    <div class="form-group">
+                        <label>Publication</label>
+                        <select class="form-control @error('publication') is-invalid @enderror" name="publication" required>
+                            <option value="">-- Select Publication Type --</option>
+                            <option value="Journal Publication"
+                                {{ old('publication') == 'Journal Publication' ? 'selected' : '' }}>Journal Publication
+                            </option>
+                            <option value="Proceedings Indexed in EBSCO"
+                                {{ old('publication') == 'Proceedings Indexed in EBSCO' ? 'selected' : '' }}>Proceedings
+                                Indexed in EBSCO</option>
+                        </select>
+                        @error('publication')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <label for="authors" class="form-label">Authors</label>
                         <small class="form-text text-muted mb-2">

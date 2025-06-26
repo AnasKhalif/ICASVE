@@ -147,7 +147,6 @@
                                                 style="font-size: 12px;">{{ $errors->first('phone_number') }}</span>
                                         @endif
                                     </div>
-
                                     <div class="form-group mb-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
@@ -158,6 +157,12 @@
                                             <select name="country" id="country"
                                                 class="form-control form-control-md border-left-0" required>
                                                 <option value="" disabled selected>Select Country</option>
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->name }}"
+                                                        {{ old('country') == $country->name ? 'selected' : '' }}>
+                                                        {{ $country->name }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         @if ($errors->has('country'))
@@ -268,23 +273,6 @@
                     }
                 });
             });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch("https://restcountries.com/v2/all")
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById("country");
-                    data.sort((a, b) => a.name.localeCompare(b.name));
-                    data.forEach(country => {
-                        const option = document.createElement("option");
-                        option.value = country.name;
-                        option.textContent = country.name;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Gagal mengambil data negara:", error));
         });
     </script>
     <style>

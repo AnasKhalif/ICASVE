@@ -92,12 +92,18 @@
             <p><strong>Phone Number:</strong> {{ $details['phone_number'] }}</p>
             <p><strong>Registration Type:</strong> {{ $details['registration_type'] }}</p>
 
-            <p class="highlight">
-                The registered email and password are required for submitting your presentation abstract.<br>
-                If you choose to give a presentation, you must submit an abstract for review. Please visit the following
-                page:<br>
-                <a href="{{ route('abstracts.index') }}">Submit Abstract</a>
-            </p>
+            @php
+                $isPresenter = in_array($details['registration_type'], ['Indonesia-presenter', 'Foreign-presenter']);
+            @endphp
+            @if ($isPresenter)
+                <p class="highlight">
+                    The registered email and password are required for submitting your presentation abstract.<br>
+                    If you choose to give a presentation, you must submit an abstract for review. Please visit the
+                    following
+                    page:<br>
+                    <a href="{{ route('abstracts.index') }}">Submit Abstract</a>
+                </p>
+            @endif
             <p>All attendants are required to pay a registration fee. Payment instructions will be announced soon.</p>
         </div>
         <div class="email-footer">

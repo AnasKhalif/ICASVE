@@ -102,6 +102,7 @@ class AbstractController extends Controller
             'corresponding_email' => 'required|email',
             'abstract' => 'required',
             'presentation_type' => 'required|in:Oral presentation,Poster presentation',
+            'publication' => 'required|in:Journal Publication,International Indexed Proceedings',
             'symposium_id' => 'required|exists:symposiums,id',
         ]);
 
@@ -114,6 +115,7 @@ class AbstractController extends Controller
             'corresponding_email' => $request->corresponding_email,
             'abstract' => $request->abstract,
             'presentation_type' => $request->presentation_type,
+            'publication' => $request->publication,
             'status' => 'open',
         ]);
 
@@ -260,11 +262,12 @@ class AbstractController extends Controller
                     'corresponding_email' => 'required|email',
                     'abstract' => 'required',
                     'presentation_type' => 'required|in:Oral presentation,Poster presentation',
+                    'publication' => 'required|in:Journal Publication,International Indexed Proceedings',
                     'symposium_id' => 'required|exists:symposiums,id',
                 ]);
 
                 $abstract->update($request->only([
-                    'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id'
+                    'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id', 'publication'
                 ]));
 
                 return redirect()->route('abstracts.index')->with($this->alertUpdated());

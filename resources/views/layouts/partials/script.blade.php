@@ -3,8 +3,9 @@
 <script src="{{ asset('vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
 <script src="{{ asset('js/template.js') }}"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
-<script type="module" src="{{ asset('build/' . ltrim($manifest['resources/js/app.js']['file'], '/')) }}"></script>
-
+<!--Production-->
+{{-- <script type="module" src="{{ asset('build/' . ltrim($manifest['resources/js/app.js']['file'], '/')) }}"></script> --}}
+@vite(['resources/js/app.js'])
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         if (window.Swal && "{{ session('type') }}" && "{{ session('message') }}") {

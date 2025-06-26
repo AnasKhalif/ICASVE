@@ -61,6 +61,19 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Publication</label>
+                        <select class="form-control" name="publication" required>
+                            <option value="">-- Select Publication Type --</option>
+                            <option value="Journal Publication"
+                                {{ old('publication', $abstract->publication) == 'Journal Publication' ? 'selected' : '' }}>
+                                Journal Publication</option>
+                            <option value="Proceedings Indexed in EBSCO"
+                                {{ old('publication', $abstract->publication) == 'Proceedings Indexed in EBSCO' ? 'selected' : '' }}>
+                                Proceedings Indexed in EBSCO</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="authors">Authors</label>
                         <input type="text" class="form-control" id="authors" name="authors"
                             value="{{ old('authors', $abstract->authors) }}" required>

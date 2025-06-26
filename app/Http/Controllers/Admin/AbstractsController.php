@@ -119,6 +119,7 @@ class AbstractsController extends Controller
             'corresponding_email' => 'required|email',
             'abstract' => 'required',
             'presentation_type' => 'required|in:Oral presentation,Poster presentation',
+            'publication' => 'required|in:Journal Publication,International Indexed Proceedings',
             'symposium_id' => 'required|exists:symposiums,id',
         ]);
 

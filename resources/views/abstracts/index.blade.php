@@ -120,7 +120,9 @@
                                         <span>Symposium:</span>
                                         <strong>{{ $abstract->symposium->name }}</strong><br><br>
                                         <span>Requested:</span>
-                                        <strong>{{ $abstract->presentation_type }}</strong>
+                                        <strong>{{ $abstract->presentation_type }}</strong><br><br>
+                                        <span>Publication:</span>
+                                        <strong>{{ $abstract->publication }}</strong>
                                     </td>
                                     <td class="text-center">
                                         <span

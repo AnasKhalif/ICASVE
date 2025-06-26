@@ -11,7 +11,7 @@ class AbstractModel extends Model
     protected $table = 'abstracts';
     protected $fillable = [
         'user_id', 'symposium_id', 'title', 'authors', 'affiliations',
-        'corresponding_email', 'abstract', 'presentation_type', 'status'
+        'corresponding_email', 'abstract', 'presentation_type', 'publication', 'status'
     ];
 
     public function user()

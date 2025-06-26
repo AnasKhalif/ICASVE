@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use App\Models\Upload;
 use App\Models\ConferenceSetting;
 use Illuminate\Support\Facades\File;
+use App\Models\Country;
 
 class RegisteredUserController extends Controller
 {
@@ -41,7 +42,8 @@ class RegisteredUserController extends Controller
         $conferenceAbbreviation = optional($conferenceSetting)->conference_abbreviation ?? 'ICASVE2025';
         $logo = Upload::where('type', 'logo')->latest()->first();
         $logoPath = $logo ? asset('storage/' . $logo->file_path) : asset('img/Logo_ICASVE_rmbg.png');
-        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting', 'logoPath'));
+        $countries = Country::orderBy('name', 'asc')->get();
+        return view('auth.register', compact('role', 'openRegistration', 'conferenceTitle', 'conferenceAbbreviation', 'conferenceSetting', 'logoPath', 'countries'));
     }
 
     /**
