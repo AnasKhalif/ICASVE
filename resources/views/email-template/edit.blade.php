@@ -17,9 +17,9 @@
                         <textarea name="content" class="form-control" rows="14" required>{{ old('content', $emailTemplate->content) }}</textarea>
                     </div>
 
-                    @if ($emailTemplate->type === 'abstract_invoice')
+                    @if ($emailTemplate->type === 'abstract_invoice_idr' || $emailTemplate->type === 'abstract_invoice_usd')
                         <div class="mb-3">
-                            <label for="amount" class="form-label"><strong>Total Pembayaran (USD):</strong></label>
+                            <label for="amount" class="form-label"><strong>Total Pembayaran :</strong></label>
                             <input type="number" step="0.01" name="amount" class="form-control"
                                 value="{{ old('amount', $emailTemplate->amount) }}" required>
                         </div>

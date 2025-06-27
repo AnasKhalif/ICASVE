@@ -28,9 +28,18 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="text-center">Email Template Abstract Invoice</td>
+                                <td class="text-center">Email Template Abstract Invoice IDR</td>
                                 <td class="text-center">
-                                    <a href="{{ route('admin.email-template.edit', ['type' => 'abstract_invoice']) }}"
+                                    <a href="{{ route('admin.email-template.edit', ['type' => 'abstract_invoice_idr']) }}"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Email Template Abstract Invoice USD</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.email-template.edit', ['type' => 'abstract_invoice_usd']) }}"
                                         class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>

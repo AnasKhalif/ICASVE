@@ -81,8 +81,11 @@
                 <strong>{{ $conference->conference_title }}</strong>.
             </p>
 
-            <p>Payment can be made via bank transfer to the following account for a total of <strong>
-                    USD {{ number_format($amount, 2) }}</strong></p>
+            <p>Payment can be made via bank transfer to the following account for a total of
+                <strong>{{ $amountType }}
+                    {{ number_format($amount, $amountType === 'IDR' ? 0 : 2, ',', '.') }}</strong>
+            </p>
+
 
             <p>{!! nl2br(e($customMessage)) !!}</p>
 

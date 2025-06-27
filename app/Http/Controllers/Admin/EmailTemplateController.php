@@ -25,9 +25,17 @@ class EmailTemplateController extends Controller
 
     public function update(Request $request, $type)
     {
+        $amountType = null;
+
+        if ($type == 'abstract_invoice_idr') {
+            $amountType = 'idr';
+        } else if ($type == 'abstract_invoice_usd') {
+            $amountType = 'usd';
+        }
+
         $emailTemplate = EmailTemplate::updateOrCreate(
             ['type' => $type],
-            ['content' => $request->content, 'amount' => $request->amount]
+            ['content' => $request->content, 'amount' => $request->amount, 'amount_type' => $amountType]
         );
 
         return redirect()->back()->with($this->alertUpdated());

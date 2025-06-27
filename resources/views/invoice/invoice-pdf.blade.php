@@ -106,7 +106,7 @@
                     <th>Abstract</th>
                     <th>QTY</th>
                     <th>Price</th>
-                    <th>Amount (IDR)</th>
+                    <th>Amount ({{ strtoupper($amountType) }})</th>
                 </tr>
             </thead>
             <tbody>
@@ -114,8 +114,20 @@
                     <td>1</td>
                     <td><strong>{{ $abstract->title }}</strong></td>
                     <td>1</td>
-                    <td>{{ number_format($amount, 0, ',', '.') }}</td>
-                    <td>{{ number_format($amount, 0, ',', '.') }}</td>
+                    <td>
+                        @if ($amountType === 'usd')
+                            {{ number_format($amount, 2, '.', ',') }}
+                        @else
+                            {{ number_format($amount, 0, ',', '.') }}
+                        @endif
+                    </td>
+                    <td>
+                        @if ($amountType === 'usd')
+                            {{ number_format($amount, 2, '.', ',') }}
+                        @else
+                            {{ number_format($amount, 0, ',', '.') }}
+                        @endif
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -123,15 +135,33 @@
         <table class="summary-table">
             <tr>
                 <td><strong>Subtotal</strong></td>
-                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+                <td>
+                    @if ($amountType === 'usd')
+                        {{ number_format($amount, 2, '.', ',') }}
+                    @else
+                        {{ number_format($amount, 0, ',', '.') }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td><strong>Total</strong></td>
-                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+                <td>
+                    @if ($amountType === 'usd')
+                        {{ number_format($amount, 2, '.', ',') }}
+                    @else
+                        {{ number_format($amount, 0, ',', '.') }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td><strong>Amount Due</strong></td>
-                <td>{{ number_format($amount, 0, ',', '.') }}</td>
+                <td>
+                    @if ($amountType === 'usd')
+                        {{ number_format($amount, 2, '.', ',') }}
+                    @else
+                        {{ number_format($amount, 0, ',', '.') }}
+                    @endif
+                </td>
             </tr>
         </table>
 

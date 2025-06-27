@@ -23,6 +23,7 @@ class AbstractInvoice extends Mailable
     public $conference;
     public $logoBase64;
     public $signaturePath;
+    public $templateType;
 
     /**
      * Create a new message instance.
@@ -32,6 +33,18 @@ class AbstractInvoice extends Mailable
         $this->user = $user;
         $this->abstract = $abstract;
         $this->conference = ConferenceSetting::first();
+
+        $roleNames = $user->roles->pluck('name')->toArray();
+
+        if (in_array('indonesia-presenter', $roleNames)) {
+            $this->templateType = 'abstract_invoice_idr';
+        } else if (in_array('foreign-presenter', $roleNames)) {
+            $this->templateType = 'abstract_invoice_usd';
+        } else {
+            $this->templateType = 'abstract_invoice_usd';
+        }
+
+
 
         $logo = Upload::where('type', 'logo')->latest()->first();
         $this->logoBase64 = null;
@@ -76,9 +89,10 @@ class AbstractInvoice extends Mailable
 
     public function build()
     {
-        $emailTemplate = EmailTemplate::where('type', 'abstract_invoice')->first();
+        $emailTemplate = EmailTemplate::where('type', $this->templateType)->first();
         $customMessage = $emailTemplate ? $emailTemplate->content : ' ';
         $amount = $emailTemplate ? $emailTemplate->amount : 0;
+        $amountType = strtoupper($emailTemplate?->amount_type ?? 'USD');
 
         $pdf = Pdf::loadView('invoice.invoice-pdf', [
             'user' => $this->user,
@@ -86,11 +100,12 @@ class AbstractInvoice extends Mailable
             'conference' => $this->conference,
             'logoBase64' => $this->logoBase64,
             'signaturePath' => $this->signaturePath,
-            'amount' => $amount
+            'amount' => $amount,
+            'amountType' => $amountType
         ]);
 
         return $this->subject('Payment Invoice for Your Accepted Abstract')
-            ->view('emails.abstract-invoice', compact('customMessage', 'amount'))
+            ->view('emails.abstract-invoice', compact('customMessage', 'amount', 'amountType'))
             ->attachData($pdf->output(), 'Invoice_' . $this->user->id . '.pdf', [
                 'mime' => 'application/pdf',
             ]);
