@@ -4,16 +4,17 @@
 <script src="{{ asset('js/template.js') }}"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
 <!--Production-->
-{{-- <script type="module" src="{{ asset('build/' . ltrim($manifest['resources/js/app.js']['file'], '/')) }}"></script> --}}
+{{--
+<script type="module" src="{{ asset('build/' . ltrim($manifest['resources/js/app.js']['file'], '/')) }}"></script> --}}
 @vite(['resources/js/app.js'])
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         if (window.Swal && "{{ session('type') }}" && "{{ session('message') }}") {
             Swal.fire({
                 icon: "{{ session('type') }}",
                 title: "{{ session('type') }}" === "success" ? "Success!" : "{{ session('type') }}" ===
                     "error" ? "Error!" : "{{ session('type') }}" ===
-                    "warning" ? "Warning!" : "Info",
+                        "warning" ? "Warning!" : "Info",
                 text: "{{ session('message') }}",
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "OK"
@@ -21,10 +22,23 @@
         }
     });
 
+    document.addEventListener("DOMContentLoaded", function () {
+        // Handle mobile sidebar toggle
+        const mobileToggle = document.querySelector('[data-toggle="offcanvas"]');
+        const sidebar = document.querySelector('.sidebar');
+        const body = document.body;
 
-    document.addEventListener("DOMContentLoaded", function() {
+        if (mobileToggle && sidebar) {
+            mobileToggle.addEventListener('click', function () {
+                body.classList.toggle('sidebar-icon-only');
+                sidebar.classList.toggle('active');
+            });
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".btn-delete").forEach(button => {
-            button.addEventListener("click", function(e) {
+            button.addEventListener("click", function (e) {
                 e.preventDefault();
                 let form = this.closest("form");
 
