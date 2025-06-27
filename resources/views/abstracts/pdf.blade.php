@@ -45,6 +45,12 @@
             font-family: "Times", serif;
             font-style: italic;
         }
+
+        #keyword {
+            font-size: 10pt;
+            font-family: "Times", serif;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -58,6 +64,7 @@
         {!! nl2br(e($abstract->abstract)) !!}
     </div>
     <hr>
+    <p id="keyword"><strong>Keyword:</strong> {{ $abstract->keyword }}</p>
     <p id="abstract_symposium"><strong>Symposium:</strong> {{ $abstract->symposium->name }}</p>
 </body>
 

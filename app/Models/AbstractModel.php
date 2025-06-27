@@ -10,7 +10,7 @@ class AbstractModel extends Model
     use HasFactory;
     protected $table = 'abstracts';
     protected $fillable = [
-        'user_id', 'symposium_id', 'title', 'authors', 'affiliations',
+        'user_id', 'symposium_id', 'title', 'keyword', 'authors', 'affiliations',
         'corresponding_email', 'abstract', 'presentation_type', 'publication', 'status'
     ];
 

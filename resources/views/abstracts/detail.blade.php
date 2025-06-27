@@ -21,6 +21,8 @@
 
                 <hr>
 
+
+                <p id="keyword"><strong>Keyword:</strong> {{ $abstract->keyword }}</p>
                 <p id="abstract_symposium"><strong>Symposium:</strong> {{ $abstract->symposium->name }}</p>
             </div>
         </div>

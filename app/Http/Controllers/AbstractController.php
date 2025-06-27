@@ -101,6 +101,7 @@ class AbstractController extends Controller
             'affiliations' => 'required',
             'corresponding_email' => 'required|email',
             'abstract' => 'required',
+            'keyword' => 'required',
             'presentation_type' => 'required|in:Oral presentation,Poster presentation',
             'publication' => 'required|in:Journal Publication,International Indexed Proceedings',
             'symposium_id' => 'required|exists:symposiums,id',
@@ -114,6 +115,7 @@ class AbstractController extends Controller
             'affiliations' => $request->affiliations,
             'corresponding_email' => $request->corresponding_email,
             'abstract' => $request->abstract,
+            'keyword' => $request->keyword,
             'presentation_type' => $request->presentation_type,
             'publication' => $request->publication,
             'status' => 'open',
@@ -261,13 +263,14 @@ class AbstractController extends Controller
                     'affiliations' => 'required',
                     'corresponding_email' => 'required|email',
                     'abstract' => 'required',
+                    'keyword' => 'required',
                     'presentation_type' => 'required|in:Oral presentation,Poster presentation',
                     'publication' => 'required|in:Journal Publication,International Indexed Proceedings',
                     'symposium_id' => 'required|exists:symposiums,id',
                 ]);
 
                 $abstract->update($request->only([
-                    'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'presentation_type', 'symposium_id', 'publication'
+                    'title', 'authors', 'affiliations', 'corresponding_email', 'abstract', 'keyword', 'presentation_type', 'symposium_id', 'publication'
                 ]));
 
                 return redirect()->route('abstracts.index')->with($this->alertUpdated());

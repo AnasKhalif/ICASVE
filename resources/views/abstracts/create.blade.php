@@ -108,7 +108,8 @@
                         <label for="corresponding_email" class="form-label">Corresponding Email</label>
                         <input type="email" name="corresponding_email" id="corresponding_email"
                             class="form-control @error('corresponding_email') is-invalid @enderror"
-                            value="{{ old('corresponding_email', $abstract->corresponding_email ?? '') }}">
+                            value="{{ old('corresponding_email', $abstract->corresponding_email ?? '') }}"
+                            placeholder="user@example.com">
                         @error('corresponding_email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -124,6 +125,20 @@
                         <small id="wordCount" class="text-muted">0 words (Max: {{ $maxWords ?? 350 }} words)</small>
                         @error('abstract')
                             <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="keyword" class="form-label">Keyword</label>
+                        <small class="form-text text-muted mb-2">
+                            Example: <br>
+                            Artificial Intelligence (AI), Machine Learning (ML), Deep Learning (DL)
+                        </small>
+                        <input type="text" name="keyword" id="keyword"
+                            class="form-control @error('keyword') is-invalid @enderror"
+                            value="{{ old('keyword', $abstract->keyword ?? '') }}">
+                        @error('keyword')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 

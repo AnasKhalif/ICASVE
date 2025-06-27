@@ -68,7 +68,7 @@
 
         <p class="center-text"><strong>Accepted for {{ $abstract->presentation_type }}</strong></p>
 
-        <p>at <strong>The 3rd International Conference on Applied Science for Vocational Education</strong>.</p>
+        <p>at <strong>The 4th International Conference on Applied Science for Vocational Education</strong>.</p>
         <p>Please note that, in order for the abstract to be included in the conference program, presenters are required
             to complete the registration process and payment.</p>
         <p>Your presentation is an important part of the conference, and we are looking forward to meet you at the

@@ -100,6 +100,16 @@
                         <small id="wordCount" class="text-muted">0 words (Max: {{ $maxWords ?? 350 }} words)</small>
                     </div>
 
+                    <div class="form-group">
+                        <label for="keyword">Keyword</label>
+                        <input type="text" class="form-control" id="keyword" name="keyword"
+                            value="{{ old('keyword', $abstract->keyword) }}">
+                        <small class="form-text text-muted">Optional keywords for your abstract.</small>
+                        @error('keyword')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ route('abstracts.index') }}" class="btn btn-light">Cancel</a>
                 </form>
