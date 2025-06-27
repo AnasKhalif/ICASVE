@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\FullPaper;
 use App\Models\User;
 use App\Traits\FlashAlert;
+use App\Mail\FullPaperAccepted;
+use Illuminate\Support\Facades\Mail;
 
 class EditorFullPaperController extends Controller
 {
@@ -121,6 +123,13 @@ class EditorFullPaperController extends Controller
 
         $fullpaper->status = $request->status;
         $fullpaper->save();
+
+        if ($request->status === 'accepted') {
+            $user = $fullpaper->abstract?->user;
+            if ($user) {
+                Mail::to($user->email)->send(new FullPaperAccepted($user, $fullpaper));
+            }
+        }
 
         return redirect()->route('reviewer.editor-fullpaper.index')->with($this->alertUpdated());
     }

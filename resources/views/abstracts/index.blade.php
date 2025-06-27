@@ -50,6 +50,9 @@
                                                     @if (!empty($review->comment))
                                                         <p class="text-danger">{{ $review->comment }}</p>
                                                     @endif
+                                                    <p class="text-muted mb-1" style="font-size: 0.9em;">
+                                                        <strong>Revision by:</strong> {{ $reviewer->name }}
+                                                    </p>
                                                 @endforeach
                                             </div>
                                         @endif
@@ -61,6 +64,9 @@
                                                 <p class="mb-1"><strong>Revision Fullpaper</strong></p>
                                                 @foreach ($abstract->fullPaper->fullPaperReviews as $review)
                                                     <p class="text-danger">{{ $review->comment }}</p>
+                                                    <p class="text-muted" style="font-size: 0.9em;">
+                                                        Revision by: {{ $review->reviewer->name ?? 'Reviewer' }}
+                                                    </p>
                                                 @endforeach
                                                 </ul>
                                             </div>
@@ -81,7 +87,12 @@
                     <h4 class="card-title">Abstracts</h4>
                     <div>
                         @if ($openAbstractSubmission && !$abstracts->where('status', 'accepted')->count())
-                            <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">Add Abstract</a>
+                            @php
+                                $hasRevision = $abstracts->contains('status', 'revision');
+                            @endphp
+                            <a href="{{ route('abstracts.create') }}" class="btn btn-sm btn-success">
+                                {{ $hasRevision ? 'Add the Revised Abstract' : 'Add Abstract' }}
+                            </a>
                         @endif
 
                         @if ($openFullPaperUpload && $abstracts->where('status', 'accepted')->count() > 0)
@@ -92,7 +103,8 @@
                                             style="display: inline;">
                                             @csrf
                                             <input type="hidden" name="abstract_id" value="{{ $abstract->id }}">
-                                            <button type="submit" class="btn btn-sm btn-primary">Upload Full Paper</button>
+                                            <button type="submit"
+                                                class="btn btn-sm btn-primary">{{ optional($abstract->fullPaper)->status === 'revision' ? 'Upload the Revised Full Paper' : 'Upload Full Paper' }}</button>
                                         </form>
                                     @endif
                                 @endif

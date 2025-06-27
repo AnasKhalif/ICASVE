@@ -28,6 +28,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="text-center">Email Template Full Paper Accepted</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.email-template.edit', ['type' => 'fullpaper_accepted']) }}"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="text-center">Email Template Abstract Invoice IDR</td>
                                 <td class="text-center">
                                     <a href="{{ route('admin.email-template.edit', ['type' => 'abstract_invoice_idr']) }}"
