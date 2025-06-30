@@ -70,6 +70,10 @@ use App\Http\Controllers\Landing\PrevconferenceController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
+Route::get('/information', function () {
+    return view('landingpage.information-hotel.index');
+})->name('information');
+
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 
 Route::get('/payment-guidelines', [PaymentGuidelineController::class, 'showLandingPage'])->name('payment_guidelines.landing');

@@ -19,6 +19,7 @@
     <link href="{{ asset('vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+    @stack('styles')
     <title>
         {{-- @php
             $years = \App\Models\::where('is_active', 1)->first();
