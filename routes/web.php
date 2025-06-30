@@ -67,12 +67,13 @@ use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
 use App\Http\Controllers\Landing\PrevconferenceController;
+use App\Http\Controllers\Landing\HotelController;
+use App\Http\Controllers\Hotels;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
-Route::get('/information', function () {
-    return view('landingpage.information-hotel.index');
-})->name('information');
+Route::get('/hotels-landing', [Hotels::class, 'index'])->name('hotels.landing');
+
 
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 
@@ -242,6 +243,7 @@ Route::name('landing.')
             ->name('newsletters.export');
         Route::resource('newsletters', NewsletterController::class);
         Route::resource('prevconference', PrevconferenceController::class);
+        Route::resource('hotels', HotelController::class);
 
 
         // Route untuk halaman Setting Tahun Aktif

@@ -565,6 +565,13 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->routeIs('landing.hotels.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('landing.hotels.index') }}">
+                    <i class="fa-solid fa-hotel menu-icon"></i>
+                    <span class="menu-title">Hotels</span>
+                </a>
+            </li>
+
         </ul>
     </nav>
 @endrole
