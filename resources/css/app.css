@@ -1,5 +1,5 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import 'abstract.css';
+@import "abstract.css";
 
 @media (min-width: 1025px) {
     .h-custom {
@@ -8,8 +8,26 @@
 }
 
 .custom-navbar {
-    background-image: url('/img/banner.jpg');
+    background-image: url("/img/banner.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+@media (max-width: 991px) {
+    .sidebar {
+        position: fixed;
+        top: 20;
+        left: -250px;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-panel {
+        margin-left: 0;
+    }
 }
