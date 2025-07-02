@@ -16,7 +16,7 @@
                                 <i class="faq-icon bi bi-question-circle"></i>
                                 <h3>{{ $faq->title }}</h3>
                                 <div class="faq-content">
-                                    <p>{{ $faq->description }}</p>
+                                    <p>{!! $faq->description !!}</p>
                                 </div>
                                 <i class="faq-toggle bi bi-chevron-right"></i>
                             </div>
@@ -28,8 +28,7 @@
                 </div>
 
                 <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in"
-                        data-aos-delay="100" />
+                    <img src="assets/images/faq.jpg" class="img-fluid" alt="" data-aos="zoom-in" data-aos-delay="100" />
                 </div>
             </div>
         </div>

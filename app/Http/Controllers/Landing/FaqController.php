@@ -13,38 +13,51 @@ class FaqController extends Controller
         $faqs = Faq::all();
         return view('landingpage-editor.faq.index', compact('faqs'));
     }
+
     public function create()
     {
         return view('landingpage-editor.faq.create');
     }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'year' => ['required', 'numeric']
         ]);
+
         $validatedData['title'] = strip_tags($validatedData['title']);
-        $validatedData['description'] = strip_tags($validatedData['description']);
+        // Don't strip tags from description as it contains HTML from CKEditor
+        // $validatedData['description'] = strip_tags($validatedData['description']);
+
         Faq::create($validatedData);
         return redirect()->route('landing.faq.index')->with('success', 'FAQ created successfully.');
     }
+
     public function edit($id)
     {
         $faq = Faq::findOrFail($id);
         return view('landingpage-editor.faq.edit', compact('faq'));
     }
+
     public function update(Request $request, $id)
     {
         $faq = Faq::findOrFail($id);
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'year' => ['required', 'numeric']
         ]);
+
         $validatedData['title'] = strip_tags($validatedData['title']);
-        $validatedData['description'] = strip_tags($validatedData['description']);
+        // Don't strip tags from description as it contains HTML from CKEditor
+        // $validatedData['description'] = strip_tags($validatedData['description']);
+
         $faq->update($validatedData);
         return redirect()->route('landing.faq.index')->with('success', 'FAQ updated successfully.');
     }
+
     public function destroy($id)
     {
         $faq = Faq::findOrFail($id);

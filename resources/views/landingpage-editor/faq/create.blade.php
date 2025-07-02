@@ -9,8 +9,8 @@
                 @csrf
                 <div class="mb-3">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" name="title" id="title" 
-                           placeholder="Enter FAQ title..." required>
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Enter FAQ title..."
+                        required>
                     @error('title')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -18,27 +18,42 @@
 
                 <div class="mb-3">
                     <label for="description">Description</label>
-                    <textarea class="form-control" name="description" id="description" 
-                              placeholder="Enter FAQ description..." required></textarea>
+                    <textarea class="form-control" name="description" id="description"
+                        placeholder="Enter FAQ description..."></textarea>
                     @error('description')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
-                {{-- Input Tahun --}}
                 <div class="mb-3">
                     <label for="year">Year</label>
-                    <input type="number" class="form-control" name="year" id="year" 
-                           value="{{ old('year', date('Y')) }}" 
-                           placeholder="Enter year (e.g. 2025)" required>
+                    <input type="number" class="form-control" name="year" id="year" value="{{ old('year', date('Y')) }}"
+                        placeholder="Enter year (e.g. 2025)" required>
                     @error('year')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            
+
                 <button type="submit" class="btn btn-primary">Save</button>
                 <a href="{{ route('landing.faq.index') }}" class="btn btn-danger">Back</a>
             </form>
         </div>
     </div>
+
+    <!-- CKEditor Script -->
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('description', {
+            // Remove the following plugins if you want to restrict HTML
+            removePlugins: 'sourcearea',
+            // Basic toolbar configuration
+            toolbar: [
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+                { name: 'paragraph', items: ['NumberedList', 'BulletedList'] },
+                { name: 'links', items: ['Link', 'Unlink'] },
+                { name: 'tools', items: ['Maximize'] },
+                { name: 'document', items: ['Source'] }
+            ]
+        });
+    </script>
 @endsection

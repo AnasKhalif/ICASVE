@@ -76,8 +76,7 @@
 
                     <div class="d-none d-xl-block col-xl-2"></div>
 
-                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up"
-                        data-aos-delay="100">
+                    <div class="image-about col-12 col-xl-5 d-flex justify-content-end" data-aos="fade-up" data-aos-delay="100">
                         <img src="{{ asset('storage/' . $about->image) }}" class="w-100 w-md-75 animated rounded-3"
                             alt="gedung-vokasi" />
                     </div>
@@ -107,8 +106,8 @@
                     @foreach ($keynoteSpeakers as $speaker)
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                             <div class="member">
-                                <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}" class="img-fluid"
-                                        alt="" /></div>
+                                <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}" class="img-fluid" alt="" />
+                                </div>
                                 <div class="member-info">
                                     <h4>{{ $speaker->name }}</h4>
                                     <span>{{ $speaker->institution }}</span>
@@ -141,8 +140,8 @@
                     @foreach ($invitedSpeakers as $speaker)
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                             <div class="member">
-                                <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}" class="img-fluid"
-                                        alt="" /></div>
+                                <div class="pic"><img src="{{ asset('storage/' . $speaker->image) }}" class="img-fluid" alt="" />
+                                </div>
                                 <div class="member-info">
                                     <h4>{{ $speaker->name }}</h4>
                                     <span>{{ $speaker->institution }}</span>
@@ -172,8 +171,7 @@
                         @endif
                         @foreach ($themes as $theme)
                             <li>
-                                <a href="{{ route('themes.show', $theme->id) }}"
-                                    class="text-white text-decoration-underline">
+                                <a href="{{ route('themes.show', $theme->id) }}" class="text-white text-decoration-underline">
                                     {{ $theme->title }} ({{ $theme->year }})
                                 </a>
                             </li>
@@ -193,8 +191,7 @@
                     <div class="row gy-4 align-items-center features-item">
                         <div class=" col-md-5 order-1 order-md-2 d-flex align-items-center" data-aos="zoom-out"
                             data-aos-delay="200">
-                            <img src="{{ asset('storage/' . $poster->image) }}" class="poster-md img-fluid rounded-2"
-                                alt="" />
+                            <img src="{{ asset('storage/' . $poster->image) }}" class="poster-md img-fluid rounded-2" alt="" />
                         </div>
                         <div class="col-md-7 order-2 order-md-1">
                             <div class="container section-title" data-aos="fade-up">
@@ -202,8 +199,7 @@
                                 <div><span>Deadline</span> <span class="description-title"> Dates</span></div>
                             </div>
                             <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-                                <img src="{{ asset('storage/' . $poster->image) }}" class="poster-sm img-fluid rounded-2"
-                                    alt="" />
+                                <img src="{{ asset('storage/' . $poster->image) }}" class="poster-sm img-fluid rounded-2" alt="" />
                             </div>
                             <table class="custom-table" data-aos="fade-up" data-aos-delay="200">
                                 <thead>
@@ -226,37 +222,104 @@
                                     @endif
                                 </tbody>
                             </table>
-                            <a href="{{ asset('storage/' . $poster->image) }}" class="leaflet-button"
-                                data-aos="fade-up">Get Our Leaflet</a>
+                            <a href="{{ asset('storage/' . $poster->image) }}" class="leaflet-button" data-aos="fade-up">Get Our
+                                Leaflet</a>
                         </div>
                     </div>
                 @endforeach
         @endif
-        <!-- Features Item -->
-        <div class="row gy-4 align-items-center features-item">
-            @if ($presenter->isNotEmpty())
-                <div class="container">
-                    <div class="container section-title" data-aos="fade-up">
-                        <h2>Registration</h2>
-                        <div><span>Registration</span> <span class="description-title"> Fee</span></div>
-                    </div>
-                    <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($presenter as $fee)
+            <!-- Features Item -->
+            <div class="row gy-4 align-items-center features-item">
+                @if ($presenter->isNotEmpty())
+                    <div class="container">
+                        <div class="container section-title" data-aos="fade-up">
+                            <h2>Registration</h2>
+                            <div><span>Registration</span> <span class="description-title"> Fee</span></div>
+                        </div>
+                        <div class="table-responsive" data-aos="fade-up" data-aos-delay="100">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Presenter</th>
+                                        <th>Domestic Participants</th>
+                                        <th>International Participants</th>
+                                        <th>Period of Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($presenter as $fee)
+                                        @php
+                                            $payment_date =
+                                                $fee->period_of_payment !== 'TBA'
+                                                ? \Carbon\Carbon::parse($fee->period_of_payment)
+                                                : null;
+                                        @endphp
+                                        <tr>
+                                            <td>
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    <s>{{ $fee->category_name }}</s>
+                                                @else
+                                                    {{ $fee->category_name }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    <s>
+                                                @endif
+                                                    @if ($fee->domestic_participants === 'TBA')
+                                                        TBA
+                                                    @elseif(is_numeric($fee->domestic_participants))
+                                                        IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                                    @endif
+                                                    @if ($payment_date && $payment_date->isPast())
+                                                        </s>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    <s>
+                                                @endif
+                                                    @if ($fee->international_participants === 'TBA')
+                                                        TBA
+                                                    @elseif(is_numeric($fee->international_participants))
+                                                        US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                                    @endif
+                                                    @if ($payment_date && $payment_date->isPast())
+                                                        </s>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                @if ($fee->period_of_payment === 'TBA')
+                                                    TBA
+                                                @else
+                                                                        {!! $payment_date && $payment_date->isPast()
+                                                    ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
+                                                    : 'Until ' . $payment_date->format('F jS, Y') !!}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    @if ($presenter->isEmpty())
+                                        <tr>
+                                            <td colspan="4">No presenter found.</td>
+                                        </tr>
+                                    @endif
+                            </table>
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Non-presenter</th>
+                                        <th>Domestic Participants</th>
+                                        <th>International Participants</th>
+                                        <th>Period of Payment</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($non_presenter as $fee)
                                     @php
                                         $payment_date =
                                             $fee->period_of_payment !== 'TBA'
-                                                ? \Carbon\Carbon::parse($fee->period_of_payment)
-                                                : null;
+                                            ? \Carbon\Carbon::parse($fee->period_of_payment)
+                                            : null;
                                     @endphp
                                     <tr>
                                         <td>
@@ -270,231 +333,164 @@
                                             @if ($payment_date && $payment_date->isPast())
                                                 <s>
                                             @endif
-                                            @if ($fee->domestic_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->domestic_participants))
-                                                IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                            @endif
+                                                @if ($fee->domestic_participants === 'TBA')
+                                                    TBA
+                                                @elseif(is_numeric($fee->domestic_participants))
+                                                    IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                                @endif
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    </s>
+                                                @endif
+                                        </td>
+                                        <td>
                                             @if ($payment_date && $payment_date->isPast())
-                                                </s>
+                                                <s>
+                                            @endif
+                                                @if ($fee->international_participants === 'TBA')
+                                                    TBA
+                                                @elseif(is_numeric($fee->international_participants))
+                                                    US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                                @endif
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    </s>
+                                                @endif
+                                        </td>
+                                        <td>
+                                            @if ($fee->period_of_payment === 'TBA')
+                                                TBA
+                                            @else
+                                                                {!! $payment_date && $payment_date->isPast()
+                                                ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
+                                                : 'Until ' . $payment_date->format('F jS, Y') !!}
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                @if ($non_presenter->isEmpty())
+                                    <tr>
+                                        <td colspan="4">No Non-presenter found.</td>
+                                    </tr>
+                                @endif
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Additional Fee</th>
+                                        <th>Domestic Participants</th>
+                                        <th>International Participants</th>
+                                        <th>Period of Payment</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($additional_fee as $fee)
+                                    @php
+                                        $payment_date =
+                                            $fee->period_of_payment !== 'TBA'
+                                            ? \Carbon\Carbon::parse($fee->period_of_payment)
+                                            : null;
+                                    @endphp
+                                    <tr>
+                                        <td>
+                                            @if ($payment_date && $payment_date->isPast())
+                                                <s>{{ $fee->category_name }}</s>
+                                            @else
+                                                {{ $fee->category_name }}
                                             @endif
                                         </td>
                                         <td>
                                             @if ($payment_date && $payment_date->isPast())
                                                 <s>
                                             @endif
-                                            @if ($fee->international_participants === 'TBA')
-                                                TBA
-                                            @elseif(is_numeric($fee->international_participants))
-                                                US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                            @endif
+                                                @if ($fee->domestic_participants === 'TBA')
+                                                    TBA
+                                                @elseif(is_numeric($fee->domestic_participants))
+                                                    IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
+                                                @endif
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    </s>
+                                                @endif
+                                        </td>
+                                        <td>
                                             @if ($payment_date && $payment_date->isPast())
-                                                </s>
+                                                <s>
                                             @endif
+                                                @if ($fee->international_participants === 'TBA')
+                                                    TBA
+                                                @elseif(is_numeric($fee->international_participants))
+                                                    US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
+                                                @endif
+                                                @if ($payment_date && $payment_date->isPast())
+                                                    </s>
+                                                @endif
                                         </td>
                                         <td>
                                             @if ($fee->period_of_payment === 'TBA')
                                                 TBA
                                             @else
-                                                {!! $payment_date && $payment_date->isPast()
-                                                    ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
-                                                    : 'Until ' . $payment_date->format('F jS, Y') !!}
+                                                                {!! $payment_date && $payment_date->isPast()
+                                                ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
+                                                : 'Until ' . $payment_date->format('F jS, Y') !!}
                                             @endif
                                         </td>
                                     </tr>
                                 @endforeach
-                                @if ($presenter->isEmpty())
+                                @if ($additional_fee->isEmpty())
                                     <tr>
-                                        <td colspan="4">No presenter found.</td>
+                                        <td colspan="4">No Additional Fee found.</td>
                                     </tr>
                                 @endif
-                        </table>
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Non-presenter</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            @foreach ($non_presenter as $fee)
-                                @php
-                                    $payment_date =
-                                        $fee->period_of_payment !== 'TBA'
-                                            ? \Carbon\Carbon::parse($fee->period_of_payment)
-                                            : null;
-                                @endphp
-                                <tr>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>{{ $fee->category_name }}</s>
-                                        @else
-                                            {{ $fee->category_name }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>
-                                        @endif
-                                        @if ($fee->domestic_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->domestic_participants))
-                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                        @endif
-                                        @if ($payment_date && $payment_date->isPast())
-                                            </s>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>
-                                        @endif
-                                        @if ($fee->international_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->international_participants))
-                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                        @endif
-                                        @if ($payment_date && $payment_date->isPast())
-                                            </s>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($fee->period_of_payment === 'TBA')
-                                            TBA
-                                        @else
-                                            {!! $payment_date && $payment_date->isPast()
-                                                ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
-                                                : 'Until ' . $payment_date->format('F jS, Y') !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                            @if ($non_presenter->isEmpty())
-                                <tr>
-                                    <td colspan="4">No Non-presenter found.</td>
-                                </tr>
-                            @endif
-                            </tbody>
-                        </table>
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Additional Fee</th>
-                                    <th>Domestic Participants</th>
-                                    <th>International Participants</th>
-                                    <th>Period of Payment</th>
-                                </tr>
-                            </thead>
-                            @foreach ($additional_fee as $fee)
-                                @php
-                                    $payment_date =
-                                        $fee->period_of_payment !== 'TBA'
-                                            ? \Carbon\Carbon::parse($fee->period_of_payment)
-                                            : null;
-                                @endphp
-                                <tr>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>{{ $fee->category_name }}</s>
-                                        @else
-                                            {{ $fee->category_name }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>
-                                        @endif
-                                        @if ($fee->domestic_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->domestic_participants))
-                                            IDR {{ number_format($fee->domestic_participants, 0, ',', '.') }}
-                                        @endif
-                                        @if ($payment_date && $payment_date->isPast())
-                                            </s>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($payment_date && $payment_date->isPast())
-                                            <s>
-                                        @endif
-                                        @if ($fee->international_participants === 'TBA')
-                                            TBA
-                                        @elseif(is_numeric($fee->international_participants))
-                                            US$ {{ number_format($fee->international_participants, 2, '.', ',') }}
-                                        @endif
-                                        @if ($payment_date && $payment_date->isPast())
-                                            </s>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($fee->period_of_payment === 'TBA')
-                                            TBA
-                                        @else
-                                            {!! $payment_date && $payment_date->isPast()
-                                                ? '<s>Until ' . $payment_date->format('F jS, Y') . '</s>'
-                                                : 'Until ' . $payment_date->format('F jS, Y') !!}
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                            @if ($additional_fee->isEmpty())
-                                <tr>
-                                    <td colspan="4">No Additional Fee found.</td>
-                                </tr>
-                            @endif
-                        </table>
+                            </table>
+                        </div>
+                        <p class="text-muted mt-3" data-aos="fade-up">
+                            <small>
+                                <b>Please note:</b><br />
+                                1. The registration fee serves only for conference fee, and it cannot be waived for
+                                authors.<br />
+                                2. Authors need to pay for publishing if accepted.<br />
+                                3. Certificate fee: Participants can attend the event without certificate.
+                            </small>
+                        </p>
+                        <div class="mt-4">
+                            <a href="{{ route('payment_guidelines.landing') }}" class="btn btn-primary btn-sm py-2 px-4">
+                                See payment procedures
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-muted mt-3" data-aos="fade-up">
-                        <small>
-                            <b>Please note:</b><br />
-                            1. The registration fee serves only for conference fee, and it cannot be waived for
-                            authors.<br />
-                            2. Authors need to pay for publishing if accepted.<br />
-                            3. Certificate fee: Participants can attend the event without certificate.
-                        </small>
-                    </p>
-                    <div class="mt-4">
-                        <a href="{{ route('payment_guidelines.landing') }}" class="btn btn-primary btn-sm py-2 px-4">
-                            See payment procedures
-                        </a>
-                    </div>
-                </div>
-            @endif
+                @endif
 
-            @if ($venues->isNotEmpty())
-        </div>
-        <div class="row gy-4 align-items-center features-item">
-            <div class="container section-title" data-aos="fade-up">
-                <h2>Venue</h2>
-                <div><span>Our</span> <span class="description-title"> Venue</span></div>
-            </div>
-            @foreach ($venues as $venue)
-                <div class="row align-items-start">
-                    <div class="col-md-6 mb-2 mb-md-0" data-aos="fade-up">
-                        <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
-                            class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; max-height: 375px;" />
+                @if ($venues->isNotEmpty())
                     </div>
-                    <div class="location col-md-6 mt-2 mt-md-0" data-aos="fade-up">
-                        <h3 class="title-location">{{ $venue->venue_name }}</h3>
-                        <p class="text-muted">{{ $venue->address }}</p>
-                        <p class="font-weight-bold">Date: {{ $venue->date }}</p>
-                        <a href="{{ $venue->link_map }}" target="_blank" class="btn btn-primary btn-map">See on Map</a>
-                    </div>
-                </div>
+                    <div class="row gy-4 align-items-center features-item">
+                        <div class="container section-title" data-aos="fade-up">
+                            <h2>Venue</h2>
+                            <div><span>Our</span> <span class="description-title"> Venue</span></div>
+                        </div>
+                        @foreach ($venues as $venue)
+                            <div class="row align-items-start">
+                                <div class="col-md-6 mb-2 mb-md-0" data-aos="fade-up">
+                                    <img src="{{ asset('storage/' . $venue->image_path) }}" alt="Venue Building"
+                                        class="img-fluid rounded shadow" style="width: 100%; max-width: 500px; max-height: 375px;" />
+                                </div>
+                                <div class="location col-md-6 mt-2 mt-md-0" data-aos="fade-up">
+                                    <h3 class="title-location">{{ $venue->venue_name }}</h3>
+                                    <p class="text-muted">{{ $venue->address }}</p>
+                                    <p class="font-weight-bold">Date: {{ $venue->date }}</p>
+                                    <a href="{{ $venue->link_map }}" target="_blank" class="btn btn-primary btn-map">See on Map</a>
+                                </div>
+                            </div>
 
-                <!-- Map Section -->
-                <div class="mt-4 full-screen-map" data-aos="fade-up">
-                    <div class="mt-4 full-screen-map" data-aos="fade-up">
-                        {!! $venue->map !!}
+                            <!-- Map Section -->
+                            <div class="mt-4 full-screen-map" data-aos="fade-up">
+                                <div class="mt-4 full-screen-map" data-aos="fade-up">
+                                    {!! $venue->map !!}
+                                </div>
+                            </div>
+                        @endforeach
+                        @if ($venues->isEmpty())
+                            <p class="text-muted mt-3" data-aos="fade-up">No venue found.</p>
+                        @endif
                     </div>
-                </div>
-            @endforeach
-            @if ($venues->isEmpty())
-                <p class="text-muted mt-3" data-aos="fade-up">No venue found.</p>
-            @endif
-        </div>
-        @endif
+                @endif
         </div>
     </section>
     <!-- /Details Section -->
@@ -558,8 +554,8 @@
                         <div class="row text-center">
                             @foreach ($supported_by as $item)
                                 <div class="col-md-3 col-6 mb-3">
-                                    <img src="{{ asset('storage/' . $item->image_path) }}"
-                                        class="logo-support img-fluid max-w-lg" alt="Sponsor Logo 1" data-aos="fade-up">
+                                    <img src="{{ asset('storage/' . $item->image_path) }}" class="logo-support img-fluid max-w-lg"
+                                        alt="Sponsor Logo 1" data-aos="fade-up">
                                 </div>
                             @endforeach
                             @if ($supported_by->isEmpty())
@@ -588,23 +584,49 @@
 
                         <div class="faq-container px-xl-5" data-aos="fade-up" data-aos-delay="200">
                             @foreach ($faqs as $index => $faq)
-                                <div class="faq-item {{ $index === 0 ? 'faq-active' : '' }}">
+                                <div class="faq-item {{ $index === 0 ? 'faq-active' : '' }}" onclick="toggleFaq(this)">
                                     <i class="faq-icon bi bi-question-circle"></i>
                                     <h3>{{ $faq->title }}</h3>
                                     <div class="faq-content">
-                                        <p>{{ $faq->description }}</p>
+                                        <div class="faq-answer">{!! $faq->description !!}</div>
                                     </div>
                                     <i class="faq-toggle bi bi-chevron-right"></i>
                                 </div>
                             @endforeach
-                            @if ($faqs->isEmpty())
-                                <p class="text-muted mt-3" data-aos="fade-up">No faq found.</p>
-                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <script>
+            function toggleFaq(element) {
+                // Toggle active class on clicked item
+                element.classList.toggle('faq-active');
+
+                // Rotate the chevron icon
+                const chevron = element.querySelector('.faq-toggle');
+                if (element.classList.contains('faq-active')) {
+                    chevron.classList.remove('bi-chevron-right');
+                    chevron.classList.add('bi-chevron-down');
+                } else {
+                    chevron.classList.remove('bi-chevron-down');
+                    chevron.classList.add('bi-chevron-right');
+                }
+            }
+
+            // Initialize first item as active
+            document.addEventListener('DOMContentLoaded', function () {
+                const firstFaq = document.querySelector('.faq-item');
+                if (firstFaq) {
+                    const chevron = firstFaq.querySelector('.faq-toggle');
+                    chevron.classList.remove('bi-chevron-right');
+                    chevron.classList.add('bi-chevron-down');
+                }
+            });
+        </script>
+    @else
+        <p class="text-muted mt-3" data-aos="fade-up">No faq found.</p>
     @endif
     <!-- /Faq Section -->
 
@@ -656,22 +678,20 @@
                             data-email="{{ $emailTo }}">
                             <div class="row gy-4">
                                 <div class="col-md-6">
-                                    <input type="text" name="name" class="form-control" placeholder="Your Name"
-                                        required />
+                                    <input type="text" name="name" class="form-control" placeholder="Your Name" required />
                                 </div>
 
                                 <div class="col-md-6">
-                                    <input type="email" name="email" class="form-control" placeholder="Your Email"
-                                        required />
+                                    <input type="email" name="email" class="form-control" placeholder="Your Email" required />
                                 </div>
 
                                 <div class="col-md-12">
-                                    <input type="text" name="subject" class="form-control" placeholder="Subject"
-                                        required />
+                                    <input type="text" name="subject" class="form-control" placeholder="Subject" required />
                                 </div>
 
                                 <div class="col-md-12">
-                                    <textarea name="message" class="form-control" rows="6" placeholder="Message" required></textarea>
+                                    <textarea name="message" class="form-control" rows="6" placeholder="Message"
+                                        required></textarea>
                                 </div>
 
                                 <div class="col-md-12 text-center">
@@ -692,7 +712,7 @@
 
 
     <script>
-        document.getElementById('whatsappForm').addEventListener('submit', function(e) {
+        document.getElementById('whatsappForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const emailTo = this.getAttribute("data-email");
