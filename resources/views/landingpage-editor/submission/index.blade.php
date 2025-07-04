@@ -28,6 +28,11 @@
                             <i class="fa-solid fa-users"></i> Presentation Submission
                         </a>
                     </div>
+                    <div class="col-md-4">
+                        <a href="{{ route('landing.ethics-statements.index') }}" class="btn btn-secondary w-100 py-2">
+                            <i class="fa-solid fa-file-contract"></i> Ethics Statement
+                        </a>
+                    </div>
 
                 </div>
             </div>

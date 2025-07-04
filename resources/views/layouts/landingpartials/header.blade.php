@@ -2,16 +2,16 @@
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
         <a href="{{ route('home') }}" class="logo d-flex align-items-center">
             @php
-               $year = \App\Models\LandingSetting::where('is_active', true)->value('year');
-               $activeYear = $year ? \App\Models\LandingSetting::where('year', $year)->first() : null;
-               $logo = \App\Models\Logo::where('year', $activeYear ? $activeYear->year : date('Y'))->first();
-         @endphp
-         
-         @if($logo)
-             <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
-         @else
-             <p>No logo found for this year.</p>
-         @endif
+                $year = \App\Models\LandingSetting::where('is_active', true)->value('year');
+                $activeYear = $year ? \App\Models\LandingSetting::where('year', $year)->first() : null;
+                $logo = \App\Models\Logo::where('year', $activeYear ? $activeYear->year : date('Y'))->first();
+             @endphp
+
+            @if($logo)
+                <img src="{{ asset('storage/' . $logo->image) }}" width="200" height="100%" alt="Logo" />
+            @else
+                <p>No logo found for this year.</p>
+            @endif
         </a>
 
         <nav id="navmenu" class="navmenu">
@@ -26,12 +26,12 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#"><span>Submission</span> <i
-                            class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <a href="#"><span>Submission</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="{{ route('submission.abstract') }}">Abstract Submission</a></li>
                         <li><a href="{{ route('submission.fullpaper') }}">Fullpaper Submission</a></li>
                         <li><a href="{{ route('submission.presentation') }}">Presentation Submission</a></li>
+                        <li><a href="{{ route('submission.ethics') }}">Ethics Submission</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ route('gallery') }}">Gallery</a></li>

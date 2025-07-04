@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Landing\EthicsStatementController;
 use App\Http\Controllers\Landing\GalleryController;
 use App\Http\Controllers\Landing\SettingController;
 use App\Http\Controllers\ProfileController;
@@ -74,7 +75,6 @@ Route::get('/', [LandingPage::class, 'index'])->name('home');
 
 Route::get('/hotels-landing', [Hotels::class, 'index'])->name('hotels.landing');
 
-
 Route::get('/themes/{id}', [LandingPageController::class, 'showTheme'])->name('themes.show');
 
 Route::get('/payment-guidelines', [PaymentGuidelineController::class, 'showLandingPage'])->name('payment_guidelines.landing');
@@ -84,9 +84,10 @@ Route::get('/conference-program', [ConferenceProgramController::class, 'showLand
 Route::get('/gallery', [GalleryController::class, 'showLandingPage'])->name('gallery');
 
 Route::get('/previous-conference', [PreviousConferences::class, 'index'])->name('previous.conference');
-Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
-Route::get('download-abstract/{id}', [ArchiveController::class, 'downloadPdf'])->name('download.abstract');
 
+Route::get('abstract-download-all-pdf', [PreviousConferences::class, 'downloadAllPdf'])->name('downloadAllPdf');
+
+Route::get('download-abstract/{id}', [ArchiveController::class, 'downloadPdf'])->name('download.abstract');
 
 Route::prefix('committee')->group(function () {
     Route::get('/steering', [SteeringLandingPageController::class, 'index'])->name('committee.steering');
@@ -108,13 +109,12 @@ Route::prefix('submission')->group(function () {
         ->name('submission.presentation');
 });
 
-
 Route::get('/archives', [ArchiveController::class, 'index'])->name('archives.index');
 Route::get('/archives/{year}', [ArchiveController::class, 'show'])->name('archives.show');
 Route::get('/abstracts/{id}/download', [AbstractController::class, 'downloadPdf'])->name('abstracts.download');
 
-
-
+Route::get('/ethics', [EthicsStatementController::class, 'showLandingPage'])
+    ->name('submission.ethics');
 
 Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 
@@ -244,7 +244,11 @@ Route::name('landing.')
         Route::resource('newsletters', NewsletterController::class);
         Route::resource('prevconference', PrevconferenceController::class);
         Route::resource('hotels', HotelController::class);
+        // Tambahkan route ini ke dalam Route::prefix('submission')->group(function () {
 
+
+        // Tambahkan route ini ke dalam Route::name('landing.') group
+        Route::resource('ethics-statements', EthicsStatementController::class);
 
         // Route untuk halaman Setting Tahun Aktif
         Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
