@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('publications_journals', function (Blueprint $table) {
             $table->id();
             $table->string('image_type');
+            $table->string('image_link')->nullable();
             $table->string('image_path');
             $table->year('year');
             $table->timestamps();
