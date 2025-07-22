@@ -251,7 +251,7 @@ Route::name('landing.')
         Route::post('setting/{id}/set-active', [SettingController::class, 'setActive'])->name('setting.setActive');
     });
 
-Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter|indonesia-participants|foreign-participants'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::middleware(['auth', 'role:indonesia-presenter|foreign-presenter'])->group(function () {

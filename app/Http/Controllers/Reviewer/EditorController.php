@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\FilePayment;
 use App\Mail\AbstractInvoice;
 use App\Traits\FlashAlert;
+use App\Mail\ReviewerAssignedAbstract;
 
 class EditorController extends Controller
 {
@@ -105,6 +106,14 @@ class EditorController extends Controller
 
         $abstract->status = 'under review';
         $abstract->save();
+
+        $reviewer1 = User::find($request->reviewer_1_id);
+        Mail::to($reviewer1->email)->send(new ReviewerAssignedAbstract($abstract, $reviewer1));
+
+        if ($request->reviewer_2_id) {
+            $reviewer2 = User::find($request->reviewer_2_id);
+            Mail::to($reviewer2->email)->send(new ReviewerAssignedAbstract($abstract, $reviewer2));
+        }
 
         return redirect()->route('reviewer.editor.noReviewer')->with($this->alertAssign());
     }
