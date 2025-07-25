@@ -71,8 +71,9 @@ class EditorFullPaperController extends Controller
 
         $assignedReviewer1 = $fullpaper->reviewers->first() ? $fullpaper->reviewers[0]->id : null;
         $assignedReviewer2 = $fullpaper->reviewers->count() > 1 ? $fullpaper->reviewers[1]->id : null;
+        $assignedReviewer3 = $fullpaper->reviewers->count() > 2 ? $fullpaper->reviewers[2]->id : null;
 
-        return view('editor-fullpaper.assignReviewer', compact('fullpaper', 'reviewers', 'assignedReviewer1', 'assignedReviewer2'));
+        return view('editor-fullpaper.assignReviewer', compact('fullpaper', 'reviewers', 'assignedReviewer1', 'assignedReviewer2', 'assignedReviewer3'));
     }
 
     public function assignReviewer(Request $request, $fullpaperId)
@@ -82,6 +83,7 @@ class EditorFullPaperController extends Controller
         $request->validate([
             'reviewer_1_id' => 'required|exists:users,id',
             'reviewer_2_id' => 'nullable|exists:users,id|different:reviewer_1_id',
+            'reviewer_3_id' => 'nullable|exists:users,id|different:reviewer_1_id|different:reviewer_2_id',
         ]);
 
         if (!$request->reviewer_1_id && !$request->reviewer_2_id) {
@@ -96,6 +98,10 @@ class EditorFullPaperController extends Controller
         }
         if ($request->reviewer_2_id) {
             $reviewers[$request->reviewer_2_id] = ['created_at' => now(), 'updated_at' => now()];
+        }
+
+        if ($request->reviewer_3_id) {
+            $reviewers[$request->reviewer_3_id] = ['created_at' => now(), 'updated_at' => now()];
         }
 
         $fullpaper->reviewers()->attach($reviewers);

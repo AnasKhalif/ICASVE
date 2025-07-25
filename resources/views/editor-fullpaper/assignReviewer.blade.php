@@ -35,6 +35,20 @@
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="reviewer_3_id">Select Reviewer 3 (Optional)</label>
+                        <select class="form-control" name="reviewer_3_id" id="reviewer_3_id">
+                            <option value="">-- Select Reviewer 3 --</option>
+                            @foreach ($reviewers as $reviewer)
+                                <option value="{{ $reviewer->id }}"
+                                    {{ old('reviewer_3_id', $assignedReviewer3 ?? null) == $reviewer->id ? 'selected' : '' }}>
+                                    {{ $reviewer->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
                     <button type="submit" class="btn btn-sm btn-success">Assign Reviewers</button>
                     <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>

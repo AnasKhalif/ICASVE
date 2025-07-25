@@ -1,3 +1,45 @@
+@role('executive')
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item {{ request()->routeIs('executive.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('executive.index') }}">
+                    <i class="fa fa-clone menu-icon"></i>
+                    <span class="menu-title">Summary</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('executive.participants') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('executive.participants') }}">
+                    <i class="fa fa-users menu-icon"></i>
+                    <span class="menu-title">Participants</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('executive.abstracts') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('executive.abstracts') }}">
+                    <i class="fa fa-book menu-icon"></i>
+                    <span class="menu-title">Abstracts</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('executive.payments') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('executive.payments') }}">
+                    <i class="fa fa-credit-card-alt menu-icon"></i>
+                    <span class="menu-title">Payment</span>
+                    @php
+                        $noVerified = \App\Models\FilePayment::where('status', 'pending')->count();
+                    @endphp
+                    <span class="badge {{ $noVerified > 0 ? 'badge-danger' : 'badge-secondary' }}">{{ $noVerified }}
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('executive.reviewers') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('executive.reviewers') }}">
+                    <i class="fa fa-user menu-icon"></i>
+                    <span class="menu-title">Reviewers</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+@endrole
+
 @role('admin')
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
@@ -96,10 +138,16 @@
                     <span class="menu-title">Years</span>
                 </a>
             </li>
-            <li class="nav-item {{ request()->routeIs('admin.email-template.index') }}">
+            <li class="nav-item {{ request()->routeIs('admin.email-template.index') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.email-template.index') }}">
                     <i class="fa fa-envelope menu-icon"></i>
                     <span class="menu-title">Edit Email Template</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('admin.regenerate-certificate.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.regenerate-certificate.index') }}">
+                    <i class="fa fa-file menu-icon"></i>
+                    <span class="menu-title">Regenerate Certificate</span>
                 </a>
             </li>
         </ul>

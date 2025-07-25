@@ -36,8 +36,8 @@ class UploadController extends Controller
 
         $request->validate([
             'type' => 'required|in:' . implode(',', array_keys($mimeTypes)),
-            'file' => 'required|mimes:' . $mimeTypes[$request->type] . '|max:2048',
-            'logo' => 'nullable|mimes:png,jpg|max:2024'
+            'file' => 'required|mimes:' . $mimeTypes[$request->type] . '|max:5120',
+            'logo' => 'nullable|mimes:png,jpg|max:5120'
         ]);
 
         // Simpan file

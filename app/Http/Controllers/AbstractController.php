@@ -126,7 +126,7 @@ class AbstractController extends Controller
         return redirect()->route('abstracts.index')->with($this->alertCreated());
     }
 
-    private function generateCertificate(AbstractModel $abstract)
+    public function generateCertificate(AbstractModel $abstract)
     {
         $user = $abstract->user;
         $role = $user->roles->first()->name;

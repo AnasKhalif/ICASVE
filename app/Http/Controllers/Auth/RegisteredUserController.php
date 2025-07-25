@@ -99,7 +99,7 @@ class RegisteredUserController extends Controller
             'password' => $validatedData['password'],
         ];
 
-        Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
+        // Mail::to($validatedData['email'])->send(new RegistrationConfirmation($details));
         $this->generateCertificate($user);
 
         return redirect(route('login'))->with('success', 'Registration successful. A confirmation email has been sent.');

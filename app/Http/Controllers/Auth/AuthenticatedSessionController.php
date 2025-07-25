@@ -69,6 +69,14 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('landing.landingpage.index');
         }
 
+        $executive = [
+            'executive'
+        ];
+
+        if (array_intersect($roles, $executive)) {
+            return redirect()->route('executive.index');
+        }
+
         return redirect()->intended(route('admin.summary', absolute: false));
     }
 

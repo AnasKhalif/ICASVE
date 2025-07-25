@@ -67,6 +67,8 @@ use App\Http\Controllers\PreviousConferences;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Landing\NewsletterController;
 use App\Http\Controllers\Landing\PrevconferenceController;
+use App\Http\Controllers\Executive\ExecutiveController;
+use App\Http\Controllers\Admin\RegenerateCertificateController;
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -120,7 +122,19 @@ Route::get('/faq', [FaqLandingController::class, 'index'])->name('faq');
 Route::get('/contact', [ContactController::class, 'showLandingpage'])->name('contact');
 Route::post('/contact/send', [ContactController::class, 'sendEmail'])->name('contact.send');
 
+Route::prefix('executive')->middleware(['auth', 'role:executive'])->group(function () {
+    Route::get('/', [ExecutiveController::class, 'index'])->name('executive.index');
+    Route::get('/participants', [ExecutiveController::class, 'participants'])->name('executive.participants');
+    Route::get('/abstracts', [ExecutiveController::class, 'abstracts'])->name('executive.abstracts');
+    Route::get('/payments', [ExecutiveController::class, 'payments'])->name('executive.payments');
+    Route::get('/reviewers', [ExecutiveController::class, 'reviewers'])->name('executive.reviewers');
+});
+
 Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/regenerate-certificate', [RegenerateCertificateController::class, 'index'])->name('regenerate-certificate.index');
+    Route::post('/regenerate-certificate/{id}', [RegenerateCertificateController::class, 'regenerateCertificate'])->name('regenerate-certificate.generate');
+
+
     Route::resource('participant', 'UserController');
     Route::get('participant-excel', [UserController::class, 'exportExcel'])->name('participant.export');
     Route::get('abstracts-participant/{id}', 'UserController@showAbstract')->name('abstracts-participant.show');

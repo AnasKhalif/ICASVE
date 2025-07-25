@@ -31,8 +31,16 @@ class DashboardController extends Controller
             'landing-editor'
         ];
 
+        $executive = [
+            'executive'
+        ];
+
         if (in_array('admin', $roles)) {
             return redirect()->route('admin.summary');
+        }
+
+        if (array_intersect($roles, $executive)) {
+            return redirect()->route('executive.index');
         }
 
         if (array_intersect($roles, $reviewers)) {
