@@ -51,14 +51,25 @@ class FullPaperController extends Controller
                 return back()->with($this->alertFullpaperNotEdit());
             }
 
-            $previousStatus = $fullPaper->status;
+            $uploadedPath = $request->file('file')->store('full_papers', 'public');
 
-            Storage::disk('public')->delete($fullPaper->file_path);
+            if ($fullPaper->status === 'revision') {
 
-            $fullPaper->update([
-                'file_path' => $request->file('file')->store('full_papers', 'public'),
-                'status' => $previousStatus,
-            ]);
+                if ($fullPaper->revised_file_path) {
+                    Storage::disk('public')->delete($fullPaper->revised_file_path);
+                }
+
+                $fullPaper->revised_file_path = $uploadedPath;
+            } else {
+
+                if ($fullPaper->file_path) {
+                    Storage::disk('public')->delete($fullPaper->file_path);
+                }
+
+                $fullPaper->file_path = $uploadedPath;
+            }
+
+            $fullPaper->save();
         } else {
             FullPaper::create([
                 'abstract_id' => $abstract->id,
@@ -66,7 +77,6 @@ class FullPaperController extends Controller
                 'status' => 'open',
             ]);
         }
-
         return redirect()->route('abstracts.index')->with($this->alertCreated());
     }
 }

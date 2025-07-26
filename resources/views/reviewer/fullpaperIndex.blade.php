@@ -24,18 +24,44 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td class="text-wrap">{{ $fullPaper->abstract->title }}</td>
                                     <td class="text-center">
-                                        @if ($fullPaper->file_path)
-                                            <a href="{{ asset('storage/' . $fullPaper->file_path) }}" target="_blank"><i
-                                                    class="fa fa-download text-primary fa-3x mt-2"></i>
-                                            </a>
+                                        @if ($fullPaper)
+                                            @if ($fullPaper->file_path)
+                                                <a href="{{ asset('storage/' . $fullPaper->file_path) }}" target="_blank"
+                                                    class="d-block">
+                                                    <i class="fa fa-download text-primary fa-2x mt-2"></i>
+                                                </a>
+                                                <p class="text-muted mb-1">Submitted</p>
+                                            @endif
+
+
+                                            @if ($fullPaper->revised_file_path)
+                                                <a href="{{ asset('storage/' . $fullPaper->revised_file_path) }}"
+                                                    target="_blank" class="d-block">
+                                                    <i class="fa fa-file-download text-warning fa-2x mt-2"></i>
+                                                </a>
+                                                <p class="text-muted">Revised</p>
+                                            @endif
+
+
+                                            @if (!$fullPaper->file_path && !$fullPaper->revised_file_path)
+                                                <span class="text-muted">No file available</span>
+                                            @endif
                                         @else
                                             <span class="text-muted">No file available</span>
                                         @endif
                                     </td>
-                                    <td><span class="badge badge-info">{{ ucfirst($fullPaper->status) }}</span></td>
+
+                                    <td class="text-center">
+
+                                        <span
+                                            class="badge 
+        {{ $fullPaper->status === 'revision' ? 'badge-warning' : 'badge-info' }}">
+                                            {{ ucfirst($fullPaper->status) }}
+                                        </span>
+                                    </td>
                                     <td class="text-center">
                                         <a href="{{ route('reviewer.review-fullpaper.showReviewForm', $fullPaper->id) }}"
-                                            class="btn btn-sm btn-primary">Review</a>
+                                            class="btn btn-sm btn-primary text-center">Review</a>
                                     </td>
                                 </tr>
                             @empty

@@ -63,15 +63,47 @@
                                             class="btn btn-sm btn-warning">Edit Status</a>
                                     </td>
                                     <td class="text-center">
-                                        @if ($fullpaper->file_path)
-                                            <span class="badge badge-info">{{ ucfirst($fullpaper->status) }}</span><br>
-                                            <a href="{{ asset('storage/' . $fullpaper->file_path) }}" target="_blank">
-                                                <i class="fa fa-download text-primary fa-3x mt-2"></i>
-                                            </a>
+                                        @if ($fullpaper)
+                                            {{-- Status badge --}}
+                                            @php
+                                                $badgeClass = match ($fullpaper->status) {
+                                                    'revision' => 'badge-warning',
+                                                    'accepted' => 'badge-success',
+                                                    'rejected' => 'badge-danger',
+                                                    'under review' => 'badge-primary',
+                                                    default => 'badge-info',
+                                                };
+                                            @endphp
+                                            <span
+                                                class="badge {{ $badgeClass }}">{{ ucfirst($fullpaper->status) }}</span><br>
+
+                                            {{-- Original file --}}
+                                            @if ($fullpaper->file_path)
+                                                <a href="{{ asset('storage/' . $fullpaper->file_path) }}" target="_blank"
+                                                    class="d-block mt-2">
+                                                    <i class="fa fa-download text-primary fa-2x"></i>
+                                                </a>
+                                                <p class="text-muted mb-1">Submitted</p>
+                                            @endif
+
+                                            {{-- Revised file --}}
+                                            @if ($fullpaper->revised_file_path)
+                                                <a href="{{ asset('storage/' . $fullpaper->revised_file_path) }}"
+                                                    target="_blank" class="d-block">
+                                                    <i class="fa fa-file-download text-warning fa-2x"></i>
+                                                </a>
+                                                <p class="text-muted">Revised</p>
+                                            @endif
+
+                                            {{-- Jika dua-duanya kosong --}}
+                                            @if (!$fullpaper->file_path && !$fullpaper->revised_file_path)
+                                                <span class="text-muted">Not Submitted</span>
+                                            @endif
                                         @else
                                             <span class="text-muted">Not Submitted</span>
                                         @endif
                                     </td>
+
                                 </tr>
                             @empty
                                 <tr>

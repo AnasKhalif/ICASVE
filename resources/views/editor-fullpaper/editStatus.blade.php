@@ -48,6 +48,23 @@
                             </option>
                         </select>
                     </div>
+                    <div class="form-group mt-3">
+                        <label for="publication">Publication</label>
+                        <select class="form-control @error('publication') is-invalid @enderror" name="publication"
+                            id="publication" required>
+                            <option value="">-- Select Publication Type --</option>
+                            <option value="Journal Publication"
+                                {{ (old('publication') ?? $fullpaper->abstract?->publication) == 'Journal Publication' ? 'selected' : '' }}>
+                                Journal Publication</option>
+                            <option value="Proceedings Indexed in EBSCO"
+                                {{ (old('publication') ?? $fullpaper->abstract?->publication) == 'Proceedings Indexed in EBSCO' ? 'selected' : '' }}>
+                                Proceedings Indexed in EBSCO</option>
+                        </select>
+                        @error('publication')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <button type="submit" class="btn btn-sm btn-success">Update Status</button>
                     <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>

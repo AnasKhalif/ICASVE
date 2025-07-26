@@ -30,12 +30,21 @@
                                             @endif
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <p class="mb-1"><strong>Full Paper</strong></p>
                                             @if ($abstract->fullPaper)
+                                                <p class="mb-1"><strong>Full Paper</strong></p>
+
                                                 <a href="{{ asset('storage/' . $abstract->fullPaper->file_path) }}"
                                                     target="_blank" class="d-block mt-1">
-                                                    <i class="fa fa-download text-primary fa-2x mt-2"></i>
+                                                    <i class="fa fa-download text-primary fa-2x mt-2 ml-3"></i>
                                                 </a>
+                                                <p class="text-muted">Submitted</p>
+                                                @if ($abstract->fullPaper->revised_file_path)
+                                                    <a href="{{ asset('storage/' . $abstract->fullPaper->revised_file_path) }}"
+                                                        target="_blank" class="d-block mt-1">
+                                                        <i class="fa fa-file-download text-warning fa-2x mt-2 ml-3"></i>
+                                                    </a>
+                                                    <p class="text-muted">Revised</p>
+                                                @endif
                                             @else
                                                 <p class="text-muted">No Full Paper Uploaded</p>
                                             @endif
@@ -71,7 +80,13 @@
                                                 </ul>
                                             </div>
                                         @endif
+                                        <div class="col-md-6 mb-3">
+                                            <p class="mb-1"><strong>Publication Journal</strong></p>
 
+                                            <p class="text-muted" style="font-size: 0.9em;">
+                                                {{ $abstract->publication ?? 'Not Specified' }}
+                                            </p>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -103,8 +118,23 @@
                                             style="display: inline;">
                                             @csrf
                                             <input type="hidden" name="abstract_id" value="{{ $abstract->id }}">
-                                            <button type="submit"
-                                                class="btn btn-sm btn-primary">{{ optional($abstract->fullPaper)->status === 'revision' ? 'Upload the Revised Full Paper' : 'Upload Full Paper' }}</button>
+                                            <button type="submit" class="btn btn-sm btn-primary">Upload Full Paper</button>
+                                        </form>
+                                    @endif
+                                @endif
+                            @endforeach
+                        @endif
+
+                        @if ($openFullPaperUpload && $abstracts->where('status', 'accepted')->count() > 0)
+                            @foreach ($abstracts as $abstract)
+                                @if ($abstract->fullPaper && $abstract->fullPaper->status === 'revision')
+                                    @if ($abstract->user?->filePayment?->status === 'verified')
+                                        <form action="{{ route('fullpapers.create') }}" method="POST"
+                                            style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="abstract_id" value="{{ $abstract->id }}">
+                                            <button type="submit" class="btn btn-sm btn-warning">Upload Revised Full
+                                                Paper</button>
                                         </form>
                                     @endif
                                 @endif

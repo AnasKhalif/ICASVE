@@ -121,14 +121,20 @@ class EditorFullPaperController extends Controller
 
     public function updateStatus(Request $request, $fullpaperId)
     {
-        $fullpaper = FullPaper::findOrFail($fullpaperId);
+        $fullpaper = FullPaper::with('abstract')->findOrFail($fullpaperId);
 
         $request->validate([
-            'status' => 'required|string|in:open,under review,accepted,revision,rejected'
+            'status' => 'required|string|in:open,under review,accepted,revision,rejected',
+            'publication' => 'required|string|in:Journal Publication,Proceedings Indexed in EBSCO'
         ]);
 
         $fullpaper->status = $request->status;
         $fullpaper->save();
+
+        if ($fullpaper->abstract) {
+            $fullpaper->abstract->publication = $request->publication;
+            $fullpaper->abstract->save();
+        }
 
         if ($request->status === 'accepted') {
             $user = $fullpaper->abstract?->user;
