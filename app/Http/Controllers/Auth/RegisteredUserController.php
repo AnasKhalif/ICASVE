@@ -31,6 +31,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $role = Role::whereIn('name', [
+            'reviewer',
             'indonesia-presenter',
             'foreign-presenter',
             'indonesia-participants',
@@ -107,8 +108,16 @@ class RegisteredUserController extends Controller
 
     public function generateCertificate(User $user)
     {
-        // Tentukan template sertifikat untuk peserta
-        $templateUrl = Upload::getFilePath('certificate_participant');
+        if ($user->hasRole('reviewer')) {
+            $templateUrl = Upload::getFilePath('reviewer_certificate');
+            $certificateType = 'reviewer';
+            $participantText = 'Reviewer';
+        } else {
+            $templateUrl = Upload::getFilePath('certificate_participant');
+            $certificateType = 'participant';
+            $participantText = 'Participant';
+        }
+
         $templatePath = storage_path('app/public/' . str_replace(asset('storage/'), '', $templateUrl));
 
         if (!file_exists($templatePath)) {
@@ -127,16 +136,16 @@ class RegisteredUserController extends Controller
         $pdf->SetFont('Times', 'B', 45); // Gunakan font Times New Roman atau Helvetica
 
         // Menentukan posisi untuk nama penerima dan menambahkan garis bawah
-        $nameWidth = $pdf->GetStringWidth($user->name);
+        $nameToPrint = $user->name_certificate ?: $user->name;
+        $nameWidth = $pdf->GetStringWidth($nameToPrint);
         $nameX = ($size['width'] - $nameWidth) / 2;  // Memusatkan nama
         $pdf->SetXY($nameX, 150);  // Koordinat untuk nama penerima
-        $pdf->Write(0, $user->name);
+        $pdf->Write(0, $nameToPrint);
 
         // Menambahkan garis bawah pada nama
         $pdf->Line($nameX, 155, $nameX + $nameWidth, 155);  // Garis bawah untuk nama
 
         // Menambahkan teks untuk institusi
-        $participantText = "Participant";  // Teks yang ingin ditampilkan
         $participantWidth = $pdf->GetStringWidth($participantText);
         $participantX = ($size['width'] - $participantWidth) / 2;  // Memusatkan teks
         $pdf->SetXY($participantX, 200);  // Koordinat untuk teks

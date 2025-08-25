@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Traits\FlashAlert;
 use App\Models\Certificate;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\AbstractController;
 
 class ProfileController extends Controller
 {
@@ -33,6 +34,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $originalName = $user->name;
+        $originalNameCertificate = $user->name_certificate;
 
         $user->update($request->validated());
 
@@ -41,8 +43,15 @@ class ProfileController extends Controller
             $user->save();
         }
 
-        if ($originalName !== $user->name) {
-            $this->updateCertificate($user);
+        if ($originalName !== $user->name || $originalNameCertificate !== $user->name_certificate) {
+            if ($user->hasRole('indonesia-presenter') || $user->hasRole('foreign-presenter')) {
+                $abstract = $user->abstracts()->first();
+                if ($abstract) {
+                    app(AbstractController::class)->generateCertificate($abstract);
+                }
+            } else {
+                $this->updateCertificate($user);
+            }
         }
 
         return Redirect::route('profile.edit')->with($this->alertUpdated());

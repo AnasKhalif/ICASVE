@@ -31,6 +31,45 @@ class FullPaperController extends Controller
         return view('fullpapers.create', compact('abstract'));
     }
 
+    public function createCommitmentLetter(Request $request)
+    {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_full_paper_upload) {
+            return redirect()->route('abstracts.index')->with($this->alertFullpaperClosed());
+        }
+
+        $abstractId = $request->input('abstract_id');
+        $abstract = AbstractModel::findOrFail($abstractId);
+
+        return view('fullpapers.commitment_letter', compact('abstract'));
+    }
+
+    public function storeCommitmentLetter(Request $request, $abstractId)
+    {
+        $conferenceSetting = ConferenceSetting::first();
+        if (!$conferenceSetting || !$conferenceSetting->open_full_paper_upload) {
+            return redirect()->route('abstracts.index')->with($this->alertFullpaperClosed());
+        }
+
+        $request->validate([
+            'commitment_letter' => 'required|mimes:pdf,docx,doc|max:10240',
+        ]);
+
+        $abstract = AbstractModel::findOrFail($abstractId);
+        $fullPaper = FullPaper::where('abstract_id', $abstract->id)->first();
+
+        if ($fullPaper && $fullPaper->status === 'accepted') {
+            $uploadedPath = $request->file('commitment_letter')->store('commitment_letters', 'public');
+
+            $fullPaper->commitment_letter_path = $uploadedPath;
+            $fullPaper->save();
+
+            return redirect()->route('abstracts.index')->with($this->alertCreated());
+        }
+
+        return back()->with($this->alertFullpaperNotAccepted());
+    }
+
     public function store(Request $request, $abstractId)
     {
         $conferenceSetting = ConferenceSetting::first();

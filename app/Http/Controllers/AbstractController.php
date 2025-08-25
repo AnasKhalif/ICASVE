@@ -36,7 +36,12 @@ class AbstractController extends Controller
         $conferenceSetting = ConferenceSetting::first();
         $openAbstractSubmission = $conferenceSetting->open_abstract_submission ?? false;
         $openFullPaperUpload = $conferenceSetting->open_full_paper_upload ?? false;
-        return view('abstracts.index', compact('abstracts', 'openAbstractSubmission', 'openFullPaperUpload'));
+
+        $user = Auth::user();
+        $fullPaper = $user->abstracts->first()->fullPaper;
+        $isFullPaperAccepted = $fullPaper && $fullPaper->status == 'accepted';
+
+        return view('abstracts.index', compact('abstracts', 'openAbstractSubmission', 'openFullPaperUpload', 'isFullPaperAccepted'));
     }
 
     /**
@@ -149,10 +154,11 @@ class AbstractController extends Controller
 
         $pdf->SetFont('Times', 'B', 45);
 
-        $nameWidth = $pdf->GetStringWidth($user->name);
+        $nameToPrint = $user->name_certificate ?: $user->name;
+        $nameWidth = $pdf->GetStringWidth($nameToPrint);
         $nameX = ($size['width'] - $nameWidth) / 2;
         $pdf->SetXY($nameX, 150);
-        $pdf->Write(0, $user->name);
+        $pdf->Write(0, $nameToPrint);
 
         $pdf->Line($nameX, 155, $nameX + $nameWidth, 155);
 

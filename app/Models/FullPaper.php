@@ -9,7 +9,10 @@ class FullPaper extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['abstract_id', 'file_path', 'status'];
+    protected $fillable = [
+        'abstract_id', 'file_path', 'commitment_letter_path', 'status', 'note',
+        'similarity_file',
+    ];
 
     public function abstract()
     {

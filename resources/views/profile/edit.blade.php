@@ -45,6 +45,14 @@
                         @enderror
                     </div>
                     <div class="col-md-6">
+                        <label for="name_certificate" class="form-label">Name Certificate</label>
+                        <input id="name_certificate" name="name_certificate" type="text" class="form-control"
+                            value="{{ old('name_certificate', $user->name_certificate) }}" required autofocus>
+                        @error('name_certificate')
+                            <div class="text-danger small">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input id="email" name="email" type="email" class="form-control"
                             value="{{ old('email', $user->email) }}" required>

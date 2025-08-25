@@ -28,6 +28,12 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="card-title">Participants</h4>
                     <div class="d-flex">
+                        <form action="{{ route('admin.invite.send') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-warning btn-sm">
+                                <p class="m-0 text-white text-center">Send Invitation</p>
+                            </button>
+                        </form>
                         <a href="{{ route('admin.participant.export') }}" target="_blank"
                             class="btn btn-sm btn-primary me-2">
                             <i class="fa fa-file-excel"></i> Excel

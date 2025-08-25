@@ -25,7 +25,11 @@ class SummaryReviewerController extends Controller
 
         $allAbstracts = AbstractModel::count();
         $allFullPapers = FullPaper::count();
+        $user = Auth::user();
+        $reviewerCertificate = Certificate::where('user_id', $user->id)
+            ->where('certificate_type', 'reviewer')
+            ->first();
 
-        return view('reviewer.summary', compact('countCompletedReviews', 'countCompletedPapers', 'allAbstracts', 'allFullPapers'));
+        return view('reviewer.summary', compact('countCompletedReviews', 'countCompletedPapers', 'allAbstracts', 'allFullPapers', 'reviewerCertificate'));
     }
 }

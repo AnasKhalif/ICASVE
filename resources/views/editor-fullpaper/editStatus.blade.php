@@ -65,6 +65,19 @@
                         @enderror
                     </div>
 
+                    <div class="form-group mt-3">
+                        <label for="note">Note (optional)</label>
+                        <textarea class="form-control" name="note" id="note" rows="3">{{ old('note', $fullpaper->note) }}</textarea>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="similarity_file">Upload Similarity File (PDF, DOC, DOCX, max 2MB)</label>
+                        <input type="file" name="similarity_file" class="form-control" accept=".pdf,.doc,.docx">
+                        @if ($fullpaper->similarity_file)
+                            <a href="{{ asset('storage/' . $fullpaper->similarity_file) }}" target="_blank">View Uploaded
+                                File</a>
+                        @endif
+                    </div>
+
                     <button type="submit" class="btn btn-sm btn-success">Update Status</button>
                     <a href="{{ url()->previous() }}" class="btn btn-sm btn-light">Cancel</a>
                 </form>

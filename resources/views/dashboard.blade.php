@@ -102,6 +102,30 @@
                     </div>
                 </div>
             </div>
+
+            @if ($isFullPaperAccepted)
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <strong>Commitment Letter Template</strong>
+                            </div>
+                            <div class="card-body">
+                                <p>
+                                    This Commitment Letter template is available for download once your full paper is
+                                    accepted.
+                                    Please download the template and provide your signature as needed.
+                                </p>
+                                <a href="{{ \App\Models\Upload::getFilePath('commitment_letter') }}" class="btn btn-primary"
+                                    target="_blank">
+                                    <i class="fa fa-download"></i> Download Template
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             @foreach ($user->abstracts as $abstract)
                 @php
                     $participantCertificate = $user->certificates->firstWhere('certificate_type', 'participant');

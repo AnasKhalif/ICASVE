@@ -127,19 +127,21 @@
 
                         @if ($openFullPaperUpload && $abstracts->where('status', 'accepted')->count() > 0)
                             @foreach ($abstracts as $abstract)
-                                @if ($abstract->fullPaper && $abstract->fullPaper->status === 'revision')
+                                @if ($abstract->fullPaper && $abstract->fullPaper->status === 'accepted')
                                     @if ($abstract->user?->filePayment?->status === 'verified')
-                                        <form action="{{ route('fullpapers.create') }}" method="POST"
+                                        <form action="{{ route('fullpapers.createCommitmentLetter') }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             <input type="hidden" name="abstract_id" value="{{ $abstract->id }}">
-                                            <button type="submit" class="btn btn-sm btn-warning">Upload Revised Full
-                                                Paper</button>
+                                            <button type="submit" class="btn btn-sm btn-green">Upload Commitment
+                                                Letter</button>
                                         </form>
                                     @endif
                                 @endif
                             @endforeach
                         @endif
+
+
                     </div>
                 </div>
                 <div class="table-responsive pt-3">

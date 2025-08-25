@@ -31,7 +31,8 @@ class UploadController extends Controller
             'signature' => 'jpg',
             'certificate_presenter' => 'pdf',
             'certificate_participant' => 'pdf',
-            'logo' => 'png,jpg'
+            'logo' => 'png,jpg',
+            'commitment_letter' => 'docx',
         ];
 
         $request->validate([

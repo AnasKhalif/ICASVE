@@ -61,6 +61,10 @@ class DashboardController extends Controller
             'filePayment',
             'certificates'
         ])->find(Auth::id());
-        return view('dashboard', compact('user'));
+
+        $fullPaper = $user->abstracts->first()->fullPaper;
+        $isFullPaperAccepted = $fullPaper && $fullPaper->status == 'accepted';
+
+        return view('dashboard', compact('user', 'isFullPaperAccepted'));
     }
 }

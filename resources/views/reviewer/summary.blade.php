@@ -67,6 +67,27 @@
                     </div>
                 </div>
             </div>
+
+            @if ($reviewerCertificate)
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="{{ asset('storage/' . $reviewerCertificate->certificate_path) }}"
+                                        target="_blank">
+                                        <i class="fa fa-user-check fa-3x"></i><br>
+                                    </a>
+                                </h5>
+                                <p class="card-text fw-bold">Reviewer Certificate</p>
+                                <span class="badge bg-{{ $reviewerCertificate->status == 1 ? 'success' : 'secondary' }}">
+                                    {{ $reviewerCertificate->status == 1 ? 'Active' : 'Inactive' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

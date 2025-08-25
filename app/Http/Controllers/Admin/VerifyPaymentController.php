@@ -13,7 +13,11 @@ use App\Models\Year;
 use App\Models\ConferenceSetting;
 use App\Mail\PaymentVerified;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentReminderMail;
 use App\Traits\FlashAlert;
+use App\Jobs\SendPaymentReminderEmail;
+use App\Jobs\SendPaymentReminderEmailForeign;
+use Illuminate\Support\Facades\Bus;
 
 class VerifyPaymentController extends Controller
 {
@@ -29,7 +33,7 @@ class VerifyPaymentController extends Controller
 
         $payments = FilePayment::with('user.roles')
             ->whereYear('created_at', $activeYear->year)
-            ->paginate(8);
+            ->paginate(10);
         return view('verify-payment.index', compact('payments'));
     }
 
@@ -61,5 +65,48 @@ class VerifyPaymentController extends Controller
 
         $pdf = PDF::loadView('verify-payment.digital-pdf', compact('filePayment', 'letterHeader', 'signature', 'conferenceChairPerson'));
         return $pdf->stream('payment-digital.pdf');
+    }
+
+    public function sendReminder()
+    {
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', [
+                'indonesia-participants',
+                'foreign-participants',
+                'indonesia-presenter',
+                'foreign-presenter'
+            ]);
+        })
+            ->whereDoesntHave('filePayments') // Belum ada pembayaran sama sekali
+            ->get();
+
+        foreach ($users as $user) {
+            SendPaymentReminderEmail::dispatch($user);
+        }
+
+        return back()->with('success', "Email reminder berhasil dikirim");
+    }
+
+    public function sendReminderForeign()
+    {
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', [
+                'foreign-participants',
+                'foreign-presenter'
+            ]);
+        })
+            ->whereDoesntHave('filePayments')
+            ->get();
+
+        $delay = 0;
+        foreach ($users as $user) {
+            Bus::dispatch(
+                (new SendPaymentReminderEmailForeign($user))
+                    ->delay(now()->addMinutes($delay))
+            );
+            $delay += 2;
+        }
+
+        return back()->with('success', "Email reminder untuk foreign berhasil dikirim");
     }
 }

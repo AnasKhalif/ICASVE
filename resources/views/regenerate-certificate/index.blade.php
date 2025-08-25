@@ -8,7 +8,6 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <h4 class="card-title">Regenerate Certificate</h4>
-                    {{-- Optional Action Button --}}
                 </div>
                 <p class="card-description">
                     List of Users to Regenerate Certificate
@@ -25,6 +24,7 @@
                                 <th class="text-center">Name</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Institution</th>
+                                <th class="text-center">Role</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -36,11 +36,13 @@
                                     <td class="text-center">{{ $user->email }}</td>
                                     <td class="text-center">{{ $user->institution }}</td>
                                     <td class="text-center">
+                                        {{ $user->roles->pluck('display_name')->join(', ') }}
+                                    </td>
+                                    <td class="text-center">
                                         <form method="POST"
                                             action="{{ route('admin.regenerate-certificate.generate', $user->id) }}">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary btn-sm"
-                                                onclick="return confirm('Regenerate certificate for {{ $user->name }}?')">
+                                            <button type="submit" class="btn btn-primary btn-sm">
                                                 Regenerate
                                             </button>
                                         </form>
@@ -55,7 +57,6 @@
                     </table>
                 </div>
 
-                {{-- Pagination --}}
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item {{ $users->onFirstPage() ? 'disabled' : '' }}">

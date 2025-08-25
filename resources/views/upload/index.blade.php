@@ -20,32 +20,37 @@
             'logo' => [
                 'label' => 'LOGO',
                 'description' => "This file will be used in: letter of acceptance, payment receipt <br>
-                                                                          The image size should be 300 × 300 pixels <br>
-                                                                          File must be in PNG format having extension .png",
+                                                                                  The image size should be 300 × 300 pixels <br>
+                                                                                  File must be in PNG format having extension .png",
             ],
             'letter_header' => [
                 'label' => 'LETTER HEADER',
                 'description' => "This file will be used in: letter of acceptance, payment receipt <br>
-                                                                          The image size should be 2390 × 470 pixels <br>
-                                                                          File must be in PNG format having extension .png",
+                                                                                  The image size should be 2390 × 470 pixels <br>
+                                                                                  File must be in PNG format having extension .png",
             ],
             'signature' => [
                 'label' => 'SIGNATURE',
                 'description' => "This file will be used in: letter of acceptance, payment receipt <br>
-                                                                          The image size should be 900 × 320 pixels <br>
-                                                                          File must be in JPG format having extension .jpg",
+                                                                                  The image size should be 900 × 320 pixels <br>
+                                                                                  File must be in JPG format having extension .jpg",
             ],
             'certificate_presenter' => [
                 'label' => 'CERTIFICATE BACKGROUND (PRESENTER)',
                 'description' => "This file will be used in: PRESENTER certificate <br>
-                                                                          The image size should be 1754 × 1240 pixels (equal to A4 in 150 dpi) <br>
-                                                                          File must be in PDF format having extension .pdf",
+                                                                                  The image size should be 1754 × 1240 pixels (equal to A4 in 150 dpi) <br>
+                                                                                  File must be in PDF format having extension .pdf",
             ],
             'certificate_participant' => [
                 'label' => 'CERTIFICATE BACKGROUND (PARTICIPANT)',
                 'description' => "This file will be used in: PARTICIPANT certificate <br>
-                                                                          The image size should be 1754 × 1240 pixels (equal to A4 in 150 dpi) <br>
-                                                                          File must be in PDF format having extension .pdf",
+                                                                                  The image size should be 1754 × 1240 pixels (equal to A4 in 150 dpi) <br>
+                                                                                  File must be in PDF format having extension .pdf",
+            ],
+            'commitment_letter' => [
+                'label' => 'COMMITMENT LETTER TEMPLATE',
+                'description' => "This file will be used for: commitment letter template <br>
+                                The file must be in PDF format having extension .docx",
             ],
         ] as $key => $data)
                     <div class="card my-3">

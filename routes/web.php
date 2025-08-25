@@ -69,6 +69,13 @@ use App\Http\Controllers\Landing\NewsletterController;
 use App\Http\Controllers\Landing\PrevconferenceController;
 use App\Http\Controllers\Executive\ExecutiveController;
 use App\Http\Controllers\Admin\RegenerateCertificateController;
+use Illuminate\Support\Facades\Artisan;
+
+
+Route::get('run-queue-worker', function () {
+    Artisan::call('queue:work', ['--once' => true]);
+    return 'Queue Worker executed successfully.';
+});
 
 Route::get('/', [LandingPage::class, 'index'])->name('home');
 
@@ -136,7 +143,10 @@ Route::name('admin.')->prefix('admin')->namespace('App\Http\Controllers\Admin')-
 
 
     Route::resource('participant', 'UserController');
+    Route::post('invite/send', [UserController::class, 'sendInvitation'])->name('invite.send');
+    Route::post('parallel-session/send', [UserController::class, 'sendParallelSession'])->name('parallel-session.send');
     Route::get('participant-excel', [UserController::class, 'exportExcel'])->name('participant.export');
+    Route::get('participant-not-paid-excel', [UserController::class, 'notPaidExcel'])->name('participant.exportNotPaid');
     Route::get('abstracts-participant/{id}', 'UserController@showAbstract')->name('abstracts-participant.show');
     Route::get('abstracts-participant/{id}/download', 'UserController@downloadAbstractPdf')->name('abstracts-participant.downloadPdf');
     Route::get('abstracts-participant/{id}/acceptance-pdf', 'UserController@acceptancePdf')->name('abstracts-participant.acceptancePdf');
@@ -273,8 +283,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('abstracts/{id}/download-pdf', [AbstractController::class, 'downloadPdf'])->name('abstracts.downloadPdf');
         Route::get('abstracts/{id}/acceptance-pdf', [AbstractController::class, 'acceptancePdf'])->name('abstracts.acceptancePdf');
         Route::get('/fullpaper-create', function () {
-            return redirect()->route('abstracts.index')->with('error', 'Invalid request method.');
+            return redirect()->route('abstracts.index');
         });
+        Route::get('/fullpaper/commitment-letter', function () {
+            return redirect()->route('abstracts.index');
+        });
+        Route::post('fullpaper/commitment-letter', [FullPaperController::class, 'createCommitmentLetter'])->name('fullpapers.createCommitmentLetter');
+        Route::post('fullpaper/commitment-letter/{abstractId}', [FullPaperController::class, 'storeCommitmentLetter'])->name('fullpapers.storeCommitmentLetter');
         Route::post('fullpaper-create', [FullPaperController::class, 'create'])->name('fullpapers.create');
         Route::post('store/{abstractId}', [FullPaperController::class, 'store'])->name('fullpapers.store');
         Route::get('abstracts/{id}/certificate/{type}', [AbstractController::class, 'viewCertificate'])->name('abstracts.viewCertificate');

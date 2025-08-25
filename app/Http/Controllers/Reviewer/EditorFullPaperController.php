@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Traits\FlashAlert;
 use App\Mail\FullPaperAccepted;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EditorFullPaperController extends Controller
 {
@@ -125,8 +126,18 @@ class EditorFullPaperController extends Controller
 
         $request->validate([
             'status' => 'required|string|in:open,under review,accepted,revision,rejected',
-            'publication' => 'required|string|in:Journal Publication,Proceedings Indexed in EBSCO'
+            'publication' => 'required|string|in:Journal Publication,Proceedings Indexed in EBSCO',
+            'note' => 'nullable|string',
+            'similarity_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
+
+        if ($request->hasFile('similarity_file')) {
+            if ($fullpaper->similarity_file) {
+                Storage::disk('public')->delete($fullpaper->similarity_file);
+            }
+            $path = $request->file('similarity_file')->store('similarity_files', 'public');
+            $fullpaper->similarity_file = $path;
+        }
 
         $fullpaper->status = $request->status;
         $fullpaper->save();

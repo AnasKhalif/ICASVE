@@ -18,6 +18,15 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label for="name_certificate">Name on Certificate</label>
+                        <input type="text" class="form-control @error('name_certificate') is-invalid @enderror"
+                            id="name_certificate" name="name_certificate" value="{{ old('name_certificate') }}"
+                            placeholder="E.g. Dr. Budi Utomo, M.Sc." required>
+                        @error('name_certificate')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
                         <label for="name">Email address</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                             name="email" value="{{ old('email') }}" placeholder="E.g. budiutomo@gmail.com" required>

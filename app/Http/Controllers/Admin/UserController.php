@@ -20,6 +20,10 @@ use Illuminate\Support\Facades\Storage;
 use setasign\Fpdi\Fpdi;
 use App\Models\Certificate;
 use Illuminate\Support\Str;
+use App\Exports\NotPaidExport;
+use App\Mail\InvitationMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ParallelSessionMail;
 
 class UserController extends Controller
 {
@@ -94,6 +98,7 @@ class UserController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'name_certificate' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'institution' => ['required', 'string', 'max:255'],
             'job_title' => ['required', 'string', 'max:255'],
@@ -106,6 +111,7 @@ class UserController extends Controller
 
         $user = User::create([
             'name' => $validatedData['name'],
+            'name_certificate' => $validatedData['name_certificate'],
             'email' => $validatedData['email'],
             'institution' => $validatedData['institution'],
             'job_title' => $validatedData['job_title'],
@@ -244,6 +250,7 @@ class UserController extends Controller
 
             $validatedData = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
+                'name_certificate' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
                 'institution' => ['required', 'string', 'max:255'],
                 'job_title' => ['required', 'string', 'max:255'],
@@ -255,6 +262,7 @@ class UserController extends Controller
 
             $user->update([
                 'name' => $validatedData['name'],
+                'name_certificate' => $validatedData['name_certificate'],
                 'email' => $validatedData['email'],
                 'institution' => $validatedData['institution'],
                 'job_title' => $validatedData['job_title'],
@@ -338,4 +346,132 @@ class UserController extends Controller
     {
         return Excel::download(new ParticipantsExport, 'participants.xlsx');
     }
+
+    public function notPaidExcel()
+    {
+        return Excel::download(new NotPaidExport, 'participants_not_paid.xlsx');
+    }
+
+    public function sendInvitation(Request $request)
+    {
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', [
+                'indonesia-participants',
+                'foreign-participants',
+                'indonesia-presenter',
+                'foreign-presenter'
+            ]);
+        })
+
+            ->whereHas('abstracts', function ($q) {
+                $q->where('status', 'accepted');
+            })
+
+            ->whereHas('filePayment', function ($q) {
+                $q->where('status', 'verified');
+            })
+            ->get();
+
+        foreach ($users as $user) {
+            $abstract = $user->abstracts()->where('status', 'accepted')->first();
+            if ($abstract) {
+                Mail::to($user->email)->send(new InvitationMail($user, $abstract));
+            }
+        }
+
+        return back()->with('success', "Invitation sent!");
+    }
+
+    public function sendParallelSession(Request $request)
+    {
+        // $user = User::find(132);
+        // if ($user) {
+        //     $abstract = AbstractModel::where('user_id', $user->id)->first();
+        //     Mail::to($user->email)->send(new ParallelSessionMail($user, $abstract));
+        //     return back()->with('success', 'Invitation sent to user ID 158!');
+        // }
+        // return back()->with('error', 'User not found!');
+
+        // $user = User::find(172);
+        // if ($user) {
+        //     Mail::to($user->email)->send(new ParallelSessionMail($user));
+        //     return back()->with('success', 'Invitation sent');
+        // }
+
+        $users = User::whereHas('roles', function ($query) {
+            $query->whereIn('name', [
+                'indonesia-participants',
+                'foreign-participants',
+                'indonesia-presenter',
+                'foreign-presenter'
+            ]);
+        })
+            ->whereHas('abstracts', function ($q) {
+                $q->where('status', 'accepted');
+            })
+            ->whereHas('filePayment', function ($q) {
+                $q->where('status', 'verified');
+            })
+            ->get();
+
+        foreach ($users as $user) {
+            Mail::to($user->email)->send(new ParallelSessionMail($user));
+        }
+
+        return back()->with('success', "Parallel session schedule sent!");
+    }
+
+    // public function sendInvitation(Request $request)
+    // {
+    //     // 1. Kirim ke PRESENTER (indo & foreign) - payment verified/pending, abstract accepted
+    //     $presenters = User::whereHas('roles', function ($query) {
+    //         $query->whereIn('name', [
+    //             'indonesia-presenter',
+    //             'foreign-presenter'
+    //         ]);
+    //     })
+    //         ->whereHas('abstracts', function ($q) {
+    //             $q->where('status', 'accepted');
+    //         })
+    //         ->whereHas('filePayment', function ($q) {
+    //             $q->whereIn('status', ['verified', 'pending']);
+    //         })
+    //         ->get();
+
+    //     foreach ($presenters as $user) {
+    //         $abstract = $user->abstracts()->where('status', 'accepted')->first();
+    //         Mail::to($user->email)->send(new InvitationMail($user, $abstract));
+    //     }
+
+    //     // 2. Kirim ke PARTICIPANT (indo & foreign) - payment verified, TIDAK perlu abstract
+    //     $participants = User::whereHas('roles', function ($query) {
+    //         $query->whereIn('name', [
+    //             'indonesia-participants',
+    //             'foreign-participants'
+    //         ]);
+    //     })
+    //         ->whereHas('filePayment', function ($q) {
+    //             $q->where('status', 'verified');
+    //         })
+    //         // Tidak perlu whereHas('abstracts')
+    //         ->get();
+
+    //     foreach ($participants as $user) {
+    //         Mail::to($user->email)->send(new InvitationMail($user, null));
+    //     }
+
+    //     return back()->with('success', "Invitation sent!");
+    // }
+
+    // public function sendInvitation(Request $request)
+    // {
+
+    //     $user = User::find(132);
+    //     if ($user) {
+    //         $abstract = AbstractModel::where('user_id', $user->id)->first();
+    //         Mail::to($user->email)->send(new InvitationMail($user, $abstract));
+    //         return back()->with('success', 'Invitation sent to user ID 158!');
+    //     }
+    //     return back()->with('error', 'User not found!');
+    // }
 }
