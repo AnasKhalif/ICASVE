@@ -11,6 +11,10 @@ use App\Models\FullPaper;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\FilePayment;
 use App\Models\Year;
+use App\Models\SteeringCommittee;
+use App\Models\OrganizingCommittee;
+use App\Models\ReviewerCommittee;
+use App\Models\Speaker;
 use App\Traits\FlashAlert;
 
 class AbstractsController extends Controller
@@ -202,6 +206,30 @@ class AbstractsController extends Controller
             return back()->with('error', 'No active year set.');
         }
 
+        $steeringCommittee = SteeringCommittee::where('year', $activeYear->year)->get();
+        if ($steeringCommittee->isEmpty()) {
+            return back()->with('error', 'Steering Committee for the active year is not set.');
+        }
+
+        $organizingCommittee = OrganizingCommittee::where('year', $activeYear->year)->get();
+        if ($organizingCommittee->isEmpty()) {
+            return back()->with('error', 'Organizing Committee for the active year is not set.');
+        }
+
+        $reviewerCommittee = ReviewerCommittee::where('year', $activeYear->year)->get();
+        if ($reviewerCommittee->isEmpty()) {
+            return back()->with('error', 'Reviewer Committee for the active year is not set.');
+        }
+
+       $speakers = Speaker::where('year', $activeYear->year)->get();
+
+        if ($speakers->isEmpty()) {
+            return back()->with('error', 'Speakers for the active year is not set.');
+        }
+        
+        $keynoteSpeakers = $speakers->where('role', 'keynote_speaker');
+        $invitedSpeakers = $speakers->where('role', 'invited_speaker');
+
         $abstracts = AbstractModel::with('symposium')
             ->where('status', 'accepted')
             ->whereYear('created_at', $activeYear->year)
@@ -215,7 +243,7 @@ class AbstractsController extends Controller
             $abstract->formattedAffiliations = $this->formatAffiliations($abstract->affiliations);
         }
 
-        $pdf = PDF::loadView('abstract.verified_pdf', compact('abstracts'));
+        $pdf = PDF::loadView('abstract.verified_pdf', compact('abstracts', 'steeringCommittee', 'organizingCommittee', 'reviewerCommittee', 'keynoteSpeakers', 'invitedSpeakers'));
 
         return $pdf->stream('verified-abstracts.pdf');
     }
