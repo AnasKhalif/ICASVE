@@ -15,7 +15,6 @@
                             <th>Title</th>
                             <th>Description</th>
                             <th>PDF</th>
-                            <th>Abstract Book</th>
                             <th>Year</th>
                             <th>Action</th>
                         </tr>
@@ -31,14 +30,6 @@
                                         <a href="{{ $prevconference->pdf }}" target="_blank">Download PDF</a>
                                     @else
                                         No PDF
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($prevconference->abstract_book)
-                                        <a href="{{ asset('storage/' . $prevconference->abstract_book) }}"
-                                            target="_blank">Download Abstract Book</a>
-                                    @else
-                                        No Abstract Book
                                     @endif
                                 </td>
                                 <td>{{ $prevconference->date }}</td>
