@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('date');
             $table->string('location');
             $table->string('pdf')->nullable();
+            $table->string('abstract_book')->nullable();
             $table->year('year');
             $table->timestamps();
         });

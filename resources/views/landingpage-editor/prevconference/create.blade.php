@@ -53,6 +53,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="abstract_book">Abstract Book (Optional)</label>
+                    <input type="file" class="form-control @error('abstract_book') is-invalid @enderror"
+                        name="abstract_book" id="abstract_book" accept="application/pdf">
+                    @error('abstract_book')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
+                <div class="form-group">
                     <label for="year">Year</label>
                     <input type="number" class="form-control @error('year') is-invalid @enderror" name="year"
                         id="year" value="{{ old('year') }}" required>

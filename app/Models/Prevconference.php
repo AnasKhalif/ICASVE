@@ -14,6 +14,7 @@ class Prevconference extends Model
         'date',
         'location',
         'pdf',
+        'abstract_book',
         'year'
     ];
 }

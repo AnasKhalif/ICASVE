@@ -30,6 +30,7 @@ class PrevconferenceController extends Controller
             'date' => ['required', 'string'],
             'location' => ['required', 'string', 'max:255'],
             'pdf' => ['nullable', 'string', 'max:255'],
+            'abstract_book' => ['nullable', 'file', 'mimes:pdf'],
             'year' => ['required', 'integer'],
         ]);
 
@@ -41,6 +42,11 @@ class PrevconferenceController extends Controller
         if ($request->hasFile('pdf')) {
             $pdfPath = $request->file('pdf')->store('prevconferences/pdfs', 'public');
             $validatedData['pdf'] = $pdfPath;
+        }
+
+        if ($request->hasFile('abstract_book')) {
+            $abstractBookPath = $request->file('abstract_book')->store('prevconferences/abstract_books', 'public');
+            $validatedData['abstract_book'] = $abstractBookPath;
         }
 
         Prevconference::create($validatedData);
@@ -65,6 +71,7 @@ class PrevconferenceController extends Controller
             'date' => ['string'],
             'location' => ['string', 'max:255'],
             'pdf' => ['nullable', 'string', 'max:255'],
+            'abstract_book' => ['nullable', 'file', 'mimes:pdf'],
             'year' => ['required', 'integer'],
         ]);
 
@@ -82,6 +89,14 @@ class PrevconferenceController extends Controller
             }
             $pdfPath = $request->file('pdf')->store('prevconferences/pdfs', 'public');
             $validatedData['pdf'] = $pdfPath;
+        }
+
+        if ($request->hasFile('abstract_book')) {
+            if ($prevconference->abstract_book) {
+                Storage::disk('public')->delete($prevconference->abstract_book);
+            }
+            $abstractBookPath = $request->file('abstract_book')->store('prevconferences/abstract_books', 'public');
+            $validatedData['abstract_book'] = $abstractBookPath;
         }
 
         $prevconference->update($validatedData);

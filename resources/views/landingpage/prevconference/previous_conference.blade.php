@@ -85,12 +85,21 @@
                             <div class="mb-2">
                                 <p class="card-text text-muted">Location: {{ $prevconference->location }}</p>
                             </div>
-                            <form>
-                                <input type="hidden" name="year">
-                                <a type="submit" href="{{ $prevconference->pdf }}" class="btn btn-primary btn-sm">
-                                    <i class="bi bi-download"></i> Archive
-                                </a>
-                            </form>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <form>
+                                    <input type="hidden" name="year">
+                                    <a type="submit" href="{{ $prevconference->pdf }}" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-download"></i> Archive
+                                    </a>
+                                </form>
+
+                                @if ($prevconference->abstract_book)
+                                    <a href="{{ asset('storage/' . $prevconference->abstract_book) }}" target="_blank"
+                                        class="btn btn-secondary btn-sm">
+                                        <i class="bi bi-file-earmark-pdf"></i> Abstract Book
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
